@@ -13,95 +13,174 @@ else if (_band is null)
 {
     <section class="punk-empty">
         <Icon Path="@Icons.Skull" Class="icon--huge" />
-        <h1>Banda no encontrada</h1>
+        <h1>Esta banda ya no existe</h1>
+        <p>O se la comieron los mutardos o la borraste tú.</p>
         <a class="btn btn--primary" href="">Volver a las bandas</a>
     </section>
 }
 else
 {
-    <header class="page-header">
-        <a class="btn btn--icon" href="" aria-label="Volver"><Icon Path="@Icons.Back" /></a>
-        <div class="page-header__title">
-            <span class="chip chip--faction">@FactionName</span>
-            <h1 class="page-title">@_band.Name</h1>
+    <div class="context-bar">
+        <span class="chip chip--faction context-bar__pill">@FactionName</span>
+        <div class="context-bar__row">
+            <a class="btn btn--icon" href="" aria-label="Volver a las bandas"><Icon Path="@Icons.Back" /></a>
+            <label class="visually-hidden" for="band-switch">Cambiar de banda</label>
+            <select id="band-switch" class="field__input context-bar__select" value="@_band.Id" @onchange="SwitchBand">
+                @foreach (var other in _allBands)
+                {
+                    <option value="@other.Id">@other.Name@(other.IsReadOnly ? " (rival)" : "")</option>
+                }
+            </select>
+            <ActionsMenu CloseOnClick="true">
+                @if (!_band.IsReadOnly)
+                {
+                    <button type="button" class="menu-pop__item" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar datos</button>
+                }
+                <button type="button" class="menu-pop__item" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Clonar banda</button>
+                <button type="button" class="menu-pop__item menu-pop__item--danger" @onclick="() => _tab = TabDetails"><Icon Path="@Icons.Trash" /> Borrar…</button>
+            </ActionsMenu>
         </div>
-    </header>
+    </div>
 
-    @if (_band.IsReadOnly)
-    {
-        <p class="notice"><Icon Path="@Icons.Lock" /> Banda rival: solo lectura.</p>
-    }
+    <section class="paper band-hero tape">
+        <div class="band-hero__top">
+            <span class="stamp">@FactionName</span>
+            @if (_band.IsReadOnly)
+            {
+                <span class="stamp stamp--ink"><Icon Path="@Icons.Lock" /> Rival</span>
+            }
+        </div>
+        <h1 class="band-hero__name distress">@_band.Name</h1>
+        <div class="band-hero__counters">
+            <span class="counter"><span class="counter__value">@_band.Members.Count</span><span class="counter__label">@(_band.Members.Count == 1 ? "miembro" : "miembros")</span></span>
+            <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Ammo)</span><span class="counter__label">balas</span></span>
+            @if (_band.Members.Any(m => m.Cost is not null))
+            {
+                <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Cost ?? 0)</span><span class="counter__label">coste</span></span>
+            }
+        </div>
+    </section>
 
     @if (_error is not null)
     {
         <p class="notice notice--danger">@_error</p>
     }
 
-    @if (_editing)
-    {
-        <form class="card stack" @onsubmit="SaveDetails">
-            <label class="field">
-                <span class="field__label">Nombre</span>
-                <input class="field__input" @bind="_draftName" maxlength="@BandService.MaxNameLength" required />
-            </label>
-            <label class="field">
-                <span class="field__label">Facción</span>
-                <select class="field__input" @bind="_draftFaction">
-                    @foreach (var faction in Rules.Factions)
+    <PageTabs Tabs="TabNames" @bind-Active="_tab" />
+
+    <div class="tab-panel">
+        @switch (_tab)
+        {
+            case TabMembers:
+                @if (_band.Members.Count == 0)
+                {
+                    <section class="punk-empty">
+                        <Icon Path="@Icons.Band" Class="icon--huge" />
+                        <h2>Banda fantasma</h2>
+                        <p>Aquí no hay ni un alma. Recluta a alguien antes de que te roben las balas.</p>
+                    </section>
+                }
+                <div class="datacard-list">
+                    @foreach (var member in _band.Members)
                     {
-                        <option value="@faction.Id">@faction.Name</option>
+                        <MemberCard Member="member" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
                     }
-                </select>
-            </label>
-            <label class="field">
-                <span class="field__label">Notas</span>
-                <textarea class="field__input" rows="3" @bind="_draftNotes"></textarea>
-            </label>
-            <div class="actions">
-                <button type="submit" class="btn btn--primary">Guardar</button>
-                <button type="button" class="btn btn--ghost" @onclick="() => _editing = false">Cancelar</button>
-            </div>
-        </form>
-    }
-    else
-    {
-        @if (!string.IsNullOrWhiteSpace(_band.Notes))
-        {
-            <p class="band-notes">@_band.Notes</p>
-        }
+                </div>
+                break;
 
-        <div class="toolbar">
-            <span class="toolbar__info">@(_band.Members.Count == 1 ? "1 miembro" : $"{_band.Members.Count} miembros") · <Icon Path="@Icons.Bullet" /> @_band.Members.Sum(m => m.Ammo) balas</span>
-            @if (!_band.IsReadOnly)
-            {
-                <button type="button" class="btn btn--ghost" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar</button>
-            }
-            <button type="button" class="btn btn--ghost" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Duplicar</button>
-            <ConfirmButton Text="Borrar" OnConfirm="Delete" />
-        </div>
-    }
+            case TabGear:
+                @if (GearRows.Count == 0)
+                {
+                    <p class="muted">Nadie lleva nada encima. Ni un mal tubo.</p>
+                }
+                else
+                {
+                    <div class="paper">
+                        <table class="data-table">
+                            <thead><tr><th scope="col">Equipo</th><th scope="col">Lo lleva</th></tr></thead>
+                            <tbody>
+                                @foreach (var row in GearRows)
+                                {
+                                    <tr><td>@row.Gear</td><td>@row.Who</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                break;
 
-    <h2 class="section-title">Miembros</h2>
-    <div class="card-grid">
-        @foreach (var member in _band.Members)
-        {
-            <MemberCard Member="member" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
-        }
-
-        @if (!_band.IsReadOnly)
-        {
-            <a class="card card--add" href="@($"bandas/{_band.Id}/miembro/nuevo")">
-                <Icon Path="@Icons.Plus" Class="icon--big" />
-                <span>Añadir miembro</span>
-            </a>
+            default:
+                @if (_editing)
+                {
+                    <form class="paper stack" @onsubmit="SaveDetails">
+                        <label class="field">
+                            <span class="field__label">Nombre</span>
+                            <input class="field__input" @bind="_draftName" maxlength="@BandService.MaxNameLength" required />
+                        </label>
+                        <label class="field">
+                            <span class="field__label">Facción</span>
+                            <select class="field__input" @bind="_draftFaction">
+                                @foreach (var faction in Rules.Factions)
+                                {
+                                    <option value="@faction.Id">@faction.Name</option>
+                                }
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span class="field__label">Notas</span>
+                            <textarea class="field__input" rows="4" @bind="_draftNotes"></textarea>
+                        </label>
+                        <div class="actions">
+                            <button type="submit" class="btn btn--primary">Guardar</button>
+                            <button type="button" class="btn btn--ghost" @onclick="() => _editing = false">Cancelar</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="rule-grid">
+                        <div class="rule-box">
+                            <h3 class="rule-box__title">Facción</h3>
+                            <p>@FactionName</p>
+                        </div>
+                        <div class="rule-box">
+                            <h3 class="rule-box__title">Notas</h3>
+                            <p class="band-notes">@(string.IsNullOrWhiteSpace(_band.Notes) ? "Sin notas. Ni un garabato." : _band.Notes)</p>
+                        </div>
+                        <div class="rule-box">
+                            <h3 class="rule-box__title">Fichada</h3>
+                            <p>@_band.CreatedAt.ToLocalTime().ToString("d MMM yyyy") · última paliza @_band.UpdatedAt.ToLocalTime().ToString("d MMM yyyy")</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        @if (!_band.IsReadOnly)
+                        {
+                            <button type="button" class="btn btn--ghost" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar datos</button>
+                        }
+                        <ConfirmButton Text="Mandar al desguace" ConfirmText="Sí, borrarla" OnConfirm="Delete" />
+                    </div>
+                }
+                break;
         }
     </div>
+
+    @if (!_band.IsReadOnly && _tab == TabMembers)
+    {
+        <a class="btn btn--blood fab" href="@($"bandas/{_band.Id}/miembro/nuevo")"><Icon Path="@Icons.Plus" /> Reclutar</a>
+    }
 }
 
 @code {
+    private const string TabMembers = "Miembros";
+    private const string TabGear = "Equipo";
+    private const string TabDetails = "Datos";
+    private static readonly IReadOnlyList<string> TabNames = [TabMembers, TabGear, TabDetails];
+
     [Parameter] public Guid Id { get; set; }
 
     private Band? _band;
+    private IReadOnlyList<Band> _allBands = [];
+    private string _tab = TabMembers;
     private bool _loading = true;
     private bool _editing;
     private string? _error;
@@ -111,11 +190,30 @@ else
 
     private string FactionName => Rules.FindFaction(_band?.FactionId)?.Name ?? "Sin facción";
 
+    private List<(string Gear, string Who)> GearRows =>
+        _band?.Members
+            .SelectMany(m => m.Gear.Select(g => (g.Name, m.Name)))
+            .GroupBy(r => r.Item1, StringComparer.OrdinalIgnoreCase)
+            .Select(g => (g.Key, string.Join(", ", g.Select(r => r.Item2))))
+            .OrderBy(r => r.Item1)
+            .ToList() ?? [];
+
     protected override async Task OnParametersSetAsync()
     {
-        _loading = true;
+        _loading = _band?.Id != Id;
+        _editing = false;
+        _error = null;
         _band = await Bands.GetAsync(Id);
+        _allBands = await Bands.GetAllAsync();
         _loading = false;
+    }
+
+    private void SwitchBand(ChangeEventArgs e)
+    {
+        if (Guid.TryParse(e.Value?.ToString(), out var id) && id != Id)
+        {
+            Navigation.NavigateTo($"bandas/{id}");
+        }
     }
 
     private void StartEditing()
@@ -130,6 +228,7 @@ else
         _draftNotes = _band.Notes;
         _error = null;
         _editing = true;
+        _tab = TabDetails;
     }
 
     private async Task SaveDetails()
@@ -146,6 +245,7 @@ else
         try
         {
             await Bands.SaveAsync(_band);
+            _allBands = await Bands.GetAllAsync();
             _editing = false;
             _error = null;
         }

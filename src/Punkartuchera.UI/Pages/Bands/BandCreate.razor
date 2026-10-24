@@ -7,13 +7,16 @@
 
 <header class="page-header">
     <a class="btn btn--icon" href="" aria-label="Volver"><Icon Path="@Icons.Back" /></a>
-    <h1 class="page-title">Nueva banda</h1>
+    <div class="page-header__title">
+        <span class="page-kicker">Se buscan mataos</span>
+        <h1 class="page-title distress">Nueva banda</h1>
+    </div>
 </header>
 
-<form class="stack" @onsubmit="Create">
+<form class="paper tape stack" @onsubmit="Create">
     <label class="field">
         <span class="field__label">Nombre</span>
-        <input class="field__input" @bind="_name" @bind:event="oninput" maxlength="@BandService.MaxNameLength" placeholder="Los Oxidados" required />
+        <input class="field__input" @bind="_name" @bind:event="oninput" maxlength="@BandService.MaxNameLength" placeholder="Los Oxidados de Puentechatarra" required />
     </label>
 
     <fieldset class="field">
@@ -35,8 +38,8 @@
     }
 
     <div class="actions">
-        <button type="submit" class="btn btn--primary" disabled="@(_saving || string.IsNullOrWhiteSpace(_name) || _factionId is null)">
-            Crear banda
+        <button type="submit" class="btn btn--blood" disabled="@(_saving || string.IsNullOrWhiteSpace(_name) || _factionId is null)">
+            <Icon Path="@Icons.Plus" /> Montar banda
         </button>
     </div>
 </form>

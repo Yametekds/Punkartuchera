@@ -1,35 +1,72 @@
 @inherits LayoutComponentBase
+@implements IDisposable
+@inject NavigationManager Navigation
 
 <div class="punk-shell">
     <header class="punk-topbar">
+        <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@_drawerOpen" @onclick="() => _drawerOpen = true">
+            <Icon Path="@Icons.Menu" />
+        </button>
         <a class="punk-brand" href="">
-            <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
             <span class="punk-brand__name">Punkartuchera</span>
         </a>
+        <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
     </header>
+
+    @if (_drawerOpen)
+    {
+        <div class="drawer-scrim" @onclick="() => _drawerOpen = false"></div>
+    }
+    <nav class="drawer @(_drawerOpen ? "is-open" : null)" aria-label="Secciones" inert="@(!_drawerOpen)">
+        <div class="drawer__head">
+            <span class="drawer__title">Punkartuchera</span>
+            <button type="button" class="btn btn--icon" aria-label="Cerrar menú" @onclick="() => _drawerOpen = false">
+                <Icon Path="@Icons.Close" />
+            </button>
+        </div>
+        <span class="drawer__scribble scribble">¿Adónde vas, chorbo?</span>
+        <ul class="drawer__list">
+            @foreach (var item in AppNavigation.Items)
+            {
+                <li>
+                    @if (item.Available)
+                    {
+                        <NavLink class="drawer__item" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                            <Icon Path="@item.Icon" />
+                            <span>@item.Label</span>
+                        </NavLink>
+                    }
+                    else
+                    {
+                        <span class="drawer__item drawer__item--soon">
+                            <Icon Path="@item.Icon" />
+                            <span>@item.Label</span>
+                            <small class="scribble">pronto</small>
+                        </span>
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
 
     <main class="punk-main">
         @Body
     </main>
-
-    <nav class="punk-tabbar" aria-label="Secciones">
-        @foreach (var item in AppNavigation.Items)
-        {
-            if (item.Available)
-            {
-                <NavLink class="punk-tab" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
-                    <Icon Path="@item.Icon" />
-                    <span>@item.Label</span>
-                </NavLink>
-            }
-            else
-            {
-                <span class="punk-tab punk-tab--soon" title="Próximamente">
-                    <Icon Path="@item.Icon" />
-                    <span>@item.Label</span>
-                    <small>Pronto</small>
-                </span>
-            }
-        }
-    </nav>
 </div>
+
+@code {
+    private bool _drawerOpen;
+
+    protected override void OnInitialized() => Navigation.LocationChanged += OnLocationChanged;
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        if (_drawerOpen)
+        {
+            _drawerOpen = false;
+            StateHasChanged();
+        }
+    }
+
+    public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
+}

@@ -17,5 +17,7 @@ public static class Icons
     public const string Edit = "M4 17.3V20h2.7l8.4-8.4-2.7-2.7L4 17.3zM17.7 9a1 1 0 0 0 0-1.4l-1.3-1.3a1 1 0 0 0-1.4 0l-1 1 2.7 2.7 1-1z";
     public const string Bullet = "M10 2h4c1.1 0 2 3 2 6v12H8V8c0-3 .9-6 2-6zM7 21h10v1H7z";
     public const string Lock = "M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V7a3 3 0 0 0-6 0v3z";
+    public const string Menu = "M3 6h18v2.5H3V6zm0 5h18v2.5H3V11zm0 5h18v2.5H3V16z";
+    public const string Dots = "M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z";
     public const string Close = "M6.4 5L12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5z";
 }

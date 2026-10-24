@@ -1,0 +1,28 @@
+@* Botón ⋮ que despliega acciones secundarias. *@
+<div class="menu-anchor">
+    <button type="button" class="btn btn--icon" aria-label="Más acciones" aria-expanded="@_open" @onclick="() => _open = !_open">
+        <Icon Path="@Icons.Dots" />
+    </button>
+    @if (_open)
+    {
+        <div class="menu-scrim" @onclick="() => _open = false"></div>
+        <div class="menu-pop" @onclick="() => _open = CloseOnClick ? false : _open">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Cierra el menú al pulsar dentro (falso si contiene pasos de confirmación).</summary>
+    [Parameter] public bool CloseOnClick { get; set; }
+
+    private bool _open;
+
+    public void Close()
+    {
+        _open = false;
+        StateHasChanged();
+    }
+}

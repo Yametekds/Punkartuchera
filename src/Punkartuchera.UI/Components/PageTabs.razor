@@ -1,0 +1,24 @@
+@* Pestañas a todo el ancho bajo la cabecera de una página. *@
+<div class="page-tabs" role="tablist">
+    @foreach (var tab in Tabs)
+    {
+        <button type="button" role="tab" class="page-tabs__tab @(tab == Active ? "is-active" : null)"
+                aria-selected="@(tab == Active)" @onclick="() => Select(tab)">
+            @tab
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<string> Tabs { get; set; } = [];
+
+    [Parameter] public string? Active { get; set; }
+
+    [Parameter] public EventCallback<string> ActiveChanged { get; set; }
+
+    private Task Select(string tab)
+    {
+        Active = tab;
+        return ActiveChanged.InvokeAsync(tab);
+    }
+}
