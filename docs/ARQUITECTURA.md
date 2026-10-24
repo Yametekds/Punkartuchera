@@ -28,8 +28,19 @@ Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`
 - Los atributos se guardan como diccionario `clave → valor`; las claves vienen de `IRulesCatalog.Stats`, así cambiar el reglamento no rompe datos guardados.
 - `Band.SchemaVersion` permite migrar datos antiguos.
 - `Band.Ownership`: `Own` (editable) o `Rival` (solo lectura; `BandService` rechaza cambios).
-- `Miniature.Ammo` son las balas; la exportación a rivales debe ponerlas a cero.
+- `Miniature.Ammo` son las balas; la exportación a rivales las pone a cero.
+- `Band.SourceId`: en las bandas rivales, el identificador que tenía la banda en el dispositivo del rival.
 - `BandSerializer` es el formato JSON único (camelCase, enums como texto, generación de código para el recortado de WebAssembly). Úsalo también para exportar.
+
+### Pasar la banda al rival
+
+`BandExchangeService` (Core, `Sharing/`) exporta una banda propia a un archivo `.punkband` y lo importa en el otro dispositivo:
+
+- El archivo es un `BandPackage` en JSON: `format` (`punkartuchera-band`), `version`, la banda y las fotos propias en base64 (`photos`, por clave). Los retratos genéricos viajan como referencia.
+- Al exportar se quitan las balas (`Ammo = 0`) y las notas de la banda. Las bandas rivales no se pueden volver a exportar.
+- Al importar se guarda como `Rival` (solo lectura) con un `Id` nuevo y `SourceId` = el `Id` original; si llega otra vez la misma banda, sustituye a la copia anterior y borra sus fotos. Se descartan fotos que no sean JPEG, PNG o WebP y se rechazan archivos de otro formato o de una versión más nueva.
+
+En la interfaz, `FileSharer` (`wwwroot/js/punkShare.js`) abre el menú de compartir del sistema (Web Share API) y, si el navegador no deja compartir archivos, lo descarga. La acción está en el menú ⋮ de la banda ("Pasar al rival") y la importación en el botón "Cargar rival" de la lista de bandas.
 
 ### IndexedDB
 
