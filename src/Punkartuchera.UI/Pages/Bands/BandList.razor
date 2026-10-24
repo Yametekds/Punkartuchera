@@ -2,6 +2,8 @@
 @page "/bandas"
 @inject BandService Bands
 @inject IRulesCatalog Rules
+@inject BandExchangeService Exchange
+@inject NavigationManager Navigation
 
 <PageTitle>Bandas · Punkartuchera</PageTitle>
 
@@ -10,7 +12,21 @@
         <span class="page-kicker">Tu chusma, tus normas</span>
         <h1 class="page-title distress">Tus bandas</h1>
     </div>
+    <label class="btn btn--ghost" title="Abre el archivo .punkband que te ha pasado el rival">
+        <Icon Path="@Icons.Inbox" /> Cargar rival
+        <InputFile class="visually-hidden" OnChange="ImportRival" />
+    </label>
 </header>
+
+@if (_importing)
+{
+    <p class="muted" role="status">Cacheando a la banda rival…</p>
+}
+
+@if (_importError is not null)
+{
+    <p class="notice notice--danger">@_importError</p>
+}
 
 <PlaceholderNotice />
 
@@ -54,7 +70,7 @@ else
                             <span class="portrait portrait--sm portrait--more">+@(band.Members.Count - 6)</span>
                         }
                     </div>
-                    <p class="band-card__meta">@MembersLabel(band.Members.Count) · @band.Members.Sum(m => m.Ammo) balas</p>
+                    <p class="band-card__meta">@MembersLabel(band.Members.Count) · @(band.IsReadOnly ? "? balas" : $"{band.Members.Sum(m => m.Ammo)} balas")</p>
                 </a>
             }
         </div>
@@ -65,8 +81,34 @@ else
 
 @code {
     private IReadOnlyList<Band>? _bands;
+    private bool _importing;
+    private string? _importError;
 
     protected override async Task OnInitializedAsync() => _bands = await Bands.GetAllAsync();
+
+    private async Task ImportRival(InputFileChangeEventArgs e)
+    {
+        _importError = null;
+        _importing = true;
+        try
+        {
+            await using var stream = e.File.OpenReadStream(BandExchangeService.MaxFileBytes);
+            var band = await Exchange.ImportAsync(stream);
+            Navigation.NavigateTo($"bandas/{band.Id}");
+        }
+        catch (BandExchangeException ex)
+        {
+            _importError = ex.Message;
+        }
+        catch (IOException)
+        {
+            _importError = "No se pudo leer el archivo. ¿Seguro que es una banda y no pesa una barbaridad?";
+        }
+        finally
+        {
+            _importing = false;
+        }
+    }
 
     private string FactionName(Band band) => Rules.FindFaction(band.FactionId)?.Name ?? "Sin facción";
 

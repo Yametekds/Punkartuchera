@@ -19,6 +19,12 @@ public sealed class Band
     /// <summary>Propia (editable) o rival importada (solo lectura).</summary>
     public BandOwnership Ownership { get; set; } = BandOwnership.Own;
 
+    /// <summary>
+    /// En las bandas rivales, el identificador que tenía la banda en el dispositivo del rival.
+    /// Sirve para sustituir la copia anterior si el rival la vuelve a pasar.
+    /// </summary>
+    public Guid? SourceId { get; set; }
+
     public List<Miniature> Members { get; set; } = [];
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;

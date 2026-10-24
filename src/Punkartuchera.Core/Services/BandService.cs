@@ -109,6 +109,7 @@ public sealed class BandService(IBandRepository bands, IPhotoStore photos, IRule
         copy.Id = Guid.NewGuid();
         copy.Name = NormalizeName($"{source.Name} (copia)");
         copy.Ownership = BandOwnership.Own;
+        copy.SourceId = null;
         copy.CreatedAt = copy.UpdatedAt = DateTimeOffset.UtcNow;
 
         foreach (var member in copy.Members)

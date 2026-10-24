@@ -26,9 +26,9 @@
                     <dd>@Member.GetStat(stat.Key, stat.Default)</dd>
                 </div>
             }
-            <div class="statbox statbox--ammo" title="Balas">
+            <div class="statbox statbox--ammo" title="@(HideAmmo ? "Las balas del rival son secreto" : "Balas")">
                 <dt><Icon Path="@Icons.Bullet" /> Balas</dt>
-                <dd>@Member.Ammo</dd>
+                <dd>@(HideAmmo ? "?" : Member.Ammo)</dd>
             </div>
         </dl>
     </header>
@@ -84,4 +84,7 @@
 
     /// <summary>Destino para editar la ficha; nulo si no es editable.</summary>
     [Parameter] public string? Href { get; set; }
+
+    /// <summary>Oculta las balas (fichas del rival).</summary>
+    [Parameter] public bool HideAmmo { get; set; }
 }
