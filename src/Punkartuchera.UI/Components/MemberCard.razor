@@ -1,53 +1,87 @@
 @inject IRulesCatalog Rules
 
-@if (Href is null)
-{
-    <article class="card member-card">@CardBody</article>
-}
-else
-{
-    <a class="card member-card" href="@Href">@CardBody</a>
-}
-
-@code {
-    [Parameter, EditorRequired] public Miniature Member { get; set; } = default!;
-
-    /// <summary>Destino al pulsar la tarjeta; nulo si no es editable.</summary>
-    [Parameter] public string? Href { get; set; }
-
-    private RenderFragment CardBody => @<text>
-        <div class="member-card__top">
-            <MiniPortrait Photo="Member.Photo" Alt="@Member.Name" Size="md" />
-            <div class="member-card__id">
-                <h3 class="member-card__name">@Member.Name</h3>
-                @if (!string.IsNullOrEmpty(Member.Role))
-                {
-                    <span class="member-card__role">@Member.Role</span>
-                }
-                <span class="ammo" title="Balas"><Icon Path="@Icons.Bullet" /> @Member.Ammo</span>
-            </div>
+@* Ficha de miembro estilo datacard: cabecera de chapa con atributos y cuerpo de papel. *@
+<article class="datacard">
+    <header class="datacard__head">
+        <MiniPortrait Photo="Member.Photo" Alt="@Member.Name" Size="md" />
+        <div class="datacard__title">
+            @if (Href is null)
+            {
+                <h3 class="datacard__name">@Member.Name</h3>
+            }
+            else
+            {
+                <h3 class="datacard__name"><a href="@Href">@Member.Name</a></h3>
+            }
+            @if (!string.IsNullOrEmpty(Member.Role))
+            {
+                <span class="datacard__role">@Member.Role</span>
+            }
         </div>
-        <dl class="stat-strip">
+        <dl class="datacard__stats" style="--stat-count: @(Rules.Stats.Count + 1)">
             @foreach (var stat in Rules.Stats)
             {
-                <div class="stat-strip__cell" title="@stat.Name">
+                <div class="statbox" title="@stat.Name">
                     <dt>@stat.Abbreviation</dt>
                     <dd>@Member.GetStat(stat.Key, stat.Default)</dd>
                 </div>
             }
+            <div class="statbox statbox--ammo" title="Balas">
+                <dt><Icon Path="@Icons.Bullet" /> Balas</dt>
+                <dd>@Member.Ammo</dd>
+            </div>
         </dl>
-        @if (Member.Skills.Count > 0 || Member.Gear.Count > 0)
+    </header>
+
+    <div class="datacard__body">
+        @if (Member.Gear.Count > 0)
         {
-            <ul class="tags tags--readonly">
-                @foreach (var skill in Member.Skills)
-                {
-                    <li class="tag tag--skill">@skill</li>
-                }
-                @foreach (var gear in Member.Gear)
-                {
-                    <li class="tag tag--gear">@gear.Name</li>
-                }
-            </ul>
+            <table class="data-table">
+                <thead>
+                    <tr><th scope="col">Equipo</th><th scope="col">Notas</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var gear in Member.Gear)
+                    {
+                        <tr><td>@gear.Name</td><td>@(gear.Notes ?? "—")</td></tr>
+                    }
+                </tbody>
+            </table>
         }
-    </text>;
+
+        @if (Member.Skills.Count > 0)
+        {
+            <div class="datacard__skills">
+                <span class="datacard__label">Habilidades</span>
+                <ul class="tags">
+                    @foreach (var skill in Member.Skills)
+                    {
+                        <li class="tag tag--skill">@skill</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Member.Notes))
+        {
+            <p class="datacard__notes">@Member.Notes</p>
+        }
+
+        @if (Member.Gear.Count == 0 && Member.Skills.Count == 0 && string.IsNullOrWhiteSpace(Member.Notes))
+        {
+            <p class="datacard__empty scribble">Ni equipo ni habilidades. Va a pelo.</p>
+        }
+
+        @if (Href is not null)
+        {
+            <a class="datacard__edit" href="@Href"><Icon Path="@Icons.Edit" /> Editar ficha</a>
+        }
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Miniature Member { get; set; } = default!;
+
+    /// <summary>Destino para editar la ficha; nulo si no es editable.</summary>
+    [Parameter] public string? Href { get; set; }
 }

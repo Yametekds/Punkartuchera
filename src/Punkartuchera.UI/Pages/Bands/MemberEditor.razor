@@ -28,7 +28,7 @@ else
         <a class="btn btn--icon" href="@BandHref" aria-label="Volver"><Icon Path="@Icons.Back" /></a>
         <div class="page-header__title">
             <span class="chip chip--faction">@_band.Name</span>
-            <h1 class="page-title">@(IsNew ? "Nuevo miembro" : "Editar miembro")</h1>
+            <h1 class="page-title distress">@(IsNew ? "Reclutar" : "Editar ficha")</h1>
         </div>
     </header>
 
@@ -39,7 +39,7 @@ else
             <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" />
         </section>
 
-        <section class="card stack">
+        <section class="paper stack">
             <label class="field">
                 <span class="field__label">Nombre</span>
                 <input class="field__input" @bind="_member.Name" @bind:event="oninput" maxlength="60" placeholder="Morro Chungo" required />
@@ -60,7 +60,7 @@ else
             </label>
         </section>
 
-        <section class="card stack">
+        <section class="paper stack">
             <h2 class="section-title">Atributos</h2>
             <PlaceholderNotice />
             <div class="stat-grid">
@@ -74,14 +74,14 @@ else
             <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" />
         </section>
 
-        <section class="card stack">
+        <section class="paper stack">
             <h2 class="section-title">Habilidades</h2>
             <TagEditor Items="_member.Skills" Placeholder="Nueva habilidad" />
             <h2 class="section-title">Equipo</h2>
             <TagEditor Items="_gearNames" Placeholder="Nuevo equipo" />
         </section>
 
-        <section class="card stack">
+        <section class="paper stack">
             <label class="field">
                 <span class="field__label">Notas</span>
                 <textarea class="field__input" rows="3" @bind="_member.Notes"></textarea>

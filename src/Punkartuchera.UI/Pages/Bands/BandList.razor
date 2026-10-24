@@ -6,58 +6,62 @@
 <PageTitle>Bandas · Punkartuchera</PageTitle>
 
 <header class="page-header">
-    <h1 class="page-title">Tus bandas</h1>
-    <a class="btn btn--primary" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Nueva banda</a>
+    <div class="page-header__title">
+        <span class="page-kicker">Tu chusma, tus normas</span>
+        <h1 class="page-title distress">Tus bandas</h1>
+    </div>
 </header>
 
 <PlaceholderNotice />
 
 @if (_bands is null)
 {
-    <p class="muted">Cargando bandas…</p>
+    <p class="muted">Rebuscando en la chatarra…</p>
 }
 else if (_bands.Count == 0)
 {
     <section class="punk-empty">
         <Icon Path="@Icons.Band" Class="icon--huge" />
         <h2>El páramo está vacío</h2>
-        <p>Crea tu primera banda y empieza a reclutar.</p>
-        <a class="btn btn--primary" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Crear banda</a>
+        <p>Ni una banda, tron. Monta la primera y sal a repartir.</p>
+        <a class="btn btn--primary" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Montar banda</a>
     </section>
 }
 else
 {
     @foreach (var group in _bands.GroupBy(b => b.Ownership))
     {
-        <h2 class="section-title">@(group.Key == BandOwnership.Own ? "Propias" : "Rivales")</h2>
+        <h2 class="section-title">@(group.Key == BandOwnership.Own ? "Las tuyas" : "Rivales")</h2>
         <div class="card-grid">
             @foreach (var band in group)
             {
-                <a class="card band-card @(band.IsReadOnly ? "band-card--rival" : null)" href="@($"bandas/{band.Id}")">
+                <a class="paper tape band-card @(band.IsReadOnly ? "band-card--rival" : null)" href="@($"bandas/{band.Id}")">
                     <div class="band-card__head">
-                        <span class="chip chip--faction">@FactionName(band)</span>
+                        <span class="stamp">@FactionName(band)</span>
                         @if (band.IsReadOnly)
                         {
-                            <span class="chip chip--rival"><Icon Path="@Icons.Lock" /> Rival</span>
+                            <span class="stamp stamp--ink"><Icon Path="@Icons.Lock" /> Rival</span>
                         }
                     </div>
                     <h3 class="band-card__name">@band.Name</h3>
                     <div class="band-card__portraits">
-                        @foreach (var member in band.Members.Take(5))
+                        @foreach (var member in band.Members.Take(6))
                         {
                             <MiniPortrait Photo="member.Photo" Alt="@member.Name" Size="sm" />
                         }
-                        @if (band.Members.Count > 5)
+                        @if (band.Members.Count > 6)
                         {
-                            <span class="portrait portrait--sm portrait--more">+@(band.Members.Count - 5)</span>
+                            <span class="portrait portrait--sm portrait--more">+@(band.Members.Count - 6)</span>
                         }
                     </div>
-                    <p class="band-card__meta">@MembersLabel(band.Members.Count)</p>
+                    <p class="band-card__meta">@MembersLabel(band.Members.Count) · @band.Members.Sum(m => m.Ammo) balas</p>
                 </a>
             }
         </div>
     }
 }
+
+<a class="btn btn--blood fab" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Nueva banda</a>
 
 @code {
     private IReadOnlyList<Band>? _bands;
