@@ -1,0 +1,103 @@
+@using Punkartuchera.Core.Storage
+@inject IPhotoStore Photos
+@inject PhotoUrlProvider PhotoUrls
+
+<div class="photo-picker">
+    <div class="photo-picker__actions">
+        <label class="btn btn--ghost">
+            <Icon Path="@Icons.Camera" /> Cámara
+            <InputFile class="visually-hidden" accept="image/*" capture="environment" OnChange="OnFileSelected" />
+        </label>
+        <label class="btn btn--ghost">
+            <Icon Path="@Icons.Image" /> Galería
+            <InputFile class="visually-hidden" accept="image/*" OnChange="OnFileSelected" />
+        </label>
+        <button type="button" class="btn btn--ghost" @onclick="() => _showStock = !_showStock">
+            <Icon Path="@Icons.Skull" /> Retratos
+        </button>
+        @if (Value is not null)
+        {
+            <button type="button" class="btn btn--ghost btn--danger-text" @onclick="() => SetAsync(null)">Quitar</button>
+        }
+    </div>
+
+    @if (_busy)
+    {
+        <p class="muted">Procesando foto…</p>
+    }
+
+    @if (_error is not null)
+    {
+        <p class="notice notice--danger">@_error</p>
+    }
+
+    @if (_showStock)
+    {
+        <div class="stock-grid">
+            @foreach (var image in StockImages.All)
+            {
+                <button type="button" class="stock-grid__item @(Value?.Key == image.Key ? "is-selected" : null)"
+                        @onclick="() => PickStock(image.Key)">
+                    <img src="@StockImages.Url(image.Key)" alt="@image.Label" />
+                    <span>@image.Label</span>
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    // Las fotos se reducen en el navegador antes de guardarlas.
+    private const int MaxSidePixels = 640;
+    private const long MaxUploadBytes = 15 * 1024 * 1024;
+
+    [Parameter] public PhotoRef? Value { get; set; }
+
+    [Parameter] public EventCallback<PhotoRef?> ValueChanged { get; set; }
+
+    /// <summary>Se invoca con la clave de cada foto nueva guardada, para poder limpiarla si se cancela.</summary>
+    [Parameter] public EventCallback<string> OnPhotoStored { get; set; }
+
+    private bool _busy;
+    private bool _showStock;
+    private string? _error;
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        _error = null;
+        _busy = true;
+        try
+        {
+            var resized = await e.File.RequestImageFileAsync("image/jpeg", MaxSidePixels, MaxSidePixels);
+            await using var stream = resized.OpenReadStream(MaxUploadBytes);
+            using var buffer = new MemoryStream();
+            await stream.CopyToAsync(buffer);
+
+            var data = buffer.ToArray();
+            var key = await Photos.SaveAsync(data, "image/jpeg");
+            PhotoUrls.Remember(key, new StoredPhoto(key, "image/jpeg", data).ToDataUrl());
+            await OnPhotoStored.InvokeAsync(key);
+            await SetAsync(PhotoRef.Stored(key));
+        }
+        catch (Exception ex) when (ex is IOException or InvalidOperationException or JSException)
+        {
+            _error = "No se pudo leer la imagen. Prueba con otra foto.";
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task PickStock(string key)
+    {
+        _showStock = false;
+        await SetAsync(PhotoRef.Stock(key));
+    }
+
+    private Task SetAsync(PhotoRef? photo)
+    {
+        Value = photo;
+        return ValueChanged.InvokeAsync(photo);
+    }
+}

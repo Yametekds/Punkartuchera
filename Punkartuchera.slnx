@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Punkartuchera.Core/Punkartuchera.Core.csproj" />
+    <Project Path="src/Punkartuchera.UI/Punkartuchera.UI.csproj" />
+    <Project Path="src/Punkartuchera.Web/Punkartuchera.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Punkartuchera.Core.Tests/Punkartuchera.Core.Tests.csproj" />
+  </Folder>
+</Solution>

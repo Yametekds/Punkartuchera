@@ -3,12 +3,12 @@
 ## Capas
 
 ```
-Punkapocalyptic.Web  ──>  Punkapocalyptic.UI  ──>  Punkapocalyptic.Core
+Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core
    (host PWA)            (Razor, tema, IndexedDB)    (modelo y lógica)
 ```
 
 - **Core** no conoce Blazor ni el navegador. Todo lo que dependa de la plataforma se expresa como interfaz.
-- **UI** es una Razor Class Library: contiene el router (`Routes.razor`), el layout, las páginas y la implementación local de las interfaces. Una futura app .NET MAUI Blazor Hybrid solo tendría que renderizar `<Routes />` y llamar a `AddPunkapocalypticUi()`.
+- **UI** es una Razor Class Library: contiene el router (`Routes.razor`), el layout, las páginas y la implementación local de las interfaces. Una futura app .NET MAUI Blazor Hybrid solo tendría que renderizar `<Routes />` y llamar a `AddPunkartucheraUi()`.
 - **Web** es un host mínimo: `index.html`, manifiesto, service worker e iconos.
 
 ## Puntos de extensión
@@ -20,7 +20,7 @@ Punkapocalyptic.Web  ──>  Punkapocalyptic.UI  ──>  Punkapocalyptic.Core
 | `IRulesCatalog` | `PlaceholderRulesCatalog` (**provisional**) | Facciones, atributos y tipos de miembro. |
 | `IMatchService` | `LocalMatchService` | Partida en un dispositivo. Los métodos en línea lanzan `OnlineMatchesUnavailableException`. |
 
-Los servicios se registran en `ServiceCollectionExtensions.AddPunkapocalypticUi()`.
+Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`.
 
 ## Datos
 

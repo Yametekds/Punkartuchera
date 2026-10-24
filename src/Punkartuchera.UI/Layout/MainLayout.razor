@@ -1,0 +1,35 @@
+@inherits LayoutComponentBase
+
+<div class="punk-shell">
+    <header class="punk-topbar">
+        <a class="punk-brand" href="">
+            <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
+            <span class="punk-brand__name">Punkartuchera</span>
+        </a>
+    </header>
+
+    <main class="punk-main">
+        @Body
+    </main>
+
+    <nav class="punk-tabbar" aria-label="Secciones">
+        @foreach (var item in AppNavigation.Items)
+        {
+            if (item.Available)
+            {
+                <NavLink class="punk-tab" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                    <Icon Path="@item.Icon" />
+                    <span>@item.Label</span>
+                </NavLink>
+            }
+            else
+            {
+                <span class="punk-tab punk-tab--soon" title="Próximamente">
+                    <Icon Path="@item.Icon" />
+                    <span>@item.Label</span>
+                    <small>Pronto</small>
+                </span>
+            }
+        }
+    </nav>
+</div>

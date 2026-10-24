@@ -28,7 +28,7 @@ jobs:
         run: dotnet test --configuration Release
 
       - name: Publicar
-        run: dotnet publish src/Punkapocalyptic.Web/Punkapocalyptic.Web.csproj --configuration Release --output publish
+        run: dotnet publish src/Punkartuchera.Web/Punkartuchera.Web.csproj --configuration Release --output publish
 
       - name: Preparar sitio estático
         run: |
