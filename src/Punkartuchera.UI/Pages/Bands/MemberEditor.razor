@@ -1,0 +1,207 @@
+@page "/bandas/{BandId:guid}/miembro/nuevo"
+@page "/bandas/{BandId:guid}/miembro/{MemberId:guid}"
+@using Punkartuchera.Core.Serialization
+@using Punkartuchera.Core.Storage
+@implements IAsyncDisposable
+@inject BandService Bands
+@inject IRulesCatalog Rules
+@inject IPhotoStore Photos
+@inject NavigationManager Navigation
+
+<PageTitle>@(IsNew ? "Nuevo miembro" : _member?.Name) · Punkartuchera</PageTitle>
+
+@if (_loading)
+{
+    <p class="muted">Cargando…</p>
+}
+else if (_band is null || _member is null || _band.IsReadOnly)
+{
+    <section class="punk-empty">
+        <Icon Path="@Icons.Skull" Class="icon--huge" />
+        <h1>No se puede editar este miembro</h1>
+        <a class="btn btn--primary" href="">Volver a las bandas</a>
+    </section>
+}
+else
+{
+    <header class="page-header">
+        <a class="btn btn--icon" href="@BandHref" aria-label="Volver"><Icon Path="@Icons.Back" /></a>
+        <div class="page-header__title">
+            <span class="chip chip--faction">@_band.Name</span>
+            <h1 class="page-title">@(IsNew ? "Nuevo miembro" : "Editar miembro")</h1>
+        </div>
+    </header>
+
+    @* Sin <form>: Enter en los campos de etiquetas no debe guardar el miembro. *@
+    <div class="stack">
+        <section class="card member-editor__photo">
+            <MiniPortrait Photo="_member.Photo" Alt="@_member.Name" Size="lg" />
+            <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" />
+        </section>
+
+        <section class="card stack">
+            <label class="field">
+                <span class="field__label">Nombre</span>
+                <input class="field__input" @bind="_member.Name" @bind:event="oninput" maxlength="60" placeholder="Morro Chungo" required />
+            </label>
+            <label class="field">
+                <span class="field__label">Tipo</span>
+                <input class="field__input" list="member-roles" @bind="_member.Role" maxlength="40" placeholder="Elige o escribe" />
+                <datalist id="member-roles">
+                    @foreach (var role in Rules.Roles)
+                    {
+                        <option value="@role"></option>
+                    }
+                </datalist>
+            </label>
+            <label class="field field--narrow">
+                <span class="field__label">Coste</span>
+                <input class="field__input" type="number" min="0" @bind="_member.Cost" />
+            </label>
+        </section>
+
+        <section class="card stack">
+            <h2 class="section-title">Atributos</h2>
+            <PlaceholderNotice />
+            <div class="stat-grid">
+                @foreach (var stat in Rules.Stats)
+                {
+                    <Stepper Label="@stat.Abbreviation" Min="stat.Min" Max="stat.Max" Compact="true"
+                             Value="_member.GetStat(stat.Key, stat.Default)"
+                             ValueChanged="value => _member.Stats[stat.Key] = value" />
+                }
+            </div>
+            <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" />
+        </section>
+
+        <section class="card stack">
+            <h2 class="section-title">Habilidades</h2>
+            <TagEditor Items="_member.Skills" Placeholder="Nueva habilidad" />
+            <h2 class="section-title">Equipo</h2>
+            <TagEditor Items="_gearNames" Placeholder="Nuevo equipo" />
+        </section>
+
+        <section class="card stack">
+            <label class="field">
+                <span class="field__label">Notas</span>
+                <textarea class="field__input" rows="3" @bind="_member.Notes"></textarea>
+            </label>
+        </section>
+
+        @if (_error is not null)
+        {
+            <p class="notice notice--danger">@_error</p>
+        }
+
+        <div class="actions actions--sticky">
+            <button type="button" class="btn btn--primary" disabled="@_saving" @onclick="Save">Guardar</button>
+            <a class="btn btn--ghost" href="@BandHref">Cancelar</a>
+            @if (!IsNew)
+            {
+                <ConfirmButton Text="Borrar" OnConfirm="Delete" />
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid BandId { get; set; }
+
+    [Parameter] public Guid? MemberId { get; set; }
+
+    private Band? _band;
+    private Miniature? _member;
+    private List<string> _gearNames = [];
+    private readonly List<string> _newPhotos = [];
+    private bool _loading = true;
+    private bool _saving;
+    private bool _saved;
+    private string? _error;
+
+    private bool IsNew => MemberId is null;
+
+    private string BandHref => $"bandas/{BandId}";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _band = await Bands.GetAsync(BandId);
+        if (_band is not null)
+        {
+            var existing = MemberId is { } id ? _band.FindMember(id) : null;
+            _member = IsNew
+                ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
+                : existing is null ? null : Clone(existing);
+            _gearNames = _member?.Gear.Select(g => g.Name).ToList() ?? [];
+        }
+
+        _loading = false;
+    }
+
+    private async Task Save()
+    {
+        if (_band is null || _member is null)
+        {
+            return;
+        }
+
+        _error = null;
+        _saving = true;
+        try
+        {
+            var notesByName = _member.Gear.GroupBy(g => g.Name).ToDictionary(g => g.Key, g => g.First().Notes);
+            _member.Gear = _gearNames
+                .Select(name => new Equipment { Name = name, Notes = notesByName.GetValueOrDefault(name) })
+                .ToList();
+
+            await Bands.SaveMemberAsync(_band, _member);
+            _saved = true;
+            await DiscardUnusedPhotosAsync(_member.Photo);
+            Navigation.NavigateTo(BandHref);
+        }
+        catch (BandValidationException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task Delete()
+    {
+        if (_band is null || MemberId is not { } id)
+        {
+            return;
+        }
+
+        await Bands.RemoveMemberAsync(_band, id);
+        Navigation.NavigateTo(BandHref, replace: true);
+    }
+
+    /// <summary>Borra las fotos hechas en esta pantalla que no han quedado asignadas.</summary>
+    private async Task DiscardUnusedPhotosAsync(PhotoRef? keep)
+    {
+        foreach (var key in _newPhotos.Where(k => keep is not { Source: PhotoSource.Stored } || keep.Key != k))
+        {
+            await Photos.DeleteAsync(key);
+        }
+
+        _newPhotos.Clear();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (!_saved)
+        {
+            await DiscardUnusedPhotosAsync(null);
+        }
+    }
+
+    private static Miniature Clone(Miniature member)
+    {
+        var wrapper = new Band { Members = [member] };
+        return BandSerializer.Clone(wrapper).Members[0];
+    }
+}

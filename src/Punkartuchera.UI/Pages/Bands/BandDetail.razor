@@ -1,0 +1,170 @@
+@page "/bandas/{Id:guid}"
+@inject BandService Bands
+@inject IRulesCatalog Rules
+@inject NavigationManager Navigation
+
+<PageTitle>@(_band?.Name ?? "Banda") · Punkartuchera</PageTitle>
+
+@if (_loading)
+{
+    <p class="muted">Cargando banda…</p>
+}
+else if (_band is null)
+{
+    <section class="punk-empty">
+        <Icon Path="@Icons.Skull" Class="icon--huge" />
+        <h1>Banda no encontrada</h1>
+        <a class="btn btn--primary" href="">Volver a las bandas</a>
+    </section>
+}
+else
+{
+    <header class="page-header">
+        <a class="btn btn--icon" href="" aria-label="Volver"><Icon Path="@Icons.Back" /></a>
+        <div class="page-header__title">
+            <span class="chip chip--faction">@FactionName</span>
+            <h1 class="page-title">@_band.Name</h1>
+        </div>
+    </header>
+
+    @if (_band.IsReadOnly)
+    {
+        <p class="notice"><Icon Path="@Icons.Lock" /> Banda rival: solo lectura.</p>
+    }
+
+    @if (_error is not null)
+    {
+        <p class="notice notice--danger">@_error</p>
+    }
+
+    @if (_editing)
+    {
+        <form class="card stack" @onsubmit="SaveDetails">
+            <label class="field">
+                <span class="field__label">Nombre</span>
+                <input class="field__input" @bind="_draftName" maxlength="@BandService.MaxNameLength" required />
+            </label>
+            <label class="field">
+                <span class="field__label">Facción</span>
+                <select class="field__input" @bind="_draftFaction">
+                    @foreach (var faction in Rules.Factions)
+                    {
+                        <option value="@faction.Id">@faction.Name</option>
+                    }
+                </select>
+            </label>
+            <label class="field">
+                <span class="field__label">Notas</span>
+                <textarea class="field__input" rows="3" @bind="_draftNotes"></textarea>
+            </label>
+            <div class="actions">
+                <button type="submit" class="btn btn--primary">Guardar</button>
+                <button type="button" class="btn btn--ghost" @onclick="() => _editing = false">Cancelar</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        @if (!string.IsNullOrWhiteSpace(_band.Notes))
+        {
+            <p class="band-notes">@_band.Notes</p>
+        }
+
+        <div class="toolbar">
+            <span class="toolbar__info">@(_band.Members.Count == 1 ? "1 miembro" : $"{_band.Members.Count} miembros") · <Icon Path="@Icons.Bullet" /> @_band.Members.Sum(m => m.Ammo) balas</span>
+            @if (!_band.IsReadOnly)
+            {
+                <button type="button" class="btn btn--ghost" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar</button>
+            }
+            <button type="button" class="btn btn--ghost" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Duplicar</button>
+            <ConfirmButton Text="Borrar" OnConfirm="Delete" />
+        </div>
+    }
+
+    <h2 class="section-title">Miembros</h2>
+    <div class="card-grid">
+        @foreach (var member in _band.Members)
+        {
+            <MemberCard Member="member" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
+        }
+
+        @if (!_band.IsReadOnly)
+        {
+            <a class="card card--add" href="@($"bandas/{_band.Id}/miembro/nuevo")">
+                <Icon Path="@Icons.Plus" Class="icon--big" />
+                <span>Añadir miembro</span>
+            </a>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private Band? _band;
+    private bool _loading = true;
+    private bool _editing;
+    private string? _error;
+    private string _draftName = string.Empty;
+    private string _draftFaction = string.Empty;
+    private string? _draftNotes;
+
+    private string FactionName => Rules.FindFaction(_band?.FactionId)?.Name ?? "Sin facción";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _band = await Bands.GetAsync(Id);
+        _loading = false;
+    }
+
+    private void StartEditing()
+    {
+        if (_band is null)
+        {
+            return;
+        }
+
+        _draftName = _band.Name;
+        _draftFaction = _band.FactionId;
+        _draftNotes = _band.Notes;
+        _error = null;
+        _editing = true;
+    }
+
+    private async Task SaveDetails()
+    {
+        if (_band is null)
+        {
+            return;
+        }
+
+        var (name, faction, notes) = (_band.Name, _band.FactionId, _band.Notes);
+        _band.Name = _draftName;
+        _band.FactionId = _draftFaction;
+        _band.Notes = string.IsNullOrWhiteSpace(_draftNotes) ? null : _draftNotes.Trim();
+        try
+        {
+            await Bands.SaveAsync(_band);
+            _editing = false;
+            _error = null;
+        }
+        catch (BandValidationException ex)
+        {
+            (_band.Name, _band.FactionId, _band.Notes) = (name, faction, notes);
+            _error = ex.Message;
+        }
+    }
+
+    private async Task Duplicate()
+    {
+        var copy = await Bands.DuplicateAsync(Id);
+        Navigation.NavigateTo($"bandas/{copy.Id}");
+    }
+
+    private async Task Delete()
+    {
+        await Bands.DeleteAsync(Id);
+        Navigation.NavigateTo("", replace: true);
+    }
+}

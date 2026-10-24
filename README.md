@@ -1,4 +1,4 @@
-# Punka Bandas
+# Punkartuchera
 
 Gestor de bandas para el juego de escaramuzas **Punkapocalyptic**: crea tus bandas, haz fotos a tus miniaturas y consulta sus atributos de un vistazo, también sin conexión.
 
@@ -22,7 +22,7 @@ En preparación: consulta de reglas, generador de mapas, bandas rivales comparti
 ## Uso en local
 
 ```bash
-dotnet run --project src/Punkapocalyptic.Web
+dotnet run --project src/Punkartuchera.Web
 ```
 
 Tests:
@@ -39,10 +39,10 @@ Cada push a `main` compila, pasa los tests y publica la app en GitHub Pages (`.g
 
 | Proyecto | Contenido |
 | --- | --- |
-| `src/Punkapocalyptic.Core` | Modelo, reglas, servicios e interfaces de almacenamiento y partidas. Sin dependencias de interfaz. |
-| `src/Punkapocalyptic.UI` | Páginas, componentes, tema visual y almacenamiento IndexedDB. Reutilizable desde una app MAUI. |
-| `src/Punkapocalyptic.Web` | Host Blazor WebAssembly (PWA). |
-| `tests/Punkapocalyptic.Core.Tests` | Tests de la lógica de negocio. |
+| `src/Punkartuchera.Core` | Modelo, reglas, servicios e interfaces de almacenamiento y partidas. Sin dependencias de interfaz. |
+| `src/Punkartuchera.UI` | Páginas, componentes, tema visual y almacenamiento IndexedDB. Reutilizable desde una app MAUI. |
+| `src/Punkartuchera.Web` | Host Blazor WebAssembly (PWA). |
+| `tests/Punkartuchera.Core.Tests` | Tests de la lógica de negocio. |
 
 Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 
