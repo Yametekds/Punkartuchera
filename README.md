@@ -11,7 +11,9 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Duplicar y borrar bandas; las fotos se limpian solas.
 - Funciona sin conexión una vez cargada.
 
-En preparación: consulta de reglas, generador de mapas, bandas rivales compartidas y partidas activas.
+Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
+
+En preparación: consulta de reglas, bandas rivales compartidas y partidas activas.
 
 > Los atributos y tipos de miembro actuales son **provisionales** (ver `PlaceholderRulesCatalog`). Se sustituirán por los del reglamento.
 
