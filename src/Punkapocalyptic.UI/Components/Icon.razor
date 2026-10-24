@@ -1,0 +1,18 @@
+<svg class="icon @Class" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    @if (IsStroke)
+    {
+        <path d="@Path" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    }
+    else
+    {
+        <path d="@Path" fill="currentColor" />
+    }
+</svg>
+
+@code {
+    [Parameter, EditorRequired] public string Path { get; set; } = string.Empty;
+
+    [Parameter] public string? Class { get; set; }
+
+    private bool IsStroke => Path == Icons.Map || Path == Icons.Back;
+}

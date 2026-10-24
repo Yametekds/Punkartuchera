@@ -1,0 +1,8 @@
+@inject IRulesCatalog Rules
+
+@if (Rules.IsPlaceholder)
+{
+    <p class="notice notice--warning">
+        <span><strong>Datos provisionales.</strong> Los atributos y tipos de miembro son de relleno hasta cargar el reglamento.</span>
+    </p>
+}

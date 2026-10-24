@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Punkapocalyptic.Core/Punkapocalyptic.Core.csproj" />
+    <Project Path="src/Punkapocalyptic.UI/Punkapocalyptic.UI.csproj" />
+    <Project Path="src/Punkapocalyptic.Web/Punkapocalyptic.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Punkapocalyptic.Core.Tests/Punkapocalyptic.Core.Tests.csproj" />
+  </Folder>
+</Solution>

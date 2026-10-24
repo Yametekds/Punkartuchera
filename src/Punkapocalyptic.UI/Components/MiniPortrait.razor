@@ -1,0 +1,37 @@
+@inject PhotoUrlProvider PhotoUrls
+
+<div class="portrait @SizeClass">
+    @if (_url is not null)
+    {
+        <img src="@_url" alt="@Alt" loading="lazy" />
+    }
+    else
+    {
+        <Icon Path="@Icons.Skull" Class="portrait__empty" />
+    }
+</div>
+
+@code {
+    [Parameter] public PhotoRef? Photo { get; set; }
+
+    [Parameter] public string Alt { get; set; } = string.Empty;
+
+    /// <summary>sm, md o lg.</summary>
+    [Parameter] public string Size { get; set; } = "md";
+
+    private string? _url;
+    private PhotoRef? _loaded;
+
+    private string SizeClass => $"portrait--{Size}";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_loaded == Photo && (_url is not null || Photo is null))
+        {
+            return;
+        }
+
+        _loaded = Photo;
+        _url = await PhotoUrls.GetUrlAsync(Photo);
+    }
+}

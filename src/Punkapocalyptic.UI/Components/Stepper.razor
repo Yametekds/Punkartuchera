@@ -1,0 +1,28 @@
+<div class="stepper @(Compact ? "stepper--compact" : null)">
+    <span class="stepper__label">@Label</span>
+    <div class="stepper__controls">
+        <button type="button" class="stepper__btn" @onclick="() => Change(-1)" disabled="@(Value <= Min)" aria-label="Restar @Label">−</button>
+        <span class="stepper__value" aria-live="polite">@Value</span>
+        <button type="button" class="stepper__btn" @onclick="() => Change(1)" disabled="@(Value >= Max)" aria-label="Sumar @Label">+</button>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+
+    [Parameter] public int Value { get; set; }
+
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter] public int Min { get; set; }
+
+    [Parameter] public int Max { get; set; } = 99;
+
+    [Parameter] public bool Compact { get; set; }
+
+    private Task Change(int delta)
+    {
+        Value = Math.Clamp(Value + delta, Min, Max);
+        return ValueChanged.InvokeAsync(Value);
+    }
+}
