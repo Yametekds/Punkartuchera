@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Generador de mapas: plano de la mesa, leyenda y selector de terreno.
+   Solo usa las variables de punk-theme.css.
+   ========================================================================== */
+
+.map-layout { display: grid; gap: 22px; margin-top: 18px; }
+.map-panel { display: none; flex-direction: column; gap: 16px; min-width: 0; }
+.map-panel.is-active { display: flex; }
+
+/* Código del mapa */
+.map-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 14px; }
+.map-code__value { display: flex; flex-direction: column; gap: 4px; }
+.map-code .datacard__label { color: var(--punk-text-muted); }
+.map-code__seed { font-size: 1.6rem; letter-spacing: .18em; }
+
+/* Plano */
+.map-frame {
+    padding: 10px;
+    background-color: var(--punk-bar);
+    background-image: var(--punk-tex-metal);
+    border: 3px solid #000;
+    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .5));
+}
+.map-diagram { display: block; width: 100%; height: auto; max-height: 72vh; margin: 0 auto; }
+.map-board { fill: var(--punk-accent); }
+.map-grid { stroke: var(--punk-ink); stroke-opacity: .14; stroke-width: .3; }
+.map-deploy { fill-opacity: .28; }
+.map-deploy--north { fill: var(--punk-ink); }
+.map-deploy--south { fill: var(--punk-rust); }
+.map-deploy__label {
+    font-family: var(--punk-font-display); font-size: 4.2px; letter-spacing: .1em; text-transform: uppercase;
+    fill: var(--punk-ink); fill-opacity: .75;
+    text-anchor: middle; dominant-baseline: central;
+}
+.map-midline { stroke: var(--punk-rust); stroke-width: .6; stroke-dasharray: 3 2; }
+
+.map-piece rect, .map-piece ellipse, .map-piece circle { stroke-width: .8; }
+.map-piece text {
+    font-family: var(--punk-font-display);
+    text-anchor: middle; dominant-baseline: central;
+    pointer-events: none;
+}
+.map-piece--block rect, .map-piece--block ellipse, .map-piece--block circle { fill: var(--punk-ink); stroke: #000; }
+.map-piece--block text { fill: var(--punk-accent); }
+.map-piece--cover rect, .map-piece--cover ellipse, .map-piece--cover circle { fill: var(--punk-steel); stroke: var(--punk-ink); }
+.map-piece--cover text { fill: #fff; }
+.map-piece--hazard rect, .map-piece--hazard ellipse, .map-piece--hazard circle { fill: var(--punk-toxic); fill-opacity: .75; stroke: var(--punk-ink); stroke-dasharray: 1.5 1; }
+.map-piece--hazard text { fill: var(--punk-ink); }
+
+/* Balanza entre bandos */
+.map-balance { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0; }
+.map-balance .statbox dd { margin: 0; font-family: var(--punk-font-display); font-size: 1.8rem; line-height: 1.05; }
+.map-balance__note { margin: 0; font-size: .9rem; }
+
+/* Leyenda */
+.map-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
+.map-legend li { display: flex; align-items: center; gap: 8px; }
+.map-legend strong { font-family: var(--punk-font-display); color: var(--punk-accent); min-width: 2ch; }
+.map-legend__swatch { width: 22px; height: 22px; flex: none; }
+
+/* Selector de terreno */
+.terrain-picker { display: flex; flex-direction: column; gap: 4px; }
+.terrain-row { padding: 8px 0; border-bottom: 2px dashed rgba(29, 23, 18, .3); }
+.terrain-row__info { margin: 4px 0 0; font-size: .85rem; color: var(--punk-ink-muted); max-width: 52ch; }
+.terrain-picker__total { margin: 8px 0 0; font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1.2px; color: var(--punk-ink); }
+.map-seed-form { display: flex; gap: 8px; }
+.map-seed-form .field__input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: .15em; font-family: var(--punk-font-display); }
+
+@media (min-width: 900px) {
+    .map-layout { grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); align-items: start; }
+    .map-panel { display: flex; }
+    .page-tabs:has(+ .map-layout) { display: none; }
+}
