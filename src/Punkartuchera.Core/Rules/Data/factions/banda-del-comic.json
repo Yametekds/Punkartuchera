@@ -1,0 +1,85 @@
+{
+  "id": "banda-del-comic",
+  "name": "La Banda del Cómic",
+  "source": "bandas",
+  "page": 90,
+  "summary": "Los protagonistas de los cómics de Punkapocalyptic, la banda de la Luna Negra. Todos son Personalidades, pero se juegan juntos como una facción.",
+  "restrictions": [
+    "No puede llevar Mercenarios.",
+    "No se repite ningún personaje.",
+    "No pueden ir a la vez Dan novato y Dan.",
+    "Caronte de los Chatarreros puede formar parte de la banda.",
+    "Máximo un Gato parameño.",
+    "Equipo cerrado e incluido en el coste, salvo las balas. No pueden Rapiñar, salvo balas si llevan Arma de fuego."
+  ],
+  "troops": [
+    {
+      "name": "Paul", "cost": 40, "page": 91, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "4", "f": "4 (5)", "d": "4", "t": "5" },
+      "weapons": "Filo pequeño", "armor": "Ninguno",
+      "mutations": "Chorrazo de tinta, Extremidad prensil y Miembros extra (ya en el perfil).",
+      "rules": [
+        { "name": "Chorrazo de tinta", "text": "1 Acción, plantilla de lágrima: -2 a Combate, Precisión y Agilidad a los tocados. Cada Acción que gasten en limpiarse quita -1." },
+        { "name": "Asco de vida", "text": "Gana los empates que normalmente ganaría quien tiene la Fase de activación." }
+      ]
+    },
+    {
+      "name": "Dan novato", "cost": 40, "page": 92, "personality": true,
+      "stats": { "a": "2", "c": "4", "p": "4 (5)", "ag": "4", "f": "4 (5)", "d": "3", "t": "3" },
+      "weapons": "Escopeta", "armor": "Chaleco antibalas",
+      "rules": [
+        { "name": "Demasiado honorable", "text": "Solo Dispara a quien le vea. Para Asaltar, el objetivo tiene que verle al menos en la última Acción, y solo suma bonificadores por las Acciones en que se veían mutuamente." },
+        { "name": "Compañerismo", "text": "Por cada compañero Abatido, acumulativo: 1 → +1 Precisión, 2 → +1 Combate, 3 → +1 Dureza, 4+ → +1 Acciones." }
+      ]
+    },
+    {
+      "name": "Nicole", "cost": 45, "page": 93, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "4", "f": "5 (7)", "d": "5", "t": "7" },
+      "weapons": "Maza", "armor": "Ropas resistentes",
+      "rules": [
+        { "name": "Voluntariosa", "text": "Cada Acción gastada da +1 a Dureza, hasta +3. Lo pierde todo tras la primera tirada de Dureza contra un ataque y puede volver a empezar." },
+        { "name": "Fuego malo", "text": "Nunca atraviesa por voluntad propia un marcador de Fuego." }
+      ]
+    },
+    {
+      "name": "Markus", "cost": 50, "page": 94, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "5 (6)", "ag": "4", "f": "4 (5)", "d": "4", "t": "5" },
+      "weapons": "Escopeta", "armor": "Cuero endurecido",
+      "rules": [
+        { "name": "Mal encarado", "text": "1 Acción: un rival a 30 cm que le vea cuenta como Mónguer hasta el final del Turno." },
+        { "name": "Trucos sucios", "text": "+1 a Precisión disparando a quien no le ve y +1 al Combate al Asaltar a quien no le ve." }
+      ]
+    },
+    {
+      "name": "Vale", "cost": 50, "page": 95, "personality": true,
+      "stats": { "a": "2", "c": "3", "p": "4", "ag": "3", "f": "3 (4)", "d": "3", "t": "5" },
+      "weapons": "Rifle con mira telescópica", "armor": "Ropas resistentes",
+      "equipment": "Protección contra la contaminación",
+      "specialRules": ["Camuflaje"],
+      "rules": [
+        { "name": "Le tengo", "text": "Si Apunta a un enemigo, conserva el bonificador entre Turnos hasta Abatirlo. No puede Apuntar a otro hasta entonces ni usarlo en Fuego defensivo." },
+        { "name": "Ocultación", "text": "Camuflaje y +1 adicional al Blindaje de la Cobertura tras la que esté (la de mayor grado)." }
+      ]
+    },
+    {
+      "name": "Dan", "cost": 65, "page": 96, "personality": true,
+      "stats": { "a": "2", "c": "5 (4)", "p": "5", "ag": "5", "f": "4", "d": "3", "t": "4" },
+      "weapons": "2 pistolas", "armor": "Chaleco antibalas",
+      "specialRules": ["Retraso (2)"],
+      "rules": [
+        { "name": "Ensalada de tiros", "text": "Con una Acción dispara a dos miniaturas distintas, una con cada pistola, con -1 a Precisión, sin Apuntar ni Fuego defensivo." },
+        { "name": "Compañerismo", "text": "Por cada compañero Abatido, acumulativo: 1 → +1 Precisión, 2 → +1 Combate, 3 → +1 Dureza, 4+ → +1 Acciones." }
+      ]
+    },
+    {
+      "name": "Rita", "cost": 80, "page": 97, "personality": true,
+      "stats": { "a": "2", "c": "6 (7)", "p": "6", "ag": "5", "f": "4 (6)", "d": "4", "t": "4" },
+      "weapons": "Filo medio y ballesta", "armor": "Cuero endurecido",
+      "specialRules": ["Retraso (2)"],
+      "rules": [
+        { "name": "Molonidad", "text": "Si Abate a alguien cuerpo a cuerpo, los enemigos a 30 cm tienen -1 a Precisión y Combate en su siguiente Fase de activación." },
+        { "name": "Recarga en movimiento", "text": "Al hacer una Acción de Movimiento recarga gratis la ballesta." }
+      ]
+    }
+  ]
+}
