@@ -1,0 +1,52 @@
+<div class="tag-editor">
+    <ul class="tags">
+        @foreach (var item in Items)
+        {
+            <li class="tag">
+                @item
+                <button type="button" class="tag__remove" @onclick="() => Remove(item)" aria-label="Quitar @item">
+                    <Icon Path="@Icons.Close" />
+                </button>
+            </li>
+        }
+    </ul>
+    <div class="tag-editor__add">
+        <input class="field__input" placeholder="@Placeholder" @bind="_draft" @bind:event="oninput" @onkeydown="OnKeyDown" maxlength="80" />
+        <button type="button" class="btn btn--ghost" @onclick="Add" disabled="@string.IsNullOrWhiteSpace(_draft)">Añadir</button>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public List<string> Items { get; set; } = [];
+
+    [Parameter] public string Placeholder { get; set; } = "Añadir…";
+
+    [Parameter] public EventCallback ItemsChanged { get; set; }
+
+    private string _draft = string.Empty;
+
+    private async Task Add()
+    {
+        var value = _draft.Trim();
+        if (value.Length == 0)
+        {
+            return;
+        }
+
+        if (!Items.Contains(value, StringComparer.OrdinalIgnoreCase))
+        {
+            Items.Add(value);
+            await ItemsChanged.InvokeAsync();
+        }
+
+        _draft = string.Empty;
+    }
+
+    private async Task Remove(string item)
+    {
+        Items.Remove(item);
+        await ItemsChanged.InvokeAsync();
+    }
+
+    private Task OnKeyDown(KeyboardEventArgs e) => e.Key == "Enter" ? Add() : Task.CompletedTask;
+}

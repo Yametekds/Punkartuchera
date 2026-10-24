@@ -1,0 +1,30 @@
+@* Botón de dos pasos para acciones destructivas, sin diálogos del navegador. *@
+@if (_armed)
+{
+    <span class="confirm">
+        <button type="button" class="btn btn--danger" @onclick="Confirm">@ConfirmText</button>
+        <button type="button" class="btn btn--ghost" @onclick="() => _armed = false">Cancelar</button>
+    </span>
+}
+else
+{
+    <button type="button" class="btn btn--ghost btn--danger-text" @onclick="() => _armed = true">
+        <Icon Path="@Icons.Trash" /> @Text
+    </button>
+}
+
+@code {
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+
+    [Parameter] public string ConfirmText { get; set; } = "Sí, borrar";
+
+    [Parameter] public EventCallback OnConfirm { get; set; }
+
+    private bool _armed;
+
+    private async Task Confirm()
+    {
+        _armed = false;
+        await OnConfirm.InvokeAsync();
+    }
+}

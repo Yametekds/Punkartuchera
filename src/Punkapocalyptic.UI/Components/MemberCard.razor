@@ -1,0 +1,53 @@
+@inject IRulesCatalog Rules
+
+@if (Href is null)
+{
+    <article class="card member-card">@CardBody</article>
+}
+else
+{
+    <a class="card member-card" href="@Href">@CardBody</a>
+}
+
+@code {
+    [Parameter, EditorRequired] public Miniature Member { get; set; } = default!;
+
+    /// <summary>Destino al pulsar la tarjeta; nulo si no es editable.</summary>
+    [Parameter] public string? Href { get; set; }
+
+    private RenderFragment CardBody => @<text>
+        <div class="member-card__top">
+            <MiniPortrait Photo="Member.Photo" Alt="@Member.Name" Size="md" />
+            <div class="member-card__id">
+                <h3 class="member-card__name">@Member.Name</h3>
+                @if (!string.IsNullOrEmpty(Member.Role))
+                {
+                    <span class="member-card__role">@Member.Role</span>
+                }
+                <span class="ammo" title="Balas"><Icon Path="@Icons.Bullet" /> @Member.Ammo</span>
+            </div>
+        </div>
+        <dl class="stat-strip">
+            @foreach (var stat in Rules.Stats)
+            {
+                <div class="stat-strip__cell" title="@stat.Name">
+                    <dt>@stat.Abbreviation</dt>
+                    <dd>@Member.GetStat(stat.Key, stat.Default)</dd>
+                </div>
+            }
+        </dl>
+        @if (Member.Skills.Count > 0 || Member.Gear.Count > 0)
+        {
+            <ul class="tags tags--readonly">
+                @foreach (var skill in Member.Skills)
+                {
+                    <li class="tag tag--skill">@skill</li>
+                }
+                @foreach (var gear in Member.Gear)
+                {
+                    <li class="tag tag--gear">@gear.Name</li>
+                }
+            </ul>
+        }
+    </text>;
+}
