@@ -1,0 +1,61 @@
+@page "/reglas"
+@inject Rulebook Book
+
+<PageTitle>Reglas · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Que no te la cuelen</span>
+        <h1 class="page-title distress">Reglas</h1>
+    </div>
+</header>
+
+<RulesSearchBox />
+
+<h2 class="section-title">El reglamento</h2>
+<div class="rules-tiles">
+    <a class="paper rules-tile" href="reglas/basicas">
+        <span class="stamp">@Book.Sections.Count</span>
+        <span class="rules-tile__name">Reglas básicas</span>
+        <span class="rules-tile__meta">Turno, movimiento, combate, disparo, coberturas</span>
+    </a>
+    <a class="paper rules-tile" href="reglas/especiales">
+        <span class="stamp">@Book.SpecialRules.Count</span>
+        <span class="rules-tile__name">Reglas especiales</span>
+        <span class="rules-tile__meta">De A dos manos a Veneno (X)</span>
+    </a>
+    <a class="paper rules-tile" href="reglas/equipo">
+        <span class="stamp">@(Book.Weapons.Count + Book.Armors.Count + Book.Gear.Count)</span>
+        <span class="rules-tile__name">Armas y equipo</span>
+        <span class="rules-tile__meta">Perfiles, costes y reglas de cada trasto</span>
+    </a>
+</div>
+
+<h2 class="section-title">Facciones</h2>
+<div class="card-grid">
+    @foreach (var faction in Book.Factions)
+    {
+        <a class="paper tape band-card" href="@($"reglas/faccion/{faction.Id}")">
+            <div class="band-card__head">
+                <span class="stamp">@(faction.IsMercenaries ? "Mercenarios" : $"{faction.Troops.Count} tropas")</span>
+                @if (faction.Beta)
+                {
+                    <span class="stamp stamp--ink">Beta</span>
+                }
+            </div>
+            <span class="band-card__name">@faction.Name</span>
+            <span class="rules-tile__meta">@faction.Summary</span>
+        </a>
+    }
+</div>
+
+<h2 class="section-title">PDFs oficiales</h2>
+<p class="muted rules-legal">
+    Resumen del reglamento gratuito de punkapocalyptic.com (@Book.Edition). Si hay dudas, manda el PDF oficial.
+</p>
+<ul class="tags rules-sources">
+    @foreach (var source in Book.Sources)
+    {
+        <li><a class="tag" href="@source.Url" target="_blank" rel="noopener">@source.Title</a></li>
+    }
+</ul>

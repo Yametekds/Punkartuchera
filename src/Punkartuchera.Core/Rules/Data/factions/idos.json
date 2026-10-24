@@ -1,0 +1,109 @@
+{
+  "id": "idos",
+  "name": "Idos",
+  "source": "bandas",
+  "page": 21,
+  "summary": "Horda de dementes salidos de Liberty City y enganchados a la Ambrosía. Proezas a base de droga con riesgo de mal viaje, y cosechadores que sacan más dosis de los caídos.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Un Cosechador por cada fracción de 200 puntos.",
+    "No puede haber más Despojos que el resto de la banda junta.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos las Aberraciones." }],
+  "rules": [
+    { "name": "Ambrosía", "text": "La banda empieza con 1 dosis por cada fracción de 100 puntos. Antes de activar una miniatura puedes darle UNA dosis y elegir un efecto para esa Fase de activación:\n• +10 cm al Movimiento en un Asalto.\n• +2 a Fuerza.\n• +2 a Dureza.\n• +2 a Técnica.\n• Todoterreno.\n• Ignorar Furia psicópata.\nTira 1d10 (-1 por cada dosis que ya hubiera tomado) en la tabla.",
+      "table": { "columns": ["1d10", "Efecto"], "rows": [["1 o menos", "Colocón malísimo: -1 Acción el resto de la partida (a 0, Abatida) y sin efecto."], ["2-3", "Mal viaje: se aplica la regla Mal viaje de su tropa esta Fase de activación."], ["4-10", "Funciona perfectamente."]] } }
+  ],
+  "troops": [
+    {
+      "name": "Despojo", "cost": 15, "page": 23,
+      "stats": { "a": "2", "c": "4", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
+      "rules": [{ "name": "Escoria", "text": "No puede tomar Ambrosía ni llevar armas incrustadas." }]
+    },
+    {
+      "name": "Aberración", "cost": 35, "page": 24,
+      "stats": { "a": "2", "c": "4", "p": "-", "ag": "5", "f": "4", "d": "3", "t": "-" },
+      "weapons": "Garras y dientes", "armor": "Ninguno",
+      "specialRules": ["Mónguer", "Raudo"],
+      "rules": [
+        { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+        { "name": "Sobredosis", "text": "-2 en la tirada de Ambrosía." },
+        { "name": "Mal viaje", "text": "Mueve al azar según 1d10 y se para si choca con algo." }
+      ]
+    },
+    {
+      "name": "Cosechador", "cost": 40, "page": 25,
+      "stats": { "a": "3", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero humano", "cost": 5 }],
+      "rules": [
+        { "name": "Cosecha", "text": "1 Acción sobre un enemigo Abatido (una vez por cadáver) para sacar dosis de Ambrosía para la banda.",
+          "table": { "columns": ["1d10", "Dosis"], "rows": [["1", "Ninguna"], ["2-5", "1"], ["6-9", "2"], ["10", "3"]] } },
+        { "name": "Mal viaje", "text": "No puede cosechar." }
+      ]
+    },
+    {
+      "name": "Desgarrador", "cost": 40, "page": 26,
+      "stats": { "a": "2", "c": "5", "p": "-", "ag": "4", "f": "4", "d": "4", "t": "1" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
+      "rules": [
+        { "name": "Furia psicópata", "text": "Avanza hacia el enemigo al que llegue antes, lo vea o no." },
+        { "name": "Mal viaje", "text": "Asalta a cualquier miniatura a distancia de Asalto, sea amiga o enemiga." }
+      ]
+    },
+    {
+      "name": "Glotón", "cost": 45, "page": 27,
+      "stats": { "a": "2", "c": "2", "p": "3", "ag": "4", "f": "4", "d": "5", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero humano", "cost": 5 }],
+      "rules": [
+        { "name": "Devorador", "text": "1 Acción sobre un Abatido en contacto (amigo o enemigo, una vez por cadáver): +1 a Combate, Fuerza y Dureza. Se retira el marcador." },
+        { "name": "Mal viaje", "text": "Va hacia el Abatido sin devorar más cercano y se lo come si llega. Si ya estaba junto a uno devorado, no se mueve." }
+      ]
+    },
+    {
+      "name": "Tío", "cost": 70, "page": 28, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "-", "ag": "4", "f": "5 (9)", "d": "6", "t": "2" },
+      "weapons": "Torbellino (maza pesada)", "armor": "Ninguno",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Torbellino", "text": "Mazas incrustadas. Puede atacar normal o gastar toda su Fase de activación (2 Acciones), incluso trabado: toda miniatura a 5 cm, amiga o enemiga, supera Agilidad o queda Impactada como en Combate." },
+        { "name": "Mal viaje", "text": "No puede usar Torbellino esa Fase de activación." }
+      ]
+    },
+    {
+      "name": "Madre", "cost": 90, "page": 29, "personality": true,
+      "stats": { "a": "3", "c": "4 (2)", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
+      "weapons": "Ninguna", "armor": "Ninguno",
+      "specialRules": ["Personalidad"],
+      "profiles": [{ "name": "Mascota", "stats": { "a": "-", "c": "4", "p": "-", "ag": "-", "f": "4", "d": "4", "t": "-" } }],
+      "rules": [
+        { "name": "Cosechadora", "text": "Cosecha como un Cosechador y cuenta como uno para las restricciones." },
+        { "name": "Presencia perturbadora", "text": "El enemigo que quiera Disparar, Asaltar o dañar a Madre o a un aliado a 15 cm de ella debe superar Dureza o pierde la Acción." },
+        { "name": "Lucidez", "text": "Los Idos que toman Ambrosía a 20 cm de ella no tiran: siempre funciona. Ella nunca la toma." },
+        { "name": "Mascota", "text": "Va siempre con Madre. Hasta que caiga, es la mascota la que combate y recibe los disparos con su perfil. Garras y dientes." }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Hoz", "kind": "Melee", "cost": 5, "combat": "+0", "strength": "+1", "penetration": "3", "page": 30 }
+  ],
+  "armors": [
+    { "name": "Cuero humano", "armor": "3", "page": 30, "notes": "Los disparos a distancia corta contra quien lo lleva tienen -1 a Precisión." }
+  ],
+  "gear": [
+    { "name": "Arma incrustada", "cost": 10, "page": 30, "text": "Un Ido puede incrustarse una hoz, filo pequeño o filo medio: +1 al Combate, no puede Rapiñar ni ser desarmado y el arma no se puede Rapiñar." }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "id": "sangre-negra",
+  "name": "Hijos de la Sangre Negra",
+  "source": "bandas",
+  "page": 12,
+  "summary": "Culto que venera el petróleo. Paranoicos y violentos desde que Cunnilingus Igni tomó el mando; usan motos, motosierras y lanzallamas que otros ni sueñan.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Guardián de la Llama.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "rules": [
+    { "name": "Mirada llameante", "text": "Algunas tropas mejoran cuando están en la Línea de visión de su Guardián de la Llama. Cada una lo explica en su regla Bajo la mirada llameante." }
+  ],
+  "troops": [
+    {
+      "name": "Ceniza", "cost": 12, "page": 13,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }]
+    },
+    {
+      "name": "Quemado", "cost": 15, "page": 14,
+      "stats": { "a": "2", "c": "2", "p": "2", "ag": "4", "f": "3", "d": "3", "t": "2" },
+      "weaponRule": "Puede llevar una",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }],
+      "armor": "Ninguno",
+      "specialRules": ["Mónguer"],
+      "rules": [
+        { "name": "¡Por la Sangre Negra!", "text": "Si un aliado a 5 cm o menos es Impactado, el Quemado se pone en contacto con él y hace la tirada de Fuerza contra Dureza en su lugar (y cae él si pierde). No vale contra Plantillas ni impactos automáticos. Si era cuerpo a cuerpo y sobrevive, queda trabado con el atacante como si le hubiera Asaltado." },
+        { "name": "Bonzo (+15 ptos)", "text": "Bidón de gasofa: si queda en contacto con un enemigo se inmola, queda Abatido y causa un impacto de F5 y Pen 5 a todos los implicados. Se retira el marcador." },
+        { "name": "Bajo la mirada llameante", "text": "Con su Guardián de la Llama viéndole, tiene Todoterreno." }
+      ]
+    },
+    {
+      "name": "Guardián de la Llama", "cost": 20, "page": 15,
+      "stats": { "a": "2", "c": "2", "p": "2", "ag": "2", "f": "3", "d": "3", "t": "6" },
+      "weaponRule": "Una",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
+      "rules": [{ "name": "Mirada llameante", "text": "Las tropas con Bajo la mirada llameante mejoran mientras él las ve." }]
+    },
+    {
+      "name": "Ascua", "cost": 50, "page": 16,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 },
+        { "name": "Cóctel molotov", "cost": 8, "each": true }, { "name": "Filo medio", "cost": 10 }, { "name": "Motosierra", "cost": 10 }, { "name": "Lanzallamas", "cost": 20 }
+      ],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],
+      "equipmentOptions": [{ "name": "Escudo", "cost": 6 }],
+      "rules": [{ "name": "Bajo la mirada llameante", "text": "Con su Guardián de la Llama viéndole, +1 a la Dureza." }]
+    },
+    {
+      "name": "Chispa", "cost": 55, "page": 17,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "4", "d": "4", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],
+      "specialRules": ["Combustible (X)", "Montada", "Raudo"],
+      "rules": [
+        { "name": "Darle caña", "text": "Va en moto: Combustible (2), Montada y Raudo, y Cobertura de Blindaje +3. Gastando 1 carga:\n• Apretar el turbo: mueve 30 cm en línea recta sin girar.\n• Potencia bruta: +2 al Combate en un Asalto.\n• Nube de polvo: -3 a Precisión contra él el resto del Turno.\n• Cagando leches: al Separarse del Combate tiene Escurridizo." },
+        { "name": "Bajo la mirada llameante", "text": "Una vez por partida, si su Guardián de la Llama le ve, puede usar 1 carga de Combustible extra (avisando)." }
+      ]
+    },
+    {
+      "name": "Momma Nutritora", "cost": 50, "page": 18, "personality": true,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "4 (6)", "d": "4", "t": "7" },
+      "weapons": "Maza", "armor": "Ropas resistentes",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Nutritora", "text": "En contacto con un aliado con arma de Combustible o moto, 1 Acción rellena todas sus cargas (salvo la de Bajo la mirada llameante)." },
+        { "name": "Bomba andante", "text": "Si al Impactarla el atacante saca un 1 en Fuerza contra Dureza, explota: queda Abatida y cuenta como un impacto Incendiaria (6)." }
+      ]
+    },
+    {
+      "name": "Cunnilingus Igni", "cost": 100, "page": 19, "personality": true,
+      "stats": { "a": "3", "c": "5", "p": "4", "ag": "5 (4)", "f": "5 (7)", "d": "5", "t": "5" },
+      "weapons": "Pistola Lechazo y sierra de mano Chorrazo", "armor": "Pura chapa",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Por el Sumo Guardián", "text": "Los Quemados pueden usar ¡Por la Sangre Negra! con él hasta 10 cm." },
+        { "name": "Sumo Guardián de la Llama", "text": "Cuenta como Guardián de la Llama (no puedes llevar otro) y sus tropas reciben Bajo la mirada llameante aunque no las vea, hasta que caiga." },
+        { "name": "Lechazo", "text": "Pistola que además aplica Incendiaria (3) centrada en el objetivo cada vez que impacta." },
+        { "name": "Chorrazo", "text": "Sierra con Combustible (5): F+2 y Pen 5 gastando 1 carga por Acción encendida. Sin cargas es un filo pequeño." }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Motosierra", "kind": "Melee", "cost": 10, "combat": "+0", "strength": "+5", "penetration": "8", "rules": ["A dos manos", "Armatoste", "Combustible (X)", "Escasa"], "page": 20, "notes": "Combustible (5): gasta 1 carga por Acción encendida. Sin cargas es una maza pesada." },
+    { "name": "Cóctel molotov", "kind": "Ranged", "cost": 8, "range": "F × 5", "strength": "-", "penetration": "-", "rules": ["Bomba", "Escasa", "Incendiaria (3)"], "page": 20, "notes": "Precio por cóctel." },
+    { "name": "Lanzallamas", "kind": "Ranged", "cost": 20, "range": "Plantilla de lágrima", "strength": "Cargas usadas", "penetration": "Cargas usadas", "rules": ["A dos manos", "Armatoste", "Combustible (X)", "Escasa", "Plantilla"], "page": 20, "notes": "Combustible (10). Antes de disparar elige cuántas cargas gastas: esa es su Fuerza y Penetración." }
+  ]
+}
