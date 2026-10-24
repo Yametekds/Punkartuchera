@@ -1,0 +1,35 @@
+@inject Rulebook Book
+
+@* Lista de opciones con su coste; las que están en el arsenal enlazan a su perfil. *@
+@if (Items.Count > 0)
+{
+    <ul class="rules-options">
+        @foreach (var option in Items)
+        {
+            <li>
+                @if (Known(option.Name))
+                {
+                    <a class="rules-link" href="@($"reglas/equipo#{RulesText.Slug(option.Name)}")">@option.Name</a>
+                }
+                else
+                {
+                    <span>@option.Name</span>
+                }
+                @if (option.Cost is not null)
+                {
+                    <span class="rules-options__cost">@option.Cost@(option.Each ? " c/u" : "")</span>
+                }
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public IReadOnlyList<PriceOption> Items { get; set; } = [];
+
+    private bool Known(string name)
+    {
+        var slug = RulesText.Slug(name);
+        return Book.Weapons.Any(w => w.Slug == slug) || Book.Armors.Any(a => a.Slug == slug) || Book.Gear.Any(g => g.Slug == slug);
+    }
+}

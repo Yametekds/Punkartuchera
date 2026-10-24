@@ -1,0 +1,107 @@
+@inject Rulebook Book
+
+@* Perfil de una tropa del reglamento, con el mismo aspecto que la ficha de un miembro. *@
+<article class="datacard rules-anchor" id="@Troop.Slug">
+    <header class="datacard__head rules-troop__head">
+        <div class="datacard__title">
+            <h3 class="datacard__name">@Troop.Name</h3>
+            <span class="datacard__role">@Troop.Cost ptos@(Troop.Personality ? " · Personalidad" : "")</span>
+        </div>
+        <dl class="datacard__stats" style="--stat-count: @Book.Attributes.Count">
+            @foreach (var attr in Book.Attributes)
+            {
+                <div class="statbox" title="@attr.Name">
+                    <dt>@attr.Abbreviation</dt>
+                    <dd class="@(Troop.Stat(attr.Key).Length > 2 ? "rules-stat--long" : null)">@Troop.Stat(attr.Key)</dd>
+                </div>
+            }
+        </dl>
+    </header>
+
+    <div class="datacard__body">
+        <dl class="rules-loadout">
+            <div>
+                <dt class="datacard__label">Armas</dt>
+                <dd>
+                    @if (Troop.Weapons is not null)
+                    {
+                        <span>@Troop.Weapons</span>
+                    }
+                    @if (Troop.WeaponRule is not null)
+                    {
+                        <span class="rules-note">@Troop.WeaponRule</span>
+                    }
+                    <PriceOptionList Items="Troop.WeaponOptions" />
+                </dd>
+            </div>
+            <div>
+                <dt class="datacard__label">Blindaje</dt>
+                <dd>
+                    <span>@(Troop.Armor ?? "Ninguno")</span>
+                    <PriceOptionList Items="Troop.ArmorOptions" />
+                </dd>
+            </div>
+            @if (Troop.Equipment is not null || Troop.EquipmentOptions.Count > 0)
+            {
+                <div>
+                    <dt class="datacard__label">Equipo</dt>
+                    <dd>
+                        @if (Troop.Equipment is not null)
+                        {
+                            <span>@Troop.Equipment</span>
+                        }
+                        <PriceOptionList Items="Troop.EquipmentOptions" />
+                    </dd>
+                </div>
+            }
+            @if (Troop.Mutations is not null)
+            {
+                <div>
+                    <dt class="datacard__label">Mutaciones</dt>
+                    <dd>@Troop.Mutations</dd>
+                </div>
+            }
+        </dl>
+
+        @if (Troop.SpecialRules.Count > 0)
+        {
+            <div class="datacard__skills">
+                <span class="datacard__label">Reglas especiales</span>
+                <SpecialRuleTags Names="Troop.SpecialRules" />
+            </div>
+        }
+
+        @foreach (var rule in Troop.Rules)
+        {
+            <div class="rule-box">
+                <h4 class="rule-box__title">@rule.Name</h4>
+                <p class="rules-text">@rule.Text</p>
+                @if (rule.Table is not null)
+                {
+                    <RuleTableView Table="rule.Table" />
+                }
+            </div>
+        }
+
+        @foreach (var profile in Troop.Profiles)
+        {
+            <div class="rules-subprofile">
+                <span class="datacard__label">@profile.Name</span>
+                <dl class="rules-substats">
+                    @foreach (var attr in Book.Attributes)
+                    {
+                        <div><dt>@attr.Abbreviation</dt><dd>@profile.Stat(attr.Key)</dd></div>
+                    }
+                </dl>
+            </div>
+        }
+
+        <SourceRef Source="@Source" Page="Troop.Page" />
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Troop Troop { get; set; } = default!;
+
+    [Parameter] public string? Source { get; set; }
+}

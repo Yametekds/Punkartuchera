@@ -17,7 +17,7 @@ Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core
 | --- | --- | --- |
 | `IBandRepository` | `IndexedDbBandRepository` (UI), `InMemoryBandRepository` (Core, tests) | Guardar bandas. Una versión en la nube implementa esta interfaz. |
 | `IPhotoStore` | `IndexedDbPhotoStore`, `InMemoryPhotoStore` | Fotos de miniaturas, separadas de la banda. |
-| `IRulesCatalog` | `PlaceholderRulesCatalog` (**provisional**) | Facciones, atributos y tipos de miembro. |
+| `IRulesCatalog` | `RulebookCatalog` | Facciones, atributos y tipos de miembro, sacados del reglamento (`Rulebook`). |
 | `IMatchService` | `LocalMatchService` | Partida en un dispositivo. Los métodos en línea lanzan `OnlineMatchesUnavailableException`. |
 
 Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`.
@@ -41,7 +41,7 @@ Para añadir un almacén nuevo: añádelo a `STORES` y sube `DB_VERSION` en `pun
 
 La disposición sigue el modelo de una hoja de equipo:
 
-- **Barra superior** con botón de menú y título. La navegación va en un **menú lateral** (`MainLayout`) que se alimenta de `Navigation/AppNavigation.cs`. Las secciones `reglas`, `mapa` y `partida` aparecen como "pronto"; para activar una, crea la página con esa ruta en `Pages/<Sección>/` y pon `Available: true`.
+- **Barra superior** con botón de menú y título. La navegación va en un **menú lateral** (`MainLayout`) que se alimenta de `Navigation/AppNavigation.cs`. Las secciones `mapa` y `partida` aparecen como "pronto"; para activar una, crea la página con esa ruta en `Pages/<Sección>/` y pon `Available: true`.
 - **Barra de contexto** (`.context-bar`): selector de la banda o facción activa con una píldora encima y un botón ⋮ (`ActionsMenu`) con acciones secundarias.
 - **Pestañas** a todo el ancho (`PageTabs`) bajo la cabecera.
 - **Contenido**: fichas `datacard` (cabecera de chapa con recuadros de atributos `.statbox`, cuerpo de papel con `.data-table`), o cajas de texto con título (`.rule-grid` y `.rule-box`).
@@ -55,7 +55,18 @@ Superficies: `card` (chapa oscura) y `paper` (papel de arena con borde rasgado).
 
 Las secciones nuevas deben reutilizarlas en lugar de definir colores o texturas propias.
 
-Componentes reutilizables en `Components/`: `Icon`, `MiniPortrait`, `MemberCard`, `PageTabs`, `ActionsMenu`, `Stepper`, `TagEditor`, `ConfirmButton`, `PhotoPicker`, `PlaceholderNotice`.
+Componentes reutilizables en `Components/`: `Icon`, `MiniPortrait`, `MemberCard`, `PageTabs`, `ActionsMenu`, `Stepper`, `TagEditor`, `ConfirmButton`, `PhotoPicker`, `PlaceholderNotice`. Los de la sección de reglas están en `Components/Rules/`.
+
+## Reglas
+
+El reglamento está en datos, no en código: `Core/Rules/Data/core.json` (atributos, reglas básicas, reglas especiales, armas, blindajes y equipo genérico) y un JSON por facción en `Core/Rules/Data/factions/`. Se incrustan en el ensamblado y `RulebookLoader.LoadEmbedded()` los carga en un `Rulebook` (con generación de código de System.Text.Json, así funciona con el recortado de WebAssembly).
+
+- Cada entrada indica `source` y `page`, que apuntan a los PDFs oficiales de `core.json` → `sources`. La interfaz enlaza a esa página del PDF.
+- Los textos son un resumen; las tablas, perfiles y costes se copian tal cual. Los perfiles de tropa son texto ("3 (5)", "-", "X") para respetar la notación del libro.
+- Para añadir una facción: crea su JSON en `factions/` y añade su id al orden de `RulebookLoader`. Los tests de `RulebookTests` comprueban que los perfiles estén completos, que las reglas especiales citadas existan y que las armas de las opciones estén en el arsenal.
+- `RulesSearch` indexa todo (sin tildes ni mayúsculas, todas las palabras obligatorias, título antes que texto) y devuelve enlaces con ancla. `FragmentScroller` lleva la vista al ancla al abrir la página.
+
+Páginas (`Pages/Rules/`): `/reglas` (buscador e índice), `/reglas/basicas`, `/reglas/especiales`, `/reglas/equipo` y `/reglas/faccion/{id}/{reglas|miembros|equipo}`. Su CSS propio está en `wwwroot/css/rules.css`.
 
 ## Fotos
 

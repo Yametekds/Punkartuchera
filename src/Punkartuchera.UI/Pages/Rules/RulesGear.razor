@@ -1,0 +1,46 @@
+@page "/reglas/equipo"
+@inject Rulebook Book
+@inject FragmentScroller Scroller
+
+<PageTitle>Armas y equipo · Punkartuchera</PageTitle>
+
+<RulesBackBar Title="Armas y equipo" Kicker="Chatarra con la que repartir" />
+
+<div class="rules-filterbar">
+    <label class="visually-hidden" for="gear-faction">Facción</label>
+    <select id="gear-faction" class="field__input context-bar__select" @bind="_factionId">
+        <option value="">Todo el equipo</option>
+        <option value="@GenericOnly">Solo genérico</option>
+        @foreach (var faction in Book.Factions.Where(f => !f.IsMercenaries))
+        {
+            <option value="@faction.Id">@faction.Name</option>
+        }
+    </select>
+</div>
+
+<nav class="rules-jump" aria-label="Apartados">
+    <a class="chip chip--faction" href="reglas/equipo#cuerpo-a-cuerpo">Cuerpo a cuerpo</a>
+    <a class="chip chip--faction" href="reglas/equipo#a-distancia">A distancia</a>
+    <a class="chip chip--faction" href="reglas/equipo#blindajes">Blindajes</a>
+    <a class="chip chip--faction" href="reglas/equipo#equipo">Equipo</a>
+</nav>
+
+<div class="stack">
+    <GearTables Weapons="Pick(Book.Weapons, w => w.FactionId)" ArmorItems="Pick(Book.Armors, a => a.FactionId)"
+                GearItems="Pick(Book.Gear, g => g.FactionId)" ShowFaction="true" />
+</div>
+
+@code {
+    private const string GenericOnly = "-";
+
+    private string _factionId = string.Empty;
+
+    private IReadOnlyList<T> Pick<T>(IEnumerable<T> items, Func<T, string?> faction) => _factionId switch
+    {
+        "" => items.ToList(),
+        GenericOnly => items.Where(i => faction(i) is null).ToList(),
+        _ => items.Where(i => faction(i) is null || faction(i) == _factionId).ToList(),
+    };
+
+    protected override Task OnAfterRenderAsync(bool firstRender) => firstRender ? Scroller.ScrollToCurrentAsync() : Task.CompletedTask;
+}

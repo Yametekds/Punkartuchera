@@ -1,0 +1,103 @@
+{
+  "id": "unami",
+  "name": "Unami",
+  "source": "unami",
+  "page": 1,
+  "beta": true,
+  "summary": "Tribu conectada a la mente de Majauchsuwi, una criatura psíquica bajo un viejo casino. No tienen Acciones fijas: las sacan de una reserva común de Puntos de Mojo. Reglas en beta.",
+  "restrictions": [
+    "Máximo una Personalidad de los Unami o Mercenario.",
+    "Un Chamán por cada fracción de 200 puntos.",
+    "No puede haber más Truenos que el resto de la banda junta.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "rules": [
+    { "name": "Una mente", "text": "Cada miniatura no Abatida aporta 2 Puntos de Mojo (PdM) a una reserva común al empezar el Turno. No tienen Atributo de Acciones: en su Fase de activación cada miniatura convierte PdM en Acciones (máximo 3, seguidas). Los Espíritus del Chamán y los Dones ya incluyen el PdM de su Acción. Cuando se acaba la reserva, las que no hayan actuado ya no actúan." },
+    { "name": "Don de Majauchsuwi", "text": "Cada tropa tiene un Don que usa con una Acción pagando sus PdM. Una vez por Turno, y si el efecto sigue en juego no se repite hasta que acabe." }
+  ],
+  "troops": [
+    {
+      "name": "Chamán", "cost": 25, "page": 3,
+      "stats": { "a": "-", "c": "2", "p": "3", "ag": "4", "f": "2", "d": "2", "t": "4" },
+      "weaponRule": "Puede llevar una",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+      "equipmentOptions": [{ "name": "Hierbas alucinógenas", "cost": 8 }],
+      "rules": [{ "name": "Espíritus", "text": "Canaliza los Espíritus de la facción." }]
+    },
+    {
+      "name": "Sombra", "cost": 35, "page": 4,
+      "stats": { "a": "-", "c": "3", "p": "5", "ag": "5", "f": "3", "d": "3", "t": "2" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Tomahawk", "cost": 5, "each": true }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+      "equipmentOptions": [{ "name": "Hierbas alucinógenas", "cost": 8 }],
+      "rules": [{ "name": "Don (2 PdM): doble", "text": "Pone un doble a 10 cm o menos y nadie sabe cuál es la real; se mueven juntas sin separarse más de eso. Si un enemigo se acerca a 10 cm o afecta a una, 1d10: con 6+ era el doble y se retira; si no, era la real y se retira la otra. Si usa una Acción que no sea Mover, el jugador elige cuál quitar." }]
+    },
+    {
+      "name": "Trueno", "cost": 40, "page": 5,
+      "stats": { "a": "-", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "3", "t": "2" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 },
+        { "name": "Tomahawk", "cost": 5, "each": true }, { "name": "Arco", "cost": 10 }, { "name": "Filo medio", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "equipmentOptions": [{ "name": "Hierbas alucinógenas", "cost": 8 }],
+      "rules": [{ "name": "Don (1 PdM)", "text": "+2 al Blindaje hasta el final del Turno." }]
+    },
+    {
+      "name": "Viento", "cost": 60, "page": 6,
+      "stats": { "a": "-", "c": "4", "p": "4", "ag": "6", "f": "5", "d": "4", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tomahawk", "cost": 5, "each": true }, { "name": "Arco", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "equipmentOptions": [{ "name": "Hierbas alucinógenas", "cost": 8 }],
+      "specialRules": ["Ímpetu (X)", "Montada", "Raudo"],
+      "rules": [
+        { "name": "Pisoteador", "text": "Montura: Ímpetu (1), Montada y Raudo." },
+        { "name": "Jinete experto", "text": "No sufre el -1 a Precisión de Montada." },
+        { "name": "Don (1 PdM)", "text": "Fulgor cegador: -2 a Precisión de los ataques a distancia contra él hasta el final del Turno." }
+      ]
+    },
+    {
+      "name": "Elaichik", "cost": 80, "page": 7, "personality": true,
+      "stats": { "a": "-", "c": "5", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "2" },
+      "weapons": "3 Afeitadoras (tomahawks)", "armor": "Cuero endurecido",
+      "specialRules": ["Personalidad", "Todoterreno"],
+      "rules": [
+        { "name": "Afeitadoras", "text": "Tomahawks con Penetración 5 cuerpo a cuerpo." },
+        { "name": "Cazador de cabelleras", "text": "Cada enemigo que Abate cuerpo a cuerpo añade 2 PdM a la reserva para usar ese mismo Turno." },
+        { "name": "Terrorífico", "text": "Los enemigos a 15 cm actúan como si tuvieran 2 menos de Agilidad." },
+        { "name": "Don (2 PdM extra)", "text": "Al Asaltar o Combatir: si gana el Combate por 4 o más, hiere sin tirar Fuerza contra Dureza; si gana por menos, +3 a Fuerza en esa tirada." }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Tomahawk", "kind": "Melee", "cost": 5, "combat": "+0", "strength": "+1", "penetration": "3", "page": 8, "notes": "También arrojadizo: 10/15/20, F+1/F/F-1, Pen 3/2/1. Si falla se pierde; si impacta queda en el suelo y se recoge con 1 Acción. Hasta 3 cuentan como una sola arma." }
+  ],
+  "gear": [
+    { "name": "Hierbas alucinógenas", "cost": 8, "page": 8, "text": "Un uso: al empezar su Fase de activación, gratis, tiene 1 PdM extra para esa activación." }
+  ],
+  "extras": [
+    {
+      "title": "Espíritus",
+      "intro": "El Chamán gasta una Acción y los PdM indicados. Ningún espíritu dos veces sobre la misma miniatura en un Turno. No necesitan Línea de visión salvo que se diga.",
+      "page": 8,
+      "items": [
+        { "name": "Bufamello (1 PdM)", "text": "45 cm, en visión y fuera de Combate: empuja a una miniatura (amiga o enemiga) 10 cm alejándola del Chamán." },
+        { "name": "Ojaldrón (1 PdM)", "text": "45 cm: el enemigo tiene -3 a Precisión en su siguiente Fase de activación. Desaparece si lo Asaltan." },
+        { "name": "Mongolongo (2 PdM)", "text": "30 cm, en visión y fuera de Combate: en su siguiente activación supera Dureza o no hace ninguna Acción. Desaparece si lo Asaltan." },
+        { "name": "Mordedor (3 PdM)", "text": "30 cm, en visión: impacto de F4 y Pen 5." },
+        { "name": "Raptura (3 PdM)", "text": "30 cm: un aliado a pie (o el Chamán) se desplaza 30 cm con Salto; origen y destino en visión del Chamán y sin acabar en contacto con enemigos. Una vez por Turno." }
+      ]
+    }
+  ]
+}

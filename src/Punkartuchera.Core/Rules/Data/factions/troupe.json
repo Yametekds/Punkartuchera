@@ -1,0 +1,133 @@
+{
+  "id": "troupe",
+  "name": "Troupé",
+  "source": "bandas",
+  "page": 62,
+  "summary": "La Hermandad de la Risa Floja: payasos, acróbatas, forzudos y domadores que dan más miedo que risa. Mucho truco, suerte a cara o cruz y artículos de coña de un solo uso.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Jefe de pista.",
+    "No puede haber más Domadores (sin sus fieras), Forzudos o Acróbatas que Pachachos.",
+    "Cada Domador puede llevar hasta 2 fieras, que cuentan para el máximo de miniaturas.",
+    "Máximo un cañón lanzador y un coche de Pachachos.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "troops": [
+    {
+      "name": "Pachacho", "cost": 18, "page": 63,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Guante de boxeo extensible", "cost": 4 }, { "name": "Maza", "cost": 5 },
+        { "name": "Pistola", "cost": 5 }, { "name": "Cañón de confeti", "cost": 6 }, { "name": "Escopeta", "cost": 6 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "rules": [
+        { "name": "Risa difícil", "text": "Quien le Dispare o Combata mira su tirada de Precisión o Combate: si es par suma 2 (máx. 10), si es impar resta 2 (mín. 1)." },
+        { "name": "Zapatones", "text": "Si se queda a 2,5 cm o menos de llegar a un Asalto, llega igualmente. También le pasa a quien le Asalte a él." },
+        { "name": "Artículos de coña", "text": "Hasta dos." }
+      ]
+    },
+    {
+      "name": "Domador", "cost": 22, "page": 64,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Látigo", "cost": 4 }, { "name": "Maza", "cost": 5 }],
+      "armor": "Ninguno",
+      "profiles": [{ "name": "Fiera (+12 ptos)", "stats": { "a": "2", "c": "4", "p": "-", "ag": "4", "f": "3", "d": "3", "t": "-" } }],
+      "rules": [
+        { "name": "Señor de las bestias", "text": "Hasta 2 fieras por +12 ptos cada una: peana de 40 mm, garras y dientes y Bestia. No se alejan voluntariamente más de 15 cm del Domador; si están más lejos, gastan Acciones en volver. Si cae el Domador, tira 1d10 por fiera antes de activarla:",
+          "table": { "columns": ["1d10", "Efecto"], "rows": [["1", "Asalta (o se acerca) a la miniatura propia más fácil de alcanzar."], ["2-3", "Huye hacia el borde más cercano."], ["4-6", "Se queda atontada."], ["7 o más", "Asalta (o se acerca) al enemigo más fácil de alcanzar."]] } },
+        { "name": "Avivar", "text": "En contacto con una fiera, 1 Acción: +1 a su Fuerza y Dureza el resto del Turno." }
+      ]
+    },
+    {
+      "name": "Acróbata", "cost": 40, "page": 65,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "4" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Ninguno",
+      "specialRules": ["Escurridizo", "Todoterreno", "Raudo"],
+      "rules": [
+        { "name": "Catapulta infernal", "text": "Al empezar empareja a tus Acróbatas. En contacto solo con su pareja tiene Salto. Si usa ese salto para Asaltar, tirada de Agilidad: si la supera, el asaltado cuenta como de espaldas; si falla, pierde los bonificadores del Asalto." },
+        { "name": "Artículos de coña", "text": "Hasta uno." }
+      ]
+    },
+    {
+      "name": "Forzudo", "cost": 40, "page": 66,
+      "stats": { "a": "2", "c": "4", "p": "3", "ag": "2", "f": "6", "d": "5", "t": "2" },
+      "weaponRule": "Una",
+      "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+      "rules": [
+        { "name": "Bestia parda", "text": "Ignora el -1 a Agilidad de Armatoste." },
+        { "name": "Lucimiento", "text": "Una vez por partida, al empezar un Turno: +2 a Fuerza hasta el final del Turno." },
+        { "name": "Artículos de coña", "text": "Hasta uno." }
+      ]
+    },
+    {
+      "name": "Jefe de pista", "cost": 50, "page": 67,
+      "stats": { "a": "3", "c": "3", "p": "4", "ag": "4", "f": "3", "d": "3", "t": "6" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+      "rules": [{ "name": "El mayor espectáculo del mundo", "text": "1 Acción con el altavoz, cada efecto una sola vez por partida:\n• Reclamar la atención: los enemigos no trabados se giran hacia él.\n• Presentar a los Pachachos: este Turno Risa difícil suma o resta 4.\n• Presentar a los Acróbatas: el próximo súper salto de Catapulta infernal gana +10 cm.\n• Presentar a los Forzudos: el próximo Lucimiento da también +2 al Combate.\n• Presentar a los Domadores: este Turno las fieras pueden alejarse 30 cm." }]
+    },
+    {
+      "name": "François el Mimo", "cost": 30, "page": 68, "personality": true,
+      "stats": { "a": "2", "c": "3 (1)", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weapons": "Ninguna", "armor": "Ninguno",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "¡Matad a eso!", "text": "Si un enemigo va a Asaltar o Disparar a su banda y François es objetivo válido, tiene que elegirle a él." },
+        { "name": "Mimo", "text": "1 Acción: copia Atributos y equipo de un enemigo humano en peana de 25 mm a 30 cm y en visión, mientras se mantengan esas condiciones." },
+        { "name": "Muro imaginario", "text": "1 Acción: Cobertura +6 por el frente solo para él hasta que se mueva." }
+      ]
+    },
+    {
+      "name": "Madame Destino", "cost": 50, "page": 69, "personality": true,
+      "stats": { "a": "2", "c": "2", "p": "2", "ag": "5", "f": "3 (4)", "d": "3", "t": "5" },
+      "weapons": "Filo pequeño", "armor": "Ropas resistentes",
+      "specialRules": ["Personalidad", "Retraso (3)"],
+      "rules": [
+        { "name": "Levitación", "text": "Ignora cualquier terreno a ras de suelo, incluso el impasable." },
+        { "name": "Vidente", "text": "1 Acción: echa una carta a un enemigo en visión a 45 cm. Una en los Turnos 1-2, otra en 3-4 y otra en 5-6. Tira 1d10 (repite cartas repetidas); el efecto es permanente.",
+          "table": { "columns": ["1d10", "Carta"], "rows": [
+            ["1", "El Masca: +1 Acciones (máx. 3)."], ["2", "El Pirao: pierde un arma al azar."], ["3", "El Sol: -2 Precisión (mín. 1)."],
+            ["4", "La Luna: -2 Combate (mín. 1)."], ["5", "El Buga: gana Raudo."], ["6", "El Engranaje: -2 Dureza (mín. 1)."],
+            ["7", "El Páramo: -2 Agilidad (mín. 1)."], ["8", "La Torre: +2 Dureza."], ["9", "El Memonio: -1 Acciones (mín. 1)."], ["10", "La Muerte: supera Dureza o queda Abatida."]
+          ] } }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Guante de boxeo extensible", "kind": "Melee", "cost": 4, "combat": "+2", "strength": "+2", "penetration": "1", "rules": ["Escasa", "Lentorra (1)"], "page": 70 },
+    { "name": "Látigo", "kind": "Melee", "cost": 4, "combat": "+0", "strength": "+1", "penetration": "3", "page": 70, "notes": "Permite Avivar a las fieras del Domador." },
+    { "name": "Cañón de confeti", "kind": "Ranged", "cost": 6, "range": "1d10 × 5", "strength": "3", "penetration": "5", "rules": ["Escasa", "Lentorra (1)", "Postas"], "page": 70, "notes": "Primero se dispara y luego se tira la distancia; si no llega, Acción perdida. Sin modificadores de distancia. Quien sobreviva al impacto tiene -1 a Agilidad hasta que gaste una Acción en limpiarse." }
+  ],
+  "gear": [
+    { "name": "Cañón lanzador", "cost": 10, "page": 70, "text": "Se despliega en tu zona (peana de 40 mm). Un Pachacho o Acróbata en contacto gasta 1 Acción en dispararse hasta 90 cm con su Precisión (sin rangos ni Apuntar). Si impacta: F7, Pen 10, queda trabado con el objetivo y cae salvo que saque un 1. Si falla, sale de la mesa Abatido. Uno por banda." },
+    { "name": "Chismeciclo", "cost": 8, "page": 70, "text": "Para un Pachacho: una vez por activación, en Terreno chachi, Raudo durante un Movimiento. Gana Montada y pierde Zapatones." },
+    { "name": "Coche de Pachachos", "cost": 25, "page": 70, "text": "Antes de desplegar, colócalo fuera de las zonas de despliegue. Cada Pachacho puede intentar desplegar pegado al coche con una tirada según la distancia a tu zona (0-10 cm 2+, hasta 20 cm 4+, 30 cm 6+, 40 cm 7+, 50 cm 8+, 60 cm 9+). Al primer fallo, el resto despliega normal. Luego es escenografía de tamaño 1 y protección pesada. Uno por banda." }
+  ],
+  "extras": [
+    {
+      "title": "Artículos de coña",
+      "intro": "Un solo uso. Ninguna miniatura repite artículo y ninguno se repite más de tres veces en la banda.",
+      "page": 71,
+      "items": [
+        { "name": "Bocina", "cost": 6, "text": "Si la Asaltan, el rival pierde todos los bonificadores del Asalto." },
+        { "name": "Bomba fétida", "cost": 4, "text": "A sus pies, marcador permanente de 5 cm de radio: -3 a las tiradas de Técnica de quien esté en contacto." },
+        { "name": "Cojín de pedos", "cost": 5, "text": "Sobrevive al cañón lanzador con 1-2 en la Precisión en lugar de solo 1." },
+        { "name": "Flor escupe agua", "cost": 5, "text": "Trabada en Combate: -2 al Combate del rival en esa tirada." },
+        { "name": "Globo que flota", "cost": 5, "text": "Si cae, impacta a todo a 5 cm con F2 y Pen 2." },
+        { "name": "Guante con descarga", "cost": 5, "text": "Si la Impactan en Combate puede tener Electrificación." },
+        { "name": "Pañuelos infinitos", "cost": 5, "text": "Al ser objetivo de un disparo, el tirador tiene -2 a Precisión." }
+      ]
+    }
+  ]
+}
