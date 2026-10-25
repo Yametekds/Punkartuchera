@@ -69,7 +69,6 @@ body {
     min-height: 100%;
     background-color: var(--punk-bg);
     background-image: var(--punk-tex-grain), var(--punk-tex-grime);
-    background-attachment: fixed;
     color: var(--punk-text);
     font-family: var(--punk-font-body);
     font-size: 16px;
@@ -176,8 +175,10 @@ h1:focus { outline: none; }
 }
 .punk-topbar::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 14px;
-    background: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
-    filter: drop-shadow(0 3px 0 var(--punk-rust));
+    height: 17px; bottom: -17px;
+    background:
+        var(--punk-edge-torn-bar) center top / 100% 14px no-repeat,
+        var(--punk-edge-torn-red) center 3px / 100% 14px no-repeat;
     pointer-events: none;
 }
 
@@ -707,7 +708,7 @@ textarea.field__input { resize: vertical; }
 
 /* Datacard: cabecera de chapa con atributos, cuerpo de papel */
 .datacard-list { display: grid; gap: 26px; max-width: 920px; width: 100%; margin: 0 auto; }
-.datacard { position: relative; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .5)); }
+.datacard { position: relative; }
 .datacard__head {
     position: relative; z-index: 1;
     display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center;
