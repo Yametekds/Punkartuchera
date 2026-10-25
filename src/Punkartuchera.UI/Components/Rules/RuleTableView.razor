@@ -1,0 +1,28 @@
+@* Tabla de una regla (tiradas, alturas, resultados). *@
+<div class="rules-table-wrap">
+    <table class="data-table">
+        <thead>
+            <tr>
+                @foreach (var column in Table.Columns)
+                {
+                    <th scope="col">@column</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Table.Rows)
+            {
+                <tr>
+                    @foreach (var cell in row)
+                    {
+                        <td>@cell</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public RuleTable Table { get; set; } = default!;
+}

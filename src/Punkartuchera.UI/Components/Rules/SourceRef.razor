@@ -1,0 +1,17 @@
+@inject Rulebook Book
+
+@* Referencia a la página del PDF oficial del que sale la regla. *@
+@if (Document is not null)
+{
+    <a class="source-ref" href="@Href" target="_blank" rel="noopener">@Document.Title@(Page is null ? "" : $", p. {Page}")</a>
+}
+
+@code {
+    [Parameter] public string? Source { get; set; }
+
+    [Parameter] public int? Page { get; set; }
+
+    private SourceDocument? Document => Book.FindSource(Source);
+
+    private string Href => Document is null ? "" : Page is null || !Document.Url.EndsWith(".pdf") ? Document.Url : $"{Document.Url}#page={Page}";
+}

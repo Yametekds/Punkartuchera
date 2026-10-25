@@ -1,0 +1,179 @@
+@page "/reglas/faccion/{Id}"
+@page "/reglas/faccion/{Id}/{Tab}"
+@inject Rulebook Book
+@inject NavigationManager Navigation
+@inject FragmentScroller Scroller
+
+<PageTitle>@(_faction?.Name ?? "Facción") · Punkartuchera</PageTitle>
+
+@if (_faction is null)
+{
+    <section class="punk-empty">
+        <Icon Path="@Icons.Skull" Class="icon--huge" />
+        <h1>Esa facción no existe</h1>
+        <p>O se la tragó el Páramo o el enlace está mal.</p>
+        <a class="btn btn--primary" href="reglas">Volver a las reglas</a>
+    </section>
+}
+else
+{
+    <div class="context-bar">
+        <span class="chip chip--faction context-bar__pill">@(_faction.Beta ? "Facción en beta" : _faction.IsMercenaries ? "A sueldo" : "Facción")</span>
+        <div class="context-bar__row">
+            <a class="btn btn--icon" href="reglas" aria-label="Volver a las reglas"><Icon Path="@Icons.Back" /></a>
+            <label class="visually-hidden" for="faction-switch">Cambiar de facción</label>
+            <select id="faction-switch" class="field__input context-bar__select" value="@_faction.Id" @onchange="SwitchFaction">
+                @foreach (var other in Book.Factions)
+                {
+                    <option value="@other.Id">@other.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <PageTabs Tabs="TabLabels" Active="@ActiveLabel" ActiveChanged="SelectTab" />
+
+    @switch (ActiveSlug)
+    {
+        case "miembros":
+            <RulesSearchBox FactionId="@_faction.Id" ShowFactionFilter="false" Placeholder="@($"Busca en {_faction.Name}…")" />
+            <nav class="rules-jump" aria-label="Tropas">
+                @foreach (var troop in _faction.Troops)
+                {
+                    <a class="chip chip--faction" href="@($"reglas/faccion/{_faction.Id}/miembros#{troop.Slug}")">@troop.Name</a>
+                }
+            </nav>
+            <div class="datacard-list">
+                @foreach (var troop in _faction.Troops)
+                {
+                    <TroopCard Troop="troop" Source="@_faction.Source" />
+                }
+            </div>
+            break;
+
+        case "equipo":
+            <div class="stack">
+                @if (_faction.GenericGear.Count > 0)
+                {
+                    <section class="paper rules-sheet">
+                        <h2 class="section-title">Equipo genérico disponible</h2>
+                        <PriceOptionList Items="_faction.GenericGear" />
+                    </section>
+                }
+                <GearTables Weapons="_faction.Weapons" ArmorItems="_faction.Armors" GearItems="_faction.Gear" />
+                @if (_faction.Weapons.Count + _faction.Armors.Count + _faction.Gear.Count == 0)
+                {
+                    <p class="scribble">Sin trastos propios: tira del <a href="reglas/equipo">equipo genérico</a>.</p>
+                }
+            </div>
+            break;
+
+        default:
+            <section class="paper band-hero tape rules-hero">
+                <div class="band-hero__top">
+                    <span class="stamp">@_faction.Troops.Count tropas</span>
+                    @if (_faction.Beta)
+                    {
+                        <span class="stamp stamp--ink">Beta</span>
+                    }
+                </div>
+                <h1 class="band-hero__name distress">@_faction.Name</h1>
+                <p class="rules-hero__summary">@_faction.Summary</p>
+                <SourceRef Source="@_faction.Source" Page="_faction.Page" />
+            </section>
+
+            <RulesSearchBox FactionId="@_faction.Id" ShowFactionFilter="false" Placeholder="@($"Busca en {_faction.Name}…")" />
+
+            @if (_faction.Restrictions.Count > 0)
+            {
+                <h2 class="section-title">Restricciones</h2>
+                <ul class="rules-restrictions">
+                    @foreach (var restriction in _faction.Restrictions)
+                    {
+                        <li>@restriction</li>
+                    }
+                </ul>
+            }
+
+            @if (_faction.Rules.Count > 0)
+            {
+                <h2 class="section-title">Reglas de facción</h2>
+                <div class="rule-grid">
+                    @foreach (var rule in _faction.Rules)
+                    {
+                        <article class="rule-box rules-anchor" id="@rule.Slug">
+                            <h3 class="rule-box__title">@rule.Name</h3>
+                            <p class="rules-text">@rule.Text</p>
+                            @if (rule.Table is not null)
+                            {
+                                <RuleTableView Table="rule.Table" />
+                            }
+                        </article>
+                    }
+                </div>
+            }
+
+            @foreach (var group in _faction.Extras)
+            {
+                <h2 class="section-title" id="@group.Slug">@group.Title</h2>
+                @if (group.Intro is not null)
+                {
+                    <p class="rules-intro">@group.Intro</p>
+                }
+                <div class="rule-grid">
+                    @foreach (var item in group.Items)
+                    {
+                        <article class="rule-box rules-anchor" id="@item.Slug">
+                            <h3 class="rule-box__title">@item.Name@(item.Cost is null ? "" : $" · {item.Cost} ptos")</h3>
+                            <p class="rules-text">@item.Text</p>
+                            @if (item.Table is not null)
+                            {
+                                <RuleTableView Table="item.Table" />
+                            }
+                        </article>
+                    }
+                </div>
+            }
+            break;
+    }
+}
+
+@code {
+    private static readonly (string Slug, string Label)[] AllTabs = [("reglas", "Reglas"), ("miembros", "Miembros"), ("equipo", "Equipo")];
+
+    [Parameter] public string Id { get; set; } = string.Empty;
+
+    [Parameter] public string? Tab { get; set; }
+
+    private FactionRules? _faction;
+    private bool _scrollPending;
+
+    private IReadOnlyList<string> TabLabels => AllTabs.Select(t => t.Label).ToList();
+
+    private string ActiveSlug => AllTabs.Any(t => t.Slug == Tab) ? Tab! : "reglas";
+
+    private string ActiveLabel => AllTabs.First(t => t.Slug == ActiveSlug).Label;
+
+    protected override void OnParametersSet()
+    {
+        _faction = Book.FindFaction(Id);
+        _scrollPending = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_scrollPending)
+        {
+            _scrollPending = false;
+            await Scroller.ScrollToCurrentAsync();
+        }
+    }
+
+    private void SelectTab(string label)
+    {
+        var slug = AllTabs.First(t => t.Label == label).Slug;
+        Navigation.NavigateTo($"reglas/faccion/{Id}/{slug}");
+    }
+
+    private void SwitchFaction(ChangeEventArgs e) => Navigation.NavigateTo($"reglas/faccion/{e.Value}/{ActiveSlug}");
+}
