@@ -50,6 +50,7 @@
     // Las fotos se reducen en el navegador antes de guardarlas.
     private const int MaxSidePixels = 640;
     private const long MaxUploadBytes = 15 * 1024 * 1024;
+    private const long MaxOriginalBytes = 3 * 1024 * 1024;
 
     [Parameter] public PhotoRef? Value { get; set; }
 
@@ -66,27 +67,76 @@
     {
         _error = null;
         _busy = true;
+        var file = e.File;
         try
         {
-            var resized = await e.File.RequestImageFileAsync("image/jpeg", MaxSidePixels, MaxSidePixels);
-            await using var stream = resized.OpenReadStream(MaxUploadBytes);
-            using var buffer = new MemoryStream();
-            await stream.CopyToAsync(buffer);
-
-            var data = buffer.ToArray();
-            var key = await Photos.SaveAsync(data, "image/jpeg");
-            PhotoUrls.Remember(key, new StoredPhoto(key, "image/jpeg", data).ToDataUrl());
+            var (data, contentType) = await ReadPhotoAsync(file);
+            var key = await Photos.SaveAsync(data, contentType);
+            PhotoUrls.Remember(key, new StoredPhoto(key, contentType, data).ToDataUrl());
             await OnPhotoStored.InvokeAsync(key);
             await SetAsync(PhotoRef.Stored(key));
         }
-        catch (Exception ex) when (ex is IOException or InvalidOperationException or JSException)
+        catch (Exception ex)
         {
-            _error = "No se pudo leer la imagen. Prueba con otra foto.";
+            Console.Error.WriteLine($"Foto no válida ({file.ContentType}, {file.Size} bytes): {ex}");
+            _error = IsHeic(file)
+                ? "Esa foto está en formato HEIC y el navegador no la entiende. Hazle una captura o pásala a JPG."
+                : $"No se pudo leer la imagen ({DescribeFile(file)}). Prueba con otra foto.";
         }
         finally
         {
             _busy = false;
         }
+    }
+
+    /// <summary>
+    /// Reduce la foto en el navegador. Si el móvil no puede (fotos enormes de 50-100 MP
+    /// agotan la memoria del lienzo), guarda el archivo original cuando es pequeño.
+    /// </summary>
+    private static async Task<(byte[] Data, string ContentType)> ReadPhotoAsync(IBrowserFile file)
+    {
+        try
+        {
+            var resized = await file.RequestImageFileAsync("image/jpeg", MaxSidePixels, MaxSidePixels);
+            var data = await ReadAllAsync(resized, MaxUploadBytes);
+            if (data.Length > 0)
+            {
+                return (data, "image/jpeg");
+            }
+        }
+        catch (Exception ex) when (file.Size <= MaxOriginalBytes && IsWebImage(file))
+        {
+            Console.Error.WriteLine($"No se pudo reducir la foto, se guarda la original: {ex.Message}");
+        }
+
+        if (file.Size > MaxOriginalBytes || !IsWebImage(file))
+        {
+            throw new InvalidOperationException("La foto no se puede reducir y es demasiado grande para guardarla tal cual.");
+        }
+
+        return (await ReadAllAsync(file, MaxOriginalBytes), file.ContentType);
+    }
+
+    private static async Task<byte[]> ReadAllAsync(IBrowserFile file, long maxBytes)
+    {
+        await using var stream = file.OpenReadStream(maxBytes);
+        using var buffer = new MemoryStream();
+        await stream.CopyToAsync(buffer);
+        return buffer.ToArray();
+    }
+
+    private static bool IsWebImage(IBrowserFile file) =>
+        file.ContentType is "image/jpeg" or "image/png" or "image/webp" or "image/gif";
+
+    private static bool IsHeic(IBrowserFile file) =>
+        file.ContentType is "image/heic" or "image/heif"
+        || file.Name.EndsWith(".heic", StringComparison.OrdinalIgnoreCase)
+        || file.Name.EndsWith(".heif", StringComparison.OrdinalIgnoreCase);
+
+    private static string DescribeFile(IBrowserFile file)
+    {
+        var type = string.IsNullOrEmpty(file.ContentType) ? "tipo desconocido" : file.ContentType;
+        return $"{type}, {file.Size / 1024d / 1024d:0.#} MB";
     }
 
     private async Task PickStock(string key)
