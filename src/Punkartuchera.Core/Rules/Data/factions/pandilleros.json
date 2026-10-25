@@ -1,0 +1,99 @@
+{
+  "id": "pandilleros",
+  "name": "Pandilleros",
+  "source": "bandas",
+  "page": 54,
+  "summary": "Bandas de supervivientes del Páramo, de saqueadores a justicieros. Perfiles sólidos y versátiles, con veteranos que saben elegir su momento gracias a Retraso.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Jefe.",
+    "No puede haber más Piltrafas que el resto de la banda junta.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "troops": [
+    {
+      "name": "Piltrafa", "cost": 20, "page": 55,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Arco", "cost": 10 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }]
+    },
+    {
+      "name": "Machaca", "cost": 30, "page": 56,
+      "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 },
+        { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 }, { "name": "Arco", "cost": 10 }, { "name": "Filo medio", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "specialRules": ["Retraso (1)"]
+    },
+    {
+      "name": "Bruto", "cost": 40, "page": 57,
+      "stats": { "a": "2", "c": "5", "p": "4", "ag": "4", "f": "5", "d": "4", "t": "2" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
+      "equipmentOptions": [{ "name": "Escudo", "cost": 6 }]
+    },
+    {
+      "name": "Curtido", "cost": 40, "page": 58,
+      "stats": { "a": "2", "c": "6", "p": "6", "ag": "5", "f": "4", "d": "4", "t": "4" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 },
+        { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }, { "name": "Armadura metálica", "cost": 15 }],
+      "specialRules": ["Retraso (2)"]
+    },
+    {
+      "name": "Jefe", "cost": 70, "page": 59,
+      "stats": { "a": "3", "c": "6", "p": "6", "ag": "6", "f": "4", "d": "4", "t": "5" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 },
+        { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
+      ],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],
+      "specialRules": ["Retraso (3)"]
+    },
+    {
+      "name": "Clint Tirofijo", "cost": 60, "page": 60, "personality": true,
+      "stats": { "a": "2", "c": "4 (3)", "p": "7", "ag": "5", "f": "4", "d": "4", "t": "3" },
+      "weapons": "Lucy (pistola)", "armor": "Cuero endurecido",
+      "specialRules": ["Personalidad", "Retraso (2)"],
+      "rules": [
+        { "name": "Por un puñado de balas", "text": "Cada vez que falla un disparo, cambia de bando al empezar el siguiente Turno. Puede volver a pasar." },
+        { "name": "Imperdonable", "text": "Ninguna otra miniatura de su banda puede llevar armas con Arma de fuego." },
+        { "name": "Alégrame el día", "text": "Una vez por partida, sin balas, puede disparar igual: si la Precisión sale par le quedaba una bala; si sale impar, no." },
+        { "name": "El Jinete Paliducho", "text": "Quien le dispare tiene -1 a Precisión." }
+      ]
+    },
+    {
+      "name": "Lord Homoeroticus", "cost": 100, "page": 61, "personality": true,
+      "stats": { "a": "3", "c": "6 (5)", "p": "6", "ag": "6", "f": "5", "d": "5", "t": "4" },
+      "weapons": "Alegradías (pistola con mira telescópica)", "armor": "Cuero endurecido",
+      "specialRules": ["Personalidad", "Retraso (3)"],
+      "rules": [
+        { "name": "Jefe", "text": "Es el Jefe de la banda: no puedes llevar otro." },
+        { "name": "Nos mola el cuero", "text": "Piltrafas, Machacas y Curtidos llevan cuero endurecido en vez de ropas resistentes sin coste." },
+        { "name": "Discursitos", "text": "Justo antes del primer Turno tira 1d10:",
+          "table": { "columns": ["1d10", "Efecto"], "rows": [
+            ["1", "Toda la banda rival gana Bersérker."],
+            ["2-4", "Su banda pierde los empates que ganaría por tener la Fase de activación."],
+            ["5-6", "En empates de Fuerza contra Dureza, la Fuerza tiene +1 (ambos bandos)."],
+            ["7-9", "La banda rival pierde los empates que ganaría por tener la Fase de activación."],
+            ["10", "Toda su banda gana Bersérker."]
+          ] } }
+      ]
+    }
+  ]
+}

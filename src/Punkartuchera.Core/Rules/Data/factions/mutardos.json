@@ -1,0 +1,132 @@
+{
+  "id": "mutardos",
+  "name": "Mutardos",
+  "source": "bandas",
+  "page": 41,
+  "summary": "Mutantes de todo tipo liderados por Cabezones con poderes psíquicos, con bestias del pozo como músculo y pochos como carne de cañón. Mal equipados, pero cada uno con sus mutaciones.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo dos grupos de Pochos por cada Cabezón.",
+    "Máximo un Gato parameño.",
+    "No puede haber más de tres Mutardos con la misma mutación."
+  ],
+  "rules": [
+    { "name": "En peores sitios habremos estado", "text": "Todos los Mutardos son inmunes al Terreno contaminado." }
+  ],
+  "troops": [
+    {
+      "name": "Pocho", "cost": 6, "page": 42,
+      "stats": { "a": "1", "c": "X", "p": "-", "ag": "1", "f": "2", "d": "2", "t": "-" },
+      "weapons": "Garras y dientes", "armor": "Ninguno",
+      "specialRules": ["Mónguer"],
+      "rules": [
+        { "name": "Cuerpo escombro", "text": "No deja marcador al caer." },
+        { "name": "Grupal", "text": "Van en grupos de 2 a 5. Al acabar su activación ninguno puede estar a más de 5 cm del más cercano ni a más de 15 cm del más lejano; si se separan, los menos deben gastar Acciones en reunirse. Cada grupo cuenta como una sola miniatura (máximo de miniaturas, despliegue, activación). En Combate el grupo hace un solo ataque con Combate igual al número de Pochos, pero cae un Pocho por Impacto." }
+      ]
+    },
+    {
+      "name": "Mutante", "cost": 12, "page": 43,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Puede llevar una",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Ninguno",
+      "mutations": "De una a tres mutaciones distintas de la lista, pagando su coste."
+    },
+    {
+      "name": "Perromorfo", "cost": 20, "page": 44,
+      "stats": { "a": "2", "c": "4", "p": "-", "ag": "7", "f": "4", "d": "3", "t": "-" },
+      "weapons": "Garras y dientes", "armor": "Ninguno",
+      "specialRules": ["Bestia", "Raudo"],
+      "rules": [{ "name": "Perrete tontico", "text": "No se le puede lanzar ningún Poder psíquico." }]
+    },
+    {
+      "name": "Bestia del pozo", "cost": 70, "page": 45,
+      "stats": { "a": "2", "c": "5", "p": "2", "ag": "2", "f": "6", "d": "6", "t": "1" },
+      "weaponRule": "Puede llevar una",
+      "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+      "armor": "Piel dura 3",
+      "mutations": "Ya tiene Cachas, Resistente (en el perfil) y Piel dura 3. Puede añadir UNA entre Carga brutal, Espinas, Esputo ácido, Garras envenenadas, Miembros extra, Cola afilada, Extremidad prensil o Piernas seguras.",
+      "specialRules": ["Bersérker", "Mónguer"]
+    },
+    {
+      "name": "Cabezón", "cost": 80, "page": 46,
+      "stats": { "a": "3", "c": "1", "p": "3", "ag": "3", "f": "2", "d": "2", "t": "4" },
+      "weaponRule": "Puede llevar una",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
+      "armor": "Ninguno",
+      "rules": [{ "name": "Poderes psíquicos", "text": "Tiene todos los Poderes psíquicos de la facción." }]
+    },
+    {
+      "name": "Magmador", "cost": 90, "page": 47, "personality": true,
+      "stats": { "a": "2", "c": "4", "p": "3", "ag": "2", "f": "6", "d": "5", "t": "3" },
+      "weapons": "Garras y dientes y Aliento flamígero", "armor": "Piel dura 5",
+      "mutations": "Resistente (en el perfil), Piel dura 5 y Aliento flamígero.",
+      "specialRules": ["Ignífugo", "Personalidad"],
+      "rules": [
+        { "name": "Aliento flamígero", "text": "Arma a distancia: plantilla de lágrima, F4, Pen 4, Plantilla, Lentorra (2)." },
+        { "name": "Cuerpo ardiente", "text": "Si le Impactan cuerpo a cuerpo, con 6+ en 1d10 el arma atacante se destruye (el Impacto sigue)." },
+        { "name": "Charco de magma", "text": "Una vez por partida, 2 Acciones seguidas: crea un charco de 10×10 cm de Terreno impasable tocando su peana, en suelo despejado." },
+        { "name": "¡Que se me quema!", "text": "Puede controlar objetivos pero no interactuar con ellos." }
+      ]
+    },
+    {
+      "name": "Kim y Fostiador", "cost": 125, "page": 48, "personality": true,
+      "stats": { "a": "3", "c": "6 (5)", "p": "3", "ag": "2 (1)", "f": "6 (10)", "d": "6", "t": "4" },
+      "weapons": "Zasca", "armor": "Piel dura 3",
+      "mutations": "Cachas y Resistente (en el perfil), Piel dura 3 y Piernas seguras.",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Una sola miniatura", "text": "Kim va montada en Fostiador; cuentan como una miniatura." },
+        { "name": "Zasca", "text": "25/50/75, F9, Pen 10, Armatoste, Mamotreto. Antes de desplegar se ponen 3 marcadores al azar (postes, farolas): en contacto con uno, 1 Acción para recargar." },
+        { "name": "Mente ocupada", "text": "No se le puede lanzar ningún Poder psíquico." },
+        { "name": "Poderes de Kim", "text": "Desarme, Potenciación y Titiritero, además de:\n• Confusión: enemigo a 30 cm en visión (no Bestia ni Mónguer) actúa el próximo Turno 3 Rondas de Agilidad más tarde (mínimo 1).\n• Absorción vital: quita 2 de Dureza permanente a una miniatura o grupo de Pochos propio para dar +1 permanente a otra; ambas a 30 cm de Kim." },
+        { "name": "Odio puro", "text": "Si cae Kim, tira 1d10:",
+          "table": { "columns": ["1d10", "Efecto"], "rows": [["1-3", "Todas las miniaturas de la mesa pierden 1 de Dureza."], ["4-7", "Toda su banda recibe Potenciación al Combate."], ["8-10", "Todas las miniaturas de la mesa tienen 1 Acción menos en su siguiente Fase de activación."]] } }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "title": "Mutaciones",
+      "intro": "No puede haber más de tres Mutardos con la misma mutación en la banda.",
+      "page": 50,
+      "items": [
+        { "name": "Cachas", "cost": 10, "text": "+2 a Fuerza." },
+        { "name": "Capacitado", "cost": 25, "text": "+1 a Acciones." },
+        { "name": "Carga brutal", "cost": 10, "text": "Ímpetu (1)." },
+        { "name": "Cola afilada", "cost": 10, "text": "Una vez por Fase de activación, al Combatir lanza un dado extra como filo pequeño con -1 al Combate y se queda el mejor. Aprovecha los bonificadores de Asalto y Potenciación." },
+        { "name": "Corredor", "cost": 12, "text": "Raudo." },
+        { "name": "Espinas", "cost": 6, "text": "Disparo con 1 Acción: 10/20/30, F2, Pen 3/2/1." },
+        { "name": "Esputo ácido", "cost": 5, "text": "Al Asaltar o ser Asaltado, si no estaba trabado, disparo gratis de F1 y Pen 3 sin modificadores de distancia ni Cobertura (salvo equipo como un escudo)." },
+        { "name": "Extremidad prensil", "cost": 5, "text": "Un enemigo trabado con él tiene -1 al Combate y -1 a Agilidad para Separarse." },
+        { "name": "Garras", "cost": 2, "text": "Garras y dientes. No se combina con otras armas." },
+        { "name": "Garras envenenadas", "cost": 8, "text": "Como Garras, con Veneno (2)." },
+        { "name": "Miembros extra", "cost": 10, "text": "+2 a Combate." },
+        { "name": "Mimetismo", "cost": 5, "text": "Camuflaje." },
+        { "name": "Pegajoso", "cost": 4, "text": "Trepador. Quien intente Separarse de él tiene -3 a Agilidad." },
+        { "name": "Piel dura 1", "cost": 5, "text": "Blindaje 1. No se acumula con otra Piel dura." },
+        { "name": "Piel dura 3", "cost": 10, "text": "Blindaje 3. No se acumula con otra Piel dura." },
+        { "name": "Piel dura 5", "cost": 20, "text": "Blindaje 5. No se acumula con otra Piel dura." },
+        { "name": "Piernas seguras", "cost": 8, "text": "Todoterreno." },
+        { "name": "Proyectil orgánico", "cost": 10, "text": "Arma a distancia 10/20/- (sin rango largo), F3, Pen 4, Postas y ¡¡¡CATAPUM!!!" },
+        { "name": "Rana", "cost": 16, "text": "Salto." },
+        { "name": "Resonancia psíquica", "cost": 20, "text": "Un Cabezón puede lanzarle cualquier poder (salvo Barrera psíquica) y redirigirlo gratis desde él a otro objetivo, midiendo desde este Mutardo." },
+        { "name": "Resistente", "cost": 10, "text": "+2 a Dureza." },
+        { "name": "Sentidos aguzados", "cost": 8, "text": "+2 a Agilidad." },
+        { "name": "Sónar", "cost": 6, "text": "Visión de 360° y al Asaltar cuenta como que siempre ve a su objetivo al empezar cada Acción." }
+      ]
+    },
+    {
+      "title": "Poderes psíquicos",
+      "intro": "1 Acción por poder, sin tirada. Ningún poder se lanza dos veces sobre la misma miniatura en el mismo Turno. No necesitan Línea de visión salvo que se diga.",
+      "page": 52,
+      "items": [
+        { "name": "Barrera psíquica", "text": "Blindaje 5 para el propio Cabezón. Hay que mantenerla con 1 Acción en cada Fase de activación posterior. Si la quita, no la reactiva hasta el Turno siguiente." },
+        { "name": "Choque mental", "text": "15 cm, en visión y que no esté combatiendo: tirada enfrentada de su Fuerza contra la Dureza del objetivo; si iguala o supera, lo Abate." },
+        { "name": "Desarme", "text": "30 cm, en visión y que no esté combatiendo: el objetivo supera Fuerza o suelta un arma a elección del Cabezón (1 Acción para recogerla)." },
+        { "name": "Potenciación", "text": "30 cm: +3 a Combate, Precisión o Técnica de un aliado hasta que lo use. No se acumula. Afecta a un grupo entero de Pochos." },
+        { "name": "Titiritero", "text": "30 cm: otra miniatura de su banda hace una Acción gratuita al momento. Afecta a un grupo entero de Pochos." }
+      ]
+    }
+  ]
+}

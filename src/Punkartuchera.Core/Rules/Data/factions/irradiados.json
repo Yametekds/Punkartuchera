@@ -1,0 +1,108 @@
+{
+  "id": "irradiados",
+  "name": "Irradiados",
+  "source": "bandas",
+  "page": 31,
+  "summary": "Los Verdaderos Herederos, salidos de la base Aurora y bañados en radiación. Inmunes a ella, la esparcen por la mesa y aguantan con fe ciega.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Cardenal Nuclear.",
+    "No puede haber más Mártires que el resto de la banda junta.",
+    "Máximo un Gato parameño."
+  ],
+  "rules": [
+    { "name": "Contaminante", "text": "Toda miniatura Abatida por un arma con esta regla pasa a ser una fuente de Radiación." },
+    { "name": "Contenedor radiactivo", "text": "Al caer, el Irradiado se convierte en fuente de Radiación. Quien interactúe con su cadáver (devorar, cosechar, rapiñar…) hace una tirada de Radiación." },
+    { "name": "Radiación", "text": "Al acabar su Fase de activación (o cuando lo diga una regla), toda miniatura a 20 cm o menos del centro de una fuente tira 1d10 + Dureza, +2 si es Mutardo o lleva protección contra la contaminación, -1 por cada fuente extra a 20 cm.",
+      "table": { "columns": ["Resultado", "Efecto"], "rows": [["1 o menos", "Abatida."], ["2-3", "-1 Dureza permanente."], ["4-6", "-1 Dureza hasta acabar su siguiente Fase de activación."], ["7 o más", "Sin efecto."]] } },
+    { "name": "Radioinmune", "text": "Inmune al Terreno contaminado y a la Radiación." }
+  ],
+  "troops": [
+    {
+      "name": "Mártir", "cost": 16, "page": 33,
+      "stats": { "a": "2", "c": "1", "p": "1", "ag": "2", "f": "2", "d": "2", "t": "3" },
+      "weaponRule": "Una",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
+      "armor": "Ninguno",
+      "rules": [{ "name": "Radiado", "text": "Es fuente de Radiación vivo y muerto, y tira Radiación cada Turno por la suya propia. Al caer deja dos marcadores de Radiación." }]
+    },
+    {
+      "name": "Discípulo", "cost": 20, "page": 34,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "specialRules": ["Contenedor radiactivo", "Radioinmune"]
+    },
+    {
+      "name": "Penitente", "cost": 40, "page": 35,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "5", "d": "5", "t": "-" },
+      "weaponRule": "Una",
+      "weaponOptions": [{ "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 }, { "name": "Botafumeiro tóxico", "cost": 7 }, { "name": "Lanzarresiduos", "cost": 15 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "specialRules": ["Bersérker", "Contenedor radiactivo", "Mónguer", "Radioinmune"]
+    },
+    {
+      "name": "Cardenal Nuclear", "cost": 50, "page": 36,
+      "stats": { "a": "3", "c": "2", "p": "4", "ag": "4", "f": "3", "d": "3", "t": "7" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 },
+        { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }, { "name": "Rifle automático", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }, { "name": "Armadura metálica", "cost": 15 }, { "name": "Chaleco antibalas", "cost": 15 }],
+      "specialRules": ["Contenedor radiactivo", "Radioinmune"],
+      "rules": [{ "name": "Sermón", "text": "Tras desplegar, elige UNO para usar una vez en la partida:\n• Nuevo Hombre: repetir una tirada de Fuerza contra Dureza de una miniatura propia Impactada.\n• Verdaderos Herederos: repetir una tirada de Precisión.\n• Maná Sagrado: obligar al rival a repetir una tirada de Radiación." }]
+    },
+    {
+      "name": "Paladín", "cost": 50, "page": 37,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "5", "f": "4", "d": "4", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }],
+      "equipmentOptions": [{ "name": "Escudo", "cost": 6 }],
+      "specialRules": ["Contenedor radiactivo", "Radioinmune", "Todoterreno"],
+      "rules": [{ "name": "Inspirador", "text": "Si Abate a un enemigo en Combate, cada Discípulo a 20 cm que le vea y no esté trabado hace al momento una Acción gratuita." }]
+    },
+    {
+      "name": "El Portador de las Reliquias", "cost": 55, "page": 38, "personality": true,
+      "stats": { "a": "2", "c": "2 (1)", "p": "2", "ag": "4", "f": "3 (7)", "d": "3", "t": "3" },
+      "weapons": "Relicario (maza pesada)", "armor": "Cuero endurecido",
+      "specialRules": ["Bersérker", "Contenedor radiactivo", "Personalidad", "Radioinmune"],
+      "rules": [{ "name": "Relicario", "text": "Gasta Acciones (seguidas, aunque sea en otra Fase de activación) para un efecto a 30 cm:",
+        "table": { "columns": ["Acciones", "Efecto"], "rows": [
+          ["1", "Aliado: +3 al Combate en su próximo Asalto."],
+          ["1", "Aliado: +2 en su próxima tirada de Precisión."],
+          ["1", "Aliado: +2 a Dureza la próxima vez que lo Impacten; luego -1 Dureza permanente."],
+          ["1", "Enemigo: -2 en su próxima tirada de Radiación."],
+          ["2", "Aliado: hace 1 Acción al momento."],
+          ["2", "Enemigo: -2 permanente en sus tiradas de Radiación."]
+        ] } }]
+    },
+    {
+      "name": "El Guardián de las Llaves", "cost": 60, "page": 39, "personality": true,
+      "stats": { "a": "2", "c": "3 (2)", "p": "4", "ag": "4", "f": "3", "d": "3", "t": "5" },
+      "weapons": "Pistola de aire comprimido (10/20/30, F4, Pen 1)", "armor": "Ropas resistentes",
+      "equipment": "Protección contra la contaminación y el Maletín",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "El Maletín", "text": "Una vez por partida, 1 Acción: todas las tiradas de Radiación tienen -2 hasta su siguiente Fase de activación o hasta que caiga." },
+        { "name": "El fin se acerca", "text": "Los Irradiados a 30 cm tienen +1 a Dureza." },
+        { "name": "Como una maraca", "text": "Al empezar su Fase de activación tira 1d10: con un 1 la maneja el rival." }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Botafumeiro tóxico", "kind": "Melee", "cost": 7, "combat": "-1", "strength": "+3", "penetration": "2", "rules": ["A dos manos", "Armatoste", "Contaminante", "Escasa"], "page": 40 },
+    { "name": "Lanzarresiduos", "kind": "Ranged", "cost": 15, "range": "Plantilla de lágrima", "strength": "3", "penetration": "7", "rules": ["A dos manos", "Contaminante", "Escasa", "Lentorra (2)", "Mamotreto", "Plantilla"], "page": 40 },
+    { "name": "Granada santa", "kind": "Ranged", "cost": 5, "range": "F × 5", "strength": "-", "penetration": "-", "rules": ["Bomba", "Escasa"], "page": 40, "notes": "Deja un marcador permanente de Radiación y quien recibe el impacto tira Radiación al momento. Precio por granada." }
+  ],
+  "gear": [
+    { "name": "Munición irradiada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Cada impacto da -3 permanente en las tiradas de Radiación de la víctima, pero el arma tiene -1 a Fuerza y Penetración. Un solo tipo de munición por miniatura." },
+    { "name": "Munición contaminada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Da Contaminante al arma, pero -1 a Precisión. Un solo tipo de munición por miniatura." }
+  ]
+}

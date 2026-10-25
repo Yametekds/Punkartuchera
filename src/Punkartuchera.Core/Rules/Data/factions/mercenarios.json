@@ -1,0 +1,106 @@
+{
+  "id": "mercenarios",
+  "name": "Mercenarios",
+  "source": "bandas",
+  "page": 81,
+  "isMercenaries": true,
+  "summary": "Tipos que venden su arma al mejor postor. Se pueden unir a cualquier banda (salvo que digan lo contrario).",
+  "restrictions": [
+    "Como máximo un Mercenario por banda, pagando sus puntos y contando para el máximo de miniaturas.",
+    "No usan ni se benefician de reglas o equipo de la banda (balas apañadas, poderes, inmunidades, walkie-talkie…).",
+    "Equipo cerrado e incluido en el coste, salvo las balas.",
+    "No pueden Rapiñar equipo, salvo balas si llevan Arma de fuego.",
+    "Los Atributos entre paréntesis ya incluyen su equipo y reglas."
+  ],
+  "troops": [
+    {
+      "name": "El Viejo Sajarratas", "cost": 15, "page": 82, "personality": true,
+      "stats": { "a": "2", "c": "3 (1)", "p": "1", "ag": "3", "f": "2", "d": "2", "t": "5" },
+      "weapons": "Ninguna", "armor": "Capa de ratas (cuero endurecido)",
+      "specialRules": ["Mercenario", "Mónguer"],
+      "rules": [
+        { "name": "5 duros pa'l bus", "text": "Si entra en contacto con un enemigo se queda pegado sin Combate; solo puede usar Chorimangui. El enemigo tiene que Combatir y Abatirle para quitárselo; si gana Sajarratas, sigue pegado." },
+        { "name": "Chorimangui", "text": "En contacto con un enemigo, tirada de Técnica para robarle 1 bala." },
+        { "name": "Cansino", "text": "Si cae, gasta sus 2 Acciones siguientes en recuperarse y vuelve a la carga." }
+      ]
+    },
+    {
+      "name": "Imperatrix Rabiosa", "cost": 60, "page": 83, "personality": true,
+      "stats": { "a": "2", "c": "3", "p": "4", "ag": "5", "f": "3 (4)", "d": "4", "t": "5" },
+      "weapons": "Rifle con mira telescópica y filo pequeño", "armor": "Cuero endurecido",
+      "specialRules": ["Mercenario", "Retraso (2)"],
+      "rules": [
+        { "name": "Me quedo con tu cara", "text": "Apunta en secreto una miniatura rival antes de empezar. Si la Abate, +1 punto de escenario para su banda; si no, +1 para el rival." },
+        { "name": "Brazo mecánico", "text": "En Combate, +2 al Blindaje." }
+      ]
+    },
+    {
+      "name": "Mongodrilo Dundee", "cost": 70, "page": 84, "personality": true,
+      "stats": { "a": "2", "c": "4", "p": "5", "ag": "6", "f": "3 (4)", "d": "3", "t": "4" },
+      "weapons": "Garrapata (ballesta)", "armor": "Piel de mongolongo",
+      "mutations": "Corredor, Mimetismo y Sónar.",
+      "specialRules": ["Mercenario"],
+      "rules": [
+        { "name": "Inmune", "text": "Inmune al Veneno y al Terreno contaminado." },
+        { "name": "Garrapata", "text": "Al empezar y en cada recarga elige virote:\n• Envenenado: Veneno (4).\n• Volador: +15 cm a todos los rangos.\n• Penetrador: Penetración 5." },
+        { "name": "Piel de mongolongo", "text": "Blindaje 2 contra disparos y 5 cuerpo a cuerpo." },
+        { "name": "Trampero", "text": "Al desplegarle, pon 6 marcadores de 25 mm fuera de la zona rival y a 20 cm entre sí; 3 tienen trampa en secreto. Quien pase a 2,5 cm (salvo él) lo destapa: si hay trampa, impacto F2 Pen 3 y, si sobrevive, no puede mover ni separarse y gasta la siguiente Acción en soltarse." },
+        { "name": "Ojo loco", "text": "Al Apuntar tira 1d10: con 1-2 tiene -2 a Precisión en vez de +3." },
+        { "name": "Escoria mutarda", "text": "No se une al V Reich." }
+      ]
+    },
+    {
+      "name": "Crazy Mel", "cost": 75, "page": 85, "personality": true,
+      "stats": { "a": "2", "c": "5 (6)", "p": "7 (8)", "ag": "5", "f": "4 (6)", "d": "4", "t": "5" },
+      "weapons": "Escopeta y filo medio", "armor": "Armadura metálica",
+      "specialRules": ["Mercenario"],
+      "rules": [
+        { "name": "En el momento menos oportuno", "text": "Su escopeta no necesita balas. Si la tirada de Precisión sale impar dispara bien; si sale par, se estropea para el resto de la partida y pierde ese disparo." },
+        { "name": "Albóndiga", "text": "Su perro: mantiene los bonificadores de Asalto aunque no viera al enemigo al empezar algún Movimiento y en Combate anula el apoyo de UN enemigo." }
+      ]
+    },
+    {
+      "name": "Capitán Hammerica", "cost": 80, "page": 86, "personality": true,
+      "stats": { "a": "2", "c": "6", "p": "4", "ag": "5", "f": "5 (7)", "d": "4", "t": "3" },
+      "weapons": "Maza y pistola", "armor": "Armadura metálica",
+      "equipment": "Escudo",
+      "specialRules": ["Mercenario"],
+      "rules": [
+        { "name": "Escudo reforzado", "text": "+3 al Blindaje en vez de +2 y sin el -1 al Combate." },
+        { "name": "Hammer time", "text": "Si cae en Combate, tiene Bersérker." },
+        { "name": "Odio a Casco Rojo", "text": "Si Abate a Casco Rojo del V Reich, +3 puntos de victoria." }
+      ]
+    },
+    {
+      "name": "Lizzy DeVille", "cost": 80, "page": 87, "personality": true,
+      "stats": { "a": "3", "c": "4 (5)", "p": "5", "ag": "5", "f": "3 (5)", "d": "5", "t": "4" },
+      "weapons": "Pistola y filo medio", "armor": "Ropas resistentes",
+      "specialRules": ["Mercenario", "Retraso (2)"],
+      "rules": [
+        { "name": "Charlatana", "text": "Se separa del Combate como si fuera Escurridizo, pero solo una vez por partida contra el mismo enemigo." },
+        { "name": "Chica de portada", "text": "Cada vez que fuera a ser Abatida, lo evita con 6+ en 1d10." },
+        { "name": "Tacaña", "text": "No dispara a miniaturas que cuesten 15 puntos o menos." }
+      ]
+    },
+    {
+      "name": "Ochodedos", "cost": 88, "page": 88, "personality": true,
+      "stats": { "a": "2", "c": "5 (6/4)", "p": "3", "ag": "3", "f": "4 (6)", "d": "4", "t": "3" },
+      "weapons": "2 filos medios", "armor": "Ninguno",
+      "specialRules": ["Mercenario"],
+      "rules": [
+        { "name": "El baile de San Vito", "text": "La primera vez que cae, ignora el resultado y gana +2 a Agilidad, Fuerza y Dureza. La segunda vez cae de verdad." },
+        { "name": "Doble dolor", "text": "Al Combatir puede usar las dos armas: tira un dado extra y se queda el mejor, con -2 al Combate." }
+      ]
+    },
+    {
+      "name": "Irina", "cost": 90, "page": 89, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "6", "f": "4", "d": "5", "t": "4" },
+      "weapons": "Utacël", "armor": "Ropas resistentes",
+      "specialRules": ["Mercenario", "Retraso (3)", "Montada", "Raudo", "Todoterreno"],
+      "rules": [
+        { "name": "Utacël", "text": "Arma de asta. Al Asaltar: C+1, F+3, Pen 5. En el resto de Combates: C-1, F+2, Pen 3." },
+        { "name": "Halálkarma", "text": "Su felino le da Montada, Raudo, Todoterreno y Cobertura de Blindaje +3. Puede Combatir la bestia en su lugar con C7, F8, Pen 5, pero luego descansa como con Lentorra (2)." }
+      ]
+    }
+  ]
+}

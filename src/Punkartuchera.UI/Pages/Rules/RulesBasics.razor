@@ -1,0 +1,46 @@
+@page "/reglas/basicas"
+@inject Rulebook Book
+@inject FragmentScroller Scroller
+
+<PageTitle>Reglas básicas · Punkartuchera</PageTitle>
+
+<RulesBackBar Title="Reglas básicas" />
+
+<RulesSearchBox ShowFactionFilter="false" Placeholder="Busca en todo el reglamento…" />
+
+<nav class="rules-jump" aria-label="Apartados">
+    @foreach (var group in Groups)
+    {
+        <a class="chip chip--faction" href="@($"reglas/basicas#{CategoryId(group.Key)}")">@group.Key</a>
+    }
+</nav>
+
+@foreach (var group in Groups)
+{
+    <h2 class="section-title" id="@CategoryId(group.Key)">@group.Key</h2>
+    <div class="rule-grid">
+        @foreach (var entry in group)
+        {
+            <article class="rule-box rules-anchor" id="@entry.Id">
+                <h3 class="rule-box__title">@entry.Title</h3>
+                @foreach (var paragraph in entry.Body)
+                {
+                    <p class="rules-text">@paragraph</p>
+                }
+                @if (entry.Table is not null)
+                {
+                    <RuleTableView Table="entry.Table" />
+                }
+                <SourceRef Source="@entry.Source" Page="entry.Page" />
+            </article>
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<IGrouping<string, RuleSection>> Groups => Book.Sections.GroupBy(s => s.Category);
+
+    private static string CategoryId(string category) => "apartado-" + RulesText.Slug(category);
+
+    protected override Task OnAfterRenderAsync(bool firstRender) => firstRender ? Scroller.ScrollToCurrentAsync() : Task.CompletedTask;
+}

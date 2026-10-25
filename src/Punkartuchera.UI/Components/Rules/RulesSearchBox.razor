@@ -1,0 +1,84 @@
+@inject RulesSearch Search
+@inject Rulebook Book
+
+@* Buscador de reglas: busca mientras escribes, sin tildes ni mayúsculas. *@
+<div class="rules-search">
+    <div class="rules-search__row">
+        <label class="visually-hidden" for="rules-query">Buscar en las reglas</label>
+        <input id="rules-query" class="field__input rules-search__input" type="search" autocomplete="off"
+               placeholder="@Placeholder" @bind="_query" @bind:event="oninput" @bind:after="Run" />
+        @if (ShowFactionFilter)
+        {
+            <label class="visually-hidden" for="rules-faction">Facción</label>
+            <select id="rules-faction" class="field__input rules-search__faction" @bind="_factionId" @bind:after="Run">
+                <option value="">Todas las facciones</option>
+                @foreach (var faction in Book.Factions)
+                {
+                    <option value="@faction.Id">@faction.Name</option>
+                }
+            </select>
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(_query))
+    {
+        @if (_hits.Count == 0)
+        {
+            <p class="rules-search__empty scribble">Nada de nada. Prueba con otra palabra.</p>
+        }
+        else
+        {
+            <ol class="rules-hits">
+                @foreach (var hit in _hits)
+                {
+                    <li>
+                        <a class="rules-hit" href="@hit.Href">
+                            <span class="rules-hit__kind">@KindLabel(hit.Kind)</span>
+                            <span class="rules-hit__title">@hit.Title</span>
+                            <span class="rules-hit__context">@hit.Context</span>
+                            @if (!string.IsNullOrEmpty(hit.Snippet))
+                            {
+                                <span class="rules-hit__snippet">@hit.Snippet</span>
+                            }
+                        </a>
+                    </li>
+                }
+            </ol>
+        }
+    }
+</div>
+
+@code {
+    /// <summary>Facción con la que empieza filtrado; las reglas generales salen siempre.</summary>
+    [Parameter] public string? FactionId { get; set; }
+
+    [Parameter] public bool ShowFactionFilter { get; set; } = true;
+
+    [Parameter] public string Placeholder { get; set; } = "Busca: asaltar, cobertura, Bersérker…";
+
+    private string _query = string.Empty;
+    private string _factionId = string.Empty;
+    private IReadOnlyList<RuleHit> _hits = [];
+
+    protected override void OnParametersSet()
+    {
+        _factionId = FactionId ?? string.Empty;
+        Run();
+    }
+
+    private void Run() => _hits = Search.Search(_query, string.IsNullOrEmpty(_factionId) ? null : _factionId);
+
+    private static string KindLabel(RuleHitKind kind) => kind switch
+    {
+        RuleHitKind.Section => "Regla",
+        RuleHitKind.SpecialRule => "Especial",
+        RuleHitKind.Weapon => "Arma",
+        RuleHitKind.Armor => "Blindaje",
+        RuleHitKind.Gear => "Equipo",
+        RuleHitKind.Faction => "Facción",
+        RuleHitKind.FactionRule => "De facción",
+        RuleHitKind.Troop => "Tropa",
+        RuleHitKind.Extra => "Extra",
+        _ => "Regla",
+    };
+}

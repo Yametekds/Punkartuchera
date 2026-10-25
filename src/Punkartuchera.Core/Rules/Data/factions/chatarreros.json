@@ -1,0 +1,103 @@
+{
+  "id": "chatarreros",
+  "name": "Chatarreros",
+  "source": "bandas",
+  "page": 3,
+  "summary": "Carroñeros que rebuscan en las ruinas y comercian con todos. Peor en el cuerpo a cuerpo, pero con inventos raros, bombas y exploradores que se cuelan por cualquier parte.",
+  "restrictions": [
+    "No puede haber más Dinamos que el resto de la banda junta.",
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "rules": [
+    { "name": "Equipo chatarrero", "text": "Si alguien que no es Chatarrero quiere usar su equipo (salvo balas apañadas y mira telescópica), tiene que superar una tirada de Técnica por objeto o lo descarta inutilizado." }
+  ],
+  "troops": [
+    {
+      "name": "Dinamo", "cost": 15, "page": 4,
+      "stats": { "a": "2", "c": "2", "p": "2", "ag": "3", "f": "3", "d": "3", "t": "7" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Bomba de humo", "cost": 5, "each": true }, { "name": "Bomba incendiaria", "cost": 7, "each": true },
+        { "name": "Vaporeta", "cost": 8 }, { "name": "Chasqueador y traje voltaico", "cost": 25 }
+      ],
+      "armor": "Ropas resistentes",
+      "equipmentOptions": [{ "name": "Cacharras del oficio", "cost": 3 }]
+    },
+    {
+      "name": "Engranaje", "cost": 16, "page": 5,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "5" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 },
+        { "name": "Pistola", "cost": 5 }, { "name": "Trabuco", "cost": 5 }, { "name": "Bombeadora", "cost": 8 },
+        { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }
+      ],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }]
+    },
+    {
+      "name": "Pistón", "cost": 30, "page": 6,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "3", "t": "4" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 },
+        { "name": "Maza pesada", "cost": 6 }, { "name": "Puño balístico", "cost": 6 }, { "name": "Filo pesado", "cost": 8 },
+        { "name": "Filo medio", "cost": 10 }, { "name": "Lanzaarpones", "cost": 18 }
+      ],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }]
+    },
+    {
+      "name": "Sonda", "cost": 40, "page": 7,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "5", "f": "2", "d": "3", "t": "5" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }],
+      "armor": "Ropas resistentes",
+      "specialRules": ["Camuflaje", "Infiltración", "Raudo", "Todoterreno"]
+    },
+    {
+      "name": "Caronte", "cost": 60, "page": 8, "personality": true,
+      "stats": { "a": "2", "c": "2", "p": "3", "ag": "3 (2)", "f": "3 (4)", "d": "4", "t": "7" },
+      "weapons": "Bola de Dragón con 5 bombas incendiarias",
+      "armor": "Carcasa",
+      "equipment": "Cacharras del oficio",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Carcasa", "text": "Blindaje 3 con Ignífugo y Escurridizo." },
+        { "name": "Bola de Dragón", "text": "Vaporeta que también lanza sus bombas incendiarias a presión (elige antes de disparar). Por cada Acción puede añadir hasta 3 marcadores de presión: cada uno da +5 cm al lanzamiento (y +2,5 cm de desviación) o +5 cm al chorro de vapor (y -1 a la Técnica). Se gastan al usarla o vaciando la presión con 1 Acción. Si cae con bombas, detonan con +1 a Fuerza por marcador." }
+      ]
+    },
+    {
+      "name": "Samantha O'Sullivan", "cost": 80, "page": 9, "personality": true,
+      "stats": { "a": "3", "c": "4 (5)", "p": "4", "ag": "4", "f": "3 (5)", "d": "4", "t": "7" },
+      "weapons": "Rotocañón y filo medio",
+      "armor": "Cuero endurecido",
+      "equipment": "Cacharras del oficio",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Rotocañón", "text": "Pistola con 3 modos (elige antes de disparar, gasta balas):\n• Cazahombres: F5, Pen 5, 20/40/60.\n• Cazabestias: F7, Pen 7, 5/10/15, Difícil de usar.\n• Cazaalimañas: F5/4/3, Pen 5/4/3, 10/20/30, Postas." },
+        { "name": "Maestra armera", "text": "Sus balas apañadas nunca tienen ¡¡¡CATAPUM!!!" }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Chasqueador y traje voltaico", "kind": "Melee", "cost": 25, "combat": "+2", "strength": "6", "penetration": "Ignora Blindaje", "rules": ["Escasa"], "page": 10, "notes": "Incluye el traje voltaico." },
+    { "name": "Puño balístico", "kind": "Melee", "cost": 6, "combat": "+2", "strength": "+5", "penetration": "2", "rules": ["Escasa", "Lentorra (2)"], "page": 10 },
+    { "name": "Bomba de humo", "kind": "Ranged", "cost": 5, "range": "F × 5", "strength": "-", "penetration": "-", "rules": ["Bomba", "Escasa"], "page": 10, "notes": "Marcador de humo permanente de 5 cm de radio: -2 acumulable a Precisión si la línea de tiro lo cruza; quien lo toque pierde los bonificadores de Asalto. Precio por bomba." },
+    { "name": "Bomba incendiaria", "kind": "Ranged", "cost": 7, "range": "F × 5", "strength": "-", "penetration": "-", "rules": ["Bomba", "Escasa", "Incendiaria (2)"], "page": 10, "notes": "Precio por bomba." },
+    { "name": "Bombeadora", "kind": "Ranged", "cost": 8, "range": "10/20/30", "strength": "1", "penetration": "1", "rules": ["A dos manos", "Escasa"], "page": 10, "notes": "Cada Acción de bombeo pone hasta 3 marcadores: +1 F, +1 Pen o +10 cm a todos los rangos (máx. 5 de cada tipo). Al disparar se gastan. Con más de 2 del mismo tipo tiene ¡¡¡CATAPUM!!!" },
+    { "name": "Lanzaarpones", "kind": "Ranged", "cost": 18, "range": "20/40/60", "strength": "7", "penetration": "10", "rules": ["A dos manos", "Armatoste", "¡¡¡CATAPUM!!!", "Escasa", "Lentorra (2)", "Mamotreto"], "page": 10 },
+    { "name": "Trabuco", "kind": "Ranged", "cost": 5, "range": "10/15/20", "strength": "5/4/3", "penetration": "2", "rules": ["A dos manos", "Escasa", "Lentorra (1)", "Postas"], "page": 11, "notes": "No necesita balas." },
+    { "name": "Vaporeta", "kind": "Ranged", "cost": 8, "range": "20 (línea recta)", "strength": "Especial", "penetration": "Ignora Blindaje y Cobertura parcial", "rules": ["A dos manos", "Armatoste", "Escasa", "Plantilla"], "page": 11, "notes": "Tirada de Técnica: si la supera, impacta a todo en la línea con F = margen de éxito + 1. Si falla, se impacta a sí misma con F = margen de fallo." }
+  ],
+  "armors": [
+    { "name": "Traje voltaico", "armor": "2", "rules": ["Armatoste", "Electrificación", "Ignífugo"], "page": 11, "notes": "Va con el chasqueador." }
+  ],
+  "gear": [
+    { "name": "Bala apañada", "cost": 10, "page": 11, "text": "Bala barata con ¡¡¡CATAPUM!!! Hay que avisar al disparar que es apañada. Precio por bala." },
+    { "name": "Cacharras del oficio", "cost": 3, "page": 11, "text": "Con una tirada de Técnica repara un arma inutilizada por ¡¡¡CATAPUM!!!" },
+    { "name": "Mira telescópica", "cost": 10, "page": 11, "text": "Para rifle o pistola. Los modificadores de distancia pasan a ser -1/+2/+1." }
+  ]
+}

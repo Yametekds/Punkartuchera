@@ -11,7 +11,7 @@ public static class AppNavigation
     public static IReadOnlyList<NavItem> Items { get; } =
     [
         new("", "Bandas", Icons.Band, Available: true, MatchAll: true),
-        new("reglas", "Reglas", Icons.Book, Available: false),
+        new("reglas", "Reglas", Icons.Book, Available: true),
         new("mapa", "Mapa", Icons.Map, Available: false),
         new("partida", "Partida", Icons.Dice, Available: false),
     ];

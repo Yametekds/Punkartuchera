@@ -1,0 +1,17 @@
+@* Cabecera de las páginas de reglas con vuelta al índice. *@
+<header class="page-header rules-back">
+    <a class="btn btn--icon" href="reglas" aria-label="Volver a las reglas"><Icon Path="@Icons.Back" /></a>
+    <div class="page-header__title">
+        @if (Kicker is not null)
+        {
+            <span class="page-kicker">@Kicker</span>
+        }
+        <h1 class="page-title distress">@Title</h1>
+    </div>
+</header>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+
+    [Parameter] public string? Kicker { get; set; }
+}

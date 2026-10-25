@@ -17,7 +17,10 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddPunkartucheraUi(this IServiceCollection services)
     {
-        services.AddSingleton<IRulesCatalog, PlaceholderRulesCatalog>();
+        services.AddSingleton(_ => RulebookLoader.LoadEmbedded());
+        services.AddSingleton<IRulesCatalog, RulebookCatalog>();
+        services.AddSingleton<RulesSearch>();
+        services.AddScoped<FragmentScroller>();
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
