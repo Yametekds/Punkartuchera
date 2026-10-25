@@ -13,7 +13,9 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Reglas del reglamento oficial gratuito: buscador, reglas básicas, reglas especiales, armas y equipo, y perfiles de todas las facciones.
 - Funciona sin conexión una vez cargada.
 
-En preparación: generador de mapas y partidas activas.
+Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
+
+En preparación: partidas activas.
 
 ## Requisitos
 

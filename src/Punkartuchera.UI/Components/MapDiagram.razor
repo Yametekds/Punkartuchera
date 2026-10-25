@@ -1,0 +1,61 @@
+@using System.Globalization
+@using Punkartuchera.Core.Maps
+@* Plano de la mesa visto desde arriba, en centímetros. El norte es la banda B y el sur la banda A. *@
+<svg class="map-diagram" viewBox="@ViewBox" role="img" aria-label="@Description">
+    <rect class="map-board" x="0" y="0" width="@W" height="@H" />
+
+    @for (var x = GridStep; x < W; x += GridStep)
+    {
+        <line class="map-grid" x1="@x" y1="0" x2="@x" y2="@H" />
+    }
+    @for (var y = GridStep; y < H; y += GridStep)
+    {
+        <line class="map-grid" x1="0" y1="@y" x2="@W" y2="@y" />
+    }
+
+    <rect class="map-deploy map-deploy--north" x="0" y="0" width="@W" height="@D" />
+    <rect class="map-deploy map-deploy--south" x="0" y="@(H - D)" width="@W" height="@D" />
+    <text class="map-deploy__label" x="@(W / 2)" y="@Num(D / 2.0)">Despliegue B</text>
+    <text class="map-deploy__label" x="@(W / 2)" y="@Num(H - D / 2.0)">Despliegue A</text>
+    <line class="map-midline" x1="0" y1="@Num(H / 2.0)" x2="@W" y2="@Num(H / 2.0)" />
+
+    @foreach (var piece in Layout.Pieces)
+    {
+        <g class="map-piece @PieceClass(piece.Type)">
+            <title>@piece.Type.Name (@piece.Width × @piece.Depth cm)</title>
+            @if (piece.Type.Shape == TerrainShape.Circle)
+            {
+                <ellipse cx="@Num(piece.X)" cy="@Num(piece.Y)" rx="@Num(piece.Width / 2.0)" ry="@Num(piece.Depth / 2.0)" />
+            }
+            else
+            {
+                <rect x="@Num(piece.Left)" y="@Num(piece.Top)" width="@piece.Width" height="@piece.Depth" />
+            }
+            <text x="@Num(piece.X)" y="@Num(piece.Y)" style="font-size: @Num(LabelSize(piece))px">@piece.Type.Abbreviation</text>
+        </g>
+    }
+</svg>
+
+@code {
+    private const int GridStep = 10;
+
+    [Parameter, EditorRequired] public MapLayout Layout { get; set; } = default!;
+
+    private int W => Layout.Board.Width;
+
+    private int H => Layout.Board.Height;
+
+    private int D => Layout.Board.DeploymentDepth;
+
+    private string ViewBox => $"0 0 {W} {H}";
+
+    private string Description => $"Mapa {Layout.Code}: mesa de {W} por {H} centímetros con {Layout.Pieces.Count} piezas de escenografía.";
+
+    /// <summary>Clase según lo que hace la pieza en juego, para colorearla igual que en la leyenda.</summary>
+    public static string PieceClass(TerrainType type) =>
+        type.BlocksSight ? "map-piece--block" : type.Cover > 0 ? "map-piece--cover" : "map-piece--hazard";
+
+    private static double LabelSize(PlacedTerrain piece) => Math.Clamp(Math.Min(piece.Width, piece.Depth) * 0.6, 2.6, 5);
+
+    private static string Num(double value) => value.ToString("0.##", CultureInfo.InvariantCulture);
+}
