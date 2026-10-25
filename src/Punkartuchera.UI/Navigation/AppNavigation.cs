@@ -12,7 +12,7 @@ public static class AppNavigation
     [
         new("", "Bandas", Icons.Band, Available: true, MatchAll: true),
         new("reglas", "Reglas", Icons.Book, Available: true),
-        new("mapa", "Mapa", Icons.Map, Available: false),
+        new("mapa", "Mapa", Icons.Map, Available: true),
         new("partida", "Partida", Icons.Dice, Available: false),
     ];
 }

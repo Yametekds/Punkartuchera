@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Punkartuchera.Core.Maps;
 using Punkartuchera.Core.Matches;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Services;
@@ -21,6 +22,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRulesCatalog, RulebookCatalog>();
         services.AddSingleton<RulesSearch>();
         services.AddScoped<FragmentScroller>();
+        services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
