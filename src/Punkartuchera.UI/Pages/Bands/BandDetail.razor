@@ -4,8 +4,6 @@
 @inject Rulebook Book
 @inject GearLookup Lookup
 @inject NavigationManager Navigation
-@inject BandExchangeService Exchange
-@inject FileSharer Sharer
 
 <PageTitle>@(_band?.Name ?? "Banda") · Punkartuchera</PageTitle>
 
@@ -37,7 +35,7 @@ else
                 @if (!_band.IsReadOnly)
                 {
                     <button type="button" class="menu-pop__item" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar datos</button>
-                    <button type="button" class="menu-pop__item" @onclick="ShareWithRival"><Icon Path="@Icons.Share" /> Pasar al rival</button>
+                    <button type="button" class="menu-pop__item" @onclick="() => _sharing = true"><Icon Path="@Icons.Share" /> Pasar al rival</button>
                 }
                 <button type="button" class="menu-pop__item" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Clonar banda</button>
                 <button type="button" class="menu-pop__item menu-pop__item--danger" @onclick="() => _tab = TabDetails"><Icon Path="@Icons.Trash" /> Borrar…</button>
@@ -78,11 +76,6 @@ else
     @if (_band.IsReadOnly)
     {
         <p class="notice">Banda del rival: solo para cotillear. Ves sus fichas, equipo y habilidades, pero las balas se las guarda.</p>
-    }
-
-    @if (_shareInfo is not null)
-    {
-        <p class="notice" role="status">@_shareInfo</p>
     }
 
     @if (_error is not null)
@@ -221,6 +214,11 @@ else
     {
         <a class="btn btn--blood fab" href="@($"bandas/{_band.Id}/miembro/nuevo")"><Icon Path="@Icons.Plus" /> Reclutar</a>
     }
+
+    @if (_sharing)
+    {
+        <RivalShareSheet BandId="_band.Id" BandName="@_band.Name" OnClose="() => _sharing = false" />
+    }
 }
 
 @code {
@@ -237,7 +235,7 @@ else
     private bool _loading = true;
     private bool _editing;
     private string? _error;
-    private string? _shareInfo;
+    private bool _sharing;
     private string _draftName = string.Empty;
     private string _draftFaction = string.Empty;
     private string? _draftNotes;
@@ -260,7 +258,7 @@ else
         _loading = _band?.Id != Id;
         _editing = false;
         _error = null;
-        _shareInfo = null;
+        _sharing = false;
         _band = await Bands.GetAsync(Id);
         _allBands = await Bands.GetAllAsync();
         _loading = false;
@@ -313,32 +311,6 @@ else
         {
             (_band.Name, _band.FactionId, _band.SubfactionId, _band.Notes) = (name, faction, subfaction, notes);
             _error = ex.Message;
-        }
-    }
-
-    private async Task ShareWithRival()
-    {
-        _error = null;
-        _shareInfo = null;
-        try
-        {
-            var export = await Exchange.ExportAsync(Id);
-            var outcome = await Sharer.ShareAsync(export.FileName, export.Content, _band?.Name ?? "Banda",
-                "Mi banda para Punkartuchera. Ábrela en la app con «Cargar rival».");
-            _shareInfo = outcome switch
-            {
-                ShareOutcome.Shared => "Banda enviada. Las balas se quedan en casa.",
-                ShareOutcome.Downloaded => $"Descargado «{export.FileName}». Pásaselo al rival como quieras; las balas no van dentro.",
-                _ => null,
-            };
-        }
-        catch (BandExchangeException ex)
-        {
-            _error = ex.Message;
-        }
-        catch (JSException)
-        {
-            _error = "El navegador no ha dejado compartir la banda. Prueba otra vez.";
         }
     }
 

@@ -1,0 +1,105 @@
+@inject BandExchangeService Exchange
+@inject FileSharer Sharer
+
+@* Hoja para pasar la banda al rival: QR sin fotos o archivo completo. *@
+<div class="sheet-scrim" @onclick="Close"></div>
+<section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="share-title">
+    <header class="sheet__head">
+        <h2 id="share-title" class="sheet__title">Pásale la banda al rival</h2>
+        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+    </header>
+
+    @if (_qr is not null)
+    {
+        <p>Que te escanee este QR desde <strong>Cargar rival</strong> y se lleva la banda <strong>sin fotos</strong>.</p>
+        <QrCode Text="@_qr.Text" Label="@($"QR de la banda {BandName}")" Class="sheet__qr" />
+        @if (_qr.NotesDropped)
+        {
+            <p class="sheet__small">Las notas no caben en el QR. Si las quiere, que pille el archivo.</p>
+        }
+    }
+    else if (_qrError is not null)
+    {
+        <p class="notice">@_qrError</p>
+    }
+    else
+    {
+        <p class="muted">Pintando el QR…</p>
+    }
+
+    <p>¿La quiere entera, con jetas y todo? <strong>Envíale el archivo</strong>.</p>
+    <div class="actions">
+        <button type="button" class="btn btn--blood" disabled="@_sending" @onclick="SendFile"><Icon Path="@Icons.Share" /> Enviar archivo</button>
+    </div>
+
+    @if (_info is not null)
+    {
+        <p class="notice" role="status">@_info</p>
+    }
+
+    @if (_error is not null)
+    {
+        <p class="notice notice--danger">@_error</p>
+    }
+
+    <p class="sheet__small">Las balas no van ni en el QR ni en el archivo.</p>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public Guid BandId { get; set; }
+
+    [Parameter] public string BandName { get; set; } = string.Empty;
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private BandQrPayload? _qr;
+    private string? _qrError;
+    private string? _info;
+    private string? _error;
+    private bool _sending;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _qr = await Exchange.ExportQrAsync(BandId);
+        }
+        catch (BandExchangeException ex)
+        {
+            _qrError = ex.Message;
+        }
+    }
+
+    private Task Close() => OnClose.InvokeAsync();
+
+    private async Task SendFile()
+    {
+        _error = null;
+        _info = null;
+        _sending = true;
+        try
+        {
+            var export = await Exchange.ExportAsync(BandId);
+            var outcome = await Sharer.ShareAsync(export.FileName, export.Content, BandName,
+                "Mi banda para Punkartuchera. Ábrela en la app con «Cargar rival».");
+            _info = outcome switch
+            {
+                ShareOutcome.Shared => "Banda enviada. Las balas se quedan en casa.",
+                ShareOutcome.Downloaded => $"Descargado «{export.FileName}». Pásaselo al rival como quieras.",
+                _ => null,
+            };
+        }
+        catch (BandExchangeException ex)
+        {
+            _error = ex.Message;
+        }
+        catch (JSException)
+        {
+            _error = "El navegador no ha dejado compartir la banda. Prueba otra vez.";
+        }
+        finally
+        {
+            _sending = false;
+        }
+    }
+}

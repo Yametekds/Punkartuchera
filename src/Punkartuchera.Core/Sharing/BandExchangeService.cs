@@ -1,16 +1,17 @@
 using System.Text.Json;
 using Punkartuchera.Core.Models;
+using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Serialization;
 using Punkartuchera.Core.Storage;
 
 namespace Punkartuchera.Core.Sharing;
 
 /// <summary>
-/// Exporta una banda propia a un archivo <c>.punkband</c> para pasársela al rival
-/// e importa las que llegan como bandas rivales de solo lectura.
+/// Exporta una banda propia para pasársela al rival, en un archivo <c>.punkband</c> (con fotos)
+/// o en el texto de un QR (sin fotos), e importa las que llegan como bandas rivales de solo lectura.
 /// Al exportar se quitan las balas y las notas de la banda: eso no lo ve el rival.
 /// </summary>
-public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photos)
+public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photos, IRulesCatalog rules)
 {
     public const string FileExtension = ".punkband";
     public const string ContentType = "application/json";
@@ -23,13 +24,7 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
     public async Task<ExportedBand> ExportAsync(Guid bandId, CancellationToken cancellationToken = default)
     {
-        var source = await bands.GetAsync(bandId, cancellationToken)
-            ?? throw new BandExchangeException("La banda no existe.");
-        if (source.IsReadOnly)
-        {
-            throw new BandExchangeException("Las bandas rivales no se pueden volver a pasar.");
-        }
-
+        var source = await GetExportableAsync(bandId, cancellationToken);
         var band = BandSerializer.Clone(source);
         band.Notes = null;
         band.Ownership = BandOwnership.Rival;
@@ -63,13 +58,45 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         return new ExportedBand(FileNameFor(source.Name), json);
     }
 
+    /// <summary>Texto del QR con la banda sin fotos ni balas.</summary>
+    /// <exception cref="BandExchangeException">Si la banda no cabe en un QR.</exception>
+    public async Task<BandQrPayload> ExportQrAsync(Guid bandId, CancellationToken cancellationToken = default)
+    {
+        var source = await GetExportableAsync(bandId, cancellationToken);
+        return BandQrCodec.Encode(source, rules.Stats.Select(s => s.Key).ToList());
+    }
+
     /// <summary>
     /// Guarda la banda del archivo como rival. Si ya había una copia de esa misma banda, la sustituye.
     /// </summary>
     public async Task<Band> ImportAsync(Stream content, CancellationToken cancellationToken = default)
     {
         var package = await ReadAsync(content, cancellationToken);
-        var band = package.Band;
+        var packaged = package.Photos
+            .Where(p => AllowedPhotoTypes.Contains(p.ContentType) && p.Data.Length > 0)
+            .GroupBy(p => p.Key)
+            .ToDictionary(g => g.Key, g => g.First());
+        return await SaveRivalAsync(package.Band, packaged, cancellationToken);
+    }
+
+    /// <summary>
+    /// Guarda como rival la banda leída de un QR. Si ya se tenía esa banda (por ejemplo, del archivo),
+    /// la sustituye y conserva las fotos de los miembros que siguen llamándose igual.
+    /// </summary>
+    public Task<Band> ImportQrAsync(string qrText, CancellationToken cancellationToken = default) =>
+        SaveRivalAsync(BandQrCodec.Decode(qrText), new Dictionary<string, PackagedPhoto>(), cancellationToken);
+
+    private async Task<Band> GetExportableAsync(Guid bandId, CancellationToken cancellationToken)
+    {
+        var source = await bands.GetAsync(bandId, cancellationToken)
+            ?? throw new BandExchangeException("La banda no existe.");
+        return source.IsReadOnly
+            ? throw new BandExchangeException("Las bandas rivales no se pueden volver a pasar.")
+            : source;
+    }
+
+    private async Task<Band> SaveRivalAsync(Band band, Dictionary<string, PackagedPhoto> packaged, CancellationToken cancellationToken)
+    {
         var sourceId = band.Id;
 
         var previous = (await bands.GetAllAsync(cancellationToken))
@@ -84,11 +111,8 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         band.UpdatedAt = DateTimeOffset.UtcNow;
         band.SchemaVersion = Band.CurrentSchemaVersion;
 
-        var packaged = package.Photos
-            .Where(p => AllowedPhotoTypes.Contains(p.ContentType) && p.Data.Length > 0)
-            .GroupBy(p => p.Key)
-            .ToDictionary(g => g.Key, g => g.First());
         var saved = new Dictionary<string, string>();
+        var kept = new HashSet<string>();
 
         foreach (var member in band.Members)
         {
@@ -96,6 +120,14 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
             member.Stats ??= [];
             member.Skills ??= [];
             member.Gear ??= [];
+            if (member.Photo is null
+                && previous?.Members.FirstOrDefault(m => m.Name == member.Name)?.Photo is { Source: PhotoSource.Stored } earlier)
+            {
+                member.Photo = earlier;
+                kept.Add(earlier.Key);
+                continue;
+            }
+
             if (member.Photo is not { Source: PhotoSource.Stored } photo)
             {
                 continue;
@@ -122,7 +154,7 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         {
             foreach (var member in previous.Members)
             {
-                if (member.Photo is { Source: PhotoSource.Stored } old)
+                if (member.Photo is { Source: PhotoSource.Stored } old && !kept.Contains(old.Key))
                 {
                     await photos.DeleteAsync(old.Key, cancellationToken);
                 }
