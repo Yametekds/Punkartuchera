@@ -1,0 +1,249 @@
+@page "/mapa"
+@using Punkartuchera.Core.Maps
+@inject ITerrainCatalog Terrain
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<PageTitle>Mapa · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Tierra de nadie</span>
+        <h1 class="page-title distress">Generador de mapas</h1>
+    </div>
+</header>
+
+@if (Terrain.IsPlaceholder)
+{
+    <p class="notice notice--warning">
+        <span><strong>Medidas orientativas.</strong> Los tamaños y la cobertura de cada pieza son de relleno hasta cargar el reglamento.</span>
+    </p>
+}
+
+<PageTabs Tabs="TabNames" @bind-Active="_tab" />
+
+@if (_layout is not null)
+{
+    <div class="map-layout">
+        <section class="map-panel @(_tab == TabMap ? "is-active" : null)" aria-label="Mapa generado">
+            <div class="map-code card">
+                <div class="map-code__value">
+                    <span class="datacard__label">Código del mapa</span>
+                    <span class="stamp stamp--light map-code__seed">@_layout.Code</span>
+                </div>
+                <button type="button" class="btn btn--ghost" @onclick="Share">
+                    <Icon Path="@Icons.Copy" /> @(_shared ? "¡Pillado!" : "Pasar al rival")
+                </button>
+            </div>
+
+            <div class="map-frame">
+                <MapDiagram Layout="_layout" />
+            </div>
+
+            @if (_layout.Leftovers.Count > 0)
+            {
+                <p class="notice notice--danger">
+                    <span><strong>No cabe todo, tron.</strong> Se quedan fuera @LeftoversText. Quita algo o pilla una mesa más grande.</span>
+                </p>
+            }
+            else if (_layout.MinGap < MapGenerator.DefaultMinGap)
+            {
+                <p class="notice notice--warning">
+                    <span>Va justito: entre algunas piezas solo quedan @_layout.MinGap cm de paso.</span>
+                </p>
+            }
+
+            <dl class="map-balance">
+                <div class="statbox"><dt>Cobertura B</dt><dd>@_layout.CoverOn(MapSide.North)</dd></div>
+                <div class="statbox statbox--ammo"><dt>Centro</dt><dd>@_layout.PiecesOn(MapSide.Center)</dd></div>
+                <div class="statbox"><dt>Cobertura A</dt><dd>@_layout.CoverOn(MapSide.South)</dd></div>
+            </dl>
+            <p class="muted map-balance__note">
+                Cada pieza tiene su gemela girada en la otra mitad, así que las dos bandas ven lo mismo desde su despliegue.
+                Lo impar va a la línea central, a la misma distancia de las dos.
+            </p>
+
+            <ul class="map-legend">
+                @foreach (var group in _layout.Pieces.GroupBy(p => p.Type))
+                {
+                    <li>
+                        <svg class="map-legend__swatch" viewBox="0 0 10 10" aria-hidden="true">
+                            <g class="map-piece @MapDiagram.PieceClass(group.Key)">
+                                @if (group.Key.Shape == TerrainShape.Circle)
+                                {
+                                    <circle cx="5" cy="5" r="4.5" />
+                                }
+                                else
+                                {
+                                    <rect x=".5" y=".5" width="9" height="9" />
+                                }
+                            </g>
+                        </svg>
+                        <strong>@group.Key.Abbreviation</strong>
+                        <span>@group.Key.Name × @group.Count()</span>
+                    </li>
+                }
+            </ul>
+        </section>
+
+        <section class="map-panel @(_tab == TabTerrain ? "is-active" : null)" aria-label="Elegir terreno">
+            <h2 class="section-title">Mesa</h2>
+            <div class="faction-grid">
+                @foreach (var board in Terrain.Boards)
+                {
+                    <button type="button" class="faction-tile @(board == _board ? "is-selected" : null)"
+                            aria-pressed="@(board == _board)" @onclick="() => SelectBoard(board)">
+                        @board.Name
+                    </button>
+                }
+            </div>
+
+            <h2 class="section-title">Chatarra para la mesa</h2>
+            <div class="paper terrain-picker">
+                @foreach (var type in Terrain.Types)
+                {
+                    <div class="terrain-row">
+                        <Stepper Label="@type.Name" Value="@_counts[type.Id]" Max="TerrainSelection.MaxPerType"
+                                 ValueChanged="value => SetCount(type, value)" />
+                        <p class="terrain-row__info">
+                            @type.Width×@type.Depth cm · @CoverText(type)@(type.Description is null ? null : $" · {type.Description}")
+                        </p>
+                    </div>
+                }
+                <p class="terrain-picker__total">@TotalPieces piezas en total</p>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn--ghost" @onclick="ResetCounts">Lo de siempre</button>
+                <button type="button" class="btn btn--ghost" @onclick="ClearCounts">Mesa pelada</button>
+            </div>
+
+            <h2 class="section-title">¿Te han pasado un código?</h2>
+            <form class="map-seed-form" @onsubmit="ApplyCode">
+                <label class="visually-hidden" for="map-code">Código del mapa</label>
+                <input id="map-code" class="field__input" @bind="_codeInput" placeholder="Ej. K7Q2XM" autocomplete="off" maxlength="12" />
+                <button type="submit" class="btn btn--primary">Cargar</button>
+            </form>
+            <p class="muted">Mismo código y misma chatarra, mismo mapa. Si te pasan el enlace, ya viene todo puesto.</p>
+        </section>
+    </div>
+}
+
+<button type="button" class="btn btn--blood fab" @onclick="Reroll"><Icon Path="@Icons.Dice" /> Otro mapa</button>
+
+@code {
+    private const string TabMap = "Mapa";
+    private const string TabTerrain = "Terreno";
+    private static readonly string[] TabNames = [TabMap, TabTerrain];
+
+    [SupplyParameterFromQuery(Name = "codigo")] public string? CodeQuery { get; set; }
+
+    [SupplyParameterFromQuery(Name = "mesa")] public string? BoardQuery { get; set; }
+
+    [SupplyParameterFromQuery(Name = "terreno")] public string? TerrainQuery { get; set; }
+
+    private string _tab = TabMap;
+    private BoardPreset _board = default!;
+    private Dictionary<string, int> _counts = [];
+    private MapLayout? _layout;
+    private string? _codeInput;
+    private bool _shared;
+
+    private int TotalPieces => _counts.Values.Sum();
+
+    private string LeftoversText => string.Join(", ", _layout!.Leftovers
+        .GroupBy(t => t.Name)
+        .Select(g => $"{g.Count()}× {g.Key}"));
+
+    /// <summary>El enlace es el estado de la pantalla: compartirlo o recargar da el mismo mapa.</summary>
+    protected override void OnParametersSet()
+    {
+        var code = MapSeed.Normalize(CodeQuery);
+        if (code is null || TerrainQuery is null || Terrain.FindBoard(BoardQuery) is null)
+        {
+            Go(code ?? MapSeed.NewCode(),
+               Terrain.FindBoard(BoardQuery) ?? Terrain.DefaultBoard,
+               TerrainQuery is null ? new Dictionary<string, int>(Terrain.DefaultCounts) : TerrainSelection.Parse(TerrainQuery, Terrain));
+            return;
+        }
+
+        _board = Terrain.FindBoard(BoardQuery)!;
+        _counts = TerrainSelection.Parse(TerrainQuery, Terrain);
+        _layout = MapGenerator.Generate(_board, TerrainSelection.ToCounts(_counts, Terrain), code);
+        _shared = false;
+    }
+
+    private void Go(string code, BoardPreset board, IReadOnlyDictionary<string, int> counts)
+    {
+        var uri = Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+        {
+            ["codigo"] = code,
+            ["mesa"] = board.Id,
+            ["terreno"] = TerrainSelection.Format(counts),
+        });
+        Navigation.NavigateTo(uri, replace: true);
+    }
+
+    private void Reroll()
+    {
+        _tab = TabMap;
+        Go(MapSeed.NewCode(), _board, _counts);
+    }
+
+    private void SelectBoard(BoardPreset board) => Go(_layout!.Code, board, _counts);
+
+    private void SetCount(TerrainType type, int value)
+    {
+        var counts = new Dictionary<string, int>(_counts) { [type.Id] = value };
+        Go(_layout!.Code, _board, counts);
+    }
+
+    private void ResetCounts() => Go(_layout!.Code, _board, Terrain.DefaultCounts);
+
+    private void ClearCounts() => Go(_layout!.Code, _board, new Dictionary<string, int>());
+
+    private void ApplyCode()
+    {
+        var code = MapSeed.Normalize(_codeInput);
+        if (code is null)
+        {
+            return;
+        }
+
+        _codeInput = null;
+        _tab = TabMap;
+        Go(code, _board, _counts);
+    }
+
+    private async Task Share()
+    {
+        var text = $"Mapa {_layout!.Code} para Punkapocalyptic";
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.share", new { title = text, url = Navigation.Uri });
+            return;
+        }
+        catch (JSException)
+        {
+            // Sin menú de compartir (o cancelado): se copia el enlace.
+        }
+
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", Navigation.Uri);
+            _shared = true;
+        }
+        catch (JSException)
+        {
+        }
+    }
+
+    private static string CoverText(TerrainType type) =>
+        (type.Cover, type.BlocksSight) switch
+        {
+            (_, true) => "tapa la vista",
+            (0, _) => "no cubre",
+            (1, _) => "cobertura ligera",
+            _ => "cobertura buena",
+        };
+}

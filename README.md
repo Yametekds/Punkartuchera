@@ -13,7 +13,9 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Pasar la banda al rival en un archivo `.punkband` (con fotos, sin balas) y cargar la suya como banda rival de solo lectura.
 - Funciona sin conexión una vez cargada.
 
-En preparación: generador de mapas y partidas activas.
+- Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
+
+En preparación: partidas activas.
 
 ## Requisitos
 
