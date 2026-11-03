@@ -48,7 +48,6 @@
     padding: 10px 12px;
     background-color: var(--punk-surface);
     background-image: var(--punk-tex-grain);
-    border-left: 5px solid var(--punk-rust);
     color: var(--punk-text); text-decoration: none;
 }
 .rules-hit:hover, .rules-hit:focus-visible { background-color: var(--punk-surface-2); outline: none; }
@@ -63,15 +62,39 @@
 
 /* ---------- Índice ---------- */
 
-.rules-tiles {
-    display: grid; gap: 18px var(--punk-gap);
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+/* Índice del reglamento: una sola hoja con renglones, no tres tarjetas iguales */
+.rules-index { display: flex; flex-direction: column; padding: 14px 16px 18px; max-width: 760px; }
+.rules-index__row {
+    display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; align-items: baseline;
+    padding: 12px 0; color: var(--punk-ink); text-decoration: none;
 }
-.rules-tile { display: flex; flex-direction: column; gap: 8px; min-height: 140px; }
-.rules-tile:nth-child(odd) { transform: rotate(-.6deg); }
-.rules-tile:nth-child(even) { transform: rotate(.5deg); }
-.rules-tile__name { font-family: var(--punk-font-display); font-size: 1.6rem; line-height: .95; color: var(--punk-ink); }
-.rules-tile__meta { font-size: .9rem; color: var(--punk-ink-muted); }
+.rules-index__row + .rules-index__row { border-top: 2px dashed rgba(29, 23, 18, .35); }
+.rules-index__name { font-family: var(--punk-font-display); font-size: clamp(1.35rem, 5vw, 1.7rem); line-height: 1; }
+.rules-index__meta { grid-column: 1; font-size: .9rem; color: var(--punk-ink-muted); }
+.rules-index__count {
+    grid-column: 2; grid-row: 1 / span 2; align-self: center; text-align: right;
+    font-family: var(--punk-font-display); font-size: 1.9rem; line-height: 1; color: var(--punk-rust);
+    font-variant-numeric: tabular-nums;
+}
+.rules-index__count small { display: block; font-family: var(--punk-font-heading); font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--punk-ink-muted); }
+.rules-index__row:hover .rules-index__name { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--punk-rust); }
+
+/* Facciones: lista de nombres sobre el fondo, como un parte de guerra */
+.faction-roster {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 0 32px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+}
+.faction-roster li { border-bottom: 2px dashed var(--punk-border); }
+.faction-roster__item {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline;
+    padding: 14px 0; color: var(--punk-text); text-decoration: none;
+}
+.faction-roster__name { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: var(--punk-font-display); font-size: 1.45rem; line-height: 1; }
+.faction-roster__beta { font-size: .7rem; padding: 1px 6px; border-width: 2px; }
+.faction-roster__troops { font-family: var(--punk-font-heading); font-size: .8rem; letter-spacing: 1px; text-transform: uppercase; color: var(--punk-accent); white-space: nowrap; }
+.faction-roster__summary { grid-column: 1 / -1; font-size: .9rem; color: var(--punk-text-muted); max-width: 60ch; }
+.faction-roster__item:hover .faction-roster__name { color: var(--punk-accent); }
 .rules-legal { margin: 0 0 10px; max-width: 65ch; }
 .rules-sources a { text-decoration: none; }
 

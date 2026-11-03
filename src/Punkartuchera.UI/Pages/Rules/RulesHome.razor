@@ -13,41 +13,43 @@
 <RulesSearchBox />
 
 <h2 class="section-title">El reglamento</h2>
-<div class="rules-tiles">
-    <a class="paper rules-tile" href="reglas/basicas">
-        <span class="stamp">@Book.Sections.Count</span>
-        <span class="rules-tile__name">Reglas básicas</span>
-        <span class="rules-tile__meta">Turno, movimiento, combate, disparo, coberturas</span>
+<nav class="paper tape rules-index" aria-label="Reglamento">
+    <a class="rules-index__row" href="reglas/basicas">
+        <span class="rules-index__name">Reglas básicas</span>
+        <span class="rules-index__meta">Turno, movimiento, combate, disparo, coberturas</span>
+        <span class="rules-index__count">@Book.Sections.Count <small>apartados</small></span>
     </a>
-    <a class="paper rules-tile" href="reglas/especiales">
-        <span class="stamp">@Book.SpecialRules.Count</span>
-        <span class="rules-tile__name">Reglas especiales</span>
-        <span class="rules-tile__meta">De A dos manos a Veneno (X)</span>
+    <a class="rules-index__row" href="reglas/especiales">
+        <span class="rules-index__name">Reglas especiales</span>
+        <span class="rules-index__meta">De A dos manos a Veneno (X)</span>
+        <span class="rules-index__count">@Book.SpecialRules.Count <small>reglas</small></span>
     </a>
-    <a class="paper rules-tile" href="reglas/equipo">
-        <span class="stamp">@(Book.Weapons.Count + Book.Armors.Count + Book.Gear.Count)</span>
-        <span class="rules-tile__name">Armas y equipo</span>
-        <span class="rules-tile__meta">Perfiles, costes y reglas de cada trasto</span>
+    <a class="rules-index__row" href="reglas/equipo">
+        <span class="rules-index__name">Armas y equipo</span>
+        <span class="rules-index__meta">Perfiles, costes y reglas de cada trasto</span>
+        <span class="rules-index__count">@(Book.Weapons.Count + Book.Armors.Count + Book.Gear.Count) <small>trastos</small></span>
     </a>
-</div>
+</nav>
 
 <h2 class="section-title">Facciones</h2>
-<div class="card-grid">
+<ul class="faction-roster">
     @foreach (var faction in Book.Factions)
     {
-        <a class="paper tape band-card" href="@($"reglas/faccion/{faction.Id}")">
-            <div class="band-card__head">
-                <span class="stamp">@(faction.IsMercenaries ? "Mercenarios" : $"{faction.Troops.Count} tropas")</span>
-                @if (faction.Beta)
-                {
-                    <span class="stamp stamp--ink">Beta</span>
-                }
-            </div>
-            <span class="band-card__name">@faction.Name</span>
-            <span class="rules-tile__meta">@faction.Summary</span>
-        </a>
+        <li>
+            <a class="faction-roster__item" href="@($"reglas/faccion/{faction.Id}")">
+                <span class="faction-roster__name">
+                    @faction.Name
+                    @if (faction.Beta)
+                    {
+                        <span class="stamp stamp--light faction-roster__beta">Beta</span>
+                    }
+                </span>
+                <span class="faction-roster__troops">@(faction.IsMercenaries ? "A sueldo" : $"{faction.Troops.Count} tropas")</span>
+                <span class="faction-roster__summary">@faction.Summary</span>
+            </a>
+        </li>
     }
-</div>
+</ul>
 
 <h2 class="section-title">PDFs oficiales</h2>
 <p class="muted rules-legal">
