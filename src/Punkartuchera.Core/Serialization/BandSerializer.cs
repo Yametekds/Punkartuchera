@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Punkartuchera.Core.Models;
+using Punkartuchera.Core.Sharing;
 
 namespace Punkartuchera.Core.Serialization;
 
@@ -26,4 +27,5 @@ public static class BandSerializer
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(Band))]
 [JsonSerializable(typeof(List<Band>))]
+[JsonSerializable(typeof(BandPackage))]
 public sealed partial class PunkJsonContext : JsonSerializerContext;
