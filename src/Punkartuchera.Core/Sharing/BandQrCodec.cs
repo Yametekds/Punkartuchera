@@ -107,6 +107,7 @@ public static class BandQrCodec
             Id = band.Id.ToString("N"),
             Name = band.Name,
             Faction = band.FactionId,
+            TotalCost = band.Cost,
             StatKeys = keys,
             Members = band.Members.Select(m => new CompactMember
             {
@@ -115,7 +116,6 @@ public static class BandQrCodec
                 Stats = keys.Select(k => m.Stats.TryGetValue(k, out var v) ? v : (int?)null).ToList(),
                 Skills = m.Skills.Count == 0 ? null : m.Skills,
                 Gear = m.Gear.Select(g => string.IsNullOrWhiteSpace(g.Notes) ? new List<string> { g.Name } : [g.Name, g.Notes]).ToList(),
-                Cost = m.CostWithoutAmmo,
                 Notes = NullIfEmpty(m.Notes),
                 Portrait = m.Photo is { Source: PhotoSource.Stock } photo ? photo.Key : null,
             }).ToList(),
@@ -125,12 +125,13 @@ public static class BandQrCodec
     private static Band FromCompact(CompactBand compact)
     {
         var keys = compact.StatKeys ?? [];
-        return new Band
+        var band = new Band
         {
             Id = Guid.TryParseExact(compact.Id, "N", out var id) ? id : Guid.NewGuid(),
             Name = compact.Name ?? string.Empty,
             FactionId = compact.Faction ?? string.Empty,
             Ownership = BandOwnership.Rival,
+            TotalCost = compact.TotalCost,
             Members = (compact.Members ?? []).Select(m =>
             {
                 var member = new Miniature
@@ -158,6 +159,10 @@ public static class BandQrCodec
                 return member;
             }).ToList(),
         };
+
+        // Códigos antiguos traían el coste por miniatura: se queda solo el total.
+        band.KeepOnlyTotalCost();
+        return band;
     }
 
     private static string? NullIfEmpty(string? value) => string.IsNullOrWhiteSpace(value) ? null : value;
@@ -173,6 +178,8 @@ internal sealed class CompactBand
     [JsonPropertyName("n")] public string? Name { get; set; }
 
     [JsonPropertyName("f")] public string? Faction { get; set; }
+
+    [JsonPropertyName("t")] public int? TotalCost { get; set; }
 
     [JsonPropertyName("k")] public List<string>? StatKeys { get; set; }
 

@@ -47,7 +47,6 @@ public class UnitCostTests
 
         Assert.Equal(70, bruto.Cost);
         Assert.Equal(40, bruto.BaseCost);
-        Assert.Equal(40, bruto.CostWithoutAmmo);
     }
 
     [Fact]
@@ -109,7 +108,7 @@ public class UnitCostTests
     }
 
     [Fact]
-    public async Task Export_hides_the_bullets_in_the_cost()
+    public async Task Export_sends_only_the_band_total()
     {
         var bands = new InMemoryBandRepository();
         var photos = new InMemoryPhotoStore();
@@ -124,7 +123,12 @@ public class UnitCostTests
         var rival = await new BandExchangeService(new InMemoryBandRepository(), new InMemoryPhotoStore(), new RulebookCatalog(Book))
             .ImportAsync(new MemoryStream(Encoding.UTF8.GetBytes(json)));
 
-        Assert.Equal(40, rival.Members[0].Cost);
+        // Solo viaja el total de la banda: con el coste de cada miniatura se deducirían sus balas.
+        Assert.Null(rival.Members[0].Cost);
+        Assert.Null(rival.Members[0].BaseCost);
+        Assert.Empty(rival.Members[0].Included);
+        Assert.Equal(100, rival.TotalCost);
+        Assert.Equal(100, rival.Cost);
         Assert.Equal(0, rival.Members[0].Ammo);
     }
 }

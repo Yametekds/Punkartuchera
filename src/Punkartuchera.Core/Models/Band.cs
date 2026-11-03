@@ -30,6 +30,12 @@ public sealed class Band
 
     public List<Miniature> Members { get; set; } = [];
 
+    /// <summary>
+    /// En las bandas rivales, el coste total de la banda. El de cada miniatura no se comparte:
+    /// con él y el equipo a la vista se podrían deducir sus balas.
+    /// </summary>
+    public int? TotalCost { get; set; }
+
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
@@ -38,6 +44,31 @@ public sealed class Band
     public int SchemaVersion { get; set; } = CurrentSchemaVersion;
 
     public bool IsReadOnly => Ownership == BandOwnership.Rival;
+
+    /// <summary>Coste de la banda: la suma de sus miniaturas, o el total recibido si es rival.</summary>
+    public int? Cost => IsReadOnly
+        ? TotalCost
+        : Members.Any(m => m.Cost is not null) ? Members.Sum(m => m.Cost ?? 0) : null;
+
+    /// <summary>
+    /// Deja solo el coste total de la banda y quita el de cada miniatura (y lo que permite rehacerlo),
+    /// para que el rival no pueda deducir cuántas balas lleva cada una.
+    /// </summary>
+    public void KeepOnlyTotalCost()
+    {
+        if (TotalCost is null && Members.Any(m => m.Cost is not null))
+        {
+            TotalCost = Members.Sum(m => m.Cost ?? 0);
+        }
+
+        foreach (var member in Members)
+        {
+            member.Cost = null;
+            member.BaseCost = null;
+            member.BulletPrice = null;
+            member.Included = [];
+        }
+    }
 
     public Miniature? FindMember(Guid memberId) => Members.FirstOrDefault(m => m.Id == memberId);
 }
