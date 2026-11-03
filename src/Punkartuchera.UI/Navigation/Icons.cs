@@ -19,5 +19,7 @@ public static class Icons
     public const string Lock = "M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V7a3 3 0 0 0-6 0v3z";
     public const string Menu = "M3 6h18v2.5H3V6zm0 5h18v2.5H3V11zm0 5h18v2.5H3V16z";
     public const string Dots = "M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z";
+    public const string Share = "M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7l7-4.1c.5.5 1.3.8 2.1.8a3 3 0 1 0-3-3c0 .2 0 .5.1.7l-7 4.1A3 3 0 0 0 6 9a3 3 0 1 0 2 5.2l7.1 4.2c-.1.2-.1.4-.1.7a3 3 0 1 0 3-3z";
+    public const string Inbox = "M11 3h2v8.2l3.3-3.3 1.4 1.4L12 15 6.3 9.3l1.4-1.4 3.3 3.3V3zM3 14h5l1.5 3h5l1.5-3h5v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z";
     public const string Close = "M6.4 5L12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5z";
 }
