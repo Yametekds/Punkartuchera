@@ -1,0 +1,141 @@
+[
+  {
+    "id": "flipaos-de-los-ninjas",
+    "name": "Flipaos de los Ninjas",
+    "summary": "Pandilleros que han visto demasiadas pelis de ninjas. Se organizan por colores de pijama, pelean a mano limpia y actúan como una mafia de fanáticos.",
+    "restrictions": [
+      "Usa Jefes, Curtidos, Machacas y Piltrafas de los Pandilleros con otros nombres (ver Colorinchis). Sin Brutos.",
+      "Más Ninjas negros que rojos, más rojos que morados y más morados que blancos.",
+      "Máximo un Ninja blanco.",
+      "Máximo una Personalidad de los Flipaos o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Colorinchis", "text": "Todos llevan Ropas resistentes y no pueden comprar otro Blindaje. No están obligados a llevar arma y no pueden llevar Arma de fuego ni ballestas. Armas renombradas: shuriken (cuchillos arrojadizos), tonfa (maza ligera), sai (filo pequeño), nunchakus (maza), katana (filo medio) y yumi (arco).",
+        "table": { "columns": ["Color", "Tropa", "Reglas extra"], "rows": [
+          ["Ninja negro", "Piltrafa", "—"],
+          ["Ninja rojo", "Machaca", "Brinca como un hámster"],
+          ["Ninja morado", "Curtido", "Brinca como un hámster, Maestro de las artes marciales"],
+          ["Ninja blanco", "Jefe", "Brinca como un hámster, Maestro de las artes marciales, Ahora me ves…"]
+        ] } },
+      { "name": "Brinca como un hámster", "text": "Tiene Todoterreno." },
+      { "name": "Maestro de las artes marciales", "text": "Si Abate a un enemigo cuerpo a cuerpo en su Fase de activación y no queda trabado con nadie más, mueve 5 cm gratis." },
+      { "name": "Ahora me ves…", "text": "Una vez por partida, cuando un enemigo vaya a Asaltarle o Dispararle, se recoloca hasta 10 cm. El enemigo puede elegir otra Acción (o la misma si sigue a su alcance)." },
+      { "name": "De uno en uno", "text": "Nunca apoyan un Combate de forma voluntaria." },
+      { "name": "Mis puños son armas", "text": "No tienen penalizador por Combatir desarmados." }
+    ],
+    "troops": [
+      {
+        "name": "El Rayao", "cost": 60, "page": 3, "personality": true,
+        "stats": { "a": "2", "c": "6", "p": "4", "ag": "5", "f": "4 (5)", "d": "4", "t": "3" },
+        "weapons": "Sai (filo pequeño)", "armor": "Albornoz costroso (cuero endurecido)",
+        "specialRules": ["Personalidad", "Retraso (2)"],
+        "rules": [
+          { "name": "Jinete de la tormenta", "text": "Flota: ignora todo el terreno a ras de suelo salvo el impasable." },
+          { "name": "Poder del rayo", "text": "1 Acción, una vez por Turno: ataque a distancia hasta 30 cm sin modificadores por distancia, F4, Pen 3, ignora Blindajes (no Coberturas)." },
+          { "name": "Los dioses me reclaman", "text": "Si pierde un Combate por 3 o más y no cae, se larga de la partida." },
+          { "name": "Pausa china", "text": "1 Acción: un rival con Línea de visión mutua a 25 cm pierde una Acción en su siguiente Fase de activación." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fraus",
+    "name": "Fraus",
+    "summary": "Amazonas de Ovariazos, cerca del Bosque Vivo. Van ligeras de ropa, montan bestias y se cabrean más cuantas más caen.",
+    "restrictions": [
+      "Usa Jefas, Machacas, Piltrafas y Brutas de los Pandilleros. Sin Curtidas.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Quien pueda llevar cuchillos arrojadizos puede llevar hondas en su lugar.",
+      "Máximo una Personalidad de las Fraus o Mercenario.",
+      "Máximo un Jefe.",
+      "No más Piltrafas que el resto de la banda junta.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Hasta el coño me tenéis", "text": "Cada Frau Abatida da un marcador a la banda. Al empezar su Fase de activación, una Frau puede gastar hasta 3: +5 cm por marcador a su última Acción de Movimiento al Asaltar." },
+      { "name": "Ligeras de ropa", "text": "Llevan Ropas resistentes de base y no pueden comprar mejor Blindaje." }
+    ],
+    "troops": [
+      {
+        "name": "Amacizona", "cost": 70, "page": 5,
+        "stats": { "a": "2", "c": "5", "p": "4", "ag": "6", "f": "5", "d": "5", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Lanza", "cost": 8 }, { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ropas resistentes",
+        "equipmentOptions": [{ "name": "Escudo", "cost": 6 }],
+        "specialRules": ["Retraso (2)", "Montada", "Raudo", "Todoterreno"],
+        "rules": [
+          { "name": "Amazona", "text": "Su bestia le da Montada, Raudo y Todoterreno. No sufre el penalizador a Precisión de Montada." },
+          { "name": "A esas no las toquéis", "text": "Si cae, da 2 marcadores de Hasta el coño me tenéis." }
+        ]
+      },
+      {
+        "name": "Callisto", "cost": 100, "page": 6, "personality": true,
+        "stats": { "a": "2", "c": "6 (7)", "p": "6", "ag": "6", "f": "5 (7)", "d": "5", "t": "3" },
+        "weapons": "Filo medio y chakram", "armor": "Cuero endurecido",
+        "specialRules": ["Personalidad", "Retraso (2)", "Montada", "Raudo", "Salto"],
+        "rules": [
+          { "name": "Pinky", "text": "Su bestia rosa le da Montada, Raudo y Salto." },
+          { "name": "Chakram", "text": "A distancia: F3, Pen 2, 10/20/30. Si impacta, rebota a otro enemigo a 15 cm con nueva tirada de Precisión (-1 acumulable por rebote), incluso fuera de alcance, hasta fallar. Las Coberturas se miden desde la miniatura de la que rebota. Siempre vuelve. No se puede Apuntar ni hacer Fuego defensivo con él; no sufre el penalizador de Montada." },
+          { "name": "Furor uterino", "text": "Si cae, da 3 marcadores de Hasta el coño me tenéis." }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Honda", "kind": "Ranged", "cost": 6, "range": "10/20/30", "strength": "F/F+1/F-1", "penetration": "1/2/0", "rules": ["Difícil de usar"], "page": 7, "notes": "Sustituye a los cuchillos arrojadizos en Piltrafas y Machacas." },
+      { "name": "Lanza", "kind": "Melee", "cost": 8, "combat": "+0", "strength": "+1", "penetration": "0", "rules": ["Ímpetu (X)"], "page": 7, "notes": "Ímpetu (2)." }
+    ]
+  },
+  {
+    "id": "ostra-azul",
+    "sharedWeapons": ["Látigo"],
+    "name": "La Ostra Azul",
+    "summary": "La banda de Lord Homoeroticus en Pozoguay: cuero, tachuelas y un apetito que descoloca al enemigo.",
+    "restrictions": [
+      "Usa Curtidos, Machacas y Piltrafas de los Pandilleros. Sin Jefes (ese es Lord Homoeroticus) ni Brutos (para eso están los Mamporreros).",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad o Mercenario.",
+      "No más Piltrafas ni Mamporreros que el resto de la banda junta.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Nos mola el cuero", "text": "Piltrafas, Machacas y Curtidos llevan cuero endurecido gratis en vez de ropas resistentes. Nadie puede llevar otro Blindaje." },
+      { "name": "Puro vicio", "text": "Quien Dispare a una miniatura de la Ostra Azul tiene -1 a Precisión." }
+    ],
+    "troops": [
+      {
+        "name": "Mamporrero", "cost": 30, "page": 9,
+        "stats": { "a": "2", "c": "4", "p": "3", "ag": "4", "f": "4", "d": "4", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Fusta", "cost": 4 }, { "name": "Látigo", "cost": 5 }, { "name": "Maza", "cost": 5 }],
+        "armor": "Cuero endurecido",
+        "rules": [
+          { "name": "Dame en el culete", "text": "Tras sufrir o causar un impacto en Combate tira 1d10 (repite los resultados que ya tenga):",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1-3", "Gatillazo: nada."], ["4-5", "+1 Combate."], ["6-7", "+1 Fuerza."], ["8-9", "+1 Dureza."], ["10", "Elige uno de los anteriores."]
+            ] } }
+        ]
+      },
+      {
+        "name": "Lord Homoeroticus", "cost": 100, "page": 10, "personality": true,
+        "stats": { "a": "3", "c": "6 (5)", "p": "6", "ag": "6", "f": "5", "d": "5", "t": "4" },
+        "weapons": "Alegradías (pistola con mira telescópica)", "armor": "Cuero endurecido",
+        "specialRules": ["Personalidad", "Retraso (3)"],
+        "rules": [
+          { "name": "Discursitos", "text": "Justo antes del primer Turno tira 1d10:",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1", "Toda la banda rival gana Bersérker."],
+              ["2-4", "Su banda pierde los empates que ganaría por tener la Fase de activación."],
+              ["5-6", "En empates de Fuerza contra Dureza, la Fuerza tiene +1 (ambos bandos)."],
+              ["7-9", "La banda rival pierde los empates que ganaría por tener la Fase de activación."],
+              ["10", "Toda su banda gana Bersérker."]
+            ] } }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Fusta", "kind": "Melee", "cost": 4, "combat": "+0", "strength": "+1", "penetration": "0", "page": 11, "notes": "Si un Mamporrero impacta con ella, +1 a su tirada de Dame en el culete." }
+    ]
+  }
+]

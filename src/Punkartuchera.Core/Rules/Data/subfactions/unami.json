@@ -1,0 +1,111 @@
+[
+  {
+    "id": "cambiapieles",
+    "name": "Cambiapieles",
+    "page": 1,
+    "summary": "Grupos que acompañan a los Yee naaldlooshii, brujos mal vistos por la tribu que se transforman en animales, imitan a otros y poseen enemigos.",
+    "restrictions": [
+      "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
+      "Un Yee naaldlooshii por cada fracción de 200 puntos.",
+      "No más Truenos que el resto de la banda junta.",
+      "Máximo una Personalidad de los Cambiapieles o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "troops": [
+      {
+        "name": "Yee naaldlooshii", "cost": 40, "page": 2,
+        "stats": { "a": "-", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "2" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tomahawk", "cost": 5 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+        "equipmentOptions": [{ "name": "Hierbas alucinógenas", "cost": 8 }],
+        "rules": [
+          { "name": "Ánti'jhnii", "text": "Usa la energía de Majauchsuwi para transformarse o poseer enemigos (ver Ánti'jhnii)." }
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "title": "Ánti'jhnii", "page": 3,
+        "items": [
+          { "name": "Transformación en lobo (1 PdM)", "text": "+1 Combate, Bestia, Raudo y garras y dientes hasta su siguiente activación." },
+          { "name": "Transformación en híbrido (3 PdM)", "text": "Conserva el equipo y gana +1 Combate, Fuerza y Dureza hasta su siguiente activación." },
+          { "name": "Transformación en oso (2 PdM)", "text": "+1 Combate, +2 Fuerza y Dureza, Bestia, garras y dientes y peana de 40 mm hasta su siguiente activación." },
+          { "name": "Transformación en enemigo (1 PdM)", "text": "Copia el aspecto de un enemigo de tamaño humano: -2 a Combate o Precisión para atacarle hasta su siguiente activación." },
+          { "name": "Controlar enemigo (2 PdM)", "text": "Un enemigo visible a 30 cm hace 1 Acción a tu elección." }
+        ],
+        "intro": "Al principio de su activación, sin gastar Acciones; uno por Turno. En lobo u oso no usa sus armas, pero vuelven al recuperar la forma humana."
+      }
+    ]
+  },
+  {
+    "id": "descastados",
+    "name": "Descastados",
+    "page": 4,
+    "summary": "Unami que no soportan la mente colmena y sirven a la tribu como exploradores por el Páramo, lejos de Majauchsuwi.",
+    "restrictions": [
+      "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
+      "No más Truenos que el resto de la banda junta.",
+      "Máximo una Personalidad de los Descastados o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Muchas mentes", "text": "Sin Hierbas alucinógenas ni Una mente: cada miniatura tiene 2 Acciones fijas. Cada Descastado (salvo Renegados) aporta 1 PdM a la banda, que sirve para un Don de Majauchsuwi a su coste o para dar 1 Acción extra. Los PdM gastados no se recuperan." }
+    ],
+    "troops": [
+      {
+        "name": "Renegado", "cost": 30, "page": 5,
+        "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "3", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }, { "name": "Chaleco antibalas", "cost": 15 }],
+        "rules": [
+          { "name": "Bloqueo mental", "text": "No genera PdM ni se beneficia de ellos." }
+        ]
+      }
+    ],
+    "gear": [
+      { "name": "Tótem", "cost": 15, "page": 6, "text": "Hasta 3 por banda, a ras de suelo en cualquier sitio libre. 40 mm, elemento grande con protección ligera. A 15 cm de él los Dones de Majauchsuwi cuestan 1 PdM menos. 15 puntos cada uno." }
+    ]
+  },
+  {
+    "id": "apostadores",
+    "name": "Apostadores",
+    "page": 7,
+    "summary": "Unami fusionados con los espíritus ludópatas del viejo casino: el azar es sagrado y la vida, una apuesta constante.",
+    "restrictions": [
+      "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
+      "No más Truenos que el resto de la banda junta.",
+      "Un Croupier por cada fracción de 200 puntos.",
+      "Máximo una Personalidad de los Apostadores o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Sin Dones", "text": "No tienen Dones de Majauchsuwi; usan estas reglas en su lugar." },
+      { "name": "Hagan juego", "text": "Antes de Disparar, 1 PdM para tirar dos dados y quedarse el mejor." },
+      { "name": "Doble o nada", "text": "Puede repetir una tirada fallida; si vuelve a fallar, queda Abatido." },
+      { "name": "Todo al negro", "text": "Antes de Combatir, 1 PdM y 1 dado: par, impacta automáticamente; impar, le impactan a él." },
+      { "name": "Suerte del novato", "text": "Una vez por partida en la banda: una miniatura que no haya usado otra regla especial saca éxito automático en su siguiente tirada, y ya no puede usar ninguna otra." }
+    ],
+    "troops": [
+      {
+        "name": "Croupier", "cost": 30, "page": 8,
+        "stats": { "a": "-", "c": "3", "p": "4", "ag": "5", "f": "2", "d": "3", "t": "4" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Tomahawk", "cost": 5 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "rules": [
+          { "name": "La banca siempre gana", "text": "Si un enemigo tira a 20 cm de él, 1 PdM para que repita." },
+          { "name": "Dados cargados", "text": "Si un aliado a 15 cm cae por Doble o nada, 2 PdM para que en su lugar reciba un impacto F4, Pen 3." },
+          { "name": "Ruleta de la fortuna", "text": "1 Acción y 2 PdM sobre un aliado visible: tira 3d6 y aplica la última condición que se cumpla:\n• Siempre: +2 a un Atributo en su siguiente activación.\n• Dos iguales: +2 a dos Atributos en su siguiente activación.\n• Tres iguales: +2 permanente a dos Atributos.\n• Dos unos: impacto F5, Pen 2.\n• Tres unos: Abatido." }
+        ]
+      }
+    ]
+  }
+]

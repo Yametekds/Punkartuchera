@@ -7,6 +7,17 @@
     { "id": "escenarios", "title": "Escenarios", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Escenarios_.pdf" },
     { "id": "resumen", "title": "Resumen de reglas", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/ResumenReglas_.pdf" },
     { "id": "unami", "title": "Reglas facción Unami (beta)", "url": "https://punkapocalyptic.com/wp-content/uploads/2026/01/Unami.pdf" },
+    { "id": "craabianos", "title": "Reglas facción Craabianos (beta)", "url": "https://punkapocalyptic.com/descargasweb/Craabianos.pdf" },
+    { "id": "subfacciones-pandilleros", "title": "Subfacciones Pandilleros", "url": "https://punkapocalyptic.com/descargasweb/SubfaccionesPandilleros.pdf" },
+    { "id": "subfacciones-mutardos", "title": "Subfacciones Mutardos", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesMutardos.pdf" },
+    { "id": "subfacciones-chatarreros", "title": "Subfacciones Chatarreros", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesChatarreros.pdf" },
+    { "id": "subfacciones-sangre-negra", "title": "Subfacciones Sangre Negra", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesSangreNegra.pdf" },
+    { "id": "subfacciones-v-reich", "title": "Subfacciones V Reich", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesVReich.pdf" },
+    { "id": "subfacciones-idos", "title": "Subfacciones Idos", "url": "https://punkapocalyptic.com/wp-content/uploads/2026/01/SubfaccionesIdos.pdf" },
+    { "id": "subfacciones-irradiados", "title": "Subfacciones Irradiados", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesIrradiados.pdf" },
+    { "id": "subfacciones-troupe", "title": "Subfacciones Troupé", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesTroupe.pdf" },
+    { "id": "subfacciones-unami", "title": "Subfacciones Unami", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesUnami.pdf" },
+    { "id": "subfacciones-craabianos", "title": "Subfacciones Craabianos (beta)", "url": "https://punkapocalyptic.com/descargasweb/SubfaccionesCraabianos.pdf" },
     { "id": "faqs", "title": "FAQs y erratas", "url": "https://punkapocalyptic.com/faqs/" }
   ],
   "attributes": [

@@ -1,0 +1,147 @@
+[
+  {
+    "id": "herederos-mecanicos",
+    "name": "Herederos Mecánicos",
+    "page": 1,
+    "summary": "La Inteligencia Suprema saquea el Cementerio de Máquinas y monta sus propios Robotrones: chatarra tambaleante que acompaña a Irradiados escogidos.",
+    "restrictions": [
+      "Usa Cardenales Nucleares, Mártires y Penitentes de los Irradiados. Sin Paladines ni Discípulos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Cardenal Nuclear.",
+      "Máximo una Personalidad de los Herederos Mecánicos o Mercenario.",
+      "No más Mártires que el resto de la banda junta.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Volveré", "text": "Antes de poner el marcador de Abatido de un Cardenal Nuclear o un Penitente, tira 1d10: con 9-10 era un Cyborg. No cae: pierde todo su equipo y pasa a tener el perfil 2 4 2 4 3 3 7, garras y dientes, Armadura metálica y Radioinmune." }
+    ],
+    "troops": [
+      {
+        "name": "Robotrón", "cost": 10, "page": 2,
+        "stats": { "a": "2", "c": "2", "p": "2", "ag": "2", "f": "2", "d": "2", "t": "2" },
+        "weapons": "Miembros robóticos (como garras y dientes)",
+        "weaponRule": "Puede llevar además una de estas",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Cuerpo mecánico (Blindaje 3)",
+        "specialRules": ["Radioinmune"],
+        "rules": [
+          { "name": "Ensamblaje", "text": "Puede llevar dos Mejoras mecánicas pagando su coste." },
+          { "name": "Material cutre", "text": "Al empezar su Fase de activación tira 1d10: con un 1 no actúa." }
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "title": "Mejoras mecánicas", "page": 3,
+        "items": [
+          { "name": "Aleación especial", "cost": 10, "text": "Pasa a Blindaje 5." },
+          { "name": "Análisis de objetivos", "cost": 10, "text": "Elige un enemigo: +2 a Combate y Precisión al atacarle." },
+          { "name": "Brillante culo metálico", "cost": 5, "text": "Pierde Material cutre." },
+          { "name": "Cálculo avanzado", "cost": 8, "text": "+3 Agilidad y Retraso (2)." },
+          { "name": "Modelo militar", "cost": 10, "text": "+3 Combate y Mónguer." },
+          { "name": "Motor de impulso", "cost": 10, "text": "Raudo." },
+          { "name": "Procesador cuántico", "cost": 20, "text": "+1 Acción." },
+          { "name": "Proyectil acoplado", "cost": 15, "text": "+2 Precisión y un arma a distancia 20/40/60, F 5/4/3, Pen 4/3/2 y ¡¡¡CATAPUM!!!." },
+          { "name": "Servos mejorados", "cost": 10, "text": "+3 Fuerza." },
+          { "name": "Transportista", "cost": 8, "text": "Todoterreno." }
+        ],
+        "intro": "No puede haber más de dos Robotrones con la misma Mejora."
+      }
+    ]
+  },
+  {
+    "id": "inquisicion-atomica",
+    "name": "Inquisición Atómica",
+    "page": 4,
+    "summary": "Paladines fanáticos que siguen a la Gran Inquisidora en una Guerra Santa contra todo hereje del Páramo, reclutando escuderos entre los supervivientes.",
+    "restrictions": [
+      "Usa Penitentes, Mártires y Paladines de los Irradiados. Sin Cardenales Nucleares ni Discípulos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de la Inquisición Atómica o Mercenario.",
+      "Hasta dos Escuderos por cada Paladín.",
+      "No más Mártires que el resto de la banda junta.",
+      "Máximo un Gato parameño."
+    ],
+    "troops": [
+      {
+        "name": "Escudero", "cost": 10, "page": 5,
+        "stats": { "a": "2", "c": "2", "p": "3", "ag": "2", "f": "2", "d": "2", "t": "2" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Arco", "cost": 10 }],
+        "armor": "Ninguno",
+        "specialRules": ["Radioinmune"],
+        "rules": [
+          { "name": "Lealtad", "text": "Si un Paladín a 10 cm Asalta, un Escudero puede moverse gratis a contactar con el mismo enemigo para dar bonificador de Combate múltiple (actúa en su propia activación). Uno por Asalto. También se beneficia de Inspirador como los Discípulos." },
+          { "name": "Porteador", "text": "Si el escenario limita los objetivos que se cargan, puede llevar uno más." }
+        ]
+      },
+      {
+        "name": "Inquisidor", "cost": 30, "page": 6,
+        "stats": { "a": "2", "c": "3", "p": "2", "ag": "4", "f": "3", "d": "3", "t": "5" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "specialRules": ["Contenedor radiactivo", "Radioinmune"],
+        "rules": [
+          { "name": "Sermón", "text": "Puede usar estos sermones:\n• Parábola de la Fe purificadora: un arma de una miniatura propia gana Contaminante.\n• Parábola de la cólera nuclear: una vez por partida, repite la tirada de Fuerza contra Dureza de un enemigo Impactado.\n• Parábola del fosforescente destino: al empezar, una miniatura propia gana +1 Blindaje por marcador de Radiación que le afecte (máximo +2). No sirve con escudo." }
+        ]
+      },
+      {
+        "name": "La Gran Inquisidora", "cost": 70, "page": 7, "personality": true,
+        "stats": { "a": "3", "c": "4", "p": "2", "ag": "4", "f": "3", "d": "3", "t": "7" },
+        "weapons": "Maza, filo pequeño y 2 granadas santas", "armor": "Armadura de fe",
+        "specialRules": ["Personalidad", "Contenedor radiactivo", "Radioinmune"],
+        "rules": [
+          { "name": "Presencia siniestra", "text": "Los enemigos a 20 cm que la ven tienen -1 a Combate, Agilidad y Fuerza." },
+          { "name": "Armadura de fe", "text": "Blindaje 2 que no reduce la Penetración y no se puede saquear." },
+          { "name": "Portadora del don", "text": "Todas sus armas tienen Contaminante." },
+          { "name": "Sermón", "text": "Los mismos que un Inquisidor." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rebelion-isotopica",
+    "name": "Rebelión Isotópica",
+    "page": 8,
+    "summary": "Habitantes de Aurora que han descubierto que la Inteligencia Suprema es una máquina. Quieren reconstruir la civilización con el átomo, con armas nucleares hechas deprisa y corriendo.",
+    "restrictions": [
+      "Usa Cardenales Nucleares, Discípulos y Paladines de los Irradiados. Sin Mártires ni Penitentes.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Cardenal Nuclear.",
+      "Máximo una Personalidad de la Rebelión Isotópica o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Fusión", "text": "Si al Disparar un arma o munición con esta regla sale 9 o 10 en la tirada de Impactar, falla y explota: impacto de F7 y Pen 5 a 5 cm, y deja 3 marcadores de Radiación desviados como los objetivos aleatorios. Se tira aunque el impacto sea automático." }
+    ],
+    "troops": [
+      {
+        "name": "Científico", "cost": 15, "page": 9,
+        "stats": { "a": "2", "c": "2", "p": "2", "ag": "3", "f": "3", "d": "3", "t": "7" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Cortadora de plasma", "cost": 8 }, { "name": "Rifle de fusión", "cost": 12 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "specialRules": ["Contenedor radiactivo", "Radioinmune"],
+        "rules": [
+          { "name": "Eso es todo, amigos", "text": "Una vez por partida, 1 Acción (incluso en Combate) para detonar un arma con Fusión que lleve:",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1", "El arma se queda sin energía y pasa a ser una maza."],
+              ["2-3", "No pasa nada."],
+              ["4-8", "Explota como con Fusión, pero F4 y Pen 3."],
+              ["9-10", "Explota como con Fusión."]
+            ] } }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Cortadora de plasma", "kind": "Melee", "cost": 8, "combat": "+1", "strength": "+3", "penetration": "6", "rules": ["A dos manos", "Contaminante", "Escasa", "Fusión"], "page": 10, "notes": "Solo la Rebelión Isotópica." },
+      { "name": "Rifle de fusión", "kind": "Ranged", "cost": 12, "range": "20/40/60", "strength": "5", "penetration": "5", "rules": ["A dos manos", "Contaminante", "Escasa", "Fusión", "Lentorra (X)"], "page": 10, "notes": "Lentorra (1). Solo la Rebelión Isotópica." }
+    ],
+    "gear": [
+      { "name": "Munición atómica", "page": 10, "text": "Sustituye a la munición normal o a la de los Irradiados (solo un tipo por miniatura). El arma gana Contaminante, Fusión y Veneno (3)." }
+    ]
+  }
+]

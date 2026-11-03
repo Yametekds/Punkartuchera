@@ -1,0 +1,123 @@
+{
+  "id": "craabianos",
+  "name": "Craabianos",
+  "source": "craabianos",
+  "page": 1,
+  "beta": true,
+  "summary": "El culto marinero de Vientocho, devoto del Capitán Craab: arponeros, grumetes y Custodios del Abismo que traen del mar armaduras de golicentollo y reliquias de las profundidades.",
+  "restrictions": [
+    "Máximo una Personalidad craabiana o Mercenario.",
+    "Máximo un Capitán.",
+    "Un Custodio del Abismo por cada fracción de 200 puntos.",
+    "No más Grumetes que el resto de la banda junta.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+  "rules": [
+    { "name": "El mar siempre reclama", "text": "Todos salvo los Grumetes pueden repetir una tirada de Atributo una vez por partida; después pierden 1 punto permanente en ese Atributo." },
+    { "name": "Sangre salada", "text": "No reciben los bonificadores de las Acciones de movimiento al Asaltar." }
+  ],
+  "troops": [
+    {
+      "name": "Grumete", "cost": 18,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "4", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }],
+      "armor": "Ninguno",
+      "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }]
+    },
+    {
+      "name": "Marinero", "cost": 30,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
+      "equipmentOptions": [{ "name": "Aceite de ballenorca", "cost": 3 }]
+    },
+    {
+      "name": "Arponero", "cost": 40,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "3", "f": "5", "d": "5", "t": "2" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Cañón de mano", "cost": 14 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
+      "equipmentOptions": [{ "name": "Aceite de ballenorca", "cost": 3 }]
+    },
+    {
+      "name": "Capitán", "cost": 60,
+      "stats": { "a": "3", "c": "5", "p": "5", "ag": "5", "f": "5", "d": "4", "t": "4" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Maza", "cost": 5 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
+      "equipmentOptions": [{ "name": "Aceite de ballenorca", "cost": 3 }],
+      "rules": [{ "name": "Reliquias", "text": "Puede llevar hasta 1 Reliquia abisal." }]
+    },
+    {
+      "name": "Custodio del Abismo", "cost": 60,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "3", "f": "4", "d": "4", "t": "5" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
+      "rules": [
+        { "name": "Reliquias", "text": "Puede llevar hasta 2 Reliquias abisales." },
+        { "name": "Arrastrados al fondo", "text": "Los enemigos a 15 cm se mueven como en Terreno chungo, tirando Fuerza en vez de Agilidad." },
+        { "name": "Ofrenda a las profundidades", "text": "1 Acción junto a un enemigo Abatido: un aliado puede tirar el segundo dado de El mar siempre reclama." },
+        { "name": "Plegarias inmundas", "text": "1 Acción: un enemigo visible a 15 cm tiene -1 a Combate o Precisión hasta que lo use por primera vez." }
+      ]
+    },
+    {
+      "name": "Bloody Mary", "cost": 100, "personality": true,
+      "stats": { "a": "3", "c": "6", "p": "5", "ag": "6", "f": "5 (8)", "d": "4", "t": "5" },
+      "weapons": "Colmillo de Leviatán (filo pesado que ignora Blindajes y no tiene Armatoste)", "armor": "Armadura quitinosa",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Mirada de la fosa", "text": "Quien quiera Asaltarla supera una tirada de Dureza o elige otra Acción. Una vez por miniatura y partida." },
+        { "name": "Voz del Abismo", "text": "Una vez por Turno, 1 Acción: los Custodios a 20 cm usan Plegarias inmundas a 25 cm." },
+        { "name": "El filo de la herejía", "text": "Un aliado a 10 cm que saque un 10 en una tirada de Atributo o un 1 en una enfrentada puede repetirla." }
+      ]
+    },
+    {
+      "name": "Davinnie Jones", "cost": 80, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "5", "ag": "4", "f": "5", "d": "4", "t": "3" },
+      "weapons": "Fusil arponero (F4, Pen 5, 10/30/40, A dos manos, Lentorra (1)) y maza", "armor": "Armadura quitinosa",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Cisma en cubierta", "text": "Capitanes y Custodios no pueden acercarse a 15 cm de él." },
+        { "name": "Tentáculos vivos", "text": "Tiene Máscara tentacular y gana los empates de Fuerza contra Dureza en Combate." },
+        { "name": "Cargado de mala hostia", "text": "Gana un marcador cada vez que un aliado falla una tirada. Con 3 puede ignorar Sangre salada en un Asalto o recargar sin gastar Acción." }
+      ]
+    }
+  ],
+  "weapons": [
+    { "name": "Tridente", "kind": "Melee", "cost": 7, "combat": "+0", "strength": "+2", "penetration": "3" },
+    { "name": "Arpón", "kind": "Ranged", "cost": 6, "range": "10/20/30", "strength": "F+1/F/F-1", "penetration": "5", "rules": ["Usar y tirar"], "notes": "6 puntos cada uno; hasta 3, que cuentan como una sola arma." },
+    { "name": "Cañón de mano", "kind": "Ranged", "cost": 14, "range": "30/60/90", "strength": "8/7/6", "penetration": "4", "rules": ["Armatoste", "Escasa", "Mamotreto"], "notes": "Solo dispara una vez." },
+    { "name": "Pistola de mecha", "kind": "Ranged", "cost": 4, "range": "10/15/20", "strength": "4/3/2", "penetration": "2", "rules": ["Lentorra (X)"], "notes": "Lentorra (2). Se puede disparar en cuerpo a cuerpo (C+1, F4, Pen 2) y queda descargada." },
+    { "name": "Red", "kind": "Ranged", "cost": 6, "range": "5/10/15", "strength": "-", "penetration": "-", "rules": ["Usar y tirar"], "notes": "La miniatura alcanzada gasta sus 2 siguientes Acciones en quitársela; si combate antes, -3 a Combate; si Abate, se libera. No contra miniaturas trabadas." }
+  ],
+  "armors": [
+    { "name": "Armadura quitinosa", "armor": "5", "notes": "Se rompe si el rival saca un 10 en la tirada de Fuerza contra Dureza." }
+  ],
+  "gear": [
+    { "name": "Aceite de ballenorca", "cost": 3, "text": "Escurridizo." }
+  ],
+  "extras": [
+    {
+      "title": "Reliquias abisales",
+      "items": [
+        { "name": "Cadena del naufragio", "cost": 7, "text": "Quien le Asalte pierde los bonificadores." },
+        { "name": "Cáliz de salmuera", "cost": 5, "text": "Ignora Sangre salada." },
+        { "name": "Caracola del umbral", "cost": 15, "text": "1 Acción: los aliados a 10 cm que no hayan actuado se activan a continuación. Una vez por miniatura y partida." },
+        { "name": "Diente de leviatán", "cost": 6, "text": "+2 Penetración en cuerpo a cuerpo." },
+        { "name": "Ídolo de coral vivo", "cost": 5, "text": "Una vez por Turno, +1 a Fuerza o Dureza y -1 a la otra." },
+        { "name": "Máscara tentacular", "cost": 4, "text": "Gana los empates en las tiradas de Combate." },
+        { "name": "Pez globo", "cost": 6, "text": "Sus ataques cuerpo a cuerpo ganan Veneno (3)." }
+      ],
+      "intro": "Cada Reliquia solo una vez por banda."
+    }
+  ],
+  "sharedWeapons": ["Trabuco"]
+}

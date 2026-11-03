@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(_ => RulebookLoader.LoadEmbedded());
         services.AddSingleton<IRulesCatalog, RulebookCatalog>();
         services.AddSingleton<RulesSearch>();
+        services.AddSingleton(sp => new RosterBuilder(sp.GetRequiredService<Rulebook>(), sp.GetRequiredService<IRulesCatalog>()));
         services.AddScoped<FragmentScroller>();
         services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();
         services.AddScoped<KeyValueDb>();

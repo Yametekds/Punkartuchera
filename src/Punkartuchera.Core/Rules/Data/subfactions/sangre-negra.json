@@ -1,0 +1,131 @@
+[
+  {
+    "id": "crematorio",
+    "name": "Crematorio",
+    "summary": "La rama más fanática de Cunnilingus: ya no adoran la Sangre Negra sino el fuego, y disfrutan quemando enemigos y quemándose ellos.",
+    "restrictions": [
+      "Usa Cenizas, Quemados y Guardianes de la Llama. Sin Chispas ni Ascuas.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Mercenario o una Personalidad de Crematorio.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "El poder del fuego", "text": "Cada miniatura (de cualquier bando) Abatida por llamas da un marcador de Churruscado. Al empezar el Turno, cada marcador gastado en una miniatura la hace actuar una Ronda de Agilidad más arriba (sin cambiar su Agilidad)." },
+      { "name": "Arma flamígera", "text": "Cualquier arma cuerpo a cuerpo puede ser flamígera gratis: -1 al Combate, pero si impacta sin Abatir, el objetivo tiene -1 acumulable a la Dureza contra cualquier tipo de llamas." }
+    ],
+    "troops": [
+      {
+        "name": "Pirómano", "cost": 45, "page": 2,
+        "stats": { "a": "2", "c": "4", "p": "3", "ag": "5", "f": "4", "d": "4", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Cóctel molotov", "cost": 8, "each": true }, { "name": "Filo medio", "cost": 10 }, { "name": "Lanzallamas", "cost": 20 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Piel quemada", "cost": 5 }],
+        "rules": [
+          { "name": "Bajo la mirada llameante", "text": "Si su Guardián de la Llama le ve, sus bajas por llamas dan 2 marcadores de Churruscado." },
+          { "name": "Dale calor", "text": "1 Acción: se prende fuego, -1 Dureza y +1 Combate permanentes. Repetible." }
+        ]
+      },
+      {
+        "name": "Chamusquina", "cost": 55, "page": 3, "personality": true,
+        "stats": { "a": "2", "c": "3", "p": "4", "ag": "6", "f": "2 (3)", "d": "2", "t": "3" },
+        "weapons": "Lanzallamitas", "armor": "Piel quemada",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "¡Mira mamá, este sí que arde bien!", "text": "Sus bajas por fuego dan 2 marcadores de Churruscado." },
+          { "name": "Inocencia incendiaria", "text": "No Asalta ni combate por voluntad propia; si está trabada en su activación tiene que intentar Separarse." },
+          { "name": "Lanzallamitas", "text": "Lanzallamas sin Armatoste y con 5 cargas." },
+          { "name": "Pequeña pero cabrona", "text": "-1 a Precisión contra ella." },
+          { "name": "Señora Chischás y Señor Bumbum", "text": "2 marcadores de 25 mm en el centro de la mesa que se mueven cada Turno como los martinejos de Gestión de estrés (sin atravesar obstáculos). Con 9-10 al moverlos, o si tocan una miniatura, explotan con Incendiaria (5)." }
+        ]
+      }
+    ],
+    "armors": [
+      { "name": "Piel quemada", "armor": "2", "rules": ["Ignífugo"], "page": 4 }
+    ]
+  },
+  {
+    "id": "nuevos-hijos",
+    "name": "Nuevos Hijos",
+    "summary": "Los seguidores de Rogelio en la Fortaleza del Cielo: melenudos, ricos de vender combustible y con balas de sobra para motivar a la tropa.",
+    "restrictions": [
+      "Usa Cenizas (E95), Ascuas (E98), Chispas (Diésel) y Guardianes de la Llama (Surtidor). Sin Quemados.",
+      "Sin lanzallamas ni cócteles molotov.",
+      "Hasta dos miniaturas entre Mercenarios (distintos) y Personalidades de los Nuevos Hijos.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Será por perres", "text": "Puedes reservar hasta 25 puntos sin gastar por cada fracción de 200. Al empezar la activación de una miniatura gastas parte en hasta dos beneficios para esa activación:",
+        "table": { "columns": ["Puntos", "Efecto"], "rows": [
+          ["5", "Raudo."], ["5", "Todoterreno."], ["8", "+2 Combate."], ["8", "+2 Fuerza."], ["8", "+2 Dureza."], ["15", "+1 Acción."]
+        ] } }
+    ],
+    "troops": [
+      {
+        "name": "Gorila", "cost": 50, "page": 6, "personality": true,
+        "stats": { "a": "2", "c": "5", "p": "2", "ag": "3", "f": "4", "d": "4", "t": "2" },
+        "weaponRule": "Una",
+        "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Cuero endurecido",
+        "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Entrenamiento", "text": "Compra su equipo por puntos y elige una mejora (sin repetir en la banda). No se beneficia de Será por perres.",
+            "table": { "columns": ["Mejora", "Efecto"], "rows": [
+              ["Aplastador", "Fuerza 6, Combate 4."], ["Ágil", "Agilidad 6."], ["Experto", "Combate 7, Fuerza 3."], ["Sutil", "Acciones 3, Combate 3."], ["Tanque", "Dureza 6, Agilidad 2."]
+            ] } }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Desbrozadora", "kind": "Melee", "cost": 4, "combat": "+0", "strength": "+4", "penetration": "3", "rules": ["A dos manos", "Combustible (X)", "Escasa"], "page": 7, "notes": "Combustible (5), 1 carga por Acción encendida. Si un enemigo mueve a 2,5 cm, gasta 1 carga y queda trabado como en un Asalto sin bonificadores. Sin cargas es una maza pesada. Pueden usarla los Ascuas." },
+      { "name": "Sierra de mano", "kind": "Melee", "cost": 8, "combat": "+0", "strength": "+2", "penetration": "5", "rules": ["Combustible (X)", "Escasa"], "page": 7, "notes": "Combustible (5), 1 carga por Acción encendida. Sin cargas es un filo pequeño. Pueden usarla los Ascuas." }
+    ]
+  },
+  {
+    "id": "rugientes",
+    "name": "Rugientes",
+    "summary": "Los moteros exploradores de Cunnilingus: Chispas en moto, sidecar o quad con Cenizas de paquete que se tiran contra el enemigo con lanzatruenos.",
+    "restrictions": [
+      "Solo Cenizas y Chispas de los Hijos de la Sangre Negra.",
+      "Máximo una Personalidad; no admite Mercenarios.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Motorizados", "text": "Todas las miniaturas empiezan montadas: Chispas, y Cenizas de paquete." },
+      { "name": "De paquete", "text": "Un Chispa lleva a un Ceniza de paquete, que no hace nada salvo usar la lanzatrueno hasta bajarse. Bajar cuesta 1 Acción (o 2 para mejorar una fila); si el Chispa está trabado, el Ceniza se pone en contacto con uno de sus rivales. Subir cuesta 1 Acción si el Chispa no está trabado. Si el Chispa cae, el Ceniza baja al momento.",
+        "table": { "columns": ["Movimiento del Chispa", "Al bajar el Ceniza"], "rows": [
+          ["No ha movido", "Baja sin problema."], ["Hasta 15 cm", "Agilidad o impacto F2."], ["Hasta 30 cm", "Agilidad o impacto F4."], ["Más de 30 cm", "Agilidad o impacto F6."]
+        ] } }
+    ],
+    "troops": [
+      {
+        "name": "Chispa rugiente", "cost": 40, "page": 10,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "4", "d": "4", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos), como el Chispa",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Cuero endurecido",
+        "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],
+        "equipmentOptions": [{ "name": "Motocicleta", "cost": 15 }, { "name": "Motocicleta con sidecar", "cost": 20 }, { "name": "Quad", "cost": 25 }],
+        "specialRules": ["Montada", "Raudo"],
+        "rules": [
+          { "name": "Vehículo", "text": "Sin moto de base: elige uno y mantiene todas las reglas de Darle caña.\n• Motocicleta: la de siempre.\n• Sidecar: -1 Agilidad, lleva un Ceniza extra que puede disparar (con el -1 de Montada); peana de 55 mm.\n• Quad: -2 Agilidad, Todoterreno; peana de 55 mm; puede Arrollar: si atraviesa a un enemigo sin quedar en contacto, este tira Agilidad o sufre impacto F3 (si la supera, se desplaza 5 cm a elección del Chispa)." },
+          { "name": "Motocross", "text": "Nueva opción de Darle caña: atraviesa un obstáculo de tamaño 1 en un Movimiento (sin acabar encima)." }
+        ]
+      },
+      {
+        "name": "Flammeus Asinum", "cost": 100, "page": 11, "personality": true,
+        "stats": { "a": "2", "c": "5 (6)", "p": "4", "ag": "6 (4)", "f": "5 (7)", "d": "5", "t": "3" },
+        "weapons": "Filo medio y escopeta", "armor": "Ninguno",
+        "specialRules": ["Personalidad", "Montada", "Raudo", "Todoterreno"],
+        "rules": [
+          { "name": "Intruder", "text": "Quad con 3 cargas en vez de 2, sin nadie de paquete, y Arrollar hace impacto F5." },
+          { "name": "Chorro flamígero", "text": "1 Acción y 1 carga: plantilla de lágrima hacia atrás, F4, Pen 4, ignora Coberturas de tamaño 1 y alcanza a todos los implicados en un Combate tocado." }
+        ]
+      }
+    ],
+    "gear": [
+      { "name": "Lanzatrueno", "cost": 6, "page": 12, "text": "Para Cenizas de paquete (no cuenta como arma). Si el Chispa no está trabado, se lanza contra un enemigo a 5 cm de la peana del Chispa. Tirada según lo que haya movido el Chispa: sin mover 3+, hasta 15 cm 5+, hasta 30 cm 7+, más 9+. Si la supera, ambos quedan en contacto y sufren impacto F6, Pen 4 (y quedan trabados si sobreviven). Si falla, solo el Ceniza sufre el impacto y el rival lo coloca a 5 cm del Chispa." }
+    ]
+  }
+]

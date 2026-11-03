@@ -1,6 +1,7 @@
 @page "/bandas/{Id:guid}"
 @inject BandService Bands
 @inject IRulesCatalog Rules
+@inject Rulebook Book
 @inject NavigationManager Navigation
 @inject BandExchangeService Exchange
 @inject FileSharer Sharer
@@ -46,6 +47,10 @@ else
     <section class="paper band-hero tape">
         <div class="band-hero__top">
             <span class="stamp">@FactionName</span>
+            @if (SubfactionName is not null)
+            {
+                <span class="stamp stamp--ink">@SubfactionName</span>
+            }
             @if (_band.IsReadOnly)
             {
                 <span class="stamp stamp--ink"><Icon Path="@Icons.Lock" /> Rival</span>
@@ -136,13 +141,26 @@ else
                         </label>
                         <label class="field">
                             <span class="field__label">Facción</span>
-                            <select class="field__input" @bind="_draftFaction">
+                            <select class="field__input" value="@_draftFaction" @onchange="e => { _draftFaction = e.Value?.ToString() ?? string.Empty; _draftSubfaction = string.Empty; }">
                                 @foreach (var faction in Rules.Factions)
                                 {
                                     <option value="@faction.Id">@faction.Name</option>
                                 }
                             </select>
                         </label>
+                        @if (Book.FindFaction(_draftFaction) is { Subfactions.Count: > 0 } draftFaction)
+                        {
+                            <label class="field">
+                                <span class="field__label">Subfacción</span>
+                                <select class="field__input" @bind="_draftSubfaction">
+                                    <option value="">Ninguna (facción base)</option>
+                                    @foreach (var subfaction in draftFaction.Subfactions)
+                                    {
+                                        <option value="@subfaction.Id">@subfaction.Name</option>
+                                    }
+                                </select>
+                            </label>
+                        }
                         <label class="field">
                             <span class="field__label">Notas</span>
                             <textarea class="field__input" rows="4" @bind="_draftNotes"></textarea>
@@ -158,7 +176,7 @@ else
                     <div class="rule-grid">
                         <div class="rule-box">
                             <h3 class="rule-box__title">Facción</h3>
-                            <p>@FactionName</p>
+                            <p>@FactionName@(SubfactionName is null ? "" : $" · {SubfactionName}")</p>
                         </div>
                         <div class="rule-box">
                             <h3 class="rule-box__title">Notas</h3>
@@ -213,8 +231,11 @@ else
     private string _draftName = string.Empty;
     private string _draftFaction = string.Empty;
     private string? _draftNotes;
+    private string _draftSubfaction = string.Empty;
 
     private string FactionName => Rules.FindFaction(_band?.FactionId)?.Name ?? "Sin facción";
+
+    private string? SubfactionName => Book.FindSubfaction(_band?.SubfactionId)?.Name;
 
     private List<(string Gear, string Who)> GearRows =>
         _band?.Members
@@ -252,6 +273,7 @@ else
 
         _draftName = _band.Name;
         _draftFaction = _band.FactionId;
+        _draftSubfaction = _band.SubfactionId ?? string.Empty;
         _draftNotes = _band.Notes;
         _error = null;
         _editing = true;
@@ -265,9 +287,10 @@ else
             return;
         }
 
-        var (name, faction, notes) = (_band.Name, _band.FactionId, _band.Notes);
+        var (name, faction, subfaction, notes) = (_band.Name, _band.FactionId, _band.SubfactionId, _band.Notes);
         _band.Name = _draftName;
         _band.FactionId = _draftFaction;
+        _band.SubfactionId = string.IsNullOrEmpty(_draftSubfaction) ? null : _draftSubfaction;
         _band.Notes = string.IsNullOrWhiteSpace(_draftNotes) ? null : _draftNotes.Trim();
         try
         {
@@ -278,7 +301,7 @@ else
         }
         catch (BandValidationException ex)
         {
-            (_band.Name, _band.FactionId, _band.Notes) = (name, faction, notes);
+            (_band.Name, _band.FactionId, _band.SubfactionId, _band.Notes) = (name, faction, subfaction, notes);
             _error = ex.Message;
         }
     }

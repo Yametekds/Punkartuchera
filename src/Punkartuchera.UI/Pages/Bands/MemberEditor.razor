@@ -5,6 +5,7 @@
 @implements IAsyncDisposable
 @inject BandService Bands
 @inject IRulesCatalog Rules
+@inject RosterBuilder Roster
 @inject IPhotoStore Photos
 @inject NavigationManager Navigation
 
@@ -33,6 +34,34 @@ else
 
     @* Sin <form>: Enter en los campos de etiquetas no debe guardar el miembro. *@
     <div class="stack">
+        @if (IsNew)
+        {
+            <section class="paper recruit-picker">
+                <label class="field">
+                    <span class="field__label">Sacar del reglamento</span>
+                    <select class="field__input" value="@_choiceKey" @onchange="PickTroop">
+                        <option value="">A mano (ficha en blanco)</option>
+                        @foreach (var group in _choices.GroupBy(c => c.Group))
+                        {
+                            <optgroup label="@group.Key">
+                                @foreach (var choice in group)
+                                {
+                                    <option value="@choice.Key">@choice.Troop.Name · @choice.Troop.Cost ptos</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </label>
+                @if (_picked is not null)
+                {
+                    <p class="recruit-picker__summary">
+                        Perfil, coste base, equipo fijo y reglas cargados. Añade las armas y mejoras que compres y súmalas al coste.
+                        <a href="@RulesHref(_picked)">Ver su ficha en las reglas</a>
+                    </p>
+                }
+            </section>
+        }
+
         <section class="card member-editor__photo">
             <MiniPortrait Photo="_member.Photo" Alt="@_member.Name" Size="lg" />
             <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" />
@@ -117,6 +146,10 @@ else
     private bool _saved;
     private string? _error;
 
+    private IReadOnlyList<TroopChoice> _choices = [];
+    private TroopChoice? _picked;
+    private string _choiceKey = string.Empty;
+
     private bool IsNew => MemberId is null;
 
     private string BandHref => $"bandas/{BandId}";
@@ -132,10 +165,33 @@ else
                 ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
                 : existing is null ? null : Clone(existing);
             _gearNames = _member?.Gear.Select(g => g.Name).ToList() ?? [];
+            _choices = Roster.ChoicesFor(_band.FactionId, _band.SubfactionId);
         }
 
         _loading = false;
     }
+
+    /// <summary>Rellena la ficha con una tropa, personalidad o mercenario del reglamento, conservando la foto.</summary>
+    private void PickTroop(ChangeEventArgs e)
+    {
+        if (_member is null)
+        {
+            return;
+        }
+
+        _choiceKey = e.Value?.ToString() ?? string.Empty;
+        _picked = Roster.FindChoice(_choiceKey);
+        var filled = _picked is null ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty) : Roster.FromTroop(_picked.Troop);
+        filled.Id = _member.Id;
+        filled.Photo = _member.Photo;
+        filled.Ammo = _member.Ammo;
+        _member = filled;
+        _gearNames = _member.Gear.Select(g => g.Name).ToList();
+    }
+
+    private static string RulesHref(TroopChoice choice) => choice.Owner.IsSubfaction
+        ? $"reglas/faccion/{choice.Owner.ParentId}/subfaccion/{choice.Owner.Id}#{choice.Troop.Slug}"
+        : $"reglas/faccion/{choice.Owner.Id}/miembros#{choice.Troop.Slug}";
 
     private async Task Save()
     {
