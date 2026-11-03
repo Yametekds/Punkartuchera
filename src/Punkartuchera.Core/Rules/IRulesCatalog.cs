@@ -1,8 +1,8 @@
 namespace Punkartuchera.Core.Rules;
 
 /// <summary>
-/// Fuente de datos de reglas: facciones, atributos y tipos de miembro.
-/// La implementación actual es provisional; se sustituirá por los datos del reglamento.
+/// Fuente de datos de reglas para las bandas: facciones, atributos y tipos de miembro.
+/// El contenido completo del reglamento está en <see cref="Rulebook"/>.
 /// </summary>
 public interface IRulesCatalog
 {
@@ -13,6 +13,7 @@ public interface IRulesCatalog
 
     IReadOnlyList<StatDefinition> Stats { get; }
 
+    /// <summary>Tipos de tropa de todas las facciones, para sugerirlos al editar un miembro.</summary>
     IReadOnlyList<string> Roles { get; }
 
     Faction? FindFaction(string? id);

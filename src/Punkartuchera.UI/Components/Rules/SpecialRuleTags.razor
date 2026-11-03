@@ -1,0 +1,26 @@
+@inject Rulebook Book
+
+@* Reglas especiales como etiquetas que llevan al glosario. *@
+@if (Names.Count > 0)
+{
+    <ul class="tags">
+        @foreach (var name in Names)
+        {
+            var rule = Book.FindSpecialRule(name);
+            <li>
+                @if (rule is null)
+                {
+                    <span class="tag tag--skill">@name</span>
+                }
+                else
+                {
+                    <a class="tag tag--skill rules-link" href="@($"reglas/especiales#{rule.Slug}")" title="@rule.Text">@name</a>
+                }
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public IReadOnlyList<string> Names { get; set; } = [];
+}

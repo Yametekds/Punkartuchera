@@ -1,0 +1,111 @@
+{
+  "id": "v-reich",
+  "name": "V Reich",
+  "source": "bandas",
+  "page": 72,
+  "summary": "Organización militarizada que odia a los Mutardos, con armas de fuego del museo de Berhart, Übersoldats genéticamente mejorados y una cadena de mando por walkie-talkie.",
+  "restrictions": [
+    "Máximo una Personalidad o Mercenario.",
+    "Máximo un Mariscal.",
+    "Máximo un Gato parameño."
+  ],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos los Subhumanos." }],
+  "troops": [
+    {
+      "name": "Subhumano", "cost": 20, "page": 73,
+      "stats": { "a": "2", "c": "2", "p": "-", "ag": "2 (1)", "f": "2", "d": "2", "t": "-" },
+      "weapons": "Garras y dientes", "armor": "Pura chapa",
+      "specialRules": ["Bersérker", "Mónguer"]
+    },
+    {
+      "name": "Sanitario", "cost": 35, "page": 74,
+      "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "3", "d": "3", "t": "5" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }],
+      "armor": "Ropas resistentes",
+      "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+      "rules": [{ "name": "Primeros auxilios", "text": "En contacto con un aliado Abatido, 1 Acción y tira 1d10. Cada miniatura solo se puede parchear una vez.",
+        "table": { "columns": ["1d10", "Efecto"], "rows": [
+          ["1", "Sin remedio: ya no se puede volver a intentar."],
+          ["2-3", "No reacciona, pero se puede intentar otra vez."],
+          ["4-8", "Vuelve en su siguiente Fase de activación con -1 a Agilidad, Fuerza y Dureza."],
+          ["9-10", "Vuelve en su siguiente Fase de activación intacta."]
+        ] } }]
+    },
+    {
+      "name": "Soldat", "cost": 40, "page": 75,
+      "stats": { "a": "2", "c": "4", "p": "5", "ag": "4", "f": "4", "d": "3", "t": "3" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }],
+      "armor": "Cuero endurecido",
+      "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }, { "name": "Mastín", "cost": 9 }],
+      "rules": [{ "name": "Mastín", "text": "Puede llevar UN mastín con correa: +1 al Combate. Si el Soldat cae, el mastín impide que los enemigos Rapiñen su cadáver." }]
+    },
+    {
+      "name": "Übersoldat", "cost": 50, "page": 76,
+      "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "6", "d": "5", "t": "2" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 },
+        { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
+      ],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
+      "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }]
+    },
+    {
+      "name": "Mariscal", "cost": 60, "page": 77,
+      "stats": { "a": "3", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "4", "t": "4" },
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponOptions": [
+        { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 },
+        { "name": "Escopeta", "cost": 6 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
+      ],
+      "armor": "Cuero endurecido",
+      "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],
+      "equipment": "Walkie-talkie",
+      "equipmentOptions": [{ "name": "Mastín", "cost": 9 }],
+      "rules": [{ "name": "Cadena de mando", "text": "Cede una de sus Acciones a otra miniatura con walkie-talkie que no esté trabada; la hace al momento. Hasta tres veces por Fase de activación y nunca dos órdenes a la misma miniatura." }]
+    },
+    {
+      "name": "Ilse, la Loba del V Reich", "cost": 45, "page": 78, "personality": true,
+      "stats": { "a": "2", "c": "3", "p": "4", "ag": "5", "f": "3 (4)", "d": "4", "t": "3" },
+      "weapons": "Fusta y pistola", "armor": "Ropas resistentes",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Fusta", "text": "Como un filo pequeño, pero cada Impacto que no Abate quita 1 de Combate al rival de forma acumulativa." },
+        { "name": "Cazadora de Mutardos", "text": "Contra Mutardos tiene Bersérker y Sed de sangre." }
+      ]
+    },
+    {
+      "name": "Aaron Schwartzmann", "cost": 80, "page": 79, "personality": true,
+      "stats": { "a": "3", "c": "4 (5)", "p": "5 (4)", "ag": "6", "f": "5 (7)", "d": "5", "t": "4" },
+      "weapons": "Filo medio y pistola", "armor": "Cuero endurecido",
+      "equipment": "Walkie-talkie",
+      "specialRules": ["Montada", "Personalidad", "Raudo"],
+      "rules": [
+        { "name": "Cadena de mando", "text": "Cuenta como Mariscal." },
+        { "name": "Maestro estratega", "text": "Una vez por Turno, una de sus órdenes da dos Acciones en lugar de una." },
+        { "name": "Amado líder", "text": "Primeros auxilios sobre él tiene +3 en la tirada." }
+      ]
+    },
+    {
+      "name": "Edward Berhart", "cost": 100, "page": 80, "personality": true,
+      "stats": { "a": "3", "c": "3 (6)", "p": "6", "ag": "5 (4)", "f": "4 (6)", "d": "4", "t": "4" },
+      "weapons": "Podadora eléctrica y rifle automático", "armor": "Pura chapa",
+      "equipment": "Walkie-talkie",
+      "specialRules": ["Personalidad"],
+      "rules": [
+        { "name": "Cadena de mando", "text": "Cuenta como Mariscal." },
+        { "name": "Podadora eléctrica", "text": "Filo medio. Si se usa dos veces en el mismo Turno, al Turno siguiente su bonificador de Fuerza baja a +1." },
+        { "name": "Ragnar", "text": "Mastín con +2 al Combate. En un Combate múltiple con aliados del V Reich, tira 1d10 antes: con 1-2 ataca a uno de los suyos." },
+        { "name": "Táctico", "text": "Tras los despliegues, recoloca hasta dos miniaturas suyas dentro de su zona." },
+        { "name": "Bombona de butano", "text": "Si cae, explota: plantilla circular de 5 cm de radio, F3 y Pen 3 sin Cobertura." }
+      ]
+    }
+  ],
+  "gear": [
+    { "name": "Walkie-talkie", "cost": 7, "page": 77, "text": "Necesario para recibir órdenes de la Cadena de mando del Mariscal." },
+    { "name": "Mastín", "cost": 9, "page": 75, "text": "+1 al Combate y protege el cadáver de su dueño de ser Rapiñado." }
+  ]
+}
