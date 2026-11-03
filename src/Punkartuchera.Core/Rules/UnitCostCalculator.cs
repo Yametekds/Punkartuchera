@@ -118,6 +118,8 @@ public sealed partial class UnitCostCalculator(Rulebook book)
         foreach (var owner in new[] { faction, subfaction }.OfType<FactionRules>())
         {
             options.AddRange(Priced(owner.GenericGear, "Equipo", false));
+            options.AddRange(owner.Gear.Where(g => g.Cost is not null)
+                .Select(g => new PurchaseOption("Equipo", g.Name, g.Cost!.Value, false)));
             foreach (var group in owner.Extras)
             {
                 options.AddRange(group.Items.Where(i => i.Cost is not null)
