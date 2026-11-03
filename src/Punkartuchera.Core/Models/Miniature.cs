@@ -41,9 +41,6 @@ public sealed class Miniature
 
     public string? Notes { get; set; }
 
-    /// <summary>El coste sin las balas, para enseñarlo al rival sin delatar cuántas lleva.</summary>
-    public int? CostWithoutAmmo => Cost is { } cost && BulletPrice is { } price ? Math.Max(0, cost - Ammo * price) : Cost;
-
     public int GetStat(string key, int fallback = 0) => Stats.TryGetValue(key, out var value) ? value : fallback;
 }
 
