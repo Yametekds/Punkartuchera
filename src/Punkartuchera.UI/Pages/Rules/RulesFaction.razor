@@ -9,7 +9,6 @@
 @if (_faction is null)
 {
     <section class="punk-empty">
-        <Icon Path="@Icons.Skull" Class="icon--huge" />
         <h1>Esa facción no existe</h1>
         <p>O se la tragó el Páramo o el enlace está mal.</p>
         <a class="btn btn--primary" href="reglas">Volver a las reglas</a>
@@ -18,7 +17,10 @@
 else
 {
     <div class="context-bar">
-        <span class="chip chip--faction context-bar__pill">@(_faction.Beta ? "Facción en beta" : _faction.IsMercenaries ? "A sueldo" : "Facción")</span>
+        @if (_faction.Beta)
+        {
+            <span class="chip chip--faction context-bar__pill">Facción en beta</span>
+        }
         <div class="context-bar__row">
             <a class="btn btn--icon" href="reglas" aria-label="Volver a las reglas"><Icon Path="@Icons.Back" /></a>
             <label class="visually-hidden" for="faction-switch">Cambiar de facción</label>
