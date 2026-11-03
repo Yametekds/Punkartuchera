@@ -73,6 +73,8 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             member.Notes = string.Join(", ", troop.Rules.Select(r => r.Name));
         }
 
+        member.BaseCost = troop.Cost;
+        member.Included = [.. member.Gear.Select(g => g.Name), .. member.Skills];
         member.Photo = BestPhoto(factionId, troop.Name, member.Gear.Select(g => g.Name));
         return member;
     }
@@ -96,6 +98,9 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             AddGear(member, name);
         }
 
+        // La ficha de control ya da el coste con todo su equipo.
+        member.BaseCost = preset.Cost;
+        member.Included = [.. member.Gear.Select(g => g.Name), .. member.Skills];
         member.Photo = BestPhoto(list.FactionId, preset.Troop, member.Gear.Select(g => g.Name));
         return member;
     }

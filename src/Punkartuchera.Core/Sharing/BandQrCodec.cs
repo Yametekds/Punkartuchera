@@ -115,7 +115,7 @@ public static class BandQrCodec
                 Stats = keys.Select(k => m.Stats.TryGetValue(k, out var v) ? v : (int?)null).ToList(),
                 Skills = m.Skills.Count == 0 ? null : m.Skills,
                 Gear = m.Gear.Select(g => string.IsNullOrWhiteSpace(g.Notes) ? new List<string> { g.Name } : [g.Name, g.Notes]).ToList(),
-                Cost = m.Cost,
+                Cost = m.CostWithoutAmmo,
                 Notes = NullIfEmpty(m.Notes),
                 Portrait = m.Photo is { Source: PhotoSource.Stock } photo ? photo.Key : null,
             }).ToList(),

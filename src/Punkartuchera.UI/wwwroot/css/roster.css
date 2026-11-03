@@ -98,3 +98,39 @@
 .official-grid img { background: #fff; object-fit: cover; }
 .official-grid__credit { margin: 4px 0 0; font-size: .78rem; color: var(--punk-text-muted); }
 .paper .official-grid__credit { color: var(--punk-ink-muted); }
+
+/* ---------- Coste de la miniatura ---------- */
+.ammo-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.ammo-stepper__price { color: var(--punk-ink-muted); font-size: 0.9rem; }
+
+.buy-group { display: grid; gap: 6px; }
+.buy-group__list { display: flex; flex-wrap: wrap; gap: 6px; }
+.buy-option {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 36px; padding: 4px 10px;
+    font: inherit; color: var(--punk-ink); text-align: left;
+    background: var(--punk-accent);
+    border: 2px solid var(--punk-black);
+    cursor: pointer;
+}
+.buy-option:hover, .buy-option:focus-visible { background: var(--punk-accent-strong); }
+.buy-option__cost { font-family: var(--punk-font-display); color: var(--punk-blood); }
+
+.cost-sheet__lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.cost-sheet__line {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 4px 0; border-bottom: 1px dashed var(--punk-ink-muted);
+}
+.cost-sheet__line--base { font-weight: 700; }
+.cost-sheet__line--included, .cost-sheet__line--unpriced { color: var(--punk-ink-muted); }
+.cost-sheet__points { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cost-sheet__hint { font-size: 0.9rem; margin: 0; color: var(--punk-ink-muted); }
+
+.cost-total {
+    display: inline-flex; align-items: baseline; gap: 4px;
+    flex: 1 1 100%; padding: 0 6px;
+    color: var(--punk-accent);
+    font-family: var(--punk-font-display);
+    font-size: 1.1rem;
+}
+.cost-total strong { font-size: 1.6rem; color: var(--punk-text); }
