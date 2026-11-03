@@ -93,4 +93,4 @@ La página `/mapa` guarda todo en el enlace (`?codigo=K7Q2XM&mesa=120x120&terren
 
 ## Fotos
 
-`PhotoPicker` usa `InputFile` con `capture="environment"` (abre la cámara en el móvil) y reduce la imagen en el navegador a 640 px en JPEG antes de guardarla. Los retratos genéricos están en `wwwroot/img/stock/` (`StockImages`).
+`PhotoPicker` abre la cámara (`capture="environment"`) o la galería y, al elegir una foto, muestra un editor de encuadre cuadrado: se arrastra para moverla y se acerca pellizcando, con la rueda o con la barra. Todo ocurre en `wwwroot/js/photoCrop.js` (a través de `PhotoCropper`): la foto se decodifica ya reducida a 2048 px de lado como mucho, con la orientación EXIF aplicada, y el encuadre se guarda como JPEG de 600 × 600 px, así que da igual lo que pese la original. Las fotos HEIC que el navegador no sabe abrir muestran un aviso. Los retratos genéricos están en `wwwroot/img/stock/` (`StockImages`).
