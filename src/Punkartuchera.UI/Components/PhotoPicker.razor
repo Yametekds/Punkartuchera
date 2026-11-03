@@ -14,7 +14,13 @@
             <Icon Path="@Icons.Image" /> Galería
             <input type="file" class="visually-hidden" accept="image/*" @ref="_galleryInput" @onchange="() => OpenAsync(_galleryInput)" />
         </label>
-        <button type="button" class="btn btn--ghost" @onclick="() => _showStock = !_showStock">
+        @if (OfficialPhotos.Count > 0)
+        {
+            <button type="button" class="btn btn--ghost" @onclick="() => { _showOfficial = !_showOfficial; _showStock = false; }">
+                <Icon Path="@Icons.Image" /> Oficiales
+            </button>
+        }
+        <button type="button" class="btn btn--ghost" @onclick="() => { _showStock = !_showStock; _showOfficial = false; }">
             <Icon Path="@Icons.Skull" /> Retratos
         </button>
         @if (Value is not null)
@@ -31,6 +37,21 @@
     @if (_error is not null)
     {
         <p class="notice notice--danger">@_error</p>
+    }
+
+    @if (_showOfficial && OfficialPhotos.Count > 0)
+    {
+        <div class="stock-grid official-grid">
+            @foreach (var mini in OfficialPhotos)
+            {
+                <button type="button" class="stock-grid__item @(Value?.Key == mini.Image ? "is-selected" : null)"
+                        @onclick="() => PickOfficial(mini.Image)">
+                    <img src="@mini.Image" alt="@mini.Name" loading="lazy" referrerpolicy="no-referrer" />
+                    <span>@mini.Name</span>
+                </button>
+            }
+        </div>
+        <p class="official-grid__credit">Fotos de la tienda oficial de Bad Roll Games.</p>
     }
 
     @if (_showStock)
@@ -78,6 +99,9 @@
 
     [Parameter] public EventCallback<PhotoRef?> ValueChanged { get; set; }
 
+    /// <summary>Fotos oficiales de la tropa del miembro, para elegir otra o volver a ella.</summary>
+    [Parameter] public IReadOnlyList<OfficialMini> OfficialPhotos { get; set; } = [];
+
     /// <summary>Se invoca con la clave de cada foto nueva guardada, para poder limpiarla si se cancela.</summary>
     [Parameter] public EventCallback<string> OnPhotoStored { get; set; }
 
@@ -89,6 +113,7 @@
     private bool _cropping;
     private bool _attachPending;
     private bool _showStock;
+    private bool _showOfficial;
     private string? _error;
 
     private async Task OpenAsync(ElementReference input)
@@ -159,6 +184,12 @@
     {
         _cropping = false;
         await Cropper.CancelAsync();
+    }
+
+    private async Task PickOfficial(string url)
+    {
+        _showOfficial = false;
+        await SetAsync(PhotoRef.Official(url));
     }
 
     private async Task PickStock(string key)

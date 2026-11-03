@@ -1,3 +1,4 @@
+using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Rules;
 
 namespace Punkartuchera.Core.Tests;
@@ -317,5 +318,45 @@ public class GearLookupTests
                 Assert.True(_lookup.Find(name, list.FactionId) is not null, $"{list.Name}: sin datos para {name}");
             }
         }
+    }
+}
+
+public class OfficialMiniTests
+{
+    private static readonly Rulebook Book = RulebookLoader.LoadEmbedded();
+    private readonly RosterBuilder _builder = new(Book, new RulebookCatalog(Book));
+
+    [Fact]
+    public void Every_official_mini_points_to_a_real_troop_and_image()
+    {
+        Assert.True(Book.Minis.Count > 100);
+        foreach (var mini in Book.Minis)
+        {
+            var faction = Book.FindFaction(mini.FactionId);
+            Assert.NotNull(faction);
+            var owner = mini.SubfactionId is null ? faction : faction.Subfactions.Single(s => s.Id == mini.SubfactionId);
+            Assert.Contains(owner.Troops, t => t.Name == mini.Troop);
+            Assert.StartsWith("https://", mini.Image);
+        }
+    }
+
+    [Fact]
+    public void Best_photo_follows_the_gear()
+    {
+        var photo = _builder.BestPhoto("sangre-negra", "Ascua", ["Escopeta", "Cuero endurecido"]);
+
+        Assert.Equal(PhotoSource.Official, photo?.Source);
+        Assert.Equal(Book.Minis.Single(m => m.Name == "Ascua con escopeta").Image, photo!.Key);
+    }
+
+    [Fact]
+    public void Troops_and_preset_lists_come_with_official_photos()
+    {
+        var mel = Book.FindFaction("mercenarios")!.Troops.Single(t => t.Name == "Crazy Mel");
+        Assert.Equal(PhotoSource.Official, _builder.FromTroop(mel, "mercenarios").Photo?.Source);
+        Assert.NotEmpty(_builder.PhotosFor("pandilleros", "Crazy Mel"));
+
+        var members = _builder.FromList(Book.FindList("craabianos")!);
+        Assert.True(members.Count(m => m.Photo is { Source: PhotoSource.Official }) >= 5);
     }
 }

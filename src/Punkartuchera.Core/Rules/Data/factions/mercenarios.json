@@ -101,6 +101,23 @@
         { "name": "Utacël", "text": "Arma de asta. Al Asaltar: C+1, F+3, Pen 5. En el resto de Combates: C-1, F+2, Pen 3." },
         { "name": "Halálkarma", "text": "Su felino le da Montada, Raudo, Todoterreno y Cobertura de Blindaje +3. Puede Combatir la bestia en su lugar con C7, F8, Pen 5, pero luego descansa como con Lentorra (2)." }
       ]
+    },
+    {
+      "name": "Devin Crow", "cost": 70, "personality": true,
+      "stats": { "a": "2", "c": "5", "p": "3", "ag": "5", "f": "3 (5)", "d": "3", "t": "6" },
+      "weapons": "Maza", "armor": "Ropas resistentes",
+      "specialRules": ["Mercenario"],
+      "rules": [
+        { "name": "Monkeys Paw", "text": "1 Acción: pide un deseo sobre una miniatura aliada, sin límite de distancia ni Línea de visión. Tira Técnica; cada deseo ya pedido da -1 acumulativo al siguiente. Máximo 3 deseos por partida y sin repetir (PDF oficial de Devin Crow).",
+          "table": { "columns": ["Deseo", "Éxito", "Fallo"], "rows": [
+            ["Shot in the dark (tira la próxima vez que Dispare)", "El Disparo impacta automáticamente.", "Impacta, pero con Fuerza y Penetración 0, y el arma queda descartada el resto de la partida."],
+            ["Pet Sematary", "Una miniatura Abatida vuelve como si no lo hubiera sido.", "Vuelve, pero pasa a la banda rival y la maneja el rival."],
+            ["Killed by death", "+1 permanente a Combate y Fuerza por cada baja que cause.", "-1 permanente a Combate y Fuerza por cada Fase de activación que acabe sin combatir."],
+            ["Don't stop me now", "Gana Raudo.", "Gana Raudo, pero si en una Fase de activación no hace al menos una Acción de Movimiento tira Dureza y, si falla, queda Abatida."],
+            ["We are not gonna take it", "Contador de suerte: cuando quiera, tira dos dados en una tirada y el jugador elige cuál vale.", "Igual, pero elige el dado el rival."]
+          ] } },
+        { "name": "Cuervos y azufre", "text": "Al ser Abatido desaparece y no deja marcador de Abatido." }
+      ]
     }
   ]
 }

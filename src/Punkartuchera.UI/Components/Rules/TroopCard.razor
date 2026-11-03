@@ -1,4 +1,5 @@
 @inject Rulebook Book
+@inject RosterBuilder Roster
 
 @* Perfil de una tropa del reglamento, con el mismo aspecto que la ficha de un miembro. *@
 <article class="datacard rules-anchor" id="@Troop.Slug">
@@ -96,6 +97,24 @@
             </div>
         }
 
+        @if (Roster.PhotosFor(FactionId, Troop.Name) is { Count: > 0 } minis)
+        {
+            <div class="official-minis">
+                <span class="datacard__label">Miniaturas oficiales</span>
+                <ul class="official-minis__list">
+                    @foreach (var mini in minis)
+                    {
+                        <li>
+                            <a class="official-minis__item" href="@(mini.Url ?? mini.Image)" target="_blank" rel="noopener">
+                                <img src="@mini.Image" alt="@mini.Name" loading="lazy" referrerpolicy="no-referrer" />
+                                <span>@mini.Name</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
         <SourceRef Source="@Source" Page="Troop.Page" />
     </div>
 </article>
@@ -104,4 +123,7 @@
     [Parameter, EditorRequired] public Troop Troop { get; set; } = default!;
 
     [Parameter] public string? Source { get; set; }
+
+    /// <summary>Facción de la tropa, para buscar sus miniaturas oficiales.</summary>
+    [Parameter] public string? FactionId { get; set; }
 }

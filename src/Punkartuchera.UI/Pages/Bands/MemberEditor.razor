@@ -64,7 +64,11 @@ else
 
         <section class="card member-editor__photo">
             <MiniPortrait Photo="_member.Photo" Alt="@_member.Name" Size="lg" />
-            <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" />
+            <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" OfficialPhotos="OfficialPhotos" />
+            @if (_member.Photo is { Source: PhotoSource.Official })
+            {
+                <p class="official-grid__credit">Foto oficial de la miniatura (Bad Roll Games). Puedes cambiarla por la tuya.</p>
+            }
         </section>
 
         <section class="paper stack">
@@ -154,6 +158,9 @@ else
 
     private bool IsNew => MemberId is null;
 
+    private IReadOnlyList<OfficialMini> OfficialPhotos =>
+        _member is null ? [] : Roster.PhotosFor(_band?.FactionId, _member.Role);
+
     private string BandHref => $"bandas/{BandId}";
 
     protected override async Task OnParametersSetAsync()
@@ -183,9 +190,17 @@ else
 
         _choiceKey = e.Value?.ToString() ?? string.Empty;
         _picked = Roster.FindChoice(_choiceKey);
-        var filled = _picked is null ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty) : Roster.FromTroop(_picked.Troop);
+        var filled = _picked is null
+            ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
+            : Roster.FromTroop(_picked.Troop, _picked.Owner.ParentId ?? _picked.Owner.Id);
         filled.Id = _member.Id;
-        filled.Photo = _member.Photo;
+
+        // La foto oficial acompaña a la tropa elegida, pero una foto propia no se pisa.
+        if (_member.Photo is not null and not { Source: PhotoSource.Official })
+        {
+            filled.Photo = _member.Photo;
+        }
+
         filled.Ammo = _member.Ammo;
         _member = filled;
         _gearNames = _member.Gear.Select(g => g.Name).ToList();
