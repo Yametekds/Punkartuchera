@@ -277,3 +277,45 @@ public class RosterBuilderTests
         Assert.Contains("Retraso (3)", boss.Skills);
     }
 }
+
+public class GearLookupTests
+{
+    private static readonly Rulebook Book = RulebookLoader.LoadEmbedded();
+    private readonly GearLookup _lookup = new(Book);
+
+    [Theory]
+    [InlineData("Pistola", "Pistola", GearInfoKind.RangedWeapon)]
+    [InlineData("filo MEDIO incrustado", "Filo medio", GearInfoKind.MeleeWeapon)]
+    [InlineData("Chasqueador", "Chasqueador y traje voltaico", GearInfoKind.MeleeWeapon)]
+    [InlineData("Cuero endurecido", "Cuero endurecido", GearInfoKind.Armor)]
+    [InlineData("Pez globo", "Pez globo", GearInfoKind.Extra)]
+    public void Finds_gear_by_approximate_name(string query, string expected, GearInfoKind kind)
+    {
+        var info = _lookup.Find(query, "chatarreros") ?? _lookup.Find(query);
+
+        Assert.NotNull(info);
+        Assert.Equal((expected, kind), (info.Name, info.Kind));
+        Assert.False(string.IsNullOrWhiteSpace(info.Summary));
+    }
+
+    [Fact]
+    public void Weapon_summary_has_its_profile()
+    {
+        var info = _lookup.Find("Pistola");
+
+        Assert.Contains("Pen", info!.Summary);
+        Assert.Contains("cm", info.Summary);
+    }
+
+    [Fact]
+    public void Every_item_in_the_preset_lists_has_rules_data()
+    {
+        foreach (var list in Book.Lists)
+        {
+            foreach (var name in list.Members.SelectMany(m => m.Weapons.Concat(m.Gear).Append(m.Armor ?? "Ropas resistentes")))
+            {
+                Assert.True(_lookup.Find(name, list.FactionId) is not null, $"{list.Name}: sin datos para {name}");
+            }
+        }
+    }
+}
