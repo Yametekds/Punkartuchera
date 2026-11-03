@@ -1,0 +1,453 @@
+{
+  "edition": "Reglamento 2ª edición",
+  "sources": [
+    { "id": "reglas", "title": "Introducción y reglas", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Reglas_.pdf" },
+    { "id": "bandas", "title": "Bandas", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Bandas_.pdf" },
+    { "id": "equipo", "title": "Equipo", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Equipo_.pdf" },
+    { "id": "escenarios", "title": "Escenarios", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Escenarios_.pdf" },
+    { "id": "resumen", "title": "Resumen de reglas", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/ResumenReglas_.pdf" },
+    { "id": "unami", "title": "Reglas facción Unami (beta)", "url": "https://punkapocalyptic.com/wp-content/uploads/2026/01/Unami.pdf" },
+    { "id": "faqs", "title": "FAQs y erratas", "url": "https://punkapocalyptic.com/faqs/" }
+  ],
+  "attributes": [
+    { "key": "a", "name": "Acciones", "abbreviation": "A", "min": 1, "max": 3, "default": 2, "description": "Cuántas Acciones puede hacer en su Fase de activación. Nunca más de 3." },
+    { "key": "c", "name": "Combate", "abbreviation": "C", "min": 0, "max": 10, "default": 3, "description": "Aptitud para luchar cuerpo a cuerpo." },
+    { "key": "p", "name": "Precisión", "abbreviation": "P", "min": 0, "max": 10, "default": 3, "description": "Puntería con armas a distancia." },
+    { "key": "ag", "name": "Agilidad", "abbreviation": "AG", "min": 0, "max": 10, "default": 3, "description": "Velocidad y reflejos. Marca la Ronda de Agilidad en la que actúa." },
+    { "key": "f", "name": "Fuerza", "abbreviation": "F", "min": 0, "max": 10, "default": 3, "description": "Potencia física." },
+    { "key": "d", "name": "Dureza", "abbreviation": "D", "min": 0, "max": 10, "default": 3, "description": "Aguante. Se enfrenta a la Fuerza del Impacto." },
+    { "key": "t", "name": "Técnica", "abbreviation": "T", "min": 0, "max": 10, "default": 3, "description": "Manejo de máquinas y dispositivos." }
+  ],
+  "sections": [
+    {
+      "id": "atributos", "category": "Básicas", "title": "Atributos", "source": "reglas", "page": 6,
+      "keywords": ["perfil", "acciones", "combate", "precisión", "agilidad", "fuerza", "dureza", "técnica"],
+      "body": [
+        "Los Atributos van de 1 a 10, salvo Acciones, que va de 1 a 3. Cuanto más alto, mejor.",
+        "Un Atributo con valor «-» no se puede usar para ninguna Acción.",
+        "Si Agilidad, Fuerza o Dureza bajan de forma permanente a 0 o menos, la miniatura queda Abatida.",
+        "• A Acciones · C Combate · P Precisión · AG Agilidad · F Fuerza · D Dureza · T Técnica"
+      ]
+    },
+    {
+      "id": "tiradas", "category": "Básicas", "title": "Tiradas", "source": "reglas", "page": 2,
+      "keywords": ["d10", "tirada de atributo", "tirada enfrentada", "empate", "dados"],
+      "body": [
+        "Se usan dados de 10 caras (d10).",
+        "Tirada de Atributo: hay que sacar igual o menos que el Atributo. Los modificadores se aplican al Atributo. Si queda en 0 o menos, se falla sin tirar; si llega a 10 o más, se supera sin tirar. No hay críticos salvo que se diga.",
+        "Tirada enfrentada: cada jugador suma 1d10 y sus modificadores; gana el total más alto. En empate gana quien tiene la Fase de activación, salvo en Combate, donde ambos Impactan.",
+        "Si una tirada se enfrenta a varias a la vez, tiene que superarlas todas; cada tirada rival que la supere tiene éxito."
+      ]
+    },
+    {
+      "id": "modificadores", "category": "Básicas", "title": "Apilar modificadores y repetir tiradas", "source": "reglas", "page": 3,
+      "keywords": ["apilar", "repetir", "repetición", "modificador"],
+      "body": [
+        "Los modificadores de una misma regla o efecto no se apilan (Apuntar dos veces sigue siendo +3). Los de reglas distintas sí.",
+        "Repetir: se repite en el momento y te quedas siempre con el último resultado. Cada jugador puede repetir una sola tirada por Acción y ninguna tirada se repite más de una vez."
+      ]
+    },
+    {
+      "id": "medidas", "category": "Básicas", "title": "Medidas, peanas y Línea de visión", "source": "reglas", "page": 3,
+      "keywords": ["medir", "distancia", "peana", "línea de visión", "180", "contacto", "plantilla", "marcador"],
+      "body": [
+        "Se puede medir cualquier distancia en cualquier momento. Entre miniaturas se mide de borde a borde más cercano de las peanas.",
+        "Al mover, mide del mismo punto de la peana al mismo punto (delante a delante, o centro a centro).",
+        "Dos miniaturas pegadas cuya peana superior esté como mucho 25 mm por encima de la otra cuentan como en contacto peana con peana.",
+        "Línea de visión: 180° hacia el frente. Ve a cualquier miniatura en ese arco que no esté tras una Cobertura que la oculte del todo.",
+        "El tamaño de peana es su diámetro.",
+        "Plantillas: si tocan una peana, esa miniatura y todas las que estén en Combate con ella resultan impactadas."
+      ]
+    },
+    {
+      "id": "fracciones", "category": "Básicas", "title": "Fracciones y contradicciones", "source": "reglas", "page": 4,
+      "keywords": ["fracción", "por cada fracción", "contradicción", "dado"],
+      "body": [
+        "«Por cada fracción de X»: de 0 a X es una fracción y en cuanto te pasas en uno ya es otra. Ej.: 3 miniaturas por cada fracción de 100 puntos son 3 hasta 100, 6 de 101 a 200, etc.",
+        "Si dos reglas chocan, usad la lógica y llegad a un acuerdo. Si no, tirad un dado y quien gane tiene razón."
+      ]
+    },
+    {
+      "id": "turno", "category": "Turno", "title": "Turno de juego y Rondas de Agilidad", "source": "reglas", "page": 6,
+      "keywords": ["turno", "ronda de agilidad", "fase de activación", "orden de actuación", "secuencia", "iniciativa"],
+      "body": [
+        "La partida se divide en Turnos (lo habitual son 6). Un Turno acaba cuando todas las miniaturas han hecho sus Acciones.",
+        "Se actúa por Rondas de Agilidad, de mayor a menor. Las Rondas sin miniaturas se saltan.",
+        "Fase de activación: el momento en que una miniatura hace todas sus Acciones. Hay que terminarla antes de activar otra, y cada miniatura solo tiene una por Turno.",
+        "Si en una Ronda solo hay miniaturas de un bando, ese jugador elige el orden.",
+        "Si hay de ambos bandos, cada jugador tira 1d10 (se repite el empate) y el ganador decide quién activa primero. Después se alternan; si un bando se queda sin miniaturas en esa Ronda, el otro activa las suyas seguidas."
+      ]
+    },
+    {
+      "id": "acciones", "category": "Turno", "title": "Acciones", "source": "reglas", "page": 7,
+      "keywords": ["acción", "mover", "disparar", "apuntar", "asaltar", "combatir", "separarse", "fuego defensivo", "rapiñar", "intercambiar balas"],
+      "body": [
+        "Una miniatura hace tantas Acciones como su Atributo A. Se pueden repetir, se resuelven de una en una y puedes no gastarlas todas.",
+        "• Mover: andar, Saltar, Levantarse, Trepar…",
+        "• Disparar: un disparo con un arma a distancia.",
+        "• Apuntar: +3 a Precisión en los siguientes disparos al mismo objetivo en esta Fase de activación.",
+        "• Asaltar: mover hasta contactar con un enemigo y combatir.",
+        "• Combatir: luchar con un enemigo en contacto.",
+        "• Separarse del Combate: intentar salir de un combate.",
+        "• Fuego defensivo: quedar lista para disparar a un enemigo que se mueva.",
+        "• Rapiñar un cadáver: quitar el equipo a un Abatido en contacto.",
+        "• Intercambiar balas: dar o recibir balas de un aliado en contacto."
+      ]
+    },
+    {
+      "id": "movimiento", "category": "Movimiento", "title": "Movimiento", "source": "reglas", "page": 8,
+      "keywords": ["mover", "10 cm", "hueco", "aliados", "peana"],
+      "body": [
+        "Salvo regla especial, se mueven 10 cm por Acción de Movimiento en Terreno chachi.",
+        "Las miniaturas aliadas no estorban al mover, pero ninguna puede terminar ocupando el sitio de otra.",
+        "Para pasar por un hueco tiene que caber la peana.",
+        "La miniatura tiene que aguantarse de pie sola donde la dejes (salvo trepando o en una escalerilla, indicando la altura)."
+      ]
+    },
+    {
+      "id": "terrenos", "category": "Movimiento", "title": "Tipos de terreno", "source": "reglas", "page": 8,
+      "keywords": ["terreno chachi", "terreno chungo", "terreno pila chungo", "impasable", "contaminado", "agua", "fango", "escombros"],
+      "body": [
+        "Terreno chachi: el normal. 10 cm por Acción.",
+        "Terreno chungo (agua poco profunda, fango, escombros, cuestas): tirada de Agilidad para mover normal; si fallas o no tiras, solo la mitad. Si ya habías movido más de la mitad, te quedas al borde. Una tirada por Acción.",
+        "Terreno pila chungo: solo la mitad del Movimiento (o te quedas al borde si ya llevabas más de la mitad). Puedes intentar mover entero con una tirada de Agilidad, pero si fallas sufres una Caída, quedas Tumbada y la siguiente Acción es Levantarse.",
+        "Terreno impasable: no se puede Mover ni Trepar por él. Si una miniatura acaba ahí, se retira de la mesa.",
+        "Terreno contaminado: pierde 1 punto de Dureza permanente si termina su Fase de activación con la peana encima. Lo evita la protección contra la contaminación o algunas reglas de facción."
+      ]
+    },
+    {
+      "id": "obstaculos", "category": "Movimiento", "title": "Atravesar obstáculos", "source": "reglas", "page": 9,
+      "keywords": ["obstáculo", "encaramarse", "tamaño 1", "tamaño 2", "valla"],
+      "body": [
+        "Cualquier miniatura sube a escenografía de tamaño 1 sin gastar Movimiento vertical; las de peana mayor de 40 mm, también a la de tamaño 2. Si no, toca rodear o Trepar.",
+        "Si el elemento es igual o más estrecho que la peana, se pone directamente al otro lado. Si no, queda encima y se aplica el terreno que sea."
+      ]
+    },
+    {
+      "id": "saltar", "category": "Movimiento", "title": "Saltar", "source": "reglas", "page": 9,
+      "keywords": ["saltar", "salto", "hueco", "parkour"],
+      "body": [
+        "Se salta en horizontal a la misma altura o hasta 2× la peana por debajo. Nunca a una altura superior.",
+        "• Hueco hasta 2× la peana: sin tirada.",
+        "• De 2× a 3× la peana: tirada de Agilidad o Caída.",
+        "• De 3× a 4× la peana: tirada de Agilidad con -2 o Caída.",
+        "• Más de 4× la peana: no se puede."
+      ]
+    },
+    {
+      "id": "trepar", "category": "Movimiento", "title": "Trepar y dejarse caer", "source": "reglas", "page": 9,
+      "keywords": ["trepar", "escalerilla", "escalar", "dejarse caer", "bajar"],
+      "body": [
+        "Trepar por una superficie: como Terreno chungo (Agilidad para mover entero, si no la mitad).",
+        "Por una escalerilla: como Terreno chachi.",
+        "Dejarse caer desde un borde hasta 2× la peana de altura es gratis dentro de una Acción de Movimiento. Más alto, se aplica Caída."
+      ]
+    },
+    {
+      "id": "caidas", "category": "Movimiento", "title": "Caídas", "source": "reglas", "page": 9,
+      "keywords": ["caída", "caer", "tumbada", "levantarse", "altura"],
+      "body": [
+        "Tirada enfrentada de Dureza (sin Blindaje) contra la Fuerza de la Caída.",
+        "Si la supera, queda Tumbada y gasta la siguiente Acción en Levantarse. Si no, queda Abatida.",
+        "Una miniatura Tumbada que entra en contacto con enemigos se levanta al momento, pero en esa Fase de activación tiene -3 al Combate y no puede Separarse del Combate."
+      ],
+      "table": {
+        "columns": ["Altura", "Fuerza"],
+        "rows": [["Hasta peana × 2", "Sin daño"], ["Hasta peana × 4", "2"], ["Hasta peana × 6", "4"], ["Hasta peana × 8", "6"], ["Más", "8"]]
+      }
+    },
+    {
+      "id": "abatidas", "category": "Combate", "title": "Miniaturas Abatidas", "source": "reglas", "page": 11,
+      "keywords": ["abatida", "baja", "marcador", "muerto"],
+      "body": [
+        "Una miniatura Abatida queda fuera de la partida. Se marca su sitio con un marcador o una peana vacía del mismo tamaño.",
+        "Los marcadores de Abatido no tapan la Línea de visión ni estorban al mover, pero nadie puede acabar su Movimiento encima."
+      ]
+    },
+    {
+      "id": "rapinar", "category": "Combate", "title": "Rapiñar un cadáver e Intercambiar balas", "source": "reglas", "page": 11,
+      "keywords": ["rapiñar", "cadáver", "saquear", "balas", "intercambiar", "secreto"],
+      "body": [
+        "Rapiñar (1 Acción): en contacto con un Abatido, amigo o enemigo, coge cualquier arma o equipo especial suyo. Respeta el máximo de armas y nunca dos A dos manos.",
+        "Intercambiar balas (1 Acción): en contacto con un aliado, le das o le quitas balas.",
+        "Las balas son información secreta: apúntalas en la hoja de banda para que el rival lo pueda comprobar al final."
+      ]
+    },
+    {
+      "id": "asaltar", "category": "Combate", "title": "Asaltar", "source": "reglas", "page": 11,
+      "keywords": ["asalto", "asaltar", "carga", "cargar", "bonificador", "espalda"],
+      "body": [
+        "Asalto: acabar una Acción de Movimiento en contacto con enemigos. Hay que verlos al empezar ese Movimiento. Es la única forma de ponerse en contacto con un enemigo.",
+        "El Asalto incluye una Acción gratuita de Combatir. El asaltado se encara al asaltante.",
+        "• +1 al Combate por Asaltar.",
+        "• +1 más por cada Acción de Movimiento anterior y seguida en la que ya veía al enemigo y avanzaba hacia él.",
+        "• +1 si el asaltado no ve al atacante en ningún momento de su Fase de activación.",
+        "Hay que avanzar lo máximo hacia el enemigo gastando el mínimo de Acciones. Si falla una tirada de Agilidad por terreno, pierde los bonificadores.",
+        "Los bonificadores valen para todos los Combates contra los asaltados hasta que acabe su Fase de activación.",
+        "Asaltar desde arriba: como dejarse caer, pero siempre queda Tumbada. -1 al Combate y +1 a Fuerza por cada fracción de 5 cm de caída. El Combate se resuelve antes que la Caída.",
+        "En contacto con enemigos solo se puede Combatir o Separarse del Combate."
+      ]
+    },
+    {
+      "id": "combatir", "category": "Combate", "title": "Combatir", "source": "reglas", "page": 11,
+      "keywords": ["combatir", "cuerpo a cuerpo", "melee", "tirada enfrentada de combate", "empate"],
+      "body": [
+        "Gasta una Acción estando en contacto. Ambos suman 1d10 + Combate + bonificador del arma + otros.",
+        "El más alto Impacta al rival. En empate, los dos quedan Impactados."
+      ]
+    },
+    {
+      "id": "combate-multiple", "category": "Combate", "title": "Combate múltiple", "source": "reglas", "page": 14,
+      "keywords": ["combate múltiple", "apoyo", "varios", "+1", "+2"],
+      "body": [
+        "Hay Combate múltiple si algún bando tiene dos o más miniaturas implicadas. Cuenta toda miniatura en contacto con al menos un enemigo.",
+        "Quien tiene la Fase de activación elige a qué enemigo del combate quiere Impactar, aunque no esté en contacto con él.",
+        "Cada aliado implicado da apoyo: +1 si tiene Combate 5 o menos, +2 si tiene 6 o más.",
+        "Si una miniatura se queda libre en mitad del combate, se pega gratis al enemigo superviviente más cercano."
+      ]
+    },
+    {
+      "id": "separarse", "category": "Combate", "title": "Separarse del Combate", "source": "reglas", "page": 15,
+      "keywords": ["separarse", "huir", "retirarse", "salir del combate", "agilidad"],
+      "body": [
+        "Gasta una Acción: tirada enfrentada de Agilidad contra todos los rivales en contacto.",
+        "Si gana, mueve normalmente al momento. Si pierde, cada rival que la haya superado la Impacta automáticamente y sigue trabada.",
+        "No puede Asaltar en la misma Acción en que se separa, pero sí en Acciones posteriores."
+      ]
+    },
+    {
+      "id": "disparar", "category": "Disparo", "title": "Disparar", "source": "reglas", "page": 15,
+      "keywords": ["disparar", "disparo", "precisión", "a distancia", "espalda"],
+      "body": [
+        "Gasta una Acción. No puede tener enemigos en contacto y tiene que ver al objetivo.",
+        "Para Impactar supera una tirada de Precisión con los modificadores de arma, distancia, Cobertura, etc."
+      ],
+      "table": {
+        "columns": ["Situación", "Precisión"],
+        "rows": [
+          ["Objetivo no ve al tirador", "+1"],
+          ["Distancia corta", "+1"],
+          ["Distancia media", "0"],
+          ["Distancia larga", "-1"],
+          ["Ha Apuntado", "+3"],
+          ["Evitar una Cobertura parcial", "-3"],
+          ["Fuego defensivo", "-2"],
+          ["Disparar a un Combate", "-3"]
+        ]
+      }
+    },
+    {
+      "id": "distancias", "category": "Disparo", "title": "Distancias", "source": "reglas", "page": 15,
+      "keywords": ["distancia", "corta", "media", "larga", "rango", "alcance"],
+      "body": [
+        "Casi todas las armas tienen tres rangos: corto (+1), medio (0) y largo (-1). No se puede disparar más allá del largo.",
+        "Cuando un valor del arma va como C/M/L, cambia según el rango."
+      ]
+    },
+    {
+      "id": "disparar-combate", "category": "Disparo", "title": "Disparar a un Combate y Evitar Cobertura", "source": "reglas", "page": 15,
+      "keywords": ["disparar a un combate", "amigo", "evitar cobertura", "-3"],
+      "body": [
+        "Disparar a un enemigo trabado en Combate: -3 a Precisión. Si fallas por culpa de ese -3, impactas a la miniatura amiga (al azar si hay varias).",
+        "Evitar una Cobertura parcial anula su bonificador al Blindaje a cambio de -3 a Precisión. Suele compensar contra Coberturas pesadas o con poca Penetración."
+      ]
+    },
+    {
+      "id": "apuntar", "category": "Disparo", "title": "Apuntar", "source": "reglas", "page": 16,
+      "keywords": ["apuntar", "+3", "puntería"],
+      "body": [
+        "Gasta una Acción: +3 a Precisión en todos los disparos posteriores de esa Fase de activación, siempre al mismo objetivo.",
+        "Se pierde al acabar la Fase de activación, así que no sirve para Fuego defensivo."
+      ]
+    },
+    {
+      "id": "fuego-defensivo", "category": "Disparo", "title": "Fuego defensivo", "source": "reglas", "page": 16,
+      "keywords": ["fuego defensivo", "overwatch", "vigilancia", "reacción"],
+      "body": [
+        "Gasta una Acción y ya no puede hacer nada más en su Fase de activación (que sea la última).",
+        "Durante el resto del Turno puede hacer UN disparo gratuito a un enemigo que haga una Acción de Movimiento en su Línea de visión. Tú eliges el momento del movimiento.",
+        "El disparo tiene -2 a Precisión. Si no lo Abate, el enemigo termina su movimiento. No estás obligado a disparar al primero que pase."
+      ]
+    },
+    {
+      "id": "impactar", "category": "Impactos", "title": "Impactar: Fuerza contra Dureza", "source": "reglas", "page": 16,
+      "keywords": ["impacto", "impactar", "fuerza", "dureza", "daño", "herida"],
+      "body": [
+        "Tirada enfrentada. El agresor suma 1d10 + Fuerza del Impacto + modificadores. Si la Fuerza del arma es un modificador (+2, -1…), se suma también la Fuerza del agresor.",
+        "La víctima suma 1d10 + Dureza + Blindaje + modificadores.",
+        "Si gana el agresor, la víctima queda Abatida (salvo reglas especiales)."
+      ]
+    },
+    {
+      "id": "blindaje", "category": "Impactos", "title": "Blindaje y Penetración", "source": "reglas", "page": 16,
+      "keywords": ["blindaje", "armadura", "penetración", "anular"],
+      "body": [
+        "El Blindaje (del equipo y de la Cobertura) se suma a la Dureza al ser Impactada.",
+        "La Penetración del arma resta Blindaje hasta un mínimo de 0. No da ningún bonificador a la Fuerza.",
+        "Ej.: Blindaje 3 contra Penetración 2 deja solo +1."
+      ]
+    },
+    {
+      "id": "coberturas", "category": "Coberturas", "title": "Tamaños y grados de Cobertura", "source": "reglas", "page": 17,
+      "keywords": ["cobertura", "tamaño", "grado", "ligera", "media", "pesada", "escenografía"],
+      "body": [
+        "Antes de jugar, decidid el tamaño y el grado de cada elemento. Un truco: marcarlos debajo como 2M, 1P, 3L…",
+        "Tamaño orientativo: 1 hasta unos 3 cm de alto, 2 entre 3 y 6 cm, 3 por encima.",
+        "Ligera: vegetación densa, madera, neumáticos, sacos. Media: adobe, ladrillo, chapa fina, escombros. Pesada: vehículos, chapa gruesa, hormigón, piedra."
+      ],
+      "table": {
+        "columns": ["Grado", "Blindaje"],
+        "rows": [["Ligera", "+3"], ["Media", "+5"], ["Pesada", "+7"]]
+      }
+    },
+    {
+      "id": "cobertura-parcial-total", "category": "Coberturas", "title": "Cobertura parcial y total", "source": "reglas", "page": 17,
+      "keywords": ["parcial", "total", "oculta", "línea recta", "pegado"],
+      "body": [
+        "Si alguna línea desde el arco frontal del tirador hasta la peana del objetivo atraviesa escenografía, hay Cobertura. Si además alguna línea no la atraviesa, es parcial; si ninguna se libra, es total.",
+        "Si el tirador está pegado a un elemento que le da Cobertura parcial, ese elemento no protege a su objetivo.",
+        "En el 90% de los casos se ve a simple vista; solo hace falta trazar líneas en casos muy justos."
+      ]
+    },
+    {
+      "id": "aplicar-cobertura", "category": "Coberturas", "title": "Aplicar la Cobertura según la peana", "source": "reglas", "page": 17,
+      "keywords": ["25 mm", "40 mm", "peana", "oculta", "tamaño 1", "tamaño 2", "tamaño 3"],
+      "body": [
+        "Cobertura total:",
+        "• Tamaño 1: protege a peanas de 25 y 40 mm; a las más grandes no.",
+        "• Tamaño 2: oculta a peanas de 25 y 40 mm; protege a las más grandes.",
+        "• Tamaño 3: oculta a todas.",
+        "Cobertura parcial:",
+        "• Tamaño 1: protege a peanas de 25 y 40 mm; a las más grandes no.",
+        "• Tamaño 2 y 3: protegen a todas.",
+        "Si la oculta, no hay Línea de visión en ningún sentido."
+      ]
+    },
+    {
+      "id": "apilar-coberturas", "category": "Coberturas", "title": "Apilar Coberturas", "source": "reglas", "page": 18,
+      "keywords": ["apilar", "varias coberturas", "+1", "escudo"],
+      "body": [
+        "Si el disparo cruza varias Coberturas que protegen, se usa la de mayor grado y +1 por cada una extra.",
+        "Ej.: muro de ladrillo (+5) y escudo (+2) dan +6."
+      ]
+    },
+    {
+      "id": "alturas", "category": "Coberturas", "title": "Coberturas a diferentes alturas", "source": "reglas", "page": 18,
+      "keywords": ["altura", "tejado", "borde", "5 cm", "elevado"],
+      "body": [
+        "Hay diferentes alturas si se separan más de 5 cm.",
+        "Objetivo en alto: pegado al borde, sin Cobertura. A menos de su tamaño de peana del borde, con Cobertura. Más lejos, oculto.",
+        "Tirador en alto: aplica las reglas de estar pegado a un elemento (no da Cobertura a su objetivo si se la daba a él)."
+      ]
+    },
+    {
+      "id": "miniaturas-cobertura", "category": "Coberturas", "title": "Miniaturas como Cobertura", "source": "reglas", "page": 18,
+      "keywords": ["miniaturas", "tapar", "interponer", "cobertura de miniaturas"],
+      "body": [
+        "Las peanas de otras miniaturas cuentan como escenografía para ver si hay Cobertura.",
+        "Total: el objetivo no se puede elegir. Parcial: se usan las reglas de Disparar a un Combate (-3; si fallas por eso, impactas a la que tapa más cercana).",
+        "No se puede Evitar esta Cobertura."
+      ]
+    },
+    {
+      "id": "puntos", "category": "Creación de bandas", "title": "Puntos y máximo de miniaturas", "source": "bandas", "page": 1,
+      "keywords": ["puntos", "límite", "lista", "máximo de miniaturas", "350", "500"],
+      "body": [
+        "Cada tropa cuesta puntos y se suma el coste de su equipo. El total no puede pasar nunca del límite pactado.",
+        "Una partida estándar es de 350 a 500 puntos.",
+        "Máximo 3 miniaturas por cada fracción de 100 puntos.",
+        "Cada tropa va en el tamaño de peana indicado en su ficha; para las reglas cuenta la peana, no la miniatura."
+      ],
+      "table": {
+        "columns": ["Puntos", "Máx. miniaturas"],
+        "rows": [["Hasta 100", "3"], ["101 a 200", "6"], ["201 a 300", "9"], ["301 a 400", "12"], ["401 a 500", "15"], ["501 a 600", "18"]]
+      }
+    },
+    {
+      "id": "restricciones", "category": "Creación de bandas", "title": "Restricciones e información", "source": "bandas", "page": 2,
+      "keywords": ["restricciones", "personalidad", "mercenario", "secreto", "balas", "información", "proxy"],
+      "body": [
+        "Cada facción tiene sus Restricciones al crear la banda (por ejemplo, un solo Jefe).",
+        "El equipo debe verse en la miniatura o dejarse claro. El rival tiene derecho a conocer perfiles, reglas, habilidades y mutaciones.",
+        "Solo es secreto el número de balas y las miniaturas que entran más tarde (por ejemplo con Infiltración).",
+        "Se pueden usar miniaturas de otras marcas, también en torneos oficiales."
+      ]
+    },
+    {
+      "id": "armas-equipo", "category": "Creación de bandas", "title": "Llevar varias armas", "source": "equipo", "page": 3,
+      "keywords": ["varias armas", "dos armas", "elegir arma", "a dos manos"],
+      "body": [
+        "Llevar varias armas no da bonificadores salvo regla especial.",
+        "Con varias armas cuerpo a cuerpo, elige cuál usa antes de Combatir o apoyar y no la cambia hasta acabar ese Combate. Con varias a distancia, elige al Disparar.",
+        "Las armas a distancia sin A dos manos y las cuerpo a cuerpo descargadas cuentan como arma improvisada en Combate. Las de A dos manos cuentan como maza ligera."
+      ]
+    }
+  ],
+  "specialRules": [
+    { "name": "A dos manos", "source": "reglas", "page": 23, "text": "Necesita las dos manos. No se puede llevar más de un objeto con esta regla." },
+    { "name": "Arma de fuego", "source": "reglas", "page": 23, "text": "No incluye munición: las balas se compran aparte." },
+    { "name": "Armatoste", "source": "reglas", "page": 23, "text": "-1 a la Agilidad. No se puede llevar más de un objeto con esta regla." },
+    { "name": "Automático", "source": "reglas", "page": 23, "text": "Antes de disparar declara modo normal o automático. En automático hace además dos disparos gratuitos e inmediatos y obligatorios (si quedan balas), al mismo objetivo u otro a 10 cm o menos del anterior." },
+    { "name": "Bersérker", "source": "reglas", "page": 24, "text": "Puede terminar su propia Fase de activación tras resultar Abatida. Es baja definitiva al final de esa Fase, al acabar la partida o si vuelve a ser Abatida, lo que pase antes." },
+    { "name": "Bestia", "source": "reglas", "page": 24, "text": "No controla ni interactúa con objetivos, no puede escalar superficies verticales (ni por escalerilla), ni Rapiñar, ni manejar aparatos." },
+    { "name": "Bomba", "source": "reglas", "page": 24, "text": "Se compran sueltas hasta 3, pero cuentan como una sola arma (también para Escasa). No sirve como arma improvisada: con solo bombas va desarmada. Tiene también Tiro parabólico y Usar y tirar." },
+    { "name": "Camuflaje", "source": "reglas", "page": 24, "text": "Los disparos que intenten Evitar Cobertura contra ella tienen -2 adicional (-5 en total)." },
+    { "name": "¡¡¡CATAPUM!!!", "source": "reglas", "page": 24, "text": "Si al disparar saca 9 o 10 en la tirada de Impactar, el disparo falla y el arma queda inutilizada el resto de la partida. Se tira aunque el Impacto fuera automático." },
+    { "name": "Combustible (X)", "source": "reglas", "page": 24, "text": "Empieza con X cargas y gasta las indicadas en cada uso. Si la miniatura es Impactada y el atacante saca un 1 en la tirada de Fuerza contra Dureza, explota: ella y quien esté en contacto sufren un impacto de Fuerza igual a las cargas restantes y Penetración 3." },
+    { "name": "Difícil de usar", "source": "reglas", "page": 24, "text": "-1 a la Precisión de sus disparos." },
+    { "name": "Electrificación", "source": "reglas", "page": 24, "text": "Al Impactar cuerpo a cuerpo con el objeto, o al activarlo, haz una tirada de Dureza. Si falla, -3 a Combate, Precisión y Agilidad (mínimo 1) hasta el final de su siguiente Fase de activación." },
+    { "name": "Escasa", "source": "reglas", "page": 24, "text": "Como máximo 3 veces en la misma banda." },
+    { "name": "Escurridizo", "source": "reglas", "page": 24, "text": "Se separa del Combate automáticamente, sin tirada enfrentada." },
+    { "name": "Ignífugo", "source": "reglas", "page": 25, "text": "Ignora los efectos de los marcadores de Fuego." },
+    { "name": "Ímpetu (X)", "source": "reglas", "page": 25, "text": "+X a Fuerza y Penetración por cada +1 al Combate que reciba por el Movimiento del Asalto." },
+    { "name": "Incendiaria (X)", "source": "reglas", "page": 25, "text": "Deja un marcador permanente de Fuego de 5 cm de radio. Quien recibe el impacto sufre otro de Fuerza y Penetración X que ignora Cobertura y, si sobrevive, sale del marcador alejándose del atacante. Quien toque un marcador de Fuego durante una Acción sufre un impacto de Fuerza y Penetración X (uno por Acción, el más fuerte). Si cae quien las lleva, detonan sobre su peana con +1 a Fuerza por cada arma incendiaria extra y su equipo se destruye." },
+    { "name": "Infiltración", "source": "reglas", "page": 25, "text": "Puede no desplegar al principio. Avanza en secreto 10 cm por Turno desde el borde de su zona de despliegue más cercano al centro y aparece en cualquier Turno del 2 al 4, a 15 cm o más de enemigos y fuera de su Línea de visión. Se avisa al empezar su Ronda de Agilidad." },
+    { "name": "Lentorra (X)", "source": "reglas", "page": 25, "text": "Tras disparar necesita X Acciones para recargar. Empieza cargada. Si es cuerpo a cuerpo, su bonificador se aplica al primer Combate que Impacte y luego queda descargada (se puede usar otra arma o una improvisada)." },
+    { "name": "Mamotreto", "source": "reglas", "page": 25, "text": "A dos manos y no puede llevar ninguna otra arma. Si es de distancia, en Combate cuenta como una maza pesada." },
+    { "name": "Mónguer", "source": "reglas", "page": 25, "text": "No controla ni interactúa con objetivos, no puede Rapiñar ni manejar aparatos." },
+    { "name": "Montada", "source": "reglas", "page": 25, "text": "No controla ni interactúa con objetivos, no puede Atravesar obstáculos ni Trepar (ni por escalerilla) y tiene -1 a Precisión con cualquier arma." },
+    { "name": "Plantilla", "source": "reglas", "page": 25, "text": "Impacta automáticamente a toda miniatura en Línea de visión que toque la plantilla, ignorando Cobertura. Se coloca en contacto con su peana, dentro de su visión. No se puede usar en Fuego defensivo. Si toca a alguien en Combate, impacta a todos los implicados." },
+    { "name": "Postas", "source": "reglas", "page": 26, "text": "+1 a Precisión. No se puede Evitar Cobertura ni elegir un objetivo concreto dentro de un Combate: se dispara al Combate sin penalizador e impacta a todos los implicados." },
+    { "name": "Raudo", "source": "reglas", "page": 26, "text": "Mueve 15 cm por Acción de Movimiento en lugar de 10." },
+    { "name": "Retraso (X)", "source": "reglas", "page": 26, "text": "Una vez por Turno puede retrasar su Fase de activación hasta X Rondas de Agilidad. Allí sigue el orden normal como si tuviera esa Agilidad." },
+    { "name": "Salto", "source": "reglas", "page": 26, "text": "Mueve en tres dimensiones y debe acabar en un sitio donde pueda estar de pie. Saltando ignora Terreno chungo y pila chungo. Puede encadenar Acciones de Movimiento en un súper salto (y Asaltar con él)." },
+    { "name": "Sed de sangre", "source": "reglas", "page": 26, "text": "Si ve un enemigo, debe ir por el camino más corto hasta Combatir con el más cercano (al azar si empatan). Nunca puede Separarse del Combate." },
+    { "name": "Tiro parabólico", "source": "reglas", "page": 26, "text": "Se elige un objetivo o un punto del suelo a 5 cm o más. Si falla, se desvía 2,5 cm por cada fracción de 2 que se pase: hacia delante si la tirada es par, hacia atrás si es impar (si cae detrás del lanzador, le cae encima). No se puede Apuntar ni Evitar Cobertura." },
+    { "name": "Todoterreno", "source": "reglas", "page": 26, "text": "El Terreno pila chungo cuenta como chungo y el chungo como chachi." },
+    { "name": "Trepador", "source": "reglas", "page": 26, "text": "Trepa como si fuera Terreno chachi." },
+    { "name": "Usar y tirar", "source": "reglas", "page": 26, "text": "Solo se usa una vez en toda la partida." },
+    { "name": "Veneno (X)", "source": "reglas", "page": 26, "text": "Aunque supere la tirada de Dureza, al empezar su siguiente Fase de activación debe ganar una tirada enfrentada de Dureza contra X o queda Abatida." }
+  ],
+  "weapons": [
+    { "name": "Desarmado", "kind": "Melee", "combat": "-2", "strength": "+0", "penetration": "0", "source": "equipo", "page": 1 },
+    { "name": "Arma improvisada", "kind": "Melee", "combat": "-1", "strength": "+0", "penetration": "0", "source": "equipo", "page": 1, "notes": "Armas a distancia sin A dos manos o armas cuerpo a cuerpo descargadas." },
+    { "name": "Garras y dientes", "kind": "Melee", "combat": "+0", "strength": "+0", "penetration": "1", "source": "equipo", "page": 1, "notes": "No se combina con otras armas." },
+    { "name": "Maza ligera", "kind": "Melee", "cost": 3, "combat": "+0", "strength": "+1", "penetration": "0", "source": "equipo", "page": 1, "notes": "Bate, pata de mesa… Las armas a distancia A dos manos cuentan como esto en Combate." },
+    { "name": "Filo pequeño", "kind": "Melee", "cost": 4, "combat": "+0", "strength": "+1", "penetration": "2", "source": "equipo", "page": 1 },
+    { "name": "Maza", "kind": "Melee", "cost": 5, "combat": "+0", "strength": "+2", "penetration": "1", "source": "equipo", "page": 1 },
+    { "name": "Maza pesada", "kind": "Melee", "cost": 6, "combat": "-1", "strength": "+4", "penetration": "2", "rules": ["A dos manos"], "source": "equipo", "page": 2 },
+    { "name": "Filo pesado", "kind": "Melee", "cost": 8, "combat": "+0", "strength": "+3", "penetration": "4", "rules": ["A dos manos", "Armatoste"], "source": "equipo", "page": 2 },
+    { "name": "Filo medio", "kind": "Melee", "cost": 10, "combat": "+1", "strength": "+2", "penetration": "3", "source": "equipo", "page": 2 },
+    { "name": "Cuchillos arrojadizos", "kind": "Ranged", "cost": 3, "range": "5/10/15", "strength": "F/F-1/F-2", "penetration": "2/1/0", "source": "equipo", "page": 2, "notes": "Usa la Fuerza del lanzador." },
+    { "name": "Pistola", "kind": "Ranged", "cost": 5, "range": "15/30/45", "strength": "6", "penetration": "4", "rules": ["Arma de fuego", "Escasa"], "source": "equipo", "page": 2 },
+    { "name": "Escopeta", "kind": "Ranged", "cost": 6, "range": "10/20/30", "strength": "7/6/5", "penetration": "3", "rules": ["A dos manos", "Arma de fuego", "Escasa", "Postas"], "source": "equipo", "page": 2 },
+    { "name": "Ballesta", "kind": "Ranged", "cost": 8, "range": "15/30/45", "strength": "4", "penetration": "3", "rules": ["A dos manos", "Lentorra (1)"], "source": "equipo", "page": 2 },
+    { "name": "Rifle", "kind": "Ranged", "cost": 8, "range": "30/60/90", "strength": "6", "penetration": "5", "rules": ["A dos manos", "Arma de fuego", "Escasa"], "source": "equipo", "page": 2 },
+    { "name": "Arco", "kind": "Ranged", "cost": 10, "range": "20/40/60", "strength": "3", "penetration": "2", "rules": ["A dos manos", "Difícil de usar"], "source": "equipo", "page": 2 },
+    { "name": "Rifle automático", "kind": "Ranged", "cost": 10, "range": "30/60/90", "strength": "6", "penetration": "5", "rules": ["A dos manos", "Arma de fuego", "Automático", "Escasa"], "source": "equipo", "page": 2 }
+  ],
+  "armors": [
+    { "name": "Ropas resistentes", "armor": "1", "source": "equipo", "page": 3 },
+    { "name": "Cuero endurecido", "armor": "3", "source": "equipo", "page": 3 },
+    { "name": "Armadura metálica", "armor": "4", "source": "equipo", "page": 3 },
+    { "name": "Pura chapa", "armor": "5", "rules": ["Armatoste"], "source": "equipo", "page": 3 },
+    { "name": "Chaleco antibalas", "armor": "3 · 5/6/7 contra Arma de fuego", "source": "equipo", "page": 3 }
+  ],
+  "gear": [
+    { "name": "Balas", "cost": 15, "source": "equipo", "page": 3, "text": "Cada bala se compra por separado para las armas con Arma de fuego. El número de balas es secreto. Las armas que no son de fuego tienen munición para toda la partida." },
+    { "name": "Bayoneta", "cost": 3, "source": "equipo", "page": 3, "text": "Se acopla a un arma con Arma de fuego: +2 a la Penetración en cuerpo a cuerpo." },
+    { "name": "Escudo", "cost": 6, "source": "equipo", "page": 3, "text": "Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate. Contra disparos: Cobertura +2. No se combina con armas A dos manos." },
+    { "name": "Protección contra la contaminación", "cost": 5, "source": "equipo", "page": 3, "text": "Máscara de gas o similar: ignora el Terreno contaminado." },
+    { "name": "Gato parameño", "cost": 10, "source": "bandas", "page": 2, "text": "Solo uno por banda y con su miniatura a la vista. Una vez por partida, repites una tirada tuya u obligas al rival a repetir una suya." }
+  ]
+}

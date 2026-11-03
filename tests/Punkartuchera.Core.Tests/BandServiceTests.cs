@@ -9,7 +9,7 @@ public class BandServiceTests
 {
     private readonly InMemoryBandRepository _bands = new();
     private readonly InMemoryPhotoStore _photos = new();
-    private readonly PlaceholderRulesCatalog _rules = new();
+    private readonly RulebookCatalog _rules = new(RulebookLoader.LoadEmbedded());
     private readonly BandService _service;
 
     public BandServiceTests() => _service = new BandService(_bands, _photos, _rules);
@@ -48,7 +48,7 @@ public class BandServiceTests
         var member = _service.NewMember();
         member.Name = "Morro";
         member.Ammo = -3;
-        member.Stats["mov"] = 999;
+        member.Stats["ag"] = 999;
 
         await _service.SaveMemberAsync(band, member);
         member.Name = "Morro Chungo";
@@ -58,7 +58,7 @@ public class BandServiceTests
         var saved = Assert.Single(stored!.Members);
         Assert.Equal("Morro Chungo", saved.Name);
         Assert.Equal(0, saved.Ammo);
-        Assert.Equal(_rules.Stats.Single(s => s.Key == "mov").Max, saved.Stats["mov"]);
+        Assert.Equal(_rules.Stats.Single(s => s.Key == "ag").Max, saved.Stats["ag"]);
     }
 
     [Fact]

@@ -37,7 +37,6 @@
 else if (_bands.Count == 0)
 {
     <section class="punk-empty">
-        <Icon Path="@Icons.Band" Class="icon--huge" />
         <h2>El páramo está vacío</h2>
         <p>Ni una banda, tron. Monta la primera y sal a repartir.</p>
         <a class="btn btn--primary" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Montar banda</a>
@@ -77,7 +76,10 @@ else
     }
 }
 
-<a class="btn btn--blood fab" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Nueva banda</a>
+@if (_bands is { Count: > 0 })
+{
+    <a class="btn btn--blood fab" href="bandas/nueva"><Icon Path="@Icons.Plus" /> Nueva banda</a>
+}
 
 @code {
     private IReadOnlyList<Band>? _bands;
