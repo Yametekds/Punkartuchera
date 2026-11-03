@@ -1,1261 +1,1264 @@
-{
- "source": "Tienda oficial de Bad Roll Games",
- "sourceUrl": "https://www.badrollgames.com/productos/punkapocalyptic/",
- "minis": [
-  {
-   "troop": "Arponero",
-   "factionId": "craabianos",
-   "name": "Arponero (maza pesada)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR07A.webp",
-   "url": "https://www.badrollgames.com/producto/arponero-maza-pesada/"
-  },
-  {
-   "troop": "Trueno",
-   "factionId": "unami",
-   "name": "Trueno con tomahawk",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1UN12A.webp",
-   "url": "https://www.badrollgames.com/producto/trueno-con-tomahawk/"
-  },
-  {
-   "troop": "El Abuelo de la Cabaña",
-   "factionId": "idos",
-   "subfactionId": "slashers",
-   "name": "Abuelo de la Cabaña",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1AM15A.webp",
-   "url": "https://www.badrollgames.com/producto/abuelo-de-la-cabana/"
-  },
-  {
-   "troop": "Psycho-killer",
-   "factionId": "idos",
-   "subfactionId": "slashers",
-   "name": "Psycho-killers (pack de 2 miniaturas)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1AM14A.webp",
-   "url": "https://www.badrollgames.com/producto/psycho-killers-pack-de-2-miniaturas/"
-  },
-  {
-   "troop": "Marinero",
-   "factionId": "craabianos",
-   "name": "Marinera (filo medio y pistola de mecha)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR04A.webp",
-   "url": "https://www.badrollgames.com/producto/marinera-filo-medio-y-pistola-de-mecha/"
-  },
-  {
-   "troop": "Grumete",
-   "factionId": "craabianos",
-   "name": "Grumete (tridente y red)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR03A.webp",
-   "url": "https://www.badrollgames.com/producto/grumete-tridente-y-red/"
-  },
-  {
-   "troop": "Arponero",
-   "factionId": "craabianos",
-   "name": "Arponero (cañón de mano)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1CR02A.webp",
-   "url": "https://www.badrollgames.com/producto/arponero-canon-de-mano/"
-  },
-  {
-   "troop": "Custodio del Abismo",
-   "factionId": "craabianos",
-   "name": "Custodio del Abismo (filo pesado)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1CR01A.webp",
-   "url": "https://www.badrollgames.com/producto/custodio-del-abismo-filo-pesado/"
-  },
-  {
-   "troop": "Lord Homoeroticus",
-   "factionId": "pandilleros",
-   "name": "Lord Homoeroticus V2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1GA32A.webp",
-   "url": "https://www.badrollgames.com/producto/lord-homoeroticus-v2/"
-  },
-  {
-   "troop": "Mamporrero",
-   "factionId": "pandilleros",
-   "subfactionId": "ostra-azul",
-   "name": "Mamporrero con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1GA33A.webp",
-   "url": "https://www.badrollgames.com/producto/mamporrero-con-maza/"
-  },
-  {
-   "troop": "Jefe",
-   "factionId": "pandilleros",
-   "name": "Jefa (rifle y filo medio)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1GA28A.webp",
-   "url": "https://www.badrollgames.com/producto/jefa-rifle-y-filo-medio/"
-  },
-  {
-   "troop": "Amacizona",
-   "factionId": "pandilleros",
-   "subfactionId": "fraus",
-   "name": "Amacizona con filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1GA30A.webp",
-   "url": "https://www.badrollgames.com/producto/amacizona-con-filo-medio/"
-  },
-  {
-   "troop": "Chamusquina",
-   "factionId": "sangre-negra",
-   "subfactionId": "crematorio",
-   "name": "Chamusquina (con la Señora Chischás y el Señor Bumbum)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/07/BR1BB23A.webp",
-   "url": "https://www.badrollgames.com/producto/chamusquina-con-la-senora-chischas-y-el-senor-bumbum/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con lanzallamas 3",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/07/BR1BB22A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas-3/"
-  },
-  {
-   "troop": "Desgarrador",
-   "factionId": "idos",
-   "name": "Desgarrador con filo medio incrustado y hoz",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1AM12A.webp",
-   "url": "https://www.badrollgames.com/producto/desgarrador-con-filo-medio-incrustado-y-hoz/"
-  },
-  {
-   "troop": "Doktor Eustace Hanneman",
-   "factionId": "v-reich",
-   "subfactionId": "division-cientifica",
-   "name": "Doktor Eustace Hanneman",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/04/BR1VR24A.webp",
-   "url": "https://www.badrollgames.com/producto/doktor-eustace-hanneman/"
-  },
-  {
-   "troop": "Jefe",
-   "factionId": "pandilleros",
-   "name": "Jefa (rifle automático)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/04/BR1GA25A.webp",
-   "url": "https://www.badrollgames.com/producto/jefa-rifle-automatico/"
-  },
-  {
-   "troop": "Elaichik",
-   "factionId": "unami",
-   "name": "Elaichik",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/03/BR1UN10A.webp",
-   "url": "https://www.badrollgames.com/producto/elaichik/"
-  },
-  {
-   "troop": "Subhumano",
-   "factionId": "v-reich",
-   "name": "Subhumano con mandíbula cepo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/03/BR1VR23A.webp",
-   "url": "https://www.badrollgames.com/producto/subhumano-con-mandibula-cepo/"
-  },
-  {
-   "troop": "Cardenal Nuclear",
-   "factionId": "irradiados",
-   "name": "Cardenala Nuclear con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR16A.webp",
-   "url": "https://www.badrollgames.com/producto/cardenala-nuclear-con-maza/"
-  },
-  {
-   "troop": "Perromorfo",
-   "factionId": "mutardos",
-   "name": "Perromorfos (pack de 2) 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU22A.webp",
-   "url": "https://www.badrollgames.com/producto/perromorfos-pack-de-2-2/"
-  },
-  {
-   "troop": "Viento",
-   "factionId": "unami",
-   "name": "Viento con tomahawk",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/02/Unami09.webp",
-   "url": "https://www.badrollgames.com/producto/viento-con-tomahawk/"
-  },
-  {
-   "troop": "Mártir",
-   "factionId": "irradiados",
-   "name": "Mártir con maza ligera 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR15A.webp",
-   "url": "https://www.badrollgames.com/producto/martir-con-maza-ligera-2/"
-  },
-  {
-   "troop": "Pachacho",
-   "factionId": "troupe",
-   "name": "Pachacho con escopeta",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR14A.webp",
-   "url": "https://www.badrollgames.com/producto/pachacho-con-escopeta/"
-  },
-  {
-   "troop": "Pajaroto Rojo",
-   "factionId": "mutardos",
-   "subfactionId": "fuerza-m",
-   "name": "Pajaroto Rojo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU21A.webp",
-   "url": "https://www.badrollgames.com/producto/pajaroto-rojo/"
-  },
-  {
-   "troop": "Mártir",
-   "factionId": "irradiados",
-   "name": "Mártir con maza ligera",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR13A.webp",
-   "url": "https://www.badrollgames.com/producto/martir-con-maza-ligera/"
-  },
-  {
-   "troop": "Vale",
-   "factionId": "banda-del-comic",
-   "name": "Vale",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO06A.webp",
-   "url": "https://www.badrollgames.com/producto/vale/"
-  },
-  {
-   "troop": "Paul",
-   "factionId": "banda-del-comic",
-   "name": "Paul",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO05A.webp",
-   "url": "https://www.badrollgames.com/producto/paul/"
-  },
-  {
-   "troop": "Nicole",
-   "factionId": "banda-del-comic",
-   "name": "Nicole",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO04A.webp",
-   "url": "https://www.badrollgames.com/producto/nicole/"
-  },
-  {
-   "troop": "Markus",
-   "factionId": "banda-del-comic",
-   "name": "Markus",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO03A.webp",
-   "url": "https://www.badrollgames.com/producto/markus/"
-  },
-  {
-   "troop": "Rita",
-   "factionId": "banda-del-comic",
-   "name": "Rita",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO02A.webp",
-   "url": "https://www.badrollgames.com/producto/rita/"
-  },
-  {
-   "troop": "Dan",
-   "factionId": "banda-del-comic",
-   "name": "Dan",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO01A.webp",
-   "url": "https://www.badrollgames.com/producto/dan/"
-  },
-  {
-   "troop": "Forzudo",
-   "factionId": "troupe",
-   "name": "Forzuda con maza pesada",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR13A.webp",
-   "url": "https://www.badrollgames.com/producto/forzuda-con-maza-pesada/"
-  },
-  {
-   "troop": "Pachacho",
-   "factionId": "troupe",
-   "name": "Pachacha con pistola y maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR11A-1.webp",
-   "url": "https://www.badrollgames.com/producto/pachacha-con-pistola-y-maza/"
-  },
-  {
-   "troop": "Acróbata",
-   "factionId": "troupe",
-   "name": "Acróbata con filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR11A.webp",
-   "url": "https://www.badrollgames.com/producto/acrobata-con-filo-medio/"
-  },
-  {
-   "troop": "François el Mimo",
-   "factionId": "troupe",
-   "name": "François el Mimo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR09A.webp",
-   "url": "https://www.badrollgames.com/producto/francois-el-mimo/"
-  },
-  {
-   "troop": "Madame Destino",
-   "factionId": "troupe",
-   "name": "Madame Destino",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR08A.webp",
-   "url": "https://www.badrollgames.com/producto/madame-destino/"
-  },
-  {
-   "troop": "Pachacho",
-   "factionId": "troupe",
-   "name": "Pachacho con cañón de confeti",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR07A.webp",
-   "url": "https://www.badrollgames.com/producto/pachacho-con-canon-de-confeti/"
-  },
-  {
-   "troop": "Pachacho",
-   "factionId": "troupe",
-   "name": "Pachacha con pistola/filo pequeño y globo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR06A.webp",
-   "url": "https://www.badrollgames.com/producto/pachacha-con-pistola-filo-pequeno-y-globo/"
-  },
-  {
-   "troop": "Acróbata",
-   "factionId": "troupe",
-   "name": "Acróbata con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR04A.webp",
-   "url": "https://www.badrollgames.com/producto/acrobata-con-filo-pequeno/"
-  },
-  {
-   "troop": "Pachacho",
-   "factionId": "troupe",
-   "name": "Pachacho con pistola/guante de boxeo y monociclo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR05A.webp",
-   "url": "https://www.badrollgames.com/producto/pachacho-con-pistola-guante-de-boxeo-y-monociclo/"
-  },
-  {
-   "troop": "Domador",
-   "factionId": "troupe",
-   "name": "Domador con látigo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR03A.webp",
-   "url": "https://www.badrollgames.com/producto/domador-con-latigo/"
-  },
-  {
-   "troop": "Forzudo",
-   "factionId": "troupe",
-   "name": "Forzudo con maza pesada",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR02A.webp",
-   "url": "https://www.badrollgames.com/producto/forzudo-con-maza-pesada/"
-  },
-  {
-   "troop": "Jefe de pista",
-   "factionId": "troupe",
-   "name": "Jefa de pista con filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR01A.webp",
-   "url": "https://www.badrollgames.com/producto/jefa-de-pista-con-filo-medio/"
-  },
-  {
-   "troop": "Penitente",
-   "factionId": "irradiados",
-   "name": "Penitente con lanzarresiduos 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR14A.webp",
-   "url": "https://www.badrollgames.com/producto/penitente-con-lanzarresiduos-2/"
-  },
-  {
-   "troop": "El Guardián de las Llaves",
-   "factionId": "irradiados",
-   "name": "El Guardián de las Llaves",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR12A.webp",
-   "url": "https://www.badrollgames.com/producto/el-guardian-de-las-llaves/"
-  },
-  {
-   "troop": "La Gran Inquisidora",
-   "factionId": "irradiados",
-   "subfactionId": "inquisicion-atomica",
-   "name": "La Gran Inquisidora",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR11A.webp",
-   "url": "https://www.badrollgames.com/producto/la-gran-inquisidora/"
-  },
-  {
-   "troop": "El Portador de las Reliquias",
-   "factionId": "irradiados",
-   "name": "El Portador de las Reliquias",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR10A.webp",
-   "url": "https://www.badrollgames.com/producto/el-portador-de-las-reliquias/"
-  },
-  {
-   "troop": "Paladín",
-   "factionId": "irradiados",
-   "name": "Paladín con filo pesado",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR09A.webp",
-   "url": "https://www.badrollgames.com/producto/paladin-con-filo-pesado/"
-  },
-  {
-   "troop": "Discípulo",
-   "factionId": "irradiados",
-   "name": "Discípulo con escopeta",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR08A.webp",
-   "url": "https://www.badrollgames.com/producto/discipulo-con-escopeta/"
-  },
-  {
-   "troop": "Penitente",
-   "factionId": "irradiados",
-   "name": "Penitente con lanzarresiduos",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR07A.webp",
-   "url": "https://www.badrollgames.com/producto/penitente-con-lanzarresiduos/"
-  },
-  {
-   "troop": "Discípulo",
-   "factionId": "irradiados",
-   "name": "Discípulo con maza/filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR06A.webp",
-   "url": "https://www.badrollgames.com/producto/discipulo-con-maza-filo-pequeno/"
-  },
-  {
-   "troop": "Paladín",
-   "factionId": "irradiados",
-   "name": "Paladín con maza y escudo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR05A.webp",
-   "url": "https://www.badrollgames.com/producto/paladin-con-maza-y-escudo/"
-  },
-  {
-   "troop": "Mártir",
-   "factionId": "irradiados",
-   "name": "Mártir con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR04A.webp",
-   "url": "https://www.badrollgames.com/producto/martir-con-filo-pequeno/"
-  },
-  {
-   "troop": "Discípulo",
-   "factionId": "irradiados",
-   "name": "Discípulo con filo pequeño y pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR03A.webp",
-   "url": "https://www.badrollgames.com/producto/discipulo-con-filo-pequeno-y-pistola/"
-  },
-  {
-   "troop": "Penitente",
-   "factionId": "irradiados",
-   "name": "Penitente con botafumeiro tóxico",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR02A.webp",
-   "url": "https://www.badrollgames.com/producto/penitente-con-botafumeiro-toxico/"
-  },
-  {
-   "troop": "Cardenal Nuclear",
-   "factionId": "irradiados",
-   "name": "Cardenal Nuclear con maza/rifle y pistola/granada santa",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR01A.webp",
-   "url": "https://www.badrollgames.com/producto/cardenal-nuclear-con-maza-rifle-y-pistola-granada-santa/"
-  },
-  {
-   "troop": "Cosechador",
-   "factionId": "idos",
-   "name": "Cosechador con hoz",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM13A.webp",
-   "url": "https://www.badrollgames.com/producto/cosechador-con-hoz/"
-  },
-  {
-   "troop": "La Familia de la Cabaña",
-   "factionId": "idos",
-   "subfactionId": "slashers",
-   "name": "Familia de la cabaña (pack de 3 miniaturas)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM11A.webp",
-   "url": "https://www.badrollgames.com/producto/familia-de-la-cabana-pack-de-3-miniaturas/"
-  },
-  {
-   "troop": "Glotón",
-   "factionId": "idos",
-   "name": "Glotón con filo pesado",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM10A.webp",
-   "url": "https://www.badrollgames.com/producto/gloton-con-filo-pesado/"
-  },
-  {
-   "troop": "Despojo",
-   "factionId": "idos",
-   "name": "Despojo con filo medio/filo pequeño/hoz",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM07A.webp",
-   "url": "https://www.badrollgames.com/producto/despojo-con-filo-medio-filo-pequeno-hoz/"
-  },
-  {
-   "troop": "Desgarrador",
-   "factionId": "idos",
-   "name": "Desgarrador con hoz incrustada/filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BRaAM06A.webp",
-   "url": "https://www.badrollgames.com/producto/desgarrador-con-hoz-incrustada-filo-medio/"
-  },
-  {
-   "troop": "Despojo",
-   "factionId": "idos",
-   "name": "Despojo con maza ligera/filo pequeño/maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM05A.webp",
-   "url": "https://www.badrollgames.com/producto/despojo-con-maza-ligera-filo-pequeno-maza/"
-  },
-  {
-   "troop": "Desgarrador",
-   "factionId": "idos",
-   "name": "Desgarrador con filo medio incrustado/hoz",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM04A.webp",
-   "url": "https://www.badrollgames.com/producto/desgarrador-con-filo-medio-incrustado-hoz/"
-  },
-  {
-   "troop": "Aberración",
-   "factionId": "idos",
-   "name": "Aberración",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM03A.webp",
-   "url": "https://www.badrollgames.com/producto/aberracion/"
-  },
-  {
-   "troop": "Glotón",
-   "factionId": "idos",
-   "name": "Glotón con maza pesada/filo pesado",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM02A.webp",
-   "url": "https://www.badrollgames.com/producto/gloton-con-maza-pesada-filo-pesado/"
-  },
-  {
-   "troop": "Cosechador",
-   "factionId": "idos",
-   "name": "Cosechadora con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM01A.webp",
-   "url": "https://www.badrollgames.com/producto/cosechadora-con-filo-pequeno/"
-  },
-  {
-   "troop": "Tío",
-   "factionId": "idos",
-   "name": "Tío",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM08A.webp",
-   "url": "https://www.badrollgames.com/producto/tio/"
-  },
-  {
-   "troop": "Madre",
-   "factionId": "idos",
-   "name": "Madre",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM09A.webp",
-   "url": "https://www.badrollgames.com/producto/madre/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con quad y filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB21B.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-quad-y-filo-medio/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB20A.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-maza/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con filo medio 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB18A.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-filo-medio-2/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con sidecar, maza y pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB19A.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-sidecar-maza-y-pistola/"
-  },
-  {
-   "troop": "Quemado",
-   "factionId": "sangre-negra",
-   "name": "Quemada con bidón de gasofa",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB17A.webp",
-   "url": "https://www.badrollgames.com/producto/quemada-con-bidon-de-gasofa/"
-  },
-  {
-   "troop": "Ceniza",
-   "factionId": "sangre-negra",
-   "name": "Ceniza con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB16A.webp",
-   "url": "https://www.badrollgames.com/producto/ceniza-con-filo-pequeno/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con cóctel Molotov, pistola y escudo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB15A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-coctel-molotov-pistola-y-escudo/"
-  },
-  {
-   "troop": "Guardián de la Llama",
-   "factionId": "sangre-negra",
-   "name": "Guardiana de la llama con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB14A.webp",
-   "url": "https://www.badrollgames.com/producto/guardiana-de-la-llama-con-maza/"
-  },
-  {
-   "troop": "Soldat",
-   "factionId": "v-reich",
-   "name": "Soldat con rifle",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR19A.webp",
-   "url": "https://www.badrollgames.com/producto/soldat-con-rifle/"
-  },
-  {
-   "troop": "Recluta",
-   "factionId": "v-reich",
-   "subfactionId": "fuerte-thule",
-   "name": "Recluta con pistola y maza ligera",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR20A.webp",
-   "url": "https://www.badrollgames.com/producto/recluta-con-pistola-y-maza-ligera/"
-  },
-  {
-   "troop": "Recluta",
-   "factionId": "v-reich",
-   "subfactionId": "fuerte-thule",
-   "name": "Recluta con pistola/cuchillos arrojadizos y maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR16A.webp",
-   "url": "https://www.badrollgames.com/producto/recluta-pistola-cuchillos-arrojadizos-y-maza/"
-  },
-  {
-   "troop": "Eva y UNO",
-   "factionId": "v-reich",
-   "subfactionId": "fuerte-thule",
-   "name": "Eva y UNO",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR15A.webp",
-   "url": "https://www.badrollgames.com/producto/eva-y-uno/"
-  },
-  {
-   "troop": "Tierdoktor",
-   "factionId": "v-reich",
-   "subfactionId": "division-cientifica",
-   "name": "Tierdoktor con azuzador/jeringa",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR14A.webp",
-   "url": "https://www.badrollgames.com/producto/tierdoktor-con-azuzador-jeringa/"
-  },
-  {
-   "troop": "Engendro",
-   "factionId": "v-reich",
-   "subfactionId": "division-cientifica",
-   "name": "Engendro",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR13A.webp",
-   "url": "https://www.badrollgames.com/producto/engendro/"
-  },
-  {
-   "troop": "Gólem",
-   "factionId": "v-reich",
-   "subfactionId": "organizacion-kraken",
-   "name": "Gólem / Übersoldat (maza pesada/maza y escudo)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR12A.webp",
-   "url": "https://www.badrollgames.com/producto/golem-ubersoldat-maza-pesada-maza-y-escudo/"
-  },
-  {
-   "troop": "Ingeniero",
-   "factionId": "v-reich",
-   "subfactionId": "organizacion-kraken",
-   "name": "Ingeniero (armas de Xerum)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR11A.webp",
-   "url": "https://www.badrollgames.com/producto/ingeniero-armas-de-xerum/"
-  },
-  {
-   "troop": "Edward Berhart",
-   "factionId": "v-reich",
-   "name": "Edward Berhart",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR18A.webp",
-   "url": "https://www.badrollgames.com/producto/edward-berhart/"
-  },
-  {
-   "troop": "Aaron Schwartzmann",
-   "factionId": "v-reich",
-   "name": "Aaron Schwartzmann",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR17A.webp",
-   "url": "https://www.badrollgames.com/producto/aron-schwartzmann/"
-  },
-  {
-   "troop": "Casco Rojo",
-   "factionId": "v-reich",
-   "subfactionId": "organizacion-kraken",
-   "name": "Casco Rojo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR10A.webp",
-   "url": "https://www.badrollgames.com/producto/casco-rojo/"
-  },
-  {
-   "troop": "Ilse, la Loba del V Reich",
-   "factionId": "v-reich",
-   "name": "Ilse, la Loba del V Reich",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR08A.webp",
-   "url": "https://www.badrollgames.com/producto/ilse-la-loba-del-v-reich/"
-  },
-  {
-   "troop": "Soldat",
-   "factionId": "v-reich",
-   "name": "Soldat con escopeta/pistola/filo pequeño y mastín",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR07A.webp",
-   "url": "https://www.badrollgames.com/producto/soldat-con-escopeta-pistola-filo-pequeno-y-mastin/"
-  },
-  {
-   "troop": "Subhumano",
-   "factionId": "v-reich",
-   "name": "Subhumano 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR09A.webp",
-   "url": "https://www.badrollgames.com/producto/subhumano-2/"
-  },
-  {
-   "troop": "Übersoldat",
-   "factionId": "v-reich",
-   "name": "Übersoldat con filo pesado y armadura metálica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR06A.webp",
-   "url": "https://www.badrollgames.com/producto/ubersoldat-con-filo-pesado-y-armadura-metalica/"
-  },
-  {
-   "troop": "Subhumano",
-   "factionId": "v-reich",
-   "name": "Subhumano",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR05A.webp",
-   "url": "https://www.badrollgames.com/producto/subhumano/"
-  },
-  {
-   "troop": "Übersoldat",
-   "factionId": "v-reich",
-   "name": "Übersoldat con escopeta, armadura metálica y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR04A.webp",
-   "url": "https://www.badrollgames.com/producto/ubersoldat-con-escopeta-armadura-metalica-y-proteccion-contra-la-contaminacion/"
-  },
-  {
-   "troop": "Soldat",
-   "factionId": "v-reich",
-   "name": "Soldat con rifle y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR03A.webp",
-   "url": "https://www.badrollgames.com/producto/soldart-con-rifle-y-proteccion-contra-la-contaminacion/"
-  },
-  {
-   "troop": "Sanitario",
-   "factionId": "v-reich",
-   "name": "Sanitaria con filo pequeño/pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR02A.webp",
-   "url": "https://www.badrollgames.com/producto/sanitaria-con-filo-pequeno-pistola/"
-  },
-  {
-   "troop": "Mariscal",
-   "factionId": "v-reich",
-   "name": "Mariscal con pistola y armadura metálica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR01A.webp",
-   "url": "https://www.badrollgames.com/producto/mariscal-con-pistola-y-armadura-metalica/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con lanzallamas",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB13A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB12A.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-filo-medio/"
-  },
-  {
-   "troop": "Cunnilingus Igni",
-   "factionId": "sangre-negra",
-   "name": "Cunnilingus Igni",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB11A.webp",
-   "url": "https://www.badrollgames.com/producto/cunnilingus-igni/"
-  },
-  {
-   "troop": "Momma Nutritora",
-   "factionId": "sangre-negra",
-   "name": "Momma Nutritora",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB10A.webp",
-   "url": "https://www.badrollgames.com/producto/momma-nutritora/"
-  },
-  {
-   "troop": "Quemado",
-   "factionId": "sangre-negra",
-   "name": "Quemado con bidón de gasolina",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB09A.webp",
-   "url": "https://www.badrollgames.com/producto/quemado-con-bidon-de-gasolina/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con motosierra y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB08A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-motosierra-y-proteccion-contra-contaminacion/"
-  },
-  {
-   "troop": "Ceniza",
-   "factionId": "sangre-negra",
-   "name": "Ceniza con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB07A.webp",
-   "url": "https://www.badrollgames.com/producto/ceniza-con-maza/"
-  },
-  {
-   "troop": "Chispa",
-   "factionId": "sangre-negra",
-   "name": "Chispa con pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB06A.webp",
-   "url": "https://www.badrollgames.com/producto/chispa-con-pistola/"
-  },
-  {
-   "troop": "Quemado",
-   "factionId": "sangre-negra",
-   "name": "Quemado con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB05A.webp",
-   "url": "https://www.badrollgames.com/producto/quemado-con-filo-pequeno/"
-  },
-  {
-   "troop": "Ceniza",
-   "factionId": "sangre-negra",
-   "name": "Ceniza con maza y pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB04A.webp",
-   "url": "https://www.badrollgames.com/producto/ceniza-con-maza-y-pistola/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con escopeta",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB03A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-escopeta/"
-  },
-  {
-   "troop": "Ascua",
-   "factionId": "sangre-negra",
-   "name": "Ascua con lanzallamas y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB02A.webp",
-   "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas-y-preteccion-contra-la-contaminacion/"
-  },
-  {
-   "troop": "Guardián de la Llama",
-   "factionId": "sangre-negra",
-   "name": "Guardián de la llama con maza",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB01A.webp",
-   "url": "https://www.badrollgames.com/producto/guardian-de-la-llama-con-maza/"
-  },
-  {
-   "troop": "Irina",
-   "factionId": "mercenarios",
-   "name": "Irina",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME06A.webp",
-   "url": "https://www.badrollgames.com/producto/irina/"
-  },
-  {
-   "troop": "Mongodrilo Dundee",
-   "factionId": "mercenarios",
-   "name": "Mongodrilo Dundee",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME05A.webp",
-   "url": "https://www.badrollgames.com/producto/mongodrilo-dundee/"
-  },
-  {
-   "troop": "Capitán Hammerica",
-   "factionId": "mercenarios",
-   "name": "Capitán Hammerica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME04A.webp",
-   "url": "https://www.badrollgames.com/producto/capitan-hammerica/"
-  },
-  {
-   "troop": "Lizzy DeVille",
-   "factionId": "mercenarios",
-   "name": "Lizzy DeVille",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME03A.webp",
-   "url": "https://www.badrollgames.com/producto/lizzy-deville/"
-  },
-  {
-   "troop": "Imperatrix Rabiosa",
-   "factionId": "mercenarios",
-   "name": "Imperatrix Rabiosa",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME02A.webp",
-   "url": "https://www.badrollgames.com/producto/imperatrix-rabiosa/"
-  },
-  {
-   "troop": "Crazy Mel",
-   "factionId": "mercenarios",
-   "name": "Crazy Mel",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME01A.webp",
-   "url": "https://www.badrollgames.com/producto/crazy-mel/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con bombeadora 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU18A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-bombeadora-2/"
-  },
-  {
-   "troop": "Dinamo",
-   "factionId": "chatarreros",
-   "name": "Dinamo con chasqueador y traje voltaico",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU17A.webp",
-   "url": "https://www.badrollgames.com/producto/dinamo-con-chasqueador-y-traje-voltaico/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con rifle y mira telescópica 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU16A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-mira-telescopica-2/"
-  },
-  {
-   "troop": "Sonda",
-   "factionId": "chatarreros",
-   "name": "Sonda con filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU15A.webp",
-   "url": "https://www.badrollgames.com/producto/sonda-con-filo-pequeno/"
-  },
-  {
-   "troop": "Pistón",
-   "factionId": "chatarreros",
-   "name": "Pistón con puños balísticos",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU14A-1.webp",
-   "url": "https://www.badrollgames.com/producto/piston-con-punos-balisticos/"
-  },
-  {
-   "troop": "Pistón",
-   "factionId": "chatarreros",
-   "name": "Pistón con lanzaarpones",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU14A.webp",
-   "url": "https://www.badrollgames.com/producto/piston-con-lanzaarpones/"
-  },
-  {
-   "troop": "Samantha O'Sullivan",
-   "factionId": "chatarreros",
-   "name": "Samantha O'Sullivan",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU11A.webp",
-   "url": "https://www.badrollgames.com/producto/samantha-osullivan/"
-  },
-  {
-   "troop": "Pistón",
-   "factionId": "chatarreros",
-   "name": "Pistón con lanzaarpones y armadura metálica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU12A.webp",
-   "url": "https://www.badrollgames.com/producto/piston-con-lanzaarpones-y-armadura-metalica/"
-  },
-  {
-   "troop": "Caronte",
-   "factionId": "chatarreros",
-   "name": "Caronte",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU10A.webp",
-   "url": "https://www.badrollgames.com/producto/caronte/"
-  },
-  {
-   "troop": "Dinamo",
-   "factionId": "chatarreros",
-   "name": "Dinamo con vaporeta y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU09A.webp",
-   "url": "https://www.badrollgames.com/producto/dinamo-con-vaporeta-y-proteccion-contra-la-contaminacion/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con rifle y cuero endurecido",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU08A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-cuero-endurecido/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con bombeadora",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU05A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-bombeadora/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con trabuco, filo medio y cuero endurecido",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU04A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-trabuco-filo-medio-y-cuero-endurecido/"
-  },
-  {
-   "troop": "Sonda",
-   "factionId": "chatarreros",
-   "name": "Sonda confilo pequeño y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU02A.webp",
-   "url": "https://www.badrollgames.com/producto/sonda-con-filo-pequeno-y-proteccion-contra-la-contaminacion/"
-  },
-  {
-   "troop": "Engranaje",
-   "factionId": "chatarreros",
-   "name": "Engranaje con rifle y mira telescópica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU01A.webp",
-   "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-mira-telescopica/"
-  },
-  {
-   "troop": "Bestia del pozo",
-   "factionId": "mutardos",
-   "name": "Bestia del pozo con filo pesado y miembros extra 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU20A.webp",
-   "url": "https://www.badrollgames.com/producto/bestia-del-pozo-con-filo-pesado-y-miembros-extra-2/"
-  },
-  {
-   "troop": "Hilo Anal",
-   "factionId": "mutardos",
-   "subfactionId": "fuerza-m",
-   "name": "Hilo Anal",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU19A.webp",
-   "url": "https://www.badrollgames.com/producto/hilo-anal/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con garras, resistente y cachas",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU18A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-garras-resistente-y-cachas/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con garras envenenadas y cachas",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU17A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-garras-envenenadas-y-cachas/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con filo medio, miembros extra y rana",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU16A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-mutante-y-rana/"
-  },
-  {
-   "troop": "Magmador",
-   "factionId": "mutardos",
-   "name": "Magmador",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU15A.webp",
-   "url": "https://www.badrollgames.com/producto/magmador/"
-  },
-  {
-   "troop": "Kim y Fostiador",
-   "factionId": "mutardos",
-   "name": "Kim y Fostiador (Kim &#038; Bashinger)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU14A.webp",
-   "url": "https://www.badrollgames.com/producto/kim-y-fostiador/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con espinas, corredor y garras envenenadas",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU13A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-espinas-corredor-y-garras-envenenadas/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con filo medio, miembros extra y sonar",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU12A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-miembros-extra-y-sonar/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con maza ligera/filo medio y capacitado",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU11A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-maza-ligera-filo-medio-carga-brutal-y-capacitado/"
-  },
-  {
-   "troop": "Bestia del pozo",
-   "factionId": "mutardos",
-   "name": "Bestia del pozo con maza pesada",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU10A.webp",
-   "url": "https://www.badrollgames.com/producto/bestia-del-pozo-con-maza-pesada/"
-  },
-  {
-   "troop": "Cabezón",
-   "factionId": "mutardos",
-   "name": "Cabezón Mutardo 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU09A.webp",
-   "url": "https://www.badrollgames.com/producto/cabezon-2/"
-  },
-  {
-   "troop": "Perromorfo",
-   "factionId": "mutardos",
-   "name": "Perromorfos (pack de 2)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU08A.webp",
-   "url": "https://www.badrollgames.com/producto/perromorfos-pack-de-2-1/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con maza, piel dura y resistente",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU07A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-maza-piel-dura-y-resistente/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con filo medio, carga brutal y cola afilada",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU05A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-carga-brutal-cola-afilada/"
-  },
-  {
-   "troop": "Bestia del pozo",
-   "factionId": "mutardos",
-   "name": "Bestia del pozo con filo pesado y miembros extra",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU04A.webp",
-   "url": "https://www.badrollgames.com/producto/bestia-pozo-filo-pesado-miembros-extra/"
-  },
-  {
-   "troop": "Mutante",
-   "factionId": "mutardos",
-   "name": "Mutante con maza y piernas seguras",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU02A.webp",
-   "url": "https://www.badrollgames.com/producto/mutante-maza-piernas-seguras/"
-  },
-  {
-   "troop": "Cabezón",
-   "factionId": "mutardos",
-   "name": "Cabezón Mutardo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU01A.webp",
-   "url": "https://www.badrollgames.com/producto/cabezon-1/"
-  },
-  {
-   "troop": "Mamporrero",
-   "factionId": "pandilleros",
-   "subfactionId": "ostra-azul",
-   "name": "Mamporrera con fusta",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA23A.webp",
-   "url": "https://www.badrollgames.com/producto/mamporrera-fusta/"
-  },
-  {
-   "troop": "El Rayao",
-   "factionId": "pandilleros",
-   "subfactionId": "flipaos-de-los-ninjas",
-   "name": "El Rayao",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA22A.webp",
-   "url": "https://www.badrollgames.com/producto/el-rayao/"
-  },
-  {
-   "troop": "Jefe",
-   "factionId": "pandilleros",
-   "name": "Jefeeeerl (pistola)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA21A.webp",
-   "url": "https://www.badrollgames.com/producto/jefeeeerl-pistola/"
-  },
-  {
-   "troop": "Callisto",
-   "factionId": "pandilleros",
-   "subfactionId": "fraus",
-   "name": "Callisto",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA20A.webp",
-   "url": "https://www.badrollgames.com/producto/callisto/"
-  },
-  {
-   "troop": "Curtido",
-   "factionId": "pandilleros",
-   "name": "Curtida con filo medio y pistola",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA19A.webp",
-   "url": "https://www.badrollgames.com/producto/curtida-filo-medio-pistola/"
-  },
-  {
-   "troop": "Jefe",
-   "factionId": "pandilleros",
-   "name": "Jefa (rifle/filo medio)",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA18A.webp",
-   "url": "https://www.badrollgames.com/producto/jefa-rifle-filo-medio/"
-  },
-  {
-   "troop": "Clint Tirofijo",
-   "factionId": "pandilleros",
-   "name": "Clint Tirofijo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA16A.webp",
-   "url": "https://www.badrollgames.com/producto/clint-tirofijo/"
-  },
-  {
-   "troop": "Lord Homoeroticus",
-   "factionId": "pandilleros",
-   "name": "Lord Homoeroticus",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA13A.webp",
-   "url": "https://www.badrollgames.com/producto/lord-homoeroticus/"
-  },
-  {
-   "troop": "Curtido",
-   "factionId": "pandilleros",
-   "name": "Curtido con filo medio y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA12A.webp",
-   "url": "https://www.badrollgames.com/producto/curtido-filo-medio-proteccion-contaminacion/"
-  },
-  {
-   "troop": "Piltrafa",
-   "factionId": "pandilleros",
-   "name": "Piltrafa con maza ligera y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA11A.webp",
-   "url": "https://www.badrollgames.com/producto/piltrafa-maza-ligera-proteccion-contaminacion/"
-  },
-  {
-   "troop": "Bruto",
-   "factionId": "pandilleros",
-   "name": "Bruta con maza y escudo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA10A.webp",
-   "url": "https://www.badrollgames.com/producto/cbruta-maza-escudo/"
-  },
-  {
-   "troop": "Machaca",
-   "factionId": "pandilleros",
-   "name": "Machaca con arco y protección contra la contaminación",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA09A.webp",
-   "url": "https://www.badrollgames.com/producto/machaca-arco-proteccion-contaminacion/"
-  },
-  {
-   "troop": "Curtido",
-   "factionId": "pandilleros",
-   "name": "Curtida con ballesta",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA08A.webp",
-   "url": "https://www.badrollgames.com/producto/curtida-ballesta/"
-  },
-  {
-   "troop": "Jefe",
-   "factionId": "pandilleros",
-   "name": "Jefe con pistola y filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA07A-.webp",
-   "url": "https://www.badrollgames.com/producto/jefe-pistola-filo-medio/"
-  },
-  {
-   "troop": "Curtido",
-   "factionId": "pandilleros",
-   "name": "Curtido con escopeta, filo medio y armadura metálica",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA06A.webp",
-   "url": "https://www.badrollgames.com/producto/curtido-escopeta-filo-medio-armadura-metalica/"
-  },
-  {
-   "troop": "Machaca",
-   "factionId": "pandilleros",
-   "name": "Machaca con cuero endurecido, arco y filo pequeño",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA05A.webp",
-   "url": "https://www.badrollgames.com/producto/machaca-cuero-enduurecido-arco-filo-pequeno/"
-  },
-  {
-   "troop": "Bruto",
-   "factionId": "pandilleros",
-   "name": "Bruto con armadura metálica y maza pesada",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA02A.webp",
-   "url": "https://www.badrollgames.com/producto/bruto-armadura-metalica-maza-pesada/"
-  },
-  {
-   "troop": "Trueno",
-   "factionId": "unami",
-   "name": "Trueno con arco 2",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami08A-1.webp",
-   "url": "https://www.badrollgames.com/producto/trueno-con-arco-2/"
-  },
-  {
-   "troop": "Sombra",
-   "factionId": "unami",
-   "name": "Sombra con filo pequeño y cuchillos arrojadizos",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami07A-1.webp",
-   "url": "https://www.badrollgames.com/producto/sombra-con-filo-pequeno-y-cuchillos-arrojadizos/"
-  },
-  {
-   "troop": "Viento",
-   "factionId": "unami",
-   "name": "Viento con arco",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami05A-1.webp",
-   "url": "https://www.badrollgames.com/producto/viento-con-arco/"
-  },
-  {
-   "troop": "Sombra",
-   "factionId": "unami",
-   "name": "Sombra con tomahawk",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-sombra-tomahawk-1.webp",
-   "url": "https://www.badrollgames.com/producto/sombra-con-tomahawk/"
-  },
-  {
-   "troop": "Chamán",
-   "factionId": "unami",
-   "name": "Chamán",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-chaman-1.webp",
-   "url": "https://www.badrollgames.com/producto/chaman/"
-  },
-  {
-   "troop": "Trueno",
-   "factionId": "unami",
-   "name": "Trueno con arco",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-trueno-con-arco-1.webp",
-   "url": "https://www.badrollgames.com/producto/trueno-con-arco/"
-  },
-  {
-   "troop": "Chamán",
-   "factionId": "unami",
-   "name": "Chamana",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-chamana-1.webp",
-   "url": "https://www.badrollgames.com/producto/chamana/"
-  },
-  {
-   "troop": "Trueno",
-   "factionId": "unami",
-   "name": "Trueno con filo medio",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/trueno1.jpg",
-   "url": "https://www.badrollgames.com/producto/trueno-con-filo-medio/"
-  },
-  {
-   "troop": "Amacizona",
-   "factionId": "pandilleros",
-   "subfactionId": "fraus",
-   "name": "Amacizona con maza/lanza y escudo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR1GA15A.webp",
-   "url": "https://www.badrollgames.com/producto/amacizona-con-maza-lanza-y-escudo/"
-  },
-  {
-   "troop": "Amacizona",
-   "factionId": "pandilleros",
-   "subfactionId": "fraus",
-   "name": "Amacizona con lanza/filo medio y escudo",
-   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR1GA14A.webp",
-   "url": "https://www.badrollgames.com/producto/amacizona-con-filo-medio-y-lanza-filo-medio-y-escudo/"
-  }
- ]
-}
+[
+ {
+  "troop": "Arponero",
+  "factionId": "craabianos",
+  "name": "Arponero (maza pesada)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR07A.webp",
+  "url": "https://www.badrollgames.com/producto/arponero-maza-pesada/"
+ },
+ {
+  "troop": "Trueno",
+  "factionId": "unami",
+  "name": "Trueno con tomahawk",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1UN12A.webp",
+  "url": "https://www.badrollgames.com/producto/trueno-con-tomahawk/"
+ },
+ {
+  "troop": "El Abuelo de la Cabaña",
+  "factionId": "idos",
+  "subfactionId": "slashers",
+  "name": "Abuelo de la Cabaña",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1AM15A.webp",
+  "url": "https://www.badrollgames.com/producto/abuelo-de-la-cabana/"
+ },
+ {
+  "troop": "Psycho-killer",
+  "factionId": "idos",
+  "subfactionId": "slashers",
+  "name": "Psycho-killers (pack de 2 miniaturas)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1AM14A.webp",
+  "url": "https://www.badrollgames.com/producto/psycho-killers-pack-de-2-miniaturas/"
+ },
+ {
+  "troop": "Marinero",
+  "factionId": "craabianos",
+  "name": "Marinera (filo medio y pistola de mecha)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR04A.webp",
+  "url": "https://www.badrollgames.com/producto/marinera-filo-medio-y-pistola-de-mecha/"
+ },
+ {
+  "troop": "Grumete",
+  "factionId": "craabianos",
+  "name": "Grumete (tridente y red)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/11/BR1CR03A.webp",
+  "url": "https://www.badrollgames.com/producto/grumete-tridente-y-red/"
+ },
+ {
+  "troop": "Arponero",
+  "factionId": "craabianos",
+  "name": "Arponero (cañón de mano)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1CR02A.webp",
+  "url": "https://www.badrollgames.com/producto/arponero-canon-de-mano/"
+ },
+ {
+  "troop": "Custodio del Abismo",
+  "factionId": "craabianos",
+  "name": "Custodio del Abismo (filo pesado)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1CR01A.webp",
+  "url": "https://www.badrollgames.com/producto/custodio-del-abismo-filo-pesado/"
+ },
+ {
+  "troop": "Lord Homoeroticus",
+  "factionId": "pandilleros",
+  "name": "Lord Homoeroticus V2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1GA32A.webp",
+  "url": "https://www.badrollgames.com/producto/lord-homoeroticus-v2/"
+ },
+ {
+  "troop": "Mamporrero",
+  "factionId": "pandilleros",
+  "subfactionId": "ostra-azul",
+  "name": "Mamporrero con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/10/BR1GA33A.webp",
+  "url": "https://www.badrollgames.com/producto/mamporrero-con-maza/"
+ },
+ {
+  "troop": "Jefe",
+  "factionId": "pandilleros",
+  "name": "Jefa (rifle y filo medio)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1GA28A.webp",
+  "url": "https://www.badrollgames.com/producto/jefa-rifle-y-filo-medio/"
+ },
+ {
+  "troop": "Amacizona",
+  "factionId": "pandilleros",
+  "subfactionId": "fraus",
+  "name": "Amacizona con filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1GA30A.webp",
+  "url": "https://www.badrollgames.com/producto/amacizona-con-filo-medio/"
+ },
+ {
+  "troop": "Chamusquina",
+  "factionId": "sangre-negra",
+  "subfactionId": "crematorio",
+  "name": "Chamusquina (con la Señora Chischás y el Señor Bumbum)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/07/BR1BB23A.webp",
+  "url": "https://www.badrollgames.com/producto/chamusquina-con-la-senora-chischas-y-el-senor-bumbum/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con lanzallamas 3",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/07/BR1BB22A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas-3/"
+ },
+ {
+  "troop": "Desgarrador",
+  "factionId": "idos",
+  "name": "Desgarrador con filo medio incrustado y hoz",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/08/BR1AM12A.webp",
+  "url": "https://www.badrollgames.com/producto/desgarrador-con-filo-medio-incrustado-y-hoz/"
+ },
+ {
+  "troop": "Doktor Eustace Hanneman",
+  "factionId": "v-reich",
+  "subfactionId": "division-cientifica",
+  "name": "Doktor Eustace Hanneman",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/04/BR1VR24A.webp",
+  "url": "https://www.badrollgames.com/producto/doktor-eustace-hanneman/"
+ },
+ {
+  "troop": "Jefe",
+  "factionId": "pandilleros",
+  "name": "Jefa (rifle automático)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/04/BR1GA25A.webp",
+  "url": "https://www.badrollgames.com/producto/jefa-rifle-automatico/"
+ },
+ {
+  "troop": "Elaichik",
+  "factionId": "unami",
+  "name": "Elaichik",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/03/BR1UN10A.webp",
+  "url": "https://www.badrollgames.com/producto/elaichik/"
+ },
+ {
+  "troop": "Subhumano",
+  "factionId": "v-reich",
+  "name": "Subhumano con mandíbula cepo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/03/BR1VR23A.webp",
+  "url": "https://www.badrollgames.com/producto/subhumano-con-mandibula-cepo/"
+ },
+ {
+  "troop": "Cardenal Nuclear",
+  "factionId": "irradiados",
+  "name": "Cardenala Nuclear con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR16A.webp",
+  "url": "https://www.badrollgames.com/producto/cardenala-nuclear-con-maza/"
+ },
+ {
+  "troop": "Perromorfo",
+  "factionId": "mutardos",
+  "name": "Perromorfos (pack de 2) 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU22A.webp",
+  "url": "https://www.badrollgames.com/producto/perromorfos-pack-de-2-2/"
+ },
+ {
+  "troop": "Viento",
+  "factionId": "unami",
+  "name": "Viento con tomahawk",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/02/Unami09.webp",
+  "url": "https://www.badrollgames.com/producto/viento-con-tomahawk/"
+ },
+ {
+  "troop": "Mártir",
+  "factionId": "irradiados",
+  "name": "Mártir con maza ligera 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR15A.webp",
+  "url": "https://www.badrollgames.com/producto/martir-con-maza-ligera-2/"
+ },
+ {
+  "troop": "Pachacho",
+  "factionId": "troupe",
+  "name": "Pachacho con escopeta",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR14A.webp",
+  "url": "https://www.badrollgames.com/producto/pachacho-con-escopeta/"
+ },
+ {
+  "troop": "Pajaroto Rojo",
+  "factionId": "mutardos",
+  "subfactionId": "fuerza-m",
+  "name": "Pajaroto Rojo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU21A.webp",
+  "url": "https://www.badrollgames.com/producto/pajaroto-rojo/"
+ },
+ {
+  "troop": "Mártir",
+  "factionId": "irradiados",
+  "name": "Mártir con maza ligera",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR13A.webp",
+  "url": "https://www.badrollgames.com/producto/martir-con-maza-ligera/"
+ },
+ {
+  "troop": "Vale",
+  "factionId": "banda-del-comic",
+  "name": "Vale",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO06A.webp",
+  "url": "https://www.badrollgames.com/producto/vale/"
+ },
+ {
+  "troop": "Paul",
+  "factionId": "banda-del-comic",
+  "name": "Paul",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO05A.webp",
+  "url": "https://www.badrollgames.com/producto/paul/"
+ },
+ {
+  "troop": "Nicole",
+  "factionId": "banda-del-comic",
+  "name": "Nicole",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO04A.webp",
+  "url": "https://www.badrollgames.com/producto/nicole/"
+ },
+ {
+  "troop": "Markus",
+  "factionId": "banda-del-comic",
+  "name": "Markus",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO03A.webp",
+  "url": "https://www.badrollgames.com/producto/markus/"
+ },
+ {
+  "troop": "Rita",
+  "factionId": "banda-del-comic",
+  "name": "Rita",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO02A.webp",
+  "url": "https://www.badrollgames.com/producto/rita/"
+ },
+ {
+  "troop": "Dan",
+  "factionId": "banda-del-comic",
+  "name": "Dan",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1CO01A.webp",
+  "url": "https://www.badrollgames.com/producto/dan/"
+ },
+ {
+  "troop": "Forzudo",
+  "factionId": "troupe",
+  "name": "Forzuda con maza pesada",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR13A.webp",
+  "url": "https://www.badrollgames.com/producto/forzuda-con-maza-pesada/"
+ },
+ {
+  "troop": "Pachacho",
+  "factionId": "troupe",
+  "name": "Pachacha con pistola y maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR11A-1.webp",
+  "url": "https://www.badrollgames.com/producto/pachacha-con-pistola-y-maza/"
+ },
+ {
+  "troop": "Acróbata",
+  "factionId": "troupe",
+  "name": "Acróbata con filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR11A.webp",
+  "url": "https://www.badrollgames.com/producto/acrobata-con-filo-medio/"
+ },
+ {
+  "troop": "François el Mimo",
+  "factionId": "troupe",
+  "name": "François el Mimo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR09A.webp",
+  "url": "https://www.badrollgames.com/producto/francois-el-mimo/"
+ },
+ {
+  "troop": "Madame Destino",
+  "factionId": "troupe",
+  "name": "Madame Destino",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR08A.webp",
+  "url": "https://www.badrollgames.com/producto/madame-destino/"
+ },
+ {
+  "troop": "Pachacho",
+  "factionId": "troupe",
+  "name": "Pachacho con cañón de confeti",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR07A.webp",
+  "url": "https://www.badrollgames.com/producto/pachacho-con-canon-de-confeti/"
+ },
+ {
+  "troop": "Pachacho",
+  "factionId": "troupe",
+  "name": "Pachacha con pistola/filo pequeño y globo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR06A.webp",
+  "url": "https://www.badrollgames.com/producto/pachacha-con-pistola-filo-pequeno-y-globo/"
+ },
+ {
+  "troop": "Acróbata",
+  "factionId": "troupe",
+  "name": "Acróbata con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR04A.webp",
+  "url": "https://www.badrollgames.com/producto/acrobata-con-filo-pequeno/"
+ },
+ {
+  "troop": "Pachacho",
+  "factionId": "troupe",
+  "name": "Pachacho con pistola/guante de boxeo y monociclo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR05A.webp",
+  "url": "https://www.badrollgames.com/producto/pachacho-con-pistola-guante-de-boxeo-y-monociclo/"
+ },
+ {
+  "troop": "Domador",
+  "factionId": "troupe",
+  "name": "Domador con látigo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR03A.webp",
+  "url": "https://www.badrollgames.com/producto/domador-con-latigo/"
+ },
+ {
+  "troop": "Forzudo",
+  "factionId": "troupe",
+  "name": "Forzudo con maza pesada",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR02A.webp",
+  "url": "https://www.badrollgames.com/producto/forzudo-con-maza-pesada/"
+ },
+ {
+  "troop": "Jefe de pista",
+  "factionId": "troupe",
+  "name": "Jefa de pista con filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1TR01A.webp",
+  "url": "https://www.badrollgames.com/producto/jefa-de-pista-con-filo-medio/"
+ },
+ {
+  "troop": "Penitente",
+  "factionId": "irradiados",
+  "name": "Penitente con lanzarresiduos 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR14A.webp",
+  "url": "https://www.badrollgames.com/producto/penitente-con-lanzarresiduos-2/"
+ },
+ {
+  "troop": "El Guardián de las Llaves",
+  "factionId": "irradiados",
+  "name": "El Guardián de las Llaves",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR12A.webp",
+  "url": "https://www.badrollgames.com/producto/el-guardian-de-las-llaves/"
+ },
+ {
+  "troop": "La Gran Inquisidora",
+  "factionId": "irradiados",
+  "subfactionId": "inquisicion-atomica",
+  "name": "La Gran Inquisidora",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR11A.webp",
+  "url": "https://www.badrollgames.com/producto/la-gran-inquisidora/"
+ },
+ {
+  "troop": "El Portador de las Reliquias",
+  "factionId": "irradiados",
+  "name": "El Portador de las Reliquias",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR10A.webp",
+  "url": "https://www.badrollgames.com/producto/el-portador-de-las-reliquias/"
+ },
+ {
+  "troop": "Paladín",
+  "factionId": "irradiados",
+  "name": "Paladín con filo pesado",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR09A.webp",
+  "url": "https://www.badrollgames.com/producto/paladin-con-filo-pesado/"
+ },
+ {
+  "troop": "Discípulo",
+  "factionId": "irradiados",
+  "name": "Discípulo con escopeta",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR08A.webp",
+  "url": "https://www.badrollgames.com/producto/discipulo-con-escopeta/"
+ },
+ {
+  "troop": "Penitente",
+  "factionId": "irradiados",
+  "name": "Penitente con lanzarresiduos",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR07A.webp",
+  "url": "https://www.badrollgames.com/producto/penitente-con-lanzarresiduos/"
+ },
+ {
+  "troop": "Discípulo",
+  "factionId": "irradiados",
+  "name": "Discípulo con maza/filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR06A.webp",
+  "url": "https://www.badrollgames.com/producto/discipulo-con-maza-filo-pequeno/"
+ },
+ {
+  "troop": "Paladín",
+  "factionId": "irradiados",
+  "name": "Paladín con maza y escudo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR05A.webp",
+  "url": "https://www.badrollgames.com/producto/paladin-con-maza-y-escudo/"
+ },
+ {
+  "troop": "Mártir",
+  "factionId": "irradiados",
+  "name": "Mártir con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR04A.webp",
+  "url": "https://www.badrollgames.com/producto/martir-con-filo-pequeno/"
+ },
+ {
+  "troop": "Discípulo",
+  "factionId": "irradiados",
+  "name": "Discípulo con filo pequeño y pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR03A.webp",
+  "url": "https://www.badrollgames.com/producto/discipulo-con-filo-pequeno-y-pistola/"
+ },
+ {
+  "troop": "Penitente",
+  "factionId": "irradiados",
+  "name": "Penitente con botafumeiro tóxico",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR02A.webp",
+  "url": "https://www.badrollgames.com/producto/penitente-con-botafumeiro-toxico/"
+ },
+ {
+  "troop": "Cardenal Nuclear",
+  "factionId": "irradiados",
+  "name": "Cardenal Nuclear con maza/rifle y pistola/granada santa",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1IR01A.webp",
+  "url": "https://www.badrollgames.com/producto/cardenal-nuclear-con-maza-rifle-y-pistola-granada-santa/"
+ },
+ {
+  "troop": "Cosechador",
+  "factionId": "idos",
+  "name": "Cosechador con hoz",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM13A.webp",
+  "url": "https://www.badrollgames.com/producto/cosechador-con-hoz/"
+ },
+ {
+  "troop": "La Familia de la Cabaña",
+  "factionId": "idos",
+  "subfactionId": "slashers",
+  "name": "Familia de la cabaña (pack de 3 miniaturas)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM11A.webp",
+  "url": "https://www.badrollgames.com/producto/familia-de-la-cabana-pack-de-3-miniaturas/"
+ },
+ {
+  "troop": "Glotón",
+  "factionId": "idos",
+  "name": "Glotón con filo pesado",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM10A.webp",
+  "url": "https://www.badrollgames.com/producto/gloton-con-filo-pesado/"
+ },
+ {
+  "troop": "Despojo",
+  "factionId": "idos",
+  "name": "Despojo con filo medio/filo pequeño/hoz",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM07A.webp",
+  "url": "https://www.badrollgames.com/producto/despojo-con-filo-medio-filo-pequeno-hoz/"
+ },
+ {
+  "troop": "Desgarrador",
+  "factionId": "idos",
+  "name": "Desgarrador con hoz incrustada/filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BRaAM06A.webp",
+  "url": "https://www.badrollgames.com/producto/desgarrador-con-hoz-incrustada-filo-medio/"
+ },
+ {
+  "troop": "Despojo",
+  "factionId": "idos",
+  "name": "Despojo con maza ligera/filo pequeño/maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM05A.webp",
+  "url": "https://www.badrollgames.com/producto/despojo-con-maza-ligera-filo-pequeno-maza/"
+ },
+ {
+  "troop": "Desgarrador",
+  "factionId": "idos",
+  "name": "Desgarrador con filo medio incrustado/hoz",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM04A.webp",
+  "url": "https://www.badrollgames.com/producto/desgarrador-con-filo-medio-incrustado-hoz/"
+ },
+ {
+  "troop": "Aberración",
+  "factionId": "idos",
+  "name": "Aberración",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM03A.webp",
+  "url": "https://www.badrollgames.com/producto/aberracion/"
+ },
+ {
+  "troop": "Glotón",
+  "factionId": "idos",
+  "name": "Glotón con maza pesada/filo pesado",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM02A.webp",
+  "url": "https://www.badrollgames.com/producto/gloton-con-maza-pesada-filo-pesado/"
+ },
+ {
+  "troop": "Cosechador",
+  "factionId": "idos",
+  "name": "Cosechadora con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM01A.webp",
+  "url": "https://www.badrollgames.com/producto/cosechadora-con-filo-pequeno/"
+ },
+ {
+  "troop": "Tío",
+  "factionId": "idos",
+  "name": "Tío",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM08A.webp",
+  "url": "https://www.badrollgames.com/producto/tio/"
+ },
+ {
+  "troop": "Madre",
+  "factionId": "idos",
+  "name": "Madre",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1AM09A.webp",
+  "url": "https://www.badrollgames.com/producto/madre/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con quad y filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB21B.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-quad-y-filo-medio/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB20A.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-maza/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con filo medio 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB18A.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-filo-medio-2/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con sidecar, maza y pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB19A.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-sidecar-maza-y-pistola/"
+ },
+ {
+  "troop": "Quemado",
+  "factionId": "sangre-negra",
+  "name": "Quemada con bidón de gasofa",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB17A.webp",
+  "url": "https://www.badrollgames.com/producto/quemada-con-bidon-de-gasofa/"
+ },
+ {
+  "troop": "Ceniza",
+  "factionId": "sangre-negra",
+  "name": "Ceniza con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB16A.webp",
+  "url": "https://www.badrollgames.com/producto/ceniza-con-filo-pequeno/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con cóctel Molotov, pistola y escudo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB15A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-coctel-molotov-pistola-y-escudo/"
+ },
+ {
+  "troop": "Guardián de la Llama",
+  "factionId": "sangre-negra",
+  "name": "Guardiana de la llama con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB14A.webp",
+  "url": "https://www.badrollgames.com/producto/guardiana-de-la-llama-con-maza/"
+ },
+ {
+  "troop": "Soldat",
+  "factionId": "v-reich",
+  "name": "Soldat con rifle",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR19A.webp",
+  "url": "https://www.badrollgames.com/producto/soldat-con-rifle/"
+ },
+ {
+  "troop": "Recluta",
+  "factionId": "v-reich",
+  "subfactionId": "fuerte-thule",
+  "name": "Recluta con pistola y maza ligera",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR20A.webp",
+  "url": "https://www.badrollgames.com/producto/recluta-con-pistola-y-maza-ligera/"
+ },
+ {
+  "troop": "Recluta",
+  "factionId": "v-reich",
+  "subfactionId": "fuerte-thule",
+  "name": "Recluta con pistola/cuchillos arrojadizos y maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR16A.webp",
+  "url": "https://www.badrollgames.com/producto/recluta-pistola-cuchillos-arrojadizos-y-maza/"
+ },
+ {
+  "troop": "Eva y UNO",
+  "factionId": "v-reich",
+  "subfactionId": "fuerte-thule",
+  "name": "Eva y UNO",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR15A.webp",
+  "url": "https://www.badrollgames.com/producto/eva-y-uno/"
+ },
+ {
+  "troop": "Tierdoktor",
+  "factionId": "v-reich",
+  "subfactionId": "division-cientifica",
+  "name": "Tierdoktor con azuzador/jeringa",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR14A.webp",
+  "url": "https://www.badrollgames.com/producto/tierdoktor-con-azuzador-jeringa/"
+ },
+ {
+  "troop": "Engendro",
+  "factionId": "v-reich",
+  "subfactionId": "division-cientifica",
+  "name": "Engendro",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR13A.webp",
+  "url": "https://www.badrollgames.com/producto/engendro/"
+ },
+ {
+  "troop": "Gólem",
+  "factionId": "v-reich",
+  "subfactionId": "organizacion-kraken",
+  "name": "Gólem / Übersoldat (maza pesada/maza y escudo)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR12A.webp",
+  "url": "https://www.badrollgames.com/producto/golem-ubersoldat-maza-pesada-maza-y-escudo/"
+ },
+ {
+  "troop": "Ingeniero",
+  "factionId": "v-reich",
+  "subfactionId": "organizacion-kraken",
+  "name": "Ingeniero (armas de Xerum)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR11A.webp",
+  "url": "https://www.badrollgames.com/producto/ingeniero-armas-de-xerum/"
+ },
+ {
+  "troop": "Edward Berhart",
+  "factionId": "v-reich",
+  "name": "Edward Berhart",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR18A.webp",
+  "url": "https://www.badrollgames.com/producto/edward-berhart/"
+ },
+ {
+  "troop": "Aaron Schwartzmann",
+  "factionId": "v-reich",
+  "name": "Aaron Schwartzmann",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR17A.webp",
+  "url": "https://www.badrollgames.com/producto/aron-schwartzmann/"
+ },
+ {
+  "troop": "Casco Rojo",
+  "factionId": "v-reich",
+  "subfactionId": "organizacion-kraken",
+  "name": "Casco Rojo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR10A.webp",
+  "url": "https://www.badrollgames.com/producto/casco-rojo/"
+ },
+ {
+  "troop": "Ilse, la Loba del V Reich",
+  "factionId": "v-reich",
+  "name": "Ilse, la Loba del V Reich",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR08A.webp",
+  "url": "https://www.badrollgames.com/producto/ilse-la-loba-del-v-reich/"
+ },
+ {
+  "troop": "Soldat",
+  "factionId": "v-reich",
+  "name": "Soldat con escopeta/pistola/filo pequeño y mastín",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR07A.webp",
+  "url": "https://www.badrollgames.com/producto/soldat-con-escopeta-pistola-filo-pequeno-y-mastin/"
+ },
+ {
+  "troop": "Subhumano",
+  "factionId": "v-reich",
+  "name": "Subhumano 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR09A.webp",
+  "url": "https://www.badrollgames.com/producto/subhumano-2/"
+ },
+ {
+  "troop": "Übersoldat",
+  "factionId": "v-reich",
+  "name": "Übersoldat con filo pesado y armadura metálica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR06A.webp",
+  "url": "https://www.badrollgames.com/producto/ubersoldat-con-filo-pesado-y-armadura-metalica/"
+ },
+ {
+  "troop": "Subhumano",
+  "factionId": "v-reich",
+  "name": "Subhumano",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR05A.webp",
+  "url": "https://www.badrollgames.com/producto/subhumano/"
+ },
+ {
+  "troop": "Übersoldat",
+  "factionId": "v-reich",
+  "name": "Übersoldat con escopeta, armadura metálica y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR04A.webp",
+  "url": "https://www.badrollgames.com/producto/ubersoldat-con-escopeta-armadura-metalica-y-proteccion-contra-la-contaminacion/"
+ },
+ {
+  "troop": "Soldat",
+  "factionId": "v-reich",
+  "name": "Soldat con rifle y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR03A.webp",
+  "url": "https://www.badrollgames.com/producto/soldart-con-rifle-y-proteccion-contra-la-contaminacion/"
+ },
+ {
+  "troop": "Sanitario",
+  "factionId": "v-reich",
+  "name": "Sanitaria con filo pequeño/pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR02A.webp",
+  "url": "https://www.badrollgames.com/producto/sanitaria-con-filo-pequeno-pistola/"
+ },
+ {
+  "troop": "Mariscal",
+  "factionId": "v-reich",
+  "name": "Mariscal con pistola y armadura metálica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1VR01A.webp",
+  "url": "https://www.badrollgames.com/producto/mariscal-con-pistola-y-armadura-metalica/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con lanzallamas",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB13A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB12A.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-filo-medio/"
+ },
+ {
+  "troop": "Cunnilingus Igni",
+  "factionId": "sangre-negra",
+  "name": "Cunnilingus Igni",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB11A.webp",
+  "url": "https://www.badrollgames.com/producto/cunnilingus-igni/"
+ },
+ {
+  "troop": "Momma Nutritora",
+  "factionId": "sangre-negra",
+  "name": "Momma Nutritora",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB10A.webp",
+  "url": "https://www.badrollgames.com/producto/momma-nutritora/"
+ },
+ {
+  "troop": "Quemado",
+  "factionId": "sangre-negra",
+  "name": "Quemado con bidón de gasolina",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB09A.webp",
+  "url": "https://www.badrollgames.com/producto/quemado-con-bidon-de-gasolina/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con motosierra y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB08A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-motosierra-y-proteccion-contra-contaminacion/"
+ },
+ {
+  "troop": "Ceniza",
+  "factionId": "sangre-negra",
+  "name": "Ceniza con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB07A.webp",
+  "url": "https://www.badrollgames.com/producto/ceniza-con-maza/"
+ },
+ {
+  "troop": "Chispa",
+  "factionId": "sangre-negra",
+  "name": "Chispa con pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB06A.webp",
+  "url": "https://www.badrollgames.com/producto/chispa-con-pistola/"
+ },
+ {
+  "troop": "Quemado",
+  "factionId": "sangre-negra",
+  "name": "Quemado con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB05A.webp",
+  "url": "https://www.badrollgames.com/producto/quemado-con-filo-pequeno/"
+ },
+ {
+  "troop": "Ceniza",
+  "factionId": "sangre-negra",
+  "name": "Ceniza con maza y pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB04A.webp",
+  "url": "https://www.badrollgames.com/producto/ceniza-con-maza-y-pistola/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con escopeta",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB03A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-escopeta/"
+ },
+ {
+  "troop": "Ascua",
+  "factionId": "sangre-negra",
+  "name": "Ascua con lanzallamas y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB02A.webp",
+  "url": "https://www.badrollgames.com/producto/ascua-con-lanzallamas-y-preteccion-contra-la-contaminacion/"
+ },
+ {
+  "troop": "Guardián de la Llama",
+  "factionId": "sangre-negra",
+  "name": "Guardián de la llama con maza",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1BB01A.webp",
+  "url": "https://www.badrollgames.com/producto/guardian-de-la-llama-con-maza/"
+ },
+ {
+  "troop": "Devin Crow",
+  "factionId": "mercenarios",
+  "name": "Devin Crow",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME07A.webp",
+  "url": "https://www.badrollgames.com/producto/devin-drow/"
+ },
+ {
+  "troop": "Irina",
+  "factionId": "mercenarios",
+  "name": "Irina",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME06A.webp",
+  "url": "https://www.badrollgames.com/producto/irina/"
+ },
+ {
+  "troop": "Mongodrilo Dundee",
+  "factionId": "mercenarios",
+  "name": "Mongodrilo Dundee",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME05A.webp",
+  "url": "https://www.badrollgames.com/producto/mongodrilo-dundee/"
+ },
+ {
+  "troop": "Capitán Hammerica",
+  "factionId": "mercenarios",
+  "name": "Capitán Hammerica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME04A.webp",
+  "url": "https://www.badrollgames.com/producto/capitan-hammerica/"
+ },
+ {
+  "troop": "Lizzy DeVille",
+  "factionId": "mercenarios",
+  "name": "Lizzy DeVille",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME03A.webp",
+  "url": "https://www.badrollgames.com/producto/lizzy-deville/"
+ },
+ {
+  "troop": "Imperatrix Rabiosa",
+  "factionId": "mercenarios",
+  "name": "Imperatrix Rabiosa",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME02A.webp",
+  "url": "https://www.badrollgames.com/producto/imperatrix-rabiosa/"
+ },
+ {
+  "troop": "Crazy Mel",
+  "factionId": "mercenarios",
+  "name": "Crazy Mel",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1ME01A.webp",
+  "url": "https://www.badrollgames.com/producto/crazy-mel/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con bombeadora 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU18A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-bombeadora-2/"
+ },
+ {
+  "troop": "Dinamo",
+  "factionId": "chatarreros",
+  "name": "Dinamo con chasqueador y traje voltaico",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU17A.webp",
+  "url": "https://www.badrollgames.com/producto/dinamo-con-chasqueador-y-traje-voltaico/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con rifle y mira telescópica 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU16A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-mira-telescopica-2/"
+ },
+ {
+  "troop": "Sonda",
+  "factionId": "chatarreros",
+  "name": "Sonda con filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU15A.webp",
+  "url": "https://www.badrollgames.com/producto/sonda-con-filo-pequeno/"
+ },
+ {
+  "troop": "Pistón",
+  "factionId": "chatarreros",
+  "name": "Pistón con puños balísticos",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU14A-1.webp",
+  "url": "https://www.badrollgames.com/producto/piston-con-punos-balisticos/"
+ },
+ {
+  "troop": "Pistón",
+  "factionId": "chatarreros",
+  "name": "Pistón con lanzaarpones",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU14A.webp",
+  "url": "https://www.badrollgames.com/producto/piston-con-lanzaarpones/"
+ },
+ {
+  "troop": "Samantha O'Sullivan",
+  "factionId": "chatarreros",
+  "name": "Samantha O'Sullivan",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU11A.webp",
+  "url": "https://www.badrollgames.com/producto/samantha-osullivan/"
+ },
+ {
+  "troop": "Pistón",
+  "factionId": "chatarreros",
+  "name": "Pistón con lanzaarpones y armadura metálica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU12A.webp",
+  "url": "https://www.badrollgames.com/producto/piston-con-lanzaarpones-y-armadura-metalica/"
+ },
+ {
+  "troop": "Caronte",
+  "factionId": "chatarreros",
+  "name": "Caronte",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU10A.webp",
+  "url": "https://www.badrollgames.com/producto/caronte/"
+ },
+ {
+  "troop": "Dinamo",
+  "factionId": "chatarreros",
+  "name": "Dinamo con vaporeta y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU09A.webp",
+  "url": "https://www.badrollgames.com/producto/dinamo-con-vaporeta-y-proteccion-contra-la-contaminacion/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con rifle y cuero endurecido",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU08A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-cuero-endurecido/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con bombeadora",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU05A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-bombeadora/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con trabuco, filo medio y cuero endurecido",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU04A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-trabuco-filo-medio-y-cuero-endurecido/"
+ },
+ {
+  "troop": "Sonda",
+  "factionId": "chatarreros",
+  "name": "Sonda confilo pequeño y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU02A.webp",
+  "url": "https://www.badrollgames.com/producto/sonda-con-filo-pequeno-y-proteccion-contra-la-contaminacion/"
+ },
+ {
+  "troop": "Engranaje",
+  "factionId": "chatarreros",
+  "name": "Engranaje con rifle y mira telescópica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1JU01A.webp",
+  "url": "https://www.badrollgames.com/producto/engranaje-con-rifle-y-mira-telescopica/"
+ },
+ {
+  "troop": "Bestia del pozo",
+  "factionId": "mutardos",
+  "name": "Bestia del pozo con filo pesado y miembros extra 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU20A.webp",
+  "url": "https://www.badrollgames.com/producto/bestia-del-pozo-con-filo-pesado-y-miembros-extra-2/"
+ },
+ {
+  "troop": "Hilo Anal",
+  "factionId": "mutardos",
+  "subfactionId": "fuerza-m",
+  "name": "Hilo Anal",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU19A.webp",
+  "url": "https://www.badrollgames.com/producto/hilo-anal/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con garras, resistente y cachas",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU18A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-garras-resistente-y-cachas/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con garras envenenadas y cachas",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU17A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-garras-envenenadas-y-cachas/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con filo medio, miembros extra y rana",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU16A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-mutante-y-rana/"
+ },
+ {
+  "troop": "Magmador",
+  "factionId": "mutardos",
+  "name": "Magmador",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU15A.webp",
+  "url": "https://www.badrollgames.com/producto/magmador/"
+ },
+ {
+  "troop": "Kim y Fostiador",
+  "factionId": "mutardos",
+  "name": "Kim y Fostiador (Kim &#038; Bashinger)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU14A.webp",
+  "url": "https://www.badrollgames.com/producto/kim-y-fostiador/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con espinas, corredor y garras envenenadas",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU13A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-espinas-corredor-y-garras-envenenadas/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con filo medio, miembros extra y sonar",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU12A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-miembros-extra-y-sonar/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con maza ligera/filo medio y capacitado",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU11A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-maza-ligera-filo-medio-carga-brutal-y-capacitado/"
+ },
+ {
+  "troop": "Bestia del pozo",
+  "factionId": "mutardos",
+  "name": "Bestia del pozo con maza pesada",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU10A.webp",
+  "url": "https://www.badrollgames.com/producto/bestia-del-pozo-con-maza-pesada/"
+ },
+ {
+  "troop": "Cabezón",
+  "factionId": "mutardos",
+  "name": "Cabezón Mutardo 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU09A.webp",
+  "url": "https://www.badrollgames.com/producto/cabezon-2/"
+ },
+ {
+  "troop": "Perromorfo",
+  "factionId": "mutardos",
+  "name": "Perromorfos (pack de 2)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU08A.webp",
+  "url": "https://www.badrollgames.com/producto/perromorfos-pack-de-2-1/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con maza, piel dura y resistente",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU07A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-maza-piel-dura-y-resistente/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con filo medio, carga brutal y cola afilada",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU05A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-con-filo-medio-carga-brutal-cola-afilada/"
+ },
+ {
+  "troop": "Bestia del pozo",
+  "factionId": "mutardos",
+  "name": "Bestia del pozo con filo pesado y miembros extra",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU04A.webp",
+  "url": "https://www.badrollgames.com/producto/bestia-pozo-filo-pesado-miembros-extra/"
+ },
+ {
+  "troop": "Mutante",
+  "factionId": "mutardos",
+  "name": "Mutante con maza y piernas seguras",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU02A.webp",
+  "url": "https://www.badrollgames.com/producto/mutante-maza-piernas-seguras/"
+ },
+ {
+  "troop": "Cabezón",
+  "factionId": "mutardos",
+  "name": "Cabezón Mutardo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1MU01A.webp",
+  "url": "https://www.badrollgames.com/producto/cabezon-1/"
+ },
+ {
+  "troop": "Mamporrero",
+  "factionId": "pandilleros",
+  "subfactionId": "ostra-azul",
+  "name": "Mamporrera con fusta",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA23A.webp",
+  "url": "https://www.badrollgames.com/producto/mamporrera-fusta/"
+ },
+ {
+  "troop": "El Rayao",
+  "factionId": "pandilleros",
+  "subfactionId": "flipaos-de-los-ninjas",
+  "name": "El Rayao",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA22A.webp",
+  "url": "https://www.badrollgames.com/producto/el-rayao/"
+ },
+ {
+  "troop": "Jefe",
+  "factionId": "pandilleros",
+  "name": "Jefeeeerl (pistola)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA21A.webp",
+  "url": "https://www.badrollgames.com/producto/jefeeeerl-pistola/"
+ },
+ {
+  "troop": "Callisto",
+  "factionId": "pandilleros",
+  "subfactionId": "fraus",
+  "name": "Callisto",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA20A.webp",
+  "url": "https://www.badrollgames.com/producto/callisto/"
+ },
+ {
+  "troop": "Curtido",
+  "factionId": "pandilleros",
+  "name": "Curtida con filo medio y pistola",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA19A.webp",
+  "url": "https://www.badrollgames.com/producto/curtida-filo-medio-pistola/"
+ },
+ {
+  "troop": "Jefe",
+  "factionId": "pandilleros",
+  "name": "Jefa (rifle/filo medio)",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA18A.webp",
+  "url": "https://www.badrollgames.com/producto/jefa-rifle-filo-medio/"
+ },
+ {
+  "troop": "Clint Tirofijo",
+  "factionId": "pandilleros",
+  "name": "Clint Tirofijo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA16A.webp",
+  "url": "https://www.badrollgames.com/producto/clint-tirofijo/"
+ },
+ {
+  "troop": "Lord Homoeroticus",
+  "factionId": "pandilleros",
+  "name": "Lord Homoeroticus",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA13A.webp",
+  "url": "https://www.badrollgames.com/producto/lord-homoeroticus/"
+ },
+ {
+  "troop": "Curtido",
+  "factionId": "pandilleros",
+  "name": "Curtido con filo medio y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA12A.webp",
+  "url": "https://www.badrollgames.com/producto/curtido-filo-medio-proteccion-contaminacion/"
+ },
+ {
+  "troop": "Piltrafa",
+  "factionId": "pandilleros",
+  "name": "Piltrafa con maza ligera y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA11A.webp",
+  "url": "https://www.badrollgames.com/producto/piltrafa-maza-ligera-proteccion-contaminacion/"
+ },
+ {
+  "troop": "Bruto",
+  "factionId": "pandilleros",
+  "name": "Bruta con maza y escudo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA10A.webp",
+  "url": "https://www.badrollgames.com/producto/cbruta-maza-escudo/"
+ },
+ {
+  "troop": "Machaca",
+  "factionId": "pandilleros",
+  "name": "Machaca con arco y protección contra la contaminación",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA09A.webp",
+  "url": "https://www.badrollgames.com/producto/machaca-arco-proteccion-contaminacion/"
+ },
+ {
+  "troop": "Curtido",
+  "factionId": "pandilleros",
+  "name": "Curtida con ballesta",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA08A.webp",
+  "url": "https://www.badrollgames.com/producto/curtida-ballesta/"
+ },
+ {
+  "troop": "Jefe",
+  "factionId": "pandilleros",
+  "name": "Jefe con pistola y filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA07A-.webp",
+  "url": "https://www.badrollgames.com/producto/jefe-pistola-filo-medio/"
+ },
+ {
+  "troop": "Curtido",
+  "factionId": "pandilleros",
+  "name": "Curtido con escopeta, filo medio y armadura metálica",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA06A.webp",
+  "url": "https://www.badrollgames.com/producto/curtido-escopeta-filo-medio-armadura-metalica/"
+ },
+ {
+  "troop": "Machaca",
+  "factionId": "pandilleros",
+  "name": "Machaca con cuero endurecido, arco y filo pequeño",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA05A.webp",
+  "url": "https://www.badrollgames.com/producto/machaca-cuero-enduurecido-arco-filo-pequeno/"
+ },
+ {
+  "troop": "Bruto",
+  "factionId": "pandilleros",
+  "name": "Bruto con armadura metálica y maza pesada",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR1GA02A.webp",
+  "url": "https://www.badrollgames.com/producto/bruto-armadura-metalica-maza-pesada/"
+ },
+ {
+  "troop": "Trueno",
+  "factionId": "unami",
+  "name": "Trueno con arco 2",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami08A-1.webp",
+  "url": "https://www.badrollgames.com/producto/trueno-con-arco-2/"
+ },
+ {
+  "troop": "Sombra",
+  "factionId": "unami",
+  "name": "Sombra con filo pequeño y cuchillos arrojadizos",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami07A-1.webp",
+  "url": "https://www.badrollgames.com/producto/sombra-con-filo-pequeno-y-cuchillos-arrojadizos/"
+ },
+ {
+  "troop": "Viento",
+  "factionId": "unami",
+  "name": "Viento con arco",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/Unami05A-1.webp",
+  "url": "https://www.badrollgames.com/producto/viento-con-arco/"
+ },
+ {
+  "troop": "Sombra",
+  "factionId": "unami",
+  "name": "Sombra con tomahawk",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-sombra-tomahawk-1.webp",
+  "url": "https://www.badrollgames.com/producto/sombra-con-tomahawk/"
+ },
+ {
+  "troop": "Chamán",
+  "factionId": "unami",
+  "name": "Chamán",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-chaman-1.webp",
+  "url": "https://www.badrollgames.com/producto/chaman/"
+ },
+ {
+  "troop": "Trueno",
+  "factionId": "unami",
+  "name": "Trueno con arco",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-trueno-con-arco-1.webp",
+  "url": "https://www.badrollgames.com/producto/trueno-con-arco/"
+ },
+ {
+  "troop": "Chamán",
+  "factionId": "unami",
+  "name": "Chamana",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/Miniatura-chamana-1.webp",
+  "url": "https://www.badrollgames.com/producto/chamana/"
+ },
+ {
+  "troop": "Trueno",
+  "factionId": "unami",
+  "name": "Trueno con filo medio",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/trueno1.jpg",
+  "url": "https://www.badrollgames.com/producto/trueno-con-filo-medio/"
+ },
+ {
+  "troop": "Amacizona",
+  "factionId": "pandilleros",
+  "subfactionId": "fraus",
+  "name": "Amacizona con maza/lanza y escudo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR1GA15A.webp",
+  "url": "https://www.badrollgames.com/producto/amacizona-con-maza-lanza-y-escudo/"
+ },
+ {
+  "troop": "Amacizona",
+  "factionId": "pandilleros",
+  "subfactionId": "fraus",
+  "name": "Amacizona con lanza/filo medio y escudo",
+  "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR1GA14A.webp",
+  "url": "https://www.badrollgames.com/producto/amacizona-con-filo-medio-y-lanza-filo-medio-y-escudo/"
+ }
+]
