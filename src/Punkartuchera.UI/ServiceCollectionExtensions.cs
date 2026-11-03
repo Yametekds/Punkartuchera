@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Punkartuchera.Core.Matches;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Services;
+using Punkartuchera.Core.Sharing;
 using Punkartuchera.Core.Storage;
 using Punkartuchera.UI.Services;
 using Punkartuchera.UI.Storage;
@@ -22,7 +23,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
         services.AddScoped<IMatchService, LocalMatchService>();
         services.AddScoped<BandService>();
+        services.AddScoped<BandExchangeService>();
         services.AddScoped<PhotoUrlProvider>();
+        services.AddScoped<FileSharer>();
         return services;
     }
 }

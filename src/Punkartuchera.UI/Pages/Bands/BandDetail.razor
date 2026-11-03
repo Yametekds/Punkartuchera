@@ -2,6 +2,8 @@
 @inject BandService Bands
 @inject IRulesCatalog Rules
 @inject NavigationManager Navigation
+@inject BandExchangeService Exchange
+@inject FileSharer Sharer
 
 <PageTitle>@(_band?.Name ?? "Banda") · Punkartuchera</PageTitle>
 
@@ -35,6 +37,7 @@ else
                 @if (!_band.IsReadOnly)
                 {
                     <button type="button" class="menu-pop__item" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar datos</button>
+                    <button type="button" class="menu-pop__item" @onclick="ShareWithRival"><Icon Path="@Icons.Share" /> Pasar al rival</button>
                 }
                 <button type="button" class="menu-pop__item" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Clonar banda</button>
                 <button type="button" class="menu-pop__item menu-pop__item--danger" @onclick="() => _tab = TabDetails"><Icon Path="@Icons.Trash" /> Borrar…</button>
@@ -53,13 +56,30 @@ else
         <h1 class="band-hero__name distress">@_band.Name</h1>
         <div class="band-hero__counters">
             <span class="counter"><span class="counter__value">@_band.Members.Count</span><span class="counter__label">@(_band.Members.Count == 1 ? "miembro" : "miembros")</span></span>
-            <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Ammo)</span><span class="counter__label">balas</span></span>
+            @if (_band.IsReadOnly)
+            {
+                <span class="counter" title="Las balas del rival son secreto"><span class="counter__value">?</span><span class="counter__label">balas</span></span>
+            }
+            else
+            {
+                <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Ammo)</span><span class="counter__label">balas</span></span>
+            }
             @if (_band.Members.Any(m => m.Cost is not null))
             {
                 <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Cost ?? 0)</span><span class="counter__label">coste</span></span>
             }
         </div>
     </section>
+
+    @if (_band.IsReadOnly)
+    {
+        <p class="notice">Banda del rival: solo para cotillear. Ves sus fichas, equipo y habilidades, pero las balas se las guarda.</p>
+    }
+
+    @if (_shareInfo is not null)
+    {
+        <p class="notice" role="status">@_shareInfo</p>
+    }
 
     @if (_error is not null)
     {
@@ -83,7 +103,7 @@ else
                 <div class="datacard-list">
                     @foreach (var member in _band.Members)
                     {
-                        <MemberCard Member="member" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
+                        <MemberCard Member="member" HideAmmo="_band.IsReadOnly" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
                     }
                 </div>
                 break;
@@ -148,8 +168,16 @@ else
                             <p class="band-notes">@(string.IsNullOrWhiteSpace(_band.Notes) ? "Sin notas. Ni un garabato." : _band.Notes)</p>
                         </div>
                         <div class="rule-box">
-                            <h3 class="rule-box__title">Fichada</h3>
-                            <p>@_band.CreatedAt.ToLocalTime().ToString("d MMM yyyy") · última paliza @_band.UpdatedAt.ToLocalTime().ToString("d MMM yyyy")</p>
+                            @if (_band.IsReadOnly)
+                            {
+                                <h3 class="rule-box__title">Recibida</h3>
+                                <p>@_band.UpdatedAt.ToLocalTime().ToString("d MMM yyyy"). Si el rival te la vuelve a pasar, se sustituye esta copia.</p>
+                            }
+                            else
+                            {
+                                <h3 class="rule-box__title">Fichada</h3>
+                                <p>@_band.CreatedAt.ToLocalTime().ToString("d MMM yyyy") · última paliza @_band.UpdatedAt.ToLocalTime().ToString("d MMM yyyy")</p>
+                            }
                         </div>
                     </div>
                     <div class="actions">
@@ -184,6 +212,7 @@ else
     private bool _loading = true;
     private bool _editing;
     private string? _error;
+    private string? _shareInfo;
     private string _draftName = string.Empty;
     private string _draftFaction = string.Empty;
     private string? _draftNotes;
@@ -203,6 +232,7 @@ else
         _loading = _band?.Id != Id;
         _editing = false;
         _error = null;
+        _shareInfo = null;
         _band = await Bands.GetAsync(Id);
         _allBands = await Bands.GetAllAsync();
         _loading = false;
@@ -253,6 +283,32 @@ else
         {
             (_band.Name, _band.FactionId, _band.Notes) = (name, faction, notes);
             _error = ex.Message;
+        }
+    }
+
+    private async Task ShareWithRival()
+    {
+        _error = null;
+        _shareInfo = null;
+        try
+        {
+            var export = await Exchange.ExportAsync(Id);
+            var outcome = await Sharer.ShareAsync(export.FileName, export.Content, _band?.Name ?? "Banda",
+                "Mi banda para Punkartuchera. Ábrela en la app con «Cargar rival».");
+            _shareInfo = outcome switch
+            {
+                ShareOutcome.Shared => "Banda enviada. Las balas se quedan en casa.",
+                ShareOutcome.Downloaded => $"Descargado «{export.FileName}». Pásaselo al rival como quieras; las balas no van dentro.",
+                _ => null,
+            };
+        }
+        catch (BandExchangeException ex)
+        {
+            _error = ex.Message;
+        }
+        catch (JSException)
+        {
+            _error = "El navegador no ha dejado compartir la banda. Prueba otra vez.";
         }
     }
 
