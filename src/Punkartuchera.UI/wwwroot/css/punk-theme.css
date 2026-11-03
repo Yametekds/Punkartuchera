@@ -138,13 +138,8 @@ h1:focus { outline: none; }
     pointer-events: none;
 }
 
-/* Borde inferior rasgado (se pinta con el color del bloque) */
-.torn-bottom { position: relative; }
-.torn-bottom::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: -18px; height: 18px;
-    background: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
-    pointer-events: none;
-}
+/* Borde inferior rasgado con la textura del propio bloque (ver .paper::after) */
+.torn-bottom { position: relative; background-position: left bottom; }
 
 /* Sello de goma */
 .stamp {
@@ -366,14 +361,21 @@ a.card:active { transform: scale(.99); }
     padding: 18px 16px 16px;
     background-color: var(--punk-accent);
     background-image: var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-position: left bottom;
     color: var(--punk-ink);
     box-shadow: var(--punk-shadow);
     text-decoration: none;
 }
-/* Borde inferior rasgado del papel */
-.paper::after {
+/* Borde inferior rasgado: el mismo papel recortado con la forma del desgarro.
+   La textura del bloque va anclada abajo y la del borde arriba, así el dibujo
+   sigue sin corte de un lado al otro. */
+.paper::after, .torn-bottom::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 13px;
-    background: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
+    background-color: inherit;
+    background-image: inherit;
+    background-position: left top;
+    -webkit-mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
+    mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
     pointer-events: none;
 }
 .paper .muted, .paper .field__label { color: var(--punk-ink-muted); }
@@ -508,6 +510,8 @@ a.paper:hover { transform: rotate(0deg) translateY(-3px) !important; }
 /* ---------- Formularios ---------- */
 
 .stack { display: flex; flex-direction: column; gap: 16px; }
+/* El borde rasgado cuelga 12px bajo el papel: se deja hueco para que no roce el bloque siguiente */
+.stack > .paper:not(:last-child) { margin-bottom: 12px; }
 
 .field { display: flex; flex-direction: column; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
 .field--narrow { max-width: 140px; }
