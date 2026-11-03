@@ -7,7 +7,7 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 ## Funciones
 
 - Bandas propias guardadas en el dispositivo (IndexedDB), con facción, notas y miembros.
-- Fichas de miembro: foto con la cámara, de la galería o un retrato genérico; atributos, balas, habilidades y equipo.
+- Fichas de miembro: foto con la cámara o de la galería (con editor para encuadrarla en cuadrado) o un retrato genérico; atributos, balas, habilidades y equipo.
 - Duplicar y borrar bandas; las fotos se limpian solas.
 - Reglas del reglamento oficial gratuito: buscador, reglas básicas, reglas especiales, armas y equipo, y perfiles de todas las facciones.
 - Pasar la banda al rival en un archivo `.punkband` (con fotos, sin balas) y cargar la suya como banda rival de solo lectura.

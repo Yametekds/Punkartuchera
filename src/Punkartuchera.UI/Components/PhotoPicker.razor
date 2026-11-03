@@ -1,16 +1,18 @@
 @using Punkartuchera.Core.Storage
+@implements IAsyncDisposable
 @inject IPhotoStore Photos
 @inject PhotoUrlProvider PhotoUrls
+@inject PhotoCropper Cropper
 
 <div class="photo-picker">
     <div class="photo-picker__actions">
         <label class="btn btn--ghost">
             <Icon Path="@Icons.Camera" /> Cámara
-            <InputFile class="visually-hidden" accept="image/*" capture="environment" OnChange="OnFileSelected" />
+            <input type="file" class="visually-hidden" accept="image/*" capture="environment" @ref="_cameraInput" @onchange="() => OpenAsync(_cameraInput)" />
         </label>
         <label class="btn btn--ghost">
             <Icon Path="@Icons.Image" /> Galería
-            <InputFile class="visually-hidden" accept="image/*" OnChange="OnFileSelected" />
+            <input type="file" class="visually-hidden" accept="image/*" @ref="_galleryInput" @onchange="() => OpenAsync(_galleryInput)" />
         </label>
         <button type="button" class="btn btn--ghost" @onclick="() => _showStock = !_showStock">
             <Icon Path="@Icons.Skull" /> Retratos
@@ -21,9 +23,9 @@
         }
     </div>
 
-    @if (_busy)
+    @if (_busy && !_cropping)
     {
-        <p class="muted">Procesando foto…</p>
+        <p class="muted">Cargando foto…</p>
     }
 
     @if (_error is not null)
@@ -46,11 +48,32 @@
     }
 </div>
 
-@code {
-    // Las fotos se reducen en el navegador antes de guardarlas.
-    private const int MaxSidePixels = 640;
-    private const long MaxUploadBytes = 15 * 1024 * 1024;
+@if (_cropping)
+{
+    <div class="cropper" role="dialog" aria-modal="true" aria-labelledby="cropper-title">
+        <div class="cropper__panel">
+            <h2 id="cropper-title" class="section-title">Encuadra la jeta</h2>
+            <p class="muted cropper__hint">Arrastra para mover y pellizca o usa la barra para acercar.</p>
+            <div class="cropper__stage">
+                <canvas class="cropper__canvas" @ref="_canvas"></canvas>
+            </div>
+            <label class="cropper__zoom">
+                <span class="visually-hidden">Zoom</span>
+                <Icon Path="@Icons.Image" Class="cropper__zoom-icon cropper__zoom-icon--small" />
+                <input type="range" @ref="_zoom" min="1" max="6" step="0.01" value="1" />
+                <Icon Path="@Icons.Image" Class="cropper__zoom-icon" />
+            </label>
+            <div class="cropper__actions">
+                <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="CancelCropAsync">Cancelar</button>
+                <button type="button" class="btn btn--primary" disabled="@_busy" @onclick="ConfirmCropAsync">
+                    @(_busy ? "Guardando…" : "Usar foto")
+                </button>
+            </div>
+        </div>
+    </div>
+}
 
+@code {
     [Parameter] public PhotoRef? Value { get; set; }
 
     [Parameter] public EventCallback<PhotoRef?> ValueChanged { get; set; }
@@ -58,35 +81,84 @@
     /// <summary>Se invoca con la clave de cada foto nueva guardada, para poder limpiarla si se cancela.</summary>
     [Parameter] public EventCallback<string> OnPhotoStored { get; set; }
 
+    private ElementReference _cameraInput;
+    private ElementReference _galleryInput;
+    private ElementReference _canvas;
+    private ElementReference _zoom;
     private bool _busy;
+    private bool _cropping;
+    private bool _attachPending;
     private bool _showStock;
     private string? _error;
 
-    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    private async Task OpenAsync(ElementReference input)
     {
         _error = null;
         _busy = true;
         try
         {
-            var resized = await e.File.RequestImageFileAsync("image/jpeg", MaxSidePixels, MaxSidePixels);
-            await using var stream = resized.OpenReadStream(MaxUploadBytes);
-            using var buffer = new MemoryStream();
-            await stream.CopyToAsync(buffer);
-
-            var data = buffer.ToArray();
-            var key = await Photos.SaveAsync(data, "image/jpeg");
-            PhotoUrls.Remember(key, new StoredPhoto(key, "image/jpeg", data).ToDataUrl());
-            await OnPhotoStored.InvokeAsync(key);
-            await SetAsync(PhotoRef.Stored(key));
+            var result = await Cropper.LoadAsync(input);
+            if (result.IsOk)
+            {
+                _showStock = false;
+                _cropping = true;
+                _attachPending = true;
+            }
+            else if (!result.IsEmpty)
+            {
+                _error = result.IsHeic
+                    ? "Esa foto está en formato HEIC y el navegador no la entiende. Hazle una captura o pásala a JPG."
+                    : "El navegador no puede abrir esa imagen. Prueba con otra foto o hazle una captura.";
+            }
         }
-        catch (Exception ex) when (ex is IOException or InvalidOperationException or JSException)
+        catch (JSException ex)
         {
-            _error = "No se pudo leer la imagen. Prueba con otra foto.";
+            Console.Error.WriteLine($"No se pudo abrir la foto: {ex.Message}");
+            _error = "No se pudo abrir la foto. Prueba otra vez.";
         }
         finally
         {
             _busy = false;
         }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_attachPending && _cropping)
+        {
+            _attachPending = false;
+            await Cropper.AttachAsync(_canvas, _zoom);
+        }
+    }
+
+    private async Task ConfirmCropAsync()
+    {
+        _busy = true;
+        try
+        {
+            var data = await Cropper.ExportJpegAsync();
+            var key = await Photos.SaveAsync(data, "image/jpeg");
+            PhotoUrls.Remember(key, new StoredPhoto(key, "image/jpeg", data).ToDataUrl());
+            await OnPhotoStored.InvokeAsync(key);
+            await SetAsync(PhotoRef.Stored(key));
+            _cropping = false;
+        }
+        catch (JSException ex)
+        {
+            Console.Error.WriteLine($"No se pudo guardar la foto: {ex.Message}");
+            _error = "No se pudo guardar la foto. Prueba otra vez.";
+            _cropping = false;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task CancelCropAsync()
+    {
+        _cropping = false;
+        await Cropper.CancelAsync();
     }
 
     private async Task PickStock(string key)
@@ -99,5 +171,19 @@
     {
         Value = photo;
         return ValueChanged.InvokeAsync(photo);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_cropping)
+        {
+            try
+            {
+                await Cropper.CancelAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+            }
+        }
     }
 }
