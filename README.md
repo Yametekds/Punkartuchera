@@ -9,13 +9,13 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Bandas propias guardadas en el dispositivo (IndexedDB), con facción, notas y miembros.
 - Fichas de miembro: foto con la cámara, de la galería o un retrato genérico; atributos, balas, habilidades y equipo.
 - Duplicar y borrar bandas; las fotos se limpian solas.
+- Reglas del reglamento oficial gratuito: buscador, reglas básicas, reglas especiales, armas y equipo, y perfiles de todas las facciones.
+- Pasar la banda al rival en un archivo `.punkband` (con fotos, sin balas) y cargar la suya como banda rival de solo lectura.
 - Funciona sin conexión una vez cargada.
 
-Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
+- Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
 
-En preparación: consulta de reglas, bandas rivales compartidas y partidas activas.
-
-> Los atributos y tipos de miembro actuales son **provisionales** (ver `PlaceholderRulesCatalog`). Se sustituirán por los del reglamento.
+En preparación: partidas activas.
 
 ## Requisitos
 

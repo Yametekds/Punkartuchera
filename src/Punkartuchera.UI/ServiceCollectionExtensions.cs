@@ -3,6 +3,7 @@ using Punkartuchera.Core.Maps;
 using Punkartuchera.Core.Matches;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Services;
+using Punkartuchera.Core.Sharing;
 using Punkartuchera.Core.Storage;
 using Punkartuchera.UI.Services;
 using Punkartuchera.UI.Storage;
@@ -17,14 +18,19 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddPunkartucheraUi(this IServiceCollection services)
     {
-        services.AddSingleton<IRulesCatalog, PlaceholderRulesCatalog>();
+        services.AddSingleton(_ => RulebookLoader.LoadEmbedded());
+        services.AddSingleton<IRulesCatalog, RulebookCatalog>();
+        services.AddSingleton<RulesSearch>();
+        services.AddScoped<FragmentScroller>();
         services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
         services.AddScoped<IMatchService, LocalMatchService>();
         services.AddScoped<BandService>();
+        services.AddScoped<BandExchangeService>();
         services.AddScoped<PhotoUrlProvider>();
+        services.AddScoped<FileSharer>();
         return services;
     }
 }

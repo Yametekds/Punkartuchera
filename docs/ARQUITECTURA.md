@@ -17,7 +17,7 @@ Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core
 | --- | --- | --- |
 | `IBandRepository` | `IndexedDbBandRepository` (UI), `InMemoryBandRepository` (Core, tests) | Guardar bandas. Una versión en la nube implementa esta interfaz. |
 | `IPhotoStore` | `IndexedDbPhotoStore`, `InMemoryPhotoStore` | Fotos de miniaturas, separadas de la banda. |
-| `IRulesCatalog` | `PlaceholderRulesCatalog` (**provisional**) | Facciones, atributos y tipos de miembro. |
+| `IRulesCatalog` | `RulebookCatalog` | Facciones, atributos y tipos de miembro, sacados del reglamento (`Rulebook`). |
 | `ITerrainCatalog` | `DefaultTerrainCatalog` (**provisional**) | Tipos de escenografía (huella en cm, cobertura, si tapa la vista) y tamaños de mesa. |
 | `IMatchService` | `LocalMatchService` | Partida en un dispositivo. Los métodos en línea lanzan `OnlineMatchesUnavailableException`. |
 
@@ -29,8 +29,19 @@ Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`
 - Los atributos se guardan como diccionario `clave → valor`; las claves vienen de `IRulesCatalog.Stats`, así cambiar el reglamento no rompe datos guardados.
 - `Band.SchemaVersion` permite migrar datos antiguos.
 - `Band.Ownership`: `Own` (editable) o `Rival` (solo lectura; `BandService` rechaza cambios).
-- `Miniature.Ammo` son las balas; la exportación a rivales debe ponerlas a cero.
+- `Miniature.Ammo` son las balas; la exportación a rivales las pone a cero.
+- `Band.SourceId`: en las bandas rivales, el identificador que tenía la banda en el dispositivo del rival.
 - `BandSerializer` es el formato JSON único (camelCase, enums como texto, generación de código para el recortado de WebAssembly). Úsalo también para exportar.
+
+### Pasar la banda al rival
+
+`BandExchangeService` (Core, `Sharing/`) exporta una banda propia a un archivo `.punkband` y lo importa en el otro dispositivo:
+
+- El archivo es un `BandPackage` en JSON: `format` (`punkartuchera-band`), `version`, la banda y las fotos propias en base64 (`photos`, por clave). Los retratos genéricos viajan como referencia.
+- Al exportar se quitan las balas (`Ammo = 0`) y las notas de la banda. Las bandas rivales no se pueden volver a exportar.
+- Al importar se guarda como `Rival` (solo lectura) con un `Id` nuevo y `SourceId` = el `Id` original; si llega otra vez la misma banda, sustituye a la copia anterior y borra sus fotos. Se descartan fotos que no sean JPEG, PNG o WebP y se rechazan archivos de otro formato o de una versión más nueva.
+
+En la interfaz, `FileSharer` (`wwwroot/js/punkShare.js`) abre el menú de compartir del sistema (Web Share API) y, si el navegador no deja compartir archivos, lo descarga. La acción está en el menú ⋮ de la banda ("Pasar al rival") y la importación en el botón "Cargar rival" de la lista de bandas.
 
 ### IndexedDB
 
@@ -56,7 +67,18 @@ Superficies: `card` (chapa oscura) y `paper` (papel de arena con borde rasgado).
 
 Las secciones nuevas deben reutilizarlas en lugar de definir colores o texturas propias.
 
-Componentes reutilizables en `Components/`: `Icon`, `MiniPortrait`, `MemberCard`, `PageTabs`, `ActionsMenu`, `Stepper`, `TagEditor`, `ConfirmButton`, `PhotoPicker`, `PlaceholderNotice`.
+Componentes reutilizables en `Components/`: `Icon`, `MiniPortrait`, `MemberCard`, `PageTabs`, `ActionsMenu`, `Stepper`, `TagEditor`, `ConfirmButton`, `PhotoPicker`, `PlaceholderNotice`. Los de la sección de reglas están en `Components/Rules/`.
+
+## Reglas
+
+El reglamento está en datos, no en código: `Core/Rules/Data/core.json` (atributos, reglas básicas, reglas especiales, armas, blindajes y equipo genérico) y un JSON por facción en `Core/Rules/Data/factions/`. Se incrustan en el ensamblado y `RulebookLoader.LoadEmbedded()` los carga en un `Rulebook` (con generación de código de System.Text.Json, así funciona con el recortado de WebAssembly).
+
+- Cada entrada indica `source` y `page`, que apuntan a los PDFs oficiales de `core.json` → `sources`. La interfaz enlaza a esa página del PDF.
+- Los textos son un resumen; las tablas, perfiles y costes se copian tal cual. Los perfiles de tropa son texto ("3 (5)", "-", "X") para respetar la notación del libro.
+- Para añadir una facción: crea su JSON en `factions/` y añade su id al orden de `RulebookLoader`. Los tests de `RulebookTests` comprueban que los perfiles estén completos, que las reglas especiales citadas existan y que las armas de las opciones estén en el arsenal.
+- `RulesSearch` indexa todo (sin tildes ni mayúsculas, todas las palabras obligatorias, título antes que texto) y devuelve enlaces con ancla. `FragmentScroller` lleva la vista al ancla al abrir la página.
+
+Páginas (`Pages/Rules/`): `/reglas` (buscador e índice), `/reglas/basicas`, `/reglas/especiales`, `/reglas/equipo` y `/reglas/faccion/{id}/{reglas|miembros|equipo}`. Su CSS propio está en `wwwroot/css/rules.css`.
 
 ## Mapas
 

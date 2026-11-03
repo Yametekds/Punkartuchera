@@ -1,0 +1,63 @@
+@page "/reglas"
+@inject Rulebook Book
+
+<PageTitle>Reglas · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Que no te la cuelen</span>
+        <h1 class="page-title distress">Reglas</h1>
+    </div>
+</header>
+
+<RulesSearchBox />
+
+<h2 class="section-title">El reglamento</h2>
+<nav class="paper tape rules-index" aria-label="Reglamento">
+    <a class="rules-index__row" href="reglas/basicas">
+        <span class="rules-index__name">Reglas básicas</span>
+        <span class="rules-index__meta">Turno, movimiento, combate, disparo, coberturas</span>
+        <span class="rules-index__count">@Book.Sections.Count <small>apartados</small></span>
+    </a>
+    <a class="rules-index__row" href="reglas/especiales">
+        <span class="rules-index__name">Reglas especiales</span>
+        <span class="rules-index__meta">De A dos manos a Veneno (X)</span>
+        <span class="rules-index__count">@Book.SpecialRules.Count <small>reglas</small></span>
+    </a>
+    <a class="rules-index__row" href="reglas/equipo">
+        <span class="rules-index__name">Armas y equipo</span>
+        <span class="rules-index__meta">Perfiles, costes y reglas de cada trasto</span>
+        <span class="rules-index__count">@(Book.Weapons.Count + Book.Armors.Count + Book.Gear.Count) <small>trastos</small></span>
+    </a>
+</nav>
+
+<h2 class="section-title">Facciones</h2>
+<ul class="faction-roster">
+    @foreach (var faction in Book.Factions)
+    {
+        <li>
+            <a class="faction-roster__item" href="@($"reglas/faccion/{faction.Id}")">
+                <span class="faction-roster__name">
+                    @faction.Name
+                    @if (faction.Beta)
+                    {
+                        <span class="stamp stamp--light faction-roster__beta">Beta</span>
+                    }
+                </span>
+                <span class="faction-roster__troops">@(faction.IsMercenaries ? "A sueldo" : $"{faction.Troops.Count} tropas")</span>
+                <span class="faction-roster__summary">@faction.Summary</span>
+            </a>
+        </li>
+    }
+</ul>
+
+<h2 class="section-title">PDFs oficiales</h2>
+<p class="muted rules-legal">
+    Resumen del reglamento gratuito de punkapocalyptic.com (@Book.Edition). Si hay dudas, manda el PDF oficial.
+</p>
+<ul class="tags rules-sources">
+    @foreach (var source in Book.Sources)
+    {
+        <li><a class="tag" href="@source.Url" target="_blank" rel="noopener">@source.Title</a></li>
+    }
+</ul>
