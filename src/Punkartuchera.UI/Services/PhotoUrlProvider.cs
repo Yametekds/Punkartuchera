@@ -16,6 +16,8 @@ public sealed class PhotoUrlProvider(IPhotoStore photos)
                 return null;
             case { Source: PhotoSource.Stock }:
                 return StockImages.Url(photo.Key);
+            case { Source: PhotoSource.Official }:
+                return photo.Key;
         }
 
         if (_cache.TryGetValue(photo.Key, out var cached))

@@ -28,6 +28,10 @@ public sealed class Rulebook
     [JsonIgnore]
     public List<FactionRules> Factions { get; } = [];
 
+    /// <summary>Fotos oficiales de las miniaturas, por tropa.</summary>
+    [JsonIgnore]
+    public List<OfficialMini> Minis { get; } = [];
+
     /// <summary>Listas preconfiguradas de las fichas de control oficiales.</summary>
     [JsonIgnore]
     public List<PresetList> Lists { get; } = [];
@@ -421,4 +425,33 @@ public sealed class PresetMember
 public sealed class PresetListFile
 {
     public List<PresetList> Lists { get; set; } = [];
+}
+
+/// <summary>Una miniatura oficial pintada, con la tropa a la que representa.</summary>
+public sealed class OfficialMini
+{
+    /// <summary>Nombre de la tropa, personalidad o mercenario en el reglamento.</summary>
+    public string Troop { get; set; } = string.Empty;
+
+    public string FactionId { get; set; } = string.Empty;
+
+    /// <summary>Si la tropa es propia de una subfacción.</summary>
+    public string? SubfactionId { get; set; }
+
+    /// <summary>Nombre de la miniatura en la tienda ("Ascua con escopeta").</summary>
+    public string Name { get; set; } = string.Empty;
+
+    public string Image { get; set; } = string.Empty;
+
+    /// <summary>Página de la miniatura en la tienda oficial.</summary>
+    public string? Url { get; set; }
+}
+
+public sealed class OfficialMiniFile
+{
+    public string Source { get; set; } = string.Empty;
+
+    public string? SourceUrl { get; set; }
+
+    public List<OfficialMini> Minis { get; set; } = [];
 }

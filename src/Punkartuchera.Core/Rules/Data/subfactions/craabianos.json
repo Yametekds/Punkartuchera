@@ -87,7 +87,15 @@
           ["1", "Sin efecto."], ["2", "-1 Agilidad."], ["3", "-1 Precisión y Combate."], ["4+", "-1 Fuerza y Dureza."]
         ] } },
       { "name": "F*ck you Craab", "text": "No tienen El mar siempre reclama ni Sangre salada." },
-      { "name": "Carta de bebidas", "text": "Cada miniatura puede comprar una bebida especial en lugar del licor de garrafón. La lista de bebidas no viene en el texto del PDF beta; consúltala en el documento oficial." }
+      { "name": "Carta de bebidas", "text": "Cada miniatura puede comprar una bebida especial en lugar del licor de garrafón. Su efecto dura los 2 Turnos siguientes a beberla (pág. 8 del PDF beta).",
+        "table": { "columns": ["Bebida", "Puntos", "Efecto"], "rows": [
+          ["Champagne Millésimé «Gran Reserva»", "8", "Turnos 1 y 2: +1 Dureza y Berserker (solo si es Abatida en ese Turno)."],
+          ["Dry Martini con Tres Aceitunas", "6", "Turno 1: +1 Acciones (máximo 3). Turno 2: -1 Acciones."],
+          ["Bellini de Melocotón Blanco", "5", "Turno 1: +1 Agilidad y Raudo. Turno 2: +1 Fuerza y -1 Agilidad."],
+          ["Negroni Clásico con Twist de Naranja", "6", "Turnos 1 y 2: Ímpetu (2)."],
+          ["Cosmopolitan «Sex on the Coast»", "5", "Turno 1: +2 Precisión y +1 Técnica. Turno 2: Escurridizo y -1 Precisión."],
+          ["Piña Colada «All Inclusive»", "8", "Turno 1: +2 Dureza. Turno 2: +2 Fuerza."]
+        ] } }
     ],
     "troops": [
       {

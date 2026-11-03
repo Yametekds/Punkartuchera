@@ -81,3 +81,20 @@
     box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .28);
     color: var(--punk-ink);
 }
+
+/* Fotos oficiales de las miniaturas */
+.official-minis { display: grid; gap: 6px; }
+.official-minis__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+}
+.official-minis__item {
+    display: grid; gap: 4px; text-decoration: none; color: var(--punk-ink); font-size: .74rem; line-height: 1.2;
+}
+.official-minis__item img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; background: #fff;
+    border: 2px solid var(--punk-ink); box-shadow: 2px 3px 0 rgba(29, 23, 18, .35);
+}
+.official-grid img { background: #fff; object-fit: cover; }
+.official-grid__credit { margin: 4px 0 0; font-size: .78rem; color: var(--punk-text-muted); }
+.paper .official-grid__credit { color: var(--punk-ink-muted); }

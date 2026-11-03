@@ -15,6 +15,7 @@ public static class RulebookLoader
     private const string FactionPrefix = ResourcePrefix + "factions.";
     private const string SubfactionPrefix = ResourcePrefix + "subfactions.";
     private const string ListsResource = ResourcePrefix + "lists.json";
+    private const string MinisResource = ResourcePrefix + "minis.json";
 
     /// <summary>Orden en que se muestran las facciones; las que no estén van al final.</summary>
     private static readonly string[] FactionOrder =
@@ -48,6 +49,9 @@ public static class RulebookLoader
 
         var lists = Read(assembly.GetManifestResourceStream(ListsResource), RulesJsonContext.Default.PresetListFile);
         book.Lists.AddRange(lists?.Lists ?? []);
+
+        var minis = Read(assembly.GetManifestResourceStream(MinisResource), RulesJsonContext.Default.OfficialMiniFile);
+        book.Minis.AddRange(minis?.Minis ?? []);
 
         return book;
     }
@@ -135,4 +139,5 @@ public static class RulebookLoader
 [JsonSerializable(typeof(FactionRules))]
 [JsonSerializable(typeof(List<FactionRules>))]
 [JsonSerializable(typeof(PresetListFile))]
+[JsonSerializable(typeof(OfficialMiniFile))]
 public sealed partial class RulesJsonContext : JsonSerializerContext;
