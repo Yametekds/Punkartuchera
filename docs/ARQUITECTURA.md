@@ -35,13 +35,19 @@ Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`
 
 ### Pasar la banda al rival
 
-`BandExchangeService` (Core, `Sharing/`) exporta una banda propia a un archivo `.punkband` y lo importa en el otro dispositivo:
+`BandExchangeService` (Core, `Sharing/`) exporta una banda propia de dos maneras, un archivo `.punkband` (con fotos) o un QR (sin fotos), y las importa en el otro dispositivo:
 
 - El archivo es un `BandPackage` en JSON: `format` (`punkartuchera-band`), `version`, la banda y las fotos propias en base64 (`photos`, por clave). Los retratos genéricos viajan como referencia.
 - Al exportar se quitan las balas (`Ammo = 0`) y las notas de la banda. Las bandas rivales no se pueden volver a exportar.
 - Al importar se guarda como `Rival` (solo lectura) con un `Id` nuevo y `SourceId` = el `Id` original; si llega otra vez la misma banda, sustituye a la copia anterior y borra sus fotos. Se descartan fotos que no sean JPEG, PNG o WebP y se rechazan archivos de otro formato o de una versión más nueva.
 
-En la interfaz, `FileSharer` (`wwwroot/js/punkShare.js`) abre el menú de compartir del sistema (Web Share API) y, si el navegador no deja compartir archivos, lo descarga. La acción está en el menú ⋮ de la banda ("Pasar al rival") y la importación en el botón "Cargar rival" de la lista de bandas.
+- El QR lo genera `BandQrCodec`: `PKB1:` + Base45( CRC-32 + JSON compacto comprimido con Deflate ). Base45 usa justo el alfabeto del modo alfanumérico de los QR. El JSON lleva nombres de propiedad de una letra y los atributos como lista en el orden de `IRulesCatalog.Stats`; los retratos genéricos van por clave y las fotos propias no van. Si la suma de comprobación no cuadra, la lectura se rechaza. Una banda normal ocupa unos 400 caracteres; el máximo es `BandQrCodec.MaxLength` (2400): si se pasa, primero se quitan las notas y, si aún no cabe, se pide mandar el archivo.
+- Una banda que llega por QR sustituye a la copia que ya hubiera de esa banda y conserva las fotos de los miembros que siguen llamándose igual (por ejemplo, si antes llegó el archivo).
+
+En la interfaz:
+
+- "Pasar al rival" (menú ⋮ de la banda) abre `RivalShareSheet`: el QR (`QrCode`, dibujado en SVG con QRCoder) y el botón para enviar el archivo. `FileSharer` (`wwwroot/js/punkShare.js`) abre el menú de compartir del sistema (Web Share API) y, si el navegador no deja compartir archivos, lo descarga.
+- "Cargar rival" (lista de bandas) abre `RivalImportSheet`: enciende la cámara y lee el QR (`wwwroot/js/punkQr.js`, con `BarcodeDetector` si existe y si no con jsQR, en `wwwroot/js/vendor/`, que solo se descarga cuando hace falta), o abre el archivo.
 
 ### IndexedDB
 

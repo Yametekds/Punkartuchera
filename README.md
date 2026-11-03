@@ -10,7 +10,7 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Fichas de miembro: foto con la cámara o de la galería (con editor para encuadrarla en cuadrado) o un retrato genérico; atributos, balas, habilidades y equipo.
 - Duplicar y borrar bandas; las fotos se limpian solas.
 - Reglas del reglamento oficial gratuito: buscador, reglas básicas, reglas especiales, armas y equipo, y perfiles de todas las facciones.
-- Pasar la banda al rival en un archivo `.punkband` (con fotos, sin balas) y cargar la suya como banda rival de solo lectura.
+- Pasar la banda al rival con un QR (sin fotos) o un archivo `.punkband` (con fotos), siempre sin balas, y cargar la suya como banda rival de solo lectura escaneando su QR o abriendo su archivo.
 - Funciona sin conexión una vez cargada.
 
 - Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
@@ -51,3 +51,5 @@ Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 ## Aviso
 
 Proyecto de aficionados sin relación oficial con los autores de Punkapocalyptic. Los nombres del juego y sus facciones pertenecen a sus propietarios.
+
+Usa [QRCoder](https://github.com/codebude/QRCoder) (MIT) para dibujar los QR y [jsQR](https://github.com/cozmo/jsQR) (Apache 2.0, licencia en `src/Punkartuchera.UI/wwwroot/js/vendor/`) para leerlos en navegadores sin lector propio.
