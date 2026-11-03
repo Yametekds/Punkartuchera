@@ -167,15 +167,23 @@ h1:focus { outline: none; }
     padding: max(10px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
     background-color: var(--punk-bar);
     background-image: var(--punk-tex-metal), var(--punk-tex-grain);
-    box-shadow: 0 2px 0 var(--punk-black);
+    background-position: left bottom;
+}
+/* Borde rasgado de la chapa: la misma chapa recortada (::after) sobre un filo rojo (::before) */
+.punk-topbar::before, .punk-topbar::after {
+    content: ""; position: absolute; left: 0; right: 0; pointer-events: none;
+}
+.punk-topbar::before {
+    bottom: -17px; height: 14px;
+    background: var(--punk-edge-torn-red) center / 100% 100% no-repeat;
 }
 .punk-topbar::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 14px;
-    height: 17px; bottom: -17px;
-    background:
-        var(--punk-edge-torn-bar) center top / 100% 14px no-repeat,
-        var(--punk-edge-torn-red) center 3px / 100% 14px no-repeat;
-    pointer-events: none;
+    bottom: -14px; height: 14px;
+    background-color: inherit;
+    background-image: inherit;
+    background-position: left top;
+    -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
+    mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
 }
 
 .punk-brand {
@@ -763,7 +771,9 @@ textarea.field__input { resize: vertical; }
     padding: 14px 14px 16px;
     background-color: var(--punk-bar);
     background-image: var(--punk-tex-grain), var(--punk-tex-metal);
+    background-position: left bottom;
     border: 2px solid var(--punk-black);
+    border-bottom: 0;
 }
 .datacard__head .portrait { margin: -26px 0 0 -4px; }
 .datacard__title { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -800,7 +810,11 @@ textarea.field__input { resize: vertical; }
 }
 .datacard__body::before {
     content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px;
-    background: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
+    background-color: var(--punk-bar);
+    background-image: var(--punk-tex-grain), var(--punk-tex-metal);
+    background-position: left top;
+    -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
+    mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
 }
 .datacard__label { font-family: var(--punk-font-display); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--punk-ink-muted); }
 .datacard__skills { display: flex; flex-direction: column; gap: 6px; }
