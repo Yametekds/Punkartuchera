@@ -108,6 +108,14 @@ public class UnitCostTests
     }
 
     [Fact]
+    public void Faction_ammo_can_be_bought_per_bullet()
+    {
+        Assert.Contains(_costs.OptionsFor("Científico", "irradiados", "rebelion-isotopica"), o => o.Name == "Munición atómica" && o.Cost == 15);
+        var member = new Miniature { Name = "X", Role = "Científico", BaseCost = 15, Gear = [new Equipment { Name = "3 Munición atómica" }] };
+        Assert.Equal(60, _costs.Calculate(member, "irradiados", "rebelion-isotopica").Total);
+    }
+
+    [Fact]
     public async Task Export_sends_only_the_band_total()
     {
         var bands = new InMemoryBandRepository();
