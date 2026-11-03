@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<BandExchangeService>();
         services.AddScoped<PhotoUrlProvider>();
         services.AddScoped<FileSharer>();
+        services.AddScoped<PhotoCropper>();
         return services;
     }
 }

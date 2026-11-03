@@ -590,6 +590,45 @@ textarea.field__input { resize: vertical; }
 .photo-picker__actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .photo-picker__actions label { cursor: pointer; }
 
+/* Editor de encuadre: cuadro 1:1 a pantalla casi completa */
+.cropper {
+    position: fixed; inset: 0; z-index: 60;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    background: rgba(13, 11, 9, .9);
+}
+.cropper__panel {
+    width: min(100%, 440px);
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 16px;
+    background-color: var(--punk-surface);
+    background-image: var(--punk-tex-grain);
+    border: 2px solid var(--punk-black);
+    box-shadow: var(--punk-shadow);
+}
+.cropper__hint { margin: 0; font-size: .85rem; }
+.cropper__stage {
+    position: relative; width: 100%; aspect-ratio: 1;
+    background: var(--punk-black);
+    outline: 3px solid var(--punk-accent); outline-offset: -3px;
+}
+/* Guías de tercios para encuadrar */
+.cropper__stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+        linear-gradient(to right, transparent calc(33.33% - .5px), rgba(244, 237, 226, .35) calc(33.33% - .5px), rgba(244, 237, 226, .35) calc(33.33% + .5px), transparent calc(33.33% + .5px),
+            transparent calc(66.66% - .5px), rgba(244, 237, 226, .35) calc(66.66% - .5px), rgba(244, 237, 226, .35) calc(66.66% + .5px), transparent calc(66.66% + .5px)),
+        linear-gradient(to bottom, transparent calc(33.33% - .5px), rgba(244, 237, 226, .35) calc(33.33% - .5px), rgba(244, 237, 226, .35) calc(33.33% + .5px), transparent calc(33.33% + .5px),
+            transparent calc(66.66% - .5px), rgba(244, 237, 226, .35) calc(66.66% - .5px), rgba(244, 237, 226, .35) calc(66.66% + .5px), transparent calc(66.66% + .5px));
+}
+.cropper__canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.cropper__canvas:active { cursor: grabbing; }
+.cropper__zoom { display: flex; align-items: center; gap: 10px; color: var(--punk-text-muted); }
+.cropper__zoom input { flex: 1; accent-color: var(--punk-rust); }
+.cropper__zoom-icon { width: 1.4rem; height: 1.4rem; }
+.cropper__zoom-icon--small { width: .95rem; height: .95rem; }
+.cropper__actions { display: flex; justify-content: flex-end; gap: 10px; }
+
 .stock-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(82px, 1fr)); }
 .stock-grid__item {
     display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 6px 8px;
