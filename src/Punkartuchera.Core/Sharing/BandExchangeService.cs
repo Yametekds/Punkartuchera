@@ -33,7 +33,9 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         var package = new BandPackage { Band = band };
         foreach (var member in band.Members)
         {
+            member.Cost = member.CostWithoutAmmo;
             member.Ammo = 0;
+            member.BulletPrice = null;
             if (member.Photo is not { Source: PhotoSource.Stored } photo)
             {
                 continue;
@@ -116,7 +118,10 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
         foreach (var member in band.Members)
         {
+            member.Cost = member.CostWithoutAmmo;
             member.Ammo = 0;
+            member.BulletPrice = null;
+            member.Included ??= [];
             member.Stats ??= [];
             member.Skills ??= [];
             member.Gear ??= [];
