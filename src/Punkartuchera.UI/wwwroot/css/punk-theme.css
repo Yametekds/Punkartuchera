@@ -371,7 +371,11 @@ a.card:active { transform: scale(.99); }
     background-image: var(--punk-tex-paper), var(--punk-tex-fibre);
     background-position: left bottom;
     color: var(--punk-ink);
-    box-shadow: var(--punk-shadow);
+    /* Bordes tostados arriba y a los lados; abajo no, para que el desgarro siga igual */
+    box-shadow: var(--punk-shadow),
+        inset 0 16px 22px -16px rgba(110, 55, 15, .55),
+        inset 16px 0 22px -16px rgba(110, 55, 15, .45),
+        inset -16px 0 22px -16px rgba(110, 55, 15, .45);
     text-decoration: none;
 }
 /* Borde inferior rasgado: el mismo papel recortado con la forma del desgarro.
