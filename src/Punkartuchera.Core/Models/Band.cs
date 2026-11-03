@@ -14,6 +14,9 @@ public sealed class Band
     /// <summary>Identificador de la facción en el catálogo de reglas.</summary>
     public string FactionId { get; set; } = string.Empty;
 
+    /// <summary>Subfacción elegida, si la hay.</summary>
+    public string? SubfactionId { get; set; }
+
     public string? Notes { get; set; }
 
     /// <summary>Propia (editable) o rival importada (solo lectura).</summary>

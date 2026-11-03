@@ -1,0 +1,107 @@
+[
+  {
+    "id": "abisales",
+    "name": "Abisales",
+    "beta": true,
+    "page": 1,
+    "summary": "Secta interna que pactó con los Señores de las Profundidades: larvas en las entrañas, branquias en el cuello y ofrendas de carne fresca al fondo de la fosa.",
+    "restrictions": [
+      "Usa Marineros, Arponeros, Capitanes y Custodios del Abismo de los Craabianos. Sin Grumetes (se han convertido en Híbridos).",
+      "Máximo un Capitán.",
+      "Un Custodio del Abismo por cada fracción de 200 puntos.",
+      "Máximo una Personalidad de los Abisales.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Pólvora mojada", "text": "Sus cañones de mano, pistolas de mecha y trabucos tienen ¡¡¡CATAPUM!!!." },
+      { "name": "Canalizadores del Abismo", "text": "Cada vez que un Custodio use con éxito Plegarias inmundas, un Híbrido visible a 15 cm hace 1 Acción gratis de Movimiento (sin Asaltar)." }
+    ],
+    "troops": [
+      {
+        "name": "Híbrido", "cost": 22, "page": 2,
+        "stats": { "a": "2", "c": "4", "p": "2", "ag": "2", "f": "4", "d": "4", "t": "2" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }],
+        "specialRules": ["Escurridizo"],
+        "rules": [
+          { "name": "Piel escamosa", "text": "Escurridizo y +1 a cualquier Blindaje que lleve." },
+          { "name": "Guiados por los susurros", "text": "+1 Combate a 15 cm o menos de un Custodio del Abismo; -1 si está a 30 cm o más." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mariscadores",
+    "name": "Mariscadores",
+    "beta": true,
+    "page": 3,
+    "summary": "Orilleros pragmáticos que saquean la marea baja y han domado golicentollos como monturas acorazadas.",
+    "restrictions": [
+      "Usa Grumetes, Marineros, Capitanes y Custodios del Abismo de los Craabianos. Sin Arponeros.",
+      "Máximo un Capitán.",
+      "Un Custodio del Abismo por cada fracción de 200 puntos.",
+      "No más Grumetes que el resto de la banda junta.",
+      "Máximo una Personalidad de los Mariscadores o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Pies en la roca", "text": "No tienen Sangre salada y toda la banda salvo los Grumetes tiene Todoterreno." },
+      { "name": "Pesca de orilla", "text": "La Red gana +5 cm en todas sus distancias." },
+      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa." }
+    ],
+    "troops": [
+      {
+        "name": "Tenacero", "cost": 65, "page": 4,
+        "stats": { "a": "2", "c": "4", "p": "3", "ag": "3", "f": "6", "d": "5", "t": "2" },
+        "weapons": "Pinzacas", "armor": "Armadura quitinosa",
+        "specialRules": ["Montada", "Todoterreno"],
+        "rules": [
+          { "name": "Pinzacas", "text": "Combate con las pinzas del golicentollo: Fuerza +4 e ignora Blindajes." },
+          { "name": "Rocódromo natural", "text": "Ignora la parte de Montada que le impide escalar superficies verticales." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "resacados",
+    "name": "Resacados",
+    "beta": true,
+    "page": 5,
+    "summary": "Desertores de Vientocho que encontraron un resort lleno de bodegas: o van borrachos como cubas o con una resaca volcánica.",
+    "restrictions": [
+      "Usa Grumetes, Marineros, Capitanes y Arponeros de los Craabianos. Sin Custodios del Abismo.",
+      "Máximo un Capitán.",
+      "Un Barman por cada fracción de 200 puntos.",
+      "No más Grumetes que el resto de la banda junta.",
+      "Máximo una Personalidad de los Resacados o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "¿Cocido o con resacón?", "text": "Empiezan con Resaca, con efectos acumulativos según los Turnos que lleven (contando el primero). Al principio de cualquier Turno, cada miniatura puede beber una vez por partida: quita los penalizadores y, si compró una bebida de la carta, gana su efecto durante 2 Turnos. El Turno siguiente sufre -1 a Agilidad, Fuerza y Dureza; a partir del otro, además -2 a Combate y Precisión y Mónguer.",
+        "table": { "columns": ["Turnos de Resaca", "Efecto acumulado"], "rows": [
+          ["1", "Sin efecto."], ["2", "-1 Agilidad."], ["3", "-1 Precisión y Combate."], ["4+", "-1 Fuerza y Dureza."]
+        ] } },
+      { "name": "F*ck you Craab", "text": "No tienen El mar siempre reclama ni Sangre salada." },
+      { "name": "Carta de bebidas", "text": "Cada miniatura puede comprar una bebida especial en lugar del licor de garrafón. La lista de bebidas no viene en el texto del PDF beta; consúltala en el documento oficial." }
+    ],
+    "troops": [
+      {
+        "name": "Barman", "cost": 35, "page": 7,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "4", "t": "4" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Trabuco", "cost": 5 }],
+        "armor": "Ropas resistentes",
+        "rules": [
+          { "name": "¡Clavo saca clavo!", "text": "En contacto con un aliado, 1 Acción: el resto del Turno ignora los penalizadores de resaca o cogorza (sin reiniciar los contadores)." },
+          { "name": "Chupito de cortesía", "text": "En contacto con un aliado que no compró bebida, 1 Acción: +1 Combate en su primer Turno de bebercio y +1 Dureza en el segundo." },
+          { "name": "Happy Hour", "text": "Una vez por partida, al empezar un Turno, un aliado a 15 cm disfruta su bebida 3 Turnos en vez de 2 (el tercero igual que el segundo)." }
+        ]
+      }
+    ]
+  }
+]

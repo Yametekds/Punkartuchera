@@ -9,6 +9,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Rules\Data\core.json" LogicalName="Punkartuchera.Rules.core.json" />
     <EmbeddedResource Include="Rules\Data\factions\*.json" LogicalName="Punkartuchera.Rules.factions.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Rules\Data\subfactions\*.json" LogicalName="Punkartuchera.Rules.subfactions.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Rules\Data\lists.json" LogicalName="Punkartuchera.Rules.lists.json" />
   </ItemGroup>
 
 </Project>

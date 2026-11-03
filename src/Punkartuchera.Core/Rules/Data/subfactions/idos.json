@@ -1,0 +1,153 @@
+[
+  {
+    "id": "slashers",
+    "sharedWeapons": ["Motosierra"],
+    "name": "Slashers",
+    "summary": "Idos a los que la Ambrosía ha convertido en asesinos de peli de terror: grandes, silenciosos, lentos… y siempre llegan.",
+    "restrictions": [
+      "Usa Cosechadores, Glotones y Despojos de los Idos. Sin Desgarradores ni Aberraciones.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de los Slashers o Mercenario.",
+      "Un Cosechador por cada fracción de 200 puntos.",
+      "No más Despojos que el resto de la banda junta.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "No estaba muerto", "text": "Cada enemigo que Abate un miembro de la banda le da un marcador de víctima. Si cae, tira 1d10 una vez por partida: si saca igual o menos que sus marcadores, vuelve al empezar el siguiente Turno donde cayó." }
+    ],
+    "troops": [
+      {
+        "name": "Psycho-killer", "cost": 40, "page": 2,
+        "stats": { "a": "2", "c": "6", "p": "-", "ag": "3", "f": "4", "d": "4", "t": "1" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Motosierra", "cost": 10 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
+        "specialRules": ["Todoterreno"],
+        "rules": [
+          { "name": "Sin prisa", "text": "Mueve 5 cm en vez de 10, salvo en la última Acción de un Asalto." },
+          { "name": "Ahora estoy aquí", "text": "Una vez por activación, 1 Acción: reaparece a 30 cm o menos, a 10 cm de un enemigo y fuera de la vista de todos los enemigos." },
+          { "name": "Mal viaje", "text": "El rival elige su final girl: +1 a Combate y Precisión contra este Psycho-killer. Si se repite, puede cambiarla." },
+          { "name": "Elige tu papel", "text": "Obligatorio, pagando el extra:\n• Imparable (+25): +1 Fuerza y Dureza y Bersérker.\n• Sobrenatural (+15): los enemigos a 20 cm que le ven tienen -1 a Combate y Fuerza y el Terreno chachi les cuenta como chungo.\n• Familia (+5): por cada miembro de la Familia por encima del primero, +1 permanente a un Atributo (no Acciones) de cualquiera de ellos, máximo +2 por Atributo." }
+        ]
+      },
+      {
+        "name": "El Hombre de los Gusanos", "cost": 90, "page": 4, "personality": true,
+        "stats": { "a": "2", "c": "4 (5)", "p": "3", "ag": "4", "f": "5", "d": "5", "t": "3" },
+        "weapons": "Filo medio", "armor": "Ninguno",
+        "specialRules": ["Personalidad", "Todoterreno", "Infiltración"],
+        "rules": [
+          { "name": "Fue a por trabajo y le comieron desde abajo", "text": "Infiltración sin guardar distancia ni esconderse; puede aparecer Asaltando (sin bonificadores)." },
+          { "name": "Pasto de los gusanos", "text": "+3 a su tirada de No estaba muerto, pero reaparece junto al marcador de una de sus víctimas. Sin víctimas no vuelve." },
+          { "name": "Carne viviente", "text": "+5 a la Dureza contra impactos de armas a distancia." },
+          { "name": "Mal viaje", "text": "Pierde Carne viviente hasta su siguiente activación." }
+        ]
+      },
+      {
+        "name": "La Familia de la Cabaña", "cost": 150, "page": 5, "personality": true,
+        "stats": { "a": "2", "c": "6", "p": "-", "ag": "4", "f": "4 (7)/(5)", "d": "4", "t": "2" },
+        "weapons": "Padre: Radial. Madre y Niña: filo pequeño", "armor": "Ninguno",
+        "specialRules": ["Personalidad"],
+        "profiles": [
+          { "name": "Madre de la Cabaña", "stats": { "a": "3", "c": "3", "p": "3", "ag": "5", "f": "3 (4)", "d": "3", "t": "4" } },
+          { "name": "Niña de la Cabaña", "stats": { "a": "2", "c": "2", "p": "2", "ag": "5", "f": "2 (3)", "d": "2", "t": "3" } }
+        ],
+        "rules": [
+          { "name": "Tres miniaturas", "text": "Se compran juntos como una Personalidad pero son tres miniaturas (el perfil principal es el Padre). Ningún Psycho-killer puede elegir Familia." },
+          { "name": "Familia feliz", "text": "Comparten marcadores de víctima; se gastan al intentar resucitar." },
+          { "name": "Venganza", "text": "Si cae uno, los demás hacen 2 Acciones gratis solo para ir a por quien lo Abatió (Asaltándolo si pueden)." },
+          { "name": "Mal viaje", "text": "Gasta toda su activación en ponerse en contacto con otro miembro de la Familia." },
+          { "name": "Padre: Radial y Psycho-killer", "text": "Si la tirada de Combate es par, es una maza ligera; si es impar, F+3 y Pen 4. Tiene todas las reglas del Psycho-killer salvo Elige tu papel." },
+          { "name": "Madre: Cosechadora", "text": "Cosecha como un Cosechador y cuenta como tal para las restricciones. Con la Niña a 15 cm, esta ignora Psicótica." },
+          { "name": "Niña: siniestra", "text": "1 Acción: los enemigos a 30 cm tiran Dureza o se encaran hacia ella. No se la puede Asaltar ni Disparar (si ella Asalta, sí se combate). Psicótica: si puede Asaltar, tiene que hacerlo." }
+        ]
+      },
+      {
+        "name": "El Abuelo de la Cabaña", "cost": 18, "page": 7, "personality": true,
+        "stats": { "a": "2", "c": "2 (3)", "p": "2", "ag": "2", "f": "2", "d": "2", "t": "4" },
+        "weapons": "Filo medio", "armor": "Ninguno",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Parte de la familia", "text": "Solo con la Familia de la Cabaña y no cuenta como Personalidad extra." },
+          { "name": "En mis tiempos…", "text": "La Familia a 20 cm que le ve tiene +1 a Combate, pero si aun así pierde el Combate tiene -2 a Dureza en esa tirada (-3 con Mal viaje)." },
+          { "name": "Todoterreno… chungo", "text": "En silla de ruedas: el Terreno chachi le cuenta como chungo." },
+          { "name": "Toma y que no se entere tu madre", "text": "La banda empieza con una carga extra de Ambrosía solo para la Niña." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hermandad-de-la-bestia",
+    "name": "Hermandad de la Bestia",
+    "summary": "Aberraciones que han conservado una mente fría y adoran al Caos Reptante en búnkeres a oscuras. Madre los tolera… por ahora.",
+    "restrictions": [
+      "Usa Aberraciones, Desgarradores, Cosechadores y Glotones de los Idos. Sin Despojos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de la Hermandad de la Bestia.",
+      "Un Cosechador por cada fracción de 200 puntos.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Criaturas de pesadilla", "text": "Desgarradores, Cosechadores y Glotones tienen Locura y ningún Blindaje, por los mismos puntos." },
+      { "name": "Dentro del plan", "text": "Sus Aberraciones no tienen Mónguer." }
+    ],
+    "troops": [
+      {
+        "name": "Abominación", "cost": 50, "page": 10,
+        "stats": { "a": "2", "c": "4", "p": "-", "ag": "3", "f": "6", "d": "5", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Ninguno",
+        "specialRules": ["Bestia"],
+        "rules": [
+          { "name": "Monstruosidad tentacular", "text": "Quien la Asalte pierde los bonificadores de Asalto, y quien intente Separarse tiene -3 a su Agilidad." },
+          { "name": "No entra más", "text": "No puede usar Ambrosía." }
+        ]
+      },
+      {
+        "name": "El Habitante de la Oscuridad", "cost": 150, "page": 11, "personality": true,
+        "stats": { "a": "2", "c": "5", "p": "-", "ag": "5", "f": "7", "d": "7", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Ninguno",
+        "specialRules": ["Personalidad", "Bersérker", "Mónguer", "Todoterreno"],
+        "rules": [
+          { "name": "Geometría antinatural", "text": "No se le puede Apuntar. La primera vez que una miniatura le impacta cuerpo a cuerpo tira 1d10: con 1-2 el impacto no cuenta." },
+          { "name": "Horror cósmico", "text": "Quien le Asalte pierde los bonificadores. Cada enemigo que acabe su activación viéndole gana un marcador de Locura; al empezar su activación tira 1d10 y si saca igual o menos que sus marcadores, no actúa." },
+          { "name": "Portador del Caos", "text": "Todas las miniaturas a 30 cm tiran 1d10 al empezar el Turno: esa es su Ronda de Agilidad (Retraso la modifica)." },
+          { "name": "Revelación de cambio", "text": "Al empezar cada Turno, 1d10 por cada aliado a 15 cm:",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1", "La controla el rival este Turno."], ["2-3", "No actúa este Turno."], ["4-5", "Nada."], ["6-7", "Se recoloca a 15 cm, sin contactar enemigos."], ["8-9", "+1 Fuerza permanente."], ["10", "+1 Dureza permanente."]
+            ] } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "devoradores",
+    "name": "Devoradores",
+    "summary": "Idos que han cambiado la Ambrosía por el canibalismo. Les potencia, pero les deja aún más tarados, con tics y sin coordinación.",
+    "restrictions": [
+      "Usa Glotones, Aberraciones, Despojos y Desgarradores de los Idos. Sin Cosechadores.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de los Devoradores.",
+      "Un grupo de Necrófagos por cada Glotón.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Canibalismo", "text": "No usan Ambrosía. Aberraciones, Desgarradores y Necrófagos pueden devorar como los Glotones, pero tiran 1d10 (en Necrófagos, para todo el grupo):",
+        "table": { "columns": ["1d10", "Efecto"], "rows": [
+          ["1", "1 Acción menos el resto de la partida (a 0, Abatido)."], ["2-3", "Nada."], ["4-5", "+1 Combate."], ["6-7", "+1 Fuerza."], ["8-9", "+1 Dureza."], ["10", "+1 Acción."]
+        ] } },
+      { "name": "Paluego", "text": "Sus Despojos se pueden devorar en vida: caen sin dejar marcador." }
+    ],
+    "troops": [
+      {
+        "name": "Necrófago", "cost": 8, "page": 14,
+        "stats": { "a": "1", "c": "X", "p": "-", "ag": "3", "f": "2", "d": "2", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Ninguno",
+        "specialRules": ["Mónguer"],
+        "rules": [
+          { "name": "Cuerpo escombro y Grupal", "text": "Como los Pochos de los Mutardos." },
+          { "name": "Hambrientos", "text": "Si al empezar su activación hay una miniatura Abatida a 15 cm, van a por ella lo máximo posible; si ya están en contacto, la devoran." }
+        ]
+      }
+    ]
+  }
+]

@@ -1,6 +1,8 @@
 @page "/bandas/nueva"
 @inject BandService Bands
 @inject IRulesCatalog Rules
+@inject Rulebook Book
+@inject RosterBuilder Roster
 @inject NavigationManager Navigation
 
 <PageTitle>Nueva banda · Punkartuchera</PageTitle>
@@ -25,12 +27,57 @@
             @foreach (var faction in Rules.Factions)
             {
                 <button type="button" class="faction-tile @(_factionId == faction.Id ? "is-selected" : null)"
-                        aria-pressed="@(_factionId == faction.Id)" @onclick="() => _factionId = faction.Id">
+                        aria-pressed="@(_factionId == faction.Id)" @onclick="() => SelectFaction(faction.Id)">
                     @faction.Name
                 </button>
             }
         </div>
     </fieldset>
+
+    @if (Book.FindFaction(_factionId) is { } chosen)
+    {
+        @if (chosen.Subfactions.Count > 0)
+        {
+            <fieldset class="field">
+                <legend class="field__label">Subfacción <span class="muted">(opcional)</span></legend>
+                <div class="faction-grid">
+                    <button type="button" class="faction-tile @(_subfactionId is null ? "is-selected" : null)"
+                            aria-pressed="@(_subfactionId is null)" @onclick="() => _subfactionId = null">
+                        Facción base
+                    </button>
+                    @foreach (var subfaction in chosen.Subfactions)
+                    {
+                        <button type="button" class="faction-tile @(_subfactionId == subfaction.Id ? "is-selected" : null)"
+                                aria-pressed="@(_subfactionId == subfaction.Id)" @onclick="() => SelectSubfaction(subfaction.Id)">
+                            @subfaction.Name
+                        </button>
+                    }
+                </div>
+            </fieldset>
+        }
+
+        @if (ListsFor(chosen.Id) is { Count: > 0 } lists && _subfactionId is null)
+        {
+            <fieldset class="field">
+                <legend class="field__label">Empezar con</legend>
+                <div class="preset-list">
+                    <button type="button" class="preset-option @(_listId is null ? "is-selected" : null)"
+                            aria-pressed="@(_listId is null)" @onclick="() => _listId = null">
+                        <span class="preset-option__name">Banda vacía</span>
+                        <span class="preset-option__meta">Recluta tú a cada miembro</span>
+                    </button>
+                    @foreach (var list in lists)
+                    {
+                        <button type="button" class="preset-option @(_listId == list.Id ? "is-selected" : null)"
+                                aria-pressed="@(_listId == list.Id)" @onclick="() => _listId = list.Id">
+                            <span class="preset-option__name">Lista preconfigurada: @list.Name</span>
+                            <span class="preset-option__meta">@list.Members.Count miembros · @list.Cost ptos · @string.Join(", ", list.Members.Select(m => m.Name ?? m.Troop))</span>
+                        </button>
+                    }
+                </div>
+            </fieldset>
+        }
+    }
 
     @if (_error is not null)
     {
@@ -47,8 +94,24 @@
 @code {
     private string _name = string.Empty;
     private string? _factionId;
+    private string? _subfactionId;
+    private string? _listId;
     private string? _error;
     private bool _saving;
+
+    private IReadOnlyList<PresetList> ListsFor(string factionId) =>
+        Book.Lists.Where(l => l.FactionId == factionId).ToList();
+
+    private void SelectFaction(string id)
+    {
+        if (_factionId != id)
+        {
+            (_factionId, _subfactionId, _listId) = (id, null, null);
+        }
+    }
+
+    /// <summary>Las listas oficiales son de la facción base: elegir subfacción las descarta.</summary>
+    private void SelectSubfaction(string id) => (_subfactionId, _listId) = (id, null);
 
     private async Task Create()
     {
@@ -56,7 +119,9 @@
         _saving = true;
         try
         {
-            var band = await Bands.CreateAsync(_name, _factionId ?? string.Empty);
+            var list = Book.FindList(_listId);
+            var members = list is null ? [] : Roster.FromList(list);
+            var band = await Bands.CreateAsync(_name, _factionId ?? string.Empty, _subfactionId, members);
             Navigation.NavigateTo($"bandas/{band.Id}", replace: true);
         }
         catch (BandValidationException ex)

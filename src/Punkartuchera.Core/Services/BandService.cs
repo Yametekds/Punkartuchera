@@ -25,9 +25,24 @@ public sealed class BandService(IBandRepository bands, IPhotoStore photos, IRule
     public Task<Band?> GetAsync(Guid id, CancellationToken cancellationToken = default) =>
         bands.GetAsync(id, cancellationToken);
 
-    public async Task<Band> CreateAsync(string name, string factionId, CancellationToken cancellationToken = default)
+    public Task<Band> CreateAsync(string name, string factionId, CancellationToken cancellationToken = default) =>
+        CreateAsync(name, factionId, null, [], cancellationToken);
+
+    /// <summary>Crea una banda, opcionalmente con subfacción y con miembros ya hechos (lista preconfigurada).</summary>
+    public async Task<Band> CreateAsync(string name, string factionId, string? subfactionId, IEnumerable<Miniature> members, CancellationToken cancellationToken = default)
     {
-        var band = new Band { Name = NormalizeName(name), FactionId = factionId };
+        var band = new Band
+        {
+            Name = NormalizeName(name),
+            FactionId = factionId,
+            SubfactionId = string.IsNullOrWhiteSpace(subfactionId) ? null : subfactionId,
+            Members = [.. members],
+        };
+        foreach (var member in band.Members)
+        {
+            ClampStats(member);
+        }
+
         Validate(band);
         await bands.SaveAsync(band, cancellationToken);
         return band;

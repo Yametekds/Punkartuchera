@@ -1,0 +1,36 @@
+/* Listas preconfiguradas y reclutamiento desde el reglamento */
+
+.preset-list { display: grid; gap: 10px; }
+
+.preset-option {
+    display: grid; gap: 4px; width: 100%;
+    padding: 12px 14px; text-align: left;
+    background-color: var(--punk-surface);
+    color: var(--punk-text);
+    border: 2px solid var(--punk-black);
+    border-left: 6px solid var(--punk-steel);
+    cursor: pointer;
+}
+.preset-option:focus-visible { outline: 3px solid var(--punk-accent); outline-offset: 2px; }
+.preset-option.is-selected { border-left-color: var(--punk-rust); background-color: var(--punk-surface-2); }
+.preset-option__name {
+    font-family: var(--punk-font-display); text-transform: uppercase; letter-spacing: .04em;
+}
+.preset-option__meta { color: var(--punk-text-muted); font-size: .88rem; }
+
+.recruit-picker { display: grid; gap: 8px; }
+.recruit-picker__summary { margin: 0; color: var(--punk-ink-muted); font-size: .9rem; }
+
+.subfaction-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.subfaction-card {
+    display: grid; gap: 6px; padding: 14px;
+    background-color: var(--punk-surface);
+    border: 2px solid var(--punk-black);
+    border-top: 5px solid var(--punk-rust);
+    color: var(--punk-text); text-decoration: none;
+}
+.subfaction-card:hover, .subfaction-card:focus-visible { background-color: var(--punk-surface-2); }
+.subfaction-card__name { font-family: var(--punk-font-heading); font-size: 1.35rem; margin: 0; }
+.subfaction-card__meta { color: var(--punk-accent); font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }
+.subfaction-card__summary { margin: 0; color: var(--punk-text-muted); font-size: .92rem; }
+.recruit-picker__summary a { color: var(--punk-ink); font-weight: 600; }

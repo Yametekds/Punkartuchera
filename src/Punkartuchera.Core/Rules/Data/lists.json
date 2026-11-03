@@ -1,0 +1,957 @@
+{
+  "lists": [
+    {
+      "id": "pandilleros-1",
+      "factionId": "pandilleros",
+      "name": "Pandilleros 1",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlPandilleros1.pdf",
+      "members": [
+        {
+          "troop": "Jefe",
+          "cost": 123,
+          "weapons": [
+            "Filo medio",
+            "Rifle"
+          ],
+          "name": "Jefa",
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ],
+          "skills": [
+            "Retraso (3)"
+          ],
+          "stats": {
+            "a": "3",
+            "c": "6 (7)",
+            "p": "6",
+            "ag": "6",
+            "f": "4 (6)",
+            "d": "4",
+            "t": "5"
+          }
+        },
+        {
+          "troop": "Curtido",
+          "cost": 53,
+          "weapons": [
+            "Ballesta"
+          ],
+          "name": "Curtida",
+          "armor": "Ropas resistentes",
+          "gear": [
+            "Protección contra la contaminación"
+          ],
+          "skills": [
+            "Retraso (2)"
+          ]
+        },
+        {
+          "troop": "Machaca",
+          "cost": 50,
+          "weapons": [
+            "Filo medio"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ],
+          "skills": [
+            "Retraso (1)"
+          ]
+        },
+        {
+          "troop": "Piltrafa",
+          "cost": 34,
+          "weapons": [
+            "Filo pequeño",
+            "Arco"
+          ]
+        },
+        {
+          "troop": "Piltrafa",
+          "cost": 26,
+          "weapons": [
+            "Maza ligera",
+            "Cuchillos arrojadizos"
+          ]
+        },
+        {
+          "troop": "Bruto",
+          "cost": 61,
+          "weapons": [
+            "Maza pesada"
+          ],
+          "armor": "Pura chapa",
+          "stats": {
+            "a": "2",
+            "c": "5 (4)",
+            "p": "4",
+            "ag": "4 (3)",
+            "f": "5 (9)",
+            "d": "4",
+            "t": "3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pandilleros-2",
+      "factionId": "pandilleros",
+      "name": "Pandilleros 2",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlPandilleros2.pdf",
+      "members": [
+        {
+          "troop": "Jefe",
+          "cost": 130,
+          "weapons": [
+            "Filo medio",
+            "Pistola"
+          ],
+          "armor": "Chaleco antibalas",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Curtido",
+          "cost": 48,
+          "weapons": [
+            "Ballesta"
+          ],
+          "name": "Curtida"
+        },
+        {
+          "troop": "Machaca",
+          "cost": 50,
+          "weapons": [
+            "Filo medio"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Piltrafa",
+          "cost": 30,
+          "weapons": [
+            "Arco"
+          ]
+        },
+        {
+          "troop": "Piltrafa",
+          "cost": 23,
+          "weapons": [
+            "Maza ligera"
+          ]
+        },
+        {
+          "troop": "Bruto",
+          "cost": 66,
+          "weapons": [
+            "Maza"
+          ],
+          "name": "Bruta",
+          "armor": "Armadura metálica",
+          "gear": [
+            "Escudo",
+            "Protección contra la contaminación"
+          ],
+          "stats": {
+            "a": "2",
+            "c": "5 (4)",
+            "p": "4",
+            "ag": "4",
+            "f": "5 (7)",
+            "d": "4",
+            "t": "3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mutardos-1",
+      "factionId": "mutardos",
+      "name": "Mutardos 1",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlMutardos.pdf",
+      "members": [
+        {
+          "troop": "Cabezón",
+          "cost": 80,
+          "weapons": []
+        },
+        {
+          "troop": "Bestia del pozo",
+          "cost": 88,
+          "weapons": [
+            "Filo pesado"
+          ],
+          "skills": [
+            "Miembros extra",
+            "Piel dura 3"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 54,
+          "weapons": [
+            "Filo pequeño"
+          ],
+          "skills": [
+            "Corredor",
+            "Rana",
+            "Proyectil orgánico"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 47,
+          "weapons": [
+            "Filo medio"
+          ],
+          "skills": [
+            "Miembros extra",
+            "Carga brutal",
+            "Piel dura 1"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 41,
+          "weapons": [
+            "Maza"
+          ],
+          "skills": [
+            "Resistente",
+            "Mimetismo",
+            "Piel dura 3"
+          ]
+        },
+        {
+          "troop": "Perromorfo",
+          "cost": 20,
+          "weapons": []
+        },
+        {
+          "troop": "Perromorfo",
+          "cost": 20,
+          "weapons": []
+        }
+      ]
+    },
+    {
+      "id": "mutardos-2",
+      "factionId": "mutardos",
+      "name": "Mutardos 2",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlMutardos2.pdf",
+      "members": [
+        {
+          "troop": "Cabezón",
+          "cost": 83,
+          "weapons": [
+            "Maza ligera"
+          ]
+        },
+        {
+          "troop": "Bestia del pozo",
+          "cost": 86,
+          "weapons": [
+            "Maza pesada"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 38,
+          "weapons": [],
+          "skills": [
+            "Garras",
+            "Corredor",
+            "Espinas",
+            "Garras envenenadas"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 48,
+          "weapons": [
+            "Filo medio"
+          ],
+          "skills": [
+            "Miembros extra",
+            "Sónar",
+            "Cachas"
+          ]
+        },
+        {
+          "troop": "Mutante",
+          "cost": 60,
+          "weapons": [
+            "Maza"
+          ],
+          "skills": [
+            "Capacitado",
+            "Sentidos aguzados",
+            "Corredor",
+            "Piel dura 3"
+          ]
+        },
+        {
+          "troop": "Perromorfo",
+          "cost": 20,
+          "weapons": []
+        },
+        {
+          "troop": "Perromorfo",
+          "cost": 20,
+          "weapons": []
+        }
+      ]
+    },
+    {
+      "id": "chatarreros-1",
+      "factionId": "chatarreros",
+      "name": "Chatarreros 1",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlChatarreros.pdf",
+      "members": [
+        {
+          "troop": "Sonda",
+          "cost": 49,
+          "weapons": [
+            "Filo pequeño"
+          ],
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Pistón",
+          "cost": 68,
+          "weapons": [
+            "Filo pesado",
+            "Pistola"
+          ],
+          "armor": "Cuero endurecido"
+        },
+        {
+          "troop": "Pistón",
+          "cost": 63,
+          "weapons": [
+            "Lanzaarpones"
+          ],
+          "armor": "Armadura metálica",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Engranaje",
+          "cost": 31,
+          "weapons": [
+            "Filo medio",
+            "Trabuco"
+          ]
+        },
+        {
+          "troop": "Engranaje",
+          "cost": 89,
+          "weapons": [
+            "Rifle con mira telescópica"
+          ]
+        },
+        {
+          "troop": "Dinamo",
+          "cost": 50,
+          "weapons": [
+            "Bomba incendiaria",
+            "Bomba incendiaria"
+          ],
+          "armor": "Traje voltaico",
+          "gear": [
+            "Protección contra la contaminación",
+            "Cacharras",
+            "Chasqueador"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chatarreros-2",
+      "factionId": "chatarreros",
+      "name": "Chatarreros 2",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlChatarreros2.pdf",
+      "members": [
+        {
+          "troop": "Sonda",
+          "cost": 49,
+          "weapons": [],
+          "armor": "Ropas resistentes"
+        },
+        {
+          "troop": "Pistón",
+          "cost": 52,
+          "weapons": [
+            "Puño balístico",
+            "Puño balístico"
+          ],
+          "armor": "Armadura metálica"
+        },
+        {
+          "troop": "Pistón",
+          "cost": 63,
+          "weapons": [
+            "Lanzaarpones"
+          ]
+        },
+        {
+          "troop": "Engranaje",
+          "cost": 24,
+          "weapons": [
+            "Bombeadora"
+          ]
+        },
+        {
+          "troop": "Engranaje",
+          "cost": 99,
+          "weapons": [
+            "Rifle con mira telescópica"
+          ]
+        },
+        {
+          "troop": "Dinamo",
+          "cost": 61,
+          "weapons": [
+            "Bomba incendiaria"
+          ],
+          "gear": [
+            "Chasqueador"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sangre-negra",
+      "factionId": "sangre-negra",
+      "name": "Sangre Negra",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlSangreNegra.pdf",
+      "members": [
+        {
+          "troop": "Guardián de la Llama",
+          "cost": 35,
+          "weapons": [
+            "Maza"
+          ],
+          "armor": "Armadura metálica"
+        },
+        {
+          "troop": "Chispa",
+          "cost": 90,
+          "weapons": [
+            "Pistola"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Motocicleta"
+          ]
+        },
+        {
+          "troop": "Ascua",
+          "cost": 91,
+          "weapons": [
+            "Escopeta"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Ascua",
+          "cost": 80,
+          "weapons": [
+            "Lanzallamas"
+          ],
+          "armor": "Chaleco antibalas"
+        },
+        {
+          "troop": "Quemado",
+          "cost": 19,
+          "weapons": [
+            "Filo pequeño"
+          ]
+        },
+        {
+          "troop": "Ceniza",
+          "cost": 35,
+          "weapons": [
+            "Pistola",
+            "Maza ligera"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sangre-negra-starter",
+      "factionId": "sangre-negra",
+      "name": "Sangre Negra (Starter Set)",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlSangreNegraStarterSet.pdf",
+      "members": [
+        {
+          "troop": "Guardián de la Llama",
+          "cost": 40,
+          "weapons": [
+            "Maza"
+          ],
+          "armor": "Armadura metálica",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Chispa",
+          "cost": 75,
+          "weapons": [
+            "Filo medio"
+          ],
+          "armor": "Chaleco antibalas",
+          "gear": [
+            "Motocicleta"
+          ]
+        },
+        {
+          "troop": "Ascua",
+          "cost": 97,
+          "weapons": [
+            "Pistola",
+            "Cóctel molotov",
+            "Cóctel molotov"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Escudo",
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Ascua",
+          "cost": 75,
+          "weapons": [
+            "Lanzallamas"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Quemado",
+          "cost": 30,
+          "weapons": [],
+          "gear": [
+            "Bidón de gasofa"
+          ]
+        },
+        {
+          "troop": "Ceniza",
+          "cost": 33,
+          "weapons": [
+            "Filo pequeño"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "v-reich",
+      "factionId": "v-reich",
+      "name": "V Reich",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlVReich.pdf",
+      "members": [
+        {
+          "troop": "Mariscal",
+          "cost": 95,
+          "weapons": [
+            "Pistola"
+          ],
+          "armor": "Armadura metálica",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Übersoldat",
+          "cost": 66,
+          "weapons": [
+            "Filo pesado"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Walkie-talkie"
+          ]
+        },
+        {
+          "troop": "Soldat",
+          "cost": 68,
+          "weapons": [
+            "Rifle"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Soldat",
+          "cost": 63,
+          "weapons": [
+            "Rifle"
+          ]
+        },
+        {
+          "troop": "Sanitario",
+          "cost": 39,
+          "weapons": [
+            "Filo pequeño"
+          ],
+          "name": "Sanitaria",
+          "armor": "Ropas resistentes"
+        },
+        {
+          "troop": "Subhumano",
+          "cost": 20,
+          "weapons": [],
+          "armor": "Pura chapa"
+        }
+      ]
+    },
+    {
+      "id": "idos",
+      "factionId": "idos",
+      "name": "Idos",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlIdos.pdf",
+      "members": [
+        {
+          "troop": "Cosechador",
+          "cost": 64,
+          "weapons": [
+            "Filo pequeño incrustado"
+          ],
+          "name": "Cosechadora",
+          "armor": "Cuero humano",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Aberración",
+          "cost": 35,
+          "weapons": []
+        },
+        {
+          "troop": "Glotón",
+          "cost": 61,
+          "weapons": [
+            "Maza pesada"
+          ],
+          "armor": "Cuero humano",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Desgarrador",
+          "cost": 70,
+          "weapons": [
+            "Filo medio incrustado"
+          ]
+        },
+        {
+          "troop": "Desgarrador",
+          "cost": 75,
+          "weapons": [
+            "Filo medio incrustado"
+          ],
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Despojo",
+          "cost": 35,
+          "weapons": [
+            "Hoz"
+          ],
+          "armor": "Cuero humano",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "irradiados",
+      "factionId": "irradiados",
+      "name": "Irradiados",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlIrradiados.pdf",
+      "members": [
+        {
+          "troop": "Cardenal Nuclear",
+          "cost": 105,
+          "weapons": [
+            "Maza",
+            "Pistola"
+          ],
+          "armor": "Chaleco antibalas"
+        },
+        {
+          "troop": "Penitente",
+          "cost": 57,
+          "weapons": [
+            "Granada santa",
+            "Botafumeiro tóxico"
+          ]
+        },
+        {
+          "troop": "Paladín",
+          "cost": 71,
+          "weapons": [
+            "Maza"
+          ],
+          "name": "Paladina",
+          "armor": "Armadura metálica",
+          "gear": [
+            "Escudo"
+          ]
+        },
+        {
+          "troop": "Discípulo",
+          "cost": 44,
+          "weapons": [
+            "Filo pequeño",
+            "Pistola"
+          ]
+        },
+        {
+          "troop": "Discípulo",
+          "cost": 56,
+          "weapons": [
+            "Escopeta"
+          ]
+        },
+        {
+          "troop": "Mártir",
+          "cost": 20,
+          "weapons": [
+            "Filo pequeño"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "troupe",
+      "factionId": "troupe",
+      "name": "Troupé",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlTroupe.pdf",
+      "members": [
+        {
+          "troop": "Jefe de pista",
+          "cost": 110,
+          "weapons": [
+            "Filo medio",
+            "Pistola"
+          ],
+          "armor": "Ropas resistentes"
+        },
+        {
+          "troop": "Forzudo",
+          "cost": 55,
+          "weapons": [
+            "Maza pesada"
+          ],
+          "gear": [
+            "Flor escupe agua"
+          ]
+        },
+        {
+          "troop": "Acróbata",
+          "cost": 44,
+          "weapons": [
+            "Filo pequeño"
+          ]
+        },
+        {
+          "troop": "Domador",
+          "cost": 26,
+          "weapons": [
+            "Látigo"
+          ]
+        },
+        {
+          "troop": "Pachacho",
+          "cost": 46,
+          "weapons": [
+            "Guante de boxeo extensible"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Chismeciclo",
+            "Bocina",
+            "Pañuelos infinitos"
+          ]
+        },
+        {
+          "troop": "Pachacho",
+          "cost": 68,
+          "weapons": [
+            "Pistola"
+          ],
+          "name": "Pachacha",
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Globo que flota",
+            "Flor escupe agua"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craabianos",
+      "factionId": "craabianos",
+      "name": "Craabianos",
+      "url": "https://punkapocalyptic.com/descargasweb/FichaControlCraabianos.pdf",
+      "members": [
+        {
+          "troop": "Capitán",
+          "cost": 80,
+          "weapons": [
+            "Maza"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Caracola del umbral"
+          ]
+        },
+        {
+          "troop": "Arponero",
+          "cost": 64,
+          "weapons": [
+            "Cañón de mano"
+          ],
+          "armor": "Armadura quitinosa"
+        },
+        {
+          "troop": "Custodio del Abismo",
+          "cost": 89,
+          "weapons": [
+            "Filo pesado"
+          ],
+          "armor": "Armadura quitinosa",
+          "gear": [
+            "Cáliz de salmuera",
+            "Pez globo"
+          ]
+        },
+        {
+          "troop": "Marinero",
+          "cost": 47,
+          "weapons": [
+            "Filo medio",
+            "Pistola de mecha"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Aceite de ballenorca"
+          ]
+        },
+        {
+          "troop": "Marinero",
+          "cost": 38,
+          "weapons": [
+            "Trabuco"
+          ],
+          "gear": [
+            "Aceite de ballenorca"
+          ]
+        },
+        {
+          "troop": "Grumete",
+          "cost": 31,
+          "weapons": [
+            "Tridente",
+            "Red"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unami-starter",
+      "factionId": "unami",
+      "name": "Unami (Starter Set)",
+      "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaControlUnamiStarterSet.pdf",
+      "members": [
+        {
+          "troop": "Chamán",
+          "cost": 42,
+          "weapons": [
+            "Filo pequeño"
+          ],
+          "armor": "Ropas resistentes",
+          "gear": [
+            "Hierbas alucinógenas"
+          ]
+        },
+        {
+          "troop": "Sombra",
+          "cost": 53,
+          "weapons": [
+            "Tomahawk"
+          ],
+          "armor": "Ropas resistentes",
+          "gear": [
+            "Hierbas alucinógenas"
+          ]
+        },
+        {
+          "troop": "Trueno",
+          "cost": 55,
+          "weapons": [
+            "Arco"
+          ],
+          "armor": "Cuero endurecido"
+        },
+        {
+          "troop": "Trueno",
+          "cost": 60,
+          "weapons": [
+            "Filo medio"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Protección contra la contaminación"
+          ]
+        },
+        {
+          "troop": "Trueno",
+          "cost": 55,
+          "weapons": [
+            "Filo medio"
+          ]
+        },
+        {
+          "troop": "Viento",
+          "cost": 75,
+          "weapons": [
+            "Arco"
+          ],
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Hierbas alucinógenas"
+          ]
+        }
+      ]
+    }
+  ]
+}
