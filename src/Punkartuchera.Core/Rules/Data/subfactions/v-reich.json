@@ -1,0 +1,152 @@
+[
+  {
+    "id": "division-cientifica",
+    "name": "División Científica",
+    "summary": "Los laboratorios del V Reich que intentan crear al humano perfecto. Casi todo sale mal, pero los engendros también sirven de carne de cañón.",
+    "restrictions": [
+      "Usa Mariscales, Subhumanos (ver Modificaciones) y Übersoldats. Sin Soldats ni Sanitarios.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de la División Científica o Mercenario.",
+      "Máximo un Mariscal.",
+      "Engendros y Subhumanos no pueden comprar equipo genérico.",
+      "Máximo un Gato parameño."
+    ],
+    "troops": [
+      {
+        "name": "Engendro", "cost": 50, "page": 2,
+        "stats": { "a": "2", "c": "4", "p": "-", "ag": "2", "f": "8", "d": "6", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Armadura metálica",
+        "specialRules": ["Mónguer"],
+        "rules": [{ "name": "Desmadrado", "text": "Si al empezar su activación no está a 15 cm de un Tierdoktor, tiene que Asaltar (o atacar si ya está en contacto) a cualquier miniatura, amiga o enemiga, que pueda. No puede usar Walkie-talkie." }]
+      },
+      {
+        "name": "Subhumano científico", "cost": 10, "page": 3,
+        "stats": { "a": "2", "c": "2", "p": "-", "ag": "2", "f": "2", "d": "2", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Ninguno (ver modificaciones)",
+        "equipmentOptions": [{ "name": "Chapa soldada", "cost": 10 }, { "name": "Explosivos", "cost": 12 }, { "name": "Mandíbula cepo", "cost": 8 }, { "name": "Manostijeras", "cost": 10 }, { "name": "Zancos", "cost": 8 }],
+        "specialRules": ["Bersérker", "Mónguer"],
+        "rules": [
+          { "name": "Modificaciones", "text": "Mismo perfil que el Subhumano, sin la pura chapa. Elige UNA (ninguna más de 3 veces en la banda):\n• Chapa soldada: pura chapa de siempre.\n• Explosivos: explota al tocar a un enemigo o al recibir un proyectil o plantilla; F4, Pen 4 a 5 cm, y se retira sin marcador.\n• Mandíbula cepo: al contactar, el enemigo tira Agilidad o tiene -2 a Dureza el resto de la partida (un uso).\n• Manostijeras: sus garras son un filo pequeño y puede repetir la tirada de Combate.\n• Zancos: Ímpetu (1) y Raudo." }
+        ]
+      },
+      {
+        "name": "Tierdoktor", "cost": 22, "page": 4,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "3", "d": "3", "t": "5" },
+        "weapons": "Azuzador",
+        "weaponOptions": [{ "name": "Pistola", "cost": 5 }],
+        "armor": "Cuero endurecido",
+        "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }],
+        "rules": [
+          { "name": "Azuzar", "text": "En contacto con un Subhumano o Engendro, 1 Acción y 1d10:",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1", "La criatura le hace un Ataque gratis."], ["2-5", "Nada."], ["6-9", "La criatura hace una Acción gratis."], ["10", "+2 a Fuerza y Combate hasta el final de su siguiente activación."]
+            ] } }
+        ]
+      },
+      {
+        "name": "Doktor Eustace Hanneman", "cost": 40, "page": 5, "personality": true,
+        "stats": { "a": "2", "c": "2", "p": "5", "ag": "3", "f": "2", "d": "2", "t": "7" },
+        "weapons": "Pistola de dardos y Wunderpincho", "armor": "Ropas resistentes",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Soy EL TIERDOKTOR", "text": "Puede Azuzar y controla a los Engendros a 25 cm." },
+          { "name": "Pistola de dardos", "text": "Alcances de pistola, también contra aliados. En vez de daño, elige dardo:\n• Envenenado: Veneno (4).\n• Tranquilizante: 1 Acción menos en su siguiente activación.\n• Estimulante: +5 cm a cada Movimiento en su siguiente activación.\n• Suero X: tirada de Dureza; si la supera +1 permanente a Combate, Fuerza y Dureza (no acumulable); si falla se convierte en Subhumano básico con su Blindaje. Engendros y Subhumanos son inmunes." },
+          { "name": "Wunderpincho", "text": "Azuzador que usa con cualquier aliado. Cada vez que Azuza gana +1 acumulable a Fuerza y Penetración; se descarga al usarlo en Combate." }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Azuzador", "kind": "Melee", "combat": "+0", "strength": "+1", "penetration": "1", "rules": ["Electrificación"], "page": 6, "notes": "Si impacta, el objetivo sufre Electrificación." }
+    ]
+  },
+  {
+    "id": "fuerte-thule",
+    "name": "Fuerte Thule",
+    "summary": "La nueva base del V Reich en el sur, al mando de la joven Eva: tiran de reclutas locales sin foguear que se acojonan cuando cae alguien.",
+    "restrictions": [
+      "Usa Mariscales, Sanitarios y Soldats. Los Übersoldats no tienen filo medio pero pueden llevar escudo por 6 puntos. Sin Subhumanos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de Fuerte Thule o Mercenario.",
+      "Máximo un Mariscal.",
+      "No más Reclutas que el resto de la banda.",
+      "Máximo un Gato parameño."
+    ],
+    "troops": [
+      {
+        "name": "Recluta", "cost": 18, "page": 8,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "rules": [{ "name": "Inexperto", "text": "Si cae un aliado que no sea Recluta, los Reclutas a 20 cm que lo vean y no estén trabados mueven 10 cm gratis hacia su zona de despliegue (ignorando Terreno chungo)." }]
+      },
+      {
+        "name": "Eva y UNO", "cost": 125, "page": 9, "personality": true,
+        "stats": { "a": "3", "c": "2", "p": "4", "ag": "5", "f": "3 (4)", "d": "2", "t": "6" },
+        "weapons": "Eva: pistola y filo pequeño. UNO: maza", "armor": "Eva: cuero endurecido. UNO: pura chapa",
+        "equipment": "Eva: Walkie-talkie. UNO: escudo",
+        "specialRules": ["Personalidad", "Mónguer"],
+        "profiles": [{ "name": "UNO", "stats": { "a": "2", "c": "5 (4)", "p": "4", "ag": "5 (4)", "f": "4 (6)", "d": "5", "t": "2" } }],
+        "rules": [
+          { "name": "Dos miniaturas", "text": "Se compran juntas como una sola Personalidad pero son dos miniaturas. Mónguer solo afecta a UNO." },
+          { "name": "Cadena de mando", "text": "Eva cuenta como Mariscal." },
+          { "name": "Ejemplar", "text": "Eva siempre actúa la primera de su banda." },
+          { "name": "Poderes mutardos", "text": "Eva es un Cabezón: tiene Choque mental y Desarme, inmunidad al Terreno contaminado y bonificadores contra la Radiación. Los Reclutas a 15 cm de ella ignoran Inexperto." },
+          { "name": "Guardaespaldas", "text": "Mientras Eva siga en pie, UNO tiene que acabar a 10 cm de ella (si está trabado, intenta Separarse). Si está a 5 cm y no trabado cuando impactan a Eva, se pone en contacto gratis y recibe él el impacto con su Dureza y Blindaje." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "organizacion-kraken",
+    "name": "Organización Kraken",
+    "summary": "La sección marginal del V Reich que sigue a Casco Rojo, convencida de que una amenaza submarina viene a por la humanidad. Tecnología de Xerum 515 y la Campana.",
+    "restrictions": [
+      "Usa Mariscales, Sanitarios, Soldats y Subhumanos. Sin Übersoldats.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de la Organización Kraken o Mercenario.",
+      "Máximo un Mariscal.",
+      "Máximo un Gato parameño."
+    ],
+    "troops": [
+      {
+        "name": "Ingeniero", "cost": 16, "page": 12,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "5" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Sables de Xerum", "cost": 10 }, { "name": "Cañón de Xerum", "cost": 15 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }]
+      },
+      {
+        "name": "Gólem", "cost": 60, "page": 13,
+        "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "4", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }],
+        "armor": "Armadura metálica",
+        "equipmentOptions": [{ "name": "Escudo", "cost": 6 }, { "name": "Walkie-talkie", "cost": 7 }],
+        "rules": [{ "name": "Tortuga", "text": "No sufre el -1 al Combate del escudo." }]
+      },
+      {
+        "name": "Casco Rojo", "cost": 100, "page": 14, "personality": true,
+        "stats": { "a": "3", "c": "5 (6)", "p": "5", "ag": "6", "f": "4 (6)", "d": "4", "t": "6" },
+        "weapons": "Filo medio y pistola", "armor": "Armadura metálica", "equipment": "Walkie-talkie",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Cadena de mando", "text": "Cuenta como Mariscal." },
+          { "name": "Casco Rojo", "text": "Los enemigos a 20 cm que le vean tienen -1 a Combate, Agilidad y Fuerza." },
+          { "name": "Liberad al Kraken", "text": "Una vez por partida, 1 Acción: los Gólems que actúen ese Turno tienen +1 a Combate y Precisión." },
+          { "name": "Odio al Capitán Hammerica", "text": "Si Abate al Capitán Hammerica, +3 puntos de victoria." }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Sables de Xerum", "kind": "Melee", "cost": 10, "combat": "+0", "strength": "1d10", "penetration": "5", "rules": ["Escasa"], "page": 15, "notes": "Si impacta, tira 1d10: esa es la Fuerza del ataque (sin sumar la de la miniatura)." },
+      { "name": "Cañón de Xerum", "kind": "Ranged", "cost": 15, "range": "25/50/75", "strength": "A elegir", "penetration": "4", "rules": ["A dos manos", "Escasa"], "page": 15, "notes": "Elige la Fuerza antes de disparar. Si impacta, tira 1d10: si sale más que la Fuerza elegida funciona; si no, falla y no hace daño." }
+    ],
+    "gear": [
+      { "name": "Die Glocke (la Campana)", "cost": 30, "page": 15, "text": "Se despliega en tu zona antes que las miniaturas. Una vez por Turno, una miniatura en contacto gasta 1 Acción y tira Técnica: si la supera, se teletransporta con la Campana a 30 cm o más; si falla no se mueve; con un 10 ambas desaparecen para siempre. Siempre, todo a 10 cm de la Campana pierde 1 de Dureza permanente (el usuario solo si no se movió). Da Blindaje +8 como escenografía." }
+    ]
+  }
+]

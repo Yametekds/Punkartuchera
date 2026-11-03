@@ -16,7 +16,7 @@ public sealed class RulebookCatalog : IRulesCatalog
             .Select(a => new StatDefinition(a.Key, a.Name, a.Abbreviation, a.Min, a.Max, a.Default))
             .ToList();
         Roles = book.Factions
-            .SelectMany(f => f.Troops)
+            .SelectMany(f => f.Troops.Concat(f.Subfactions.SelectMany(s => s.Troops)))
             .Select(t => t.Name)
             .Distinct(StringComparer.CurrentCultureIgnoreCase)
             .ToList();

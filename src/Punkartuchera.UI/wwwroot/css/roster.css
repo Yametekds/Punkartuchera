@@ -1,0 +1,83 @@
+/* Listas preconfiguradas y reclutamiento desde el reglamento */
+
+.preset-list { display: grid; gap: 10px; }
+
+.preset-option {
+    display: grid; gap: 4px; width: 100%;
+    padding: 12px 14px; text-align: left;
+    background-color: var(--punk-surface);
+    color: var(--punk-text);
+    border: 2px solid var(--punk-black);
+    border-left: 6px solid var(--punk-steel);
+    cursor: pointer;
+}
+.preset-option:focus-visible { outline: 3px solid var(--punk-accent); outline-offset: 2px; }
+.preset-option.is-selected { border-left-color: var(--punk-rust); background-color: var(--punk-surface-2); }
+.preset-option__name {
+    font-family: var(--punk-font-display); text-transform: uppercase; letter-spacing: .04em;
+}
+.preset-option__meta { color: var(--punk-text-muted); font-size: .88rem; }
+
+.recruit-picker { display: grid; gap: 8px; }
+.recruit-picker__summary { margin: 0; color: var(--punk-ink-muted); font-size: .9rem; }
+
+.subfaction-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.subfaction-card {
+    display: grid; gap: 6px; padding: 14px;
+    background-color: var(--punk-surface);
+    border: 2px solid var(--punk-black);
+    border-top: 5px solid var(--punk-rust);
+    color: var(--punk-text); text-decoration: none;
+}
+.subfaction-card:hover, .subfaction-card:focus-visible { background-color: var(--punk-surface-2); }
+.subfaction-card__name { font-family: var(--punk-font-heading); font-size: 1.35rem; margin: 0; }
+.subfaction-card__meta { color: var(--punk-accent); font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }
+.subfaction-card__summary { margin: 0; color: var(--punk-text-muted); font-size: .92rem; }
+.recruit-picker__summary a { color: var(--punk-ink); font-weight: 600; }
+
+/* Equipo de la ficha con los datos del reglamento */
+.gear-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.gear-item { padding: 8px 0; border-bottom: 1px solid rgba(29, 23, 18, .25); }
+.gear-item:last-child { border-bottom: 3px solid var(--punk-rust); }
+.gear-item__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 10px; }
+.gear-item__name { font-weight: 700; }
+.gear-item__kind {
+    font-family: var(--punk-font-display); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--punk-rust);
+}
+.gear-item__data { margin: 2px 0 0; font-size: .86rem; line-height: 1.35; color: var(--punk-ink); }
+.gear-item__data--missing { color: var(--punk-ink-muted); font-style: italic; }
+.gear-item__link { margin-left: 4px; color: var(--punk-rust); font-weight: 700; white-space: nowrap; }
+.gear-item__notes { margin: 2px 0 0; font-size: .82rem; color: var(--punk-ink-muted); }
+
+/* Balas con forma de bala: punta de plomo y casquillo de latón con culote */
+.datacard__stats .statbox--ammo {
+    position: relative;
+    padding: 18px 2px 8px;
+    border: 2px solid var(--punk-black);
+    border-radius: 50% 50% 3px 3px / 58% 58% 3px 3px;
+    padding-top: 26px;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, .28) 0 18%, transparent 30% 70%, rgba(0, 0, 0, .3) 85%),
+        linear-gradient(180deg, #8d8f93 0 36%, #c99a3e 36% 100%);
+    box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .28);
+    color: var(--punk-ink);
+}
+.datacard__stats .statbox--ammo::after {
+    content: ""; position: absolute; left: -4px; right: -4px; bottom: -2px; height: 5px;
+    background: #8a6524; border: 2px solid var(--punk-black); border-radius: 2px;
+}
+.datacard__stats .statbox--ammo dt { color: var(--punk-ink); font-size: clamp(.5rem, 2vw, .62rem); }
+.datacard__stats .statbox--ammo dd { color: var(--punk-ink); text-shadow: 0 1px 0 rgba(255, 255, 255, .35); }
+
+.ammo-stepper .stepper__value {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 44px; height: 66px; padding-top: 22px; margin: 0 2px;
+    border-radius: 50% 50% 3px 3px / 56% 56% 3px 3px;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, .28) 0 18%, transparent 30% 70%, rgba(0, 0, 0, .3) 85%),
+        linear-gradient(180deg, #8d8f93 0 36%, #c99a3e 36% 100%);
+    border: 2px solid var(--punk-black);
+    box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .28);
+    color: var(--punk-ink);
+}
