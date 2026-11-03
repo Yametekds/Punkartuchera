@@ -12,7 +12,6 @@
 else if (_band is null)
 {
     <section class="punk-empty">
-        <Icon Path="@Icons.Skull" Class="icon--huge" />
         <h1>Esta banda ya no existe</h1>
         <p>O se la comieron los mutardos o la borraste tú.</p>
         <a class="btn btn--primary" href="">Volver a las bandas</a>
@@ -21,7 +20,6 @@ else if (_band is null)
 else
 {
     <div class="context-bar">
-        <span class="chip chip--faction context-bar__pill">@FactionName</span>
         <div class="context-bar__row">
             <a class="btn btn--icon" href="" aria-label="Volver a las bandas"><Icon Path="@Icons.Back" /></a>
             <label class="visually-hidden" for="band-switch">Cambiar de banda</label>
@@ -75,7 +73,6 @@ else
                 @if (_band.Members.Count == 0)
                 {
                     <section class="punk-empty">
-                        <Icon Path="@Icons.Band" Class="icon--huge" />
                         <h2>Banda fantasma</h2>
                         <p>Aquí no hay ni un alma. Recluta a alguien antes de que te roben las balas.</p>
                     </section>
