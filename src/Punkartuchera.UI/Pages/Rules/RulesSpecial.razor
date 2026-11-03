@@ -1,0 +1,58 @@
+@page "/reglas/especiales"
+@inject Rulebook Book
+@inject FragmentScroller Scroller
+
+<PageTitle>Reglas especiales · Punkartuchera</PageTitle>
+
+<RulesBackBar Title="Reglas especiales" Kicker="El glosario del Páramo" />
+
+<label class="visually-hidden" for="special-filter">Filtrar reglas especiales</label>
+<input id="special-filter" class="field__input rules-filter" type="search" autocomplete="off"
+       placeholder="Filtra: Bersérker, Veneno, Raudo…" @bind="_filter" @bind:event="oninput" />
+
+<nav class="rules-jump rules-jump--letters" aria-label="Letras">
+    @foreach (var letter in Visible.Select(r => Letter(r.Name)).Distinct())
+    {
+        <a class="chip chip--faction" href="@($"reglas/especiales#letra-{letter}")">@letter</a>
+    }
+</nav>
+
+@if (!Visible.Any())
+{
+    <p class="scribble">Esa regla no existe, listillo.</p>
+}
+
+@foreach (var group in Visible.GroupBy(r => Letter(r.Name)))
+{
+    <h2 class="section-title" id="@($"letra-{group.Key}")">@group.Key</h2>
+    <div class="rule-grid">
+        @foreach (var rule in group)
+        {
+            <article class="rule-box rules-anchor" id="@rule.Slug">
+                <h3 class="rule-box__title">@rule.Name</h3>
+                <p class="rules-text">@rule.Text</p>
+                <SourceRef Source="@rule.Source" Page="rule.Page" />
+            </article>
+        }
+    </div>
+}
+
+@code {
+    private string _filter = string.Empty;
+
+    private IEnumerable<SpecialRule> Visible
+    {
+        get
+        {
+            var folded = RulesText.Fold(_filter.Trim());
+            var rules = Book.SpecialRules.OrderBy(r => RulesText.Fold(r.Name), StringComparer.Ordinal);
+            return folded.Length == 0
+                ? rules
+                : rules.Where(r => RulesText.Fold(r.Name).Contains(folded) || RulesText.Fold(r.Text).Contains(folded));
+        }
+    }
+
+    private static string Letter(string name) => RulesText.Fold(name)[..1].ToUpperInvariant();
+
+    protected override Task OnAfterRenderAsync(bool firstRender) => firstRender ? Scroller.ScrollToCurrentAsync() : Task.CompletedTask;
+}

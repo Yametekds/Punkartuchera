@@ -9,11 +9,10 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 - Bandas propias guardadas en el dispositivo (IndexedDB), con facción, notas y miembros.
 - Fichas de miembro: foto con la cámara, de la galería o un retrato genérico; atributos, balas, habilidades y equipo.
 - Duplicar y borrar bandas; las fotos se limpian solas.
+- Reglas del reglamento oficial gratuito: buscador, reglas básicas, reglas especiales, armas y equipo, y perfiles de todas las facciones.
 - Funciona sin conexión una vez cargada.
 
-En preparación: consulta de reglas, generador de mapas, bandas rivales compartidas y partidas activas.
-
-> Los atributos y tipos de miembro actuales son **provisionales** (ver `PlaceholderRulesCatalog`). Se sustituirán por los del reglamento.
+En preparación: generador de mapas, bandas rivales compartidas y partidas activas.
 
 ## Requisitos
 
