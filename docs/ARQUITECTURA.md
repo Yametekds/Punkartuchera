@@ -18,6 +18,7 @@ Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core
 | `IBandRepository` | `IndexedDbBandRepository` (UI), `InMemoryBandRepository` (Core, tests) | Guardar bandas. Una versión en la nube implementa esta interfaz. |
 | `IPhotoStore` | `IndexedDbPhotoStore`, `InMemoryPhotoStore` | Fotos de miniaturas, separadas de la banda. |
 | `IRulesCatalog` | `RulebookCatalog` | Facciones, atributos y tipos de miembro, sacados del reglamento (`Rulebook`). |
+| `ITerrainCatalog` | `DefaultTerrainCatalog` (**provisional**) | Tipos de escenografía (huella en cm, cobertura, si tapa la vista) y tamaños de mesa. |
 | `IMatchService` | `LocalMatchService` | Partida en un dispositivo. Los métodos en línea lanzan `OnlineMatchesUnavailableException`. |
 
 Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`.
@@ -52,7 +53,7 @@ Para añadir un almacén nuevo: añádelo a `STORES` y sube `DB_VERSION` en `pun
 
 La disposición sigue el modelo de una hoja de equipo:
 
-- **Barra superior** con botón de menú y título. La navegación va en un **menú lateral** (`MainLayout`) que se alimenta de `Navigation/AppNavigation.cs`. Las secciones `mapa` y `partida` aparecen como "pronto"; para activar una, crea la página con esa ruta en `Pages/<Sección>/` y pon `Available: true`.
+- **Barra superior** con botón de menú y título. La navegación va en un **menú lateral** (`MainLayout`) que se alimenta de `Navigation/AppNavigation.cs`. Las secciones que aún no existen aparecen como "pronto"; para activar una, crea la página con esa ruta en `Pages/<Sección>/` y pon `Available: true`.
 - **Barra de contexto** (`.context-bar`): selector de la banda o facción activa con una píldora encima y un botón ⋮ (`ActionsMenu`) con acciones secundarias.
 - **Pestañas** a todo el ancho (`PageTabs`) bajo la cabecera.
 - **Contenido**: fichas `datacard` (cabecera de chapa con recuadros de atributos `.statbox`, cuerpo de papel con `.data-table`), o cajas de texto con título (`.rule-grid` y `.rule-box`).
@@ -78,6 +79,17 @@ El reglamento está en datos, no en código: `Core/Rules/Data/core.json` (atribu
 - `RulesSearch` indexa todo (sin tildes ni mayúsculas, todas las palabras obligatorias, título antes que texto) y devuelve enlaces con ancla. `FragmentScroller` lleva la vista al ancla al abrir la página.
 
 Páginas (`Pages/Rules/`): `/reglas` (buscador e índice), `/reglas/basicas`, `/reglas/especiales`, `/reglas/equipo` y `/reglas/faccion/{id}/{reglas|miembros|equipo}`. Su CSS propio está en `wwwroot/css/rules.css`.
+
+## Mapas
+
+`Core/Maps/MapGenerator` reparte la escenografía elegida sobre la mesa:
+
+- **Simetría central**: cada pieza de la mitad norte tiene su gemela girada 180° en la sur, así las dos bandas tienen el mismo terreno delante. Si un tipo es impar, la pieza que sobra va a la línea central, al centro si cabe.
+- Las zonas de despliegue quedan libres y entre piezas hay un hueco mínimo (`DefaultMinGap`, 7 cm). Si no cabe todo, lo vuelve a intentar con menos hueco y, en último caso, devuelve las piezas que no ha podido colocar (`MapLayout.Leftovers`) en lugar de amontonarlas.
+- Cada pieza se coloca en el mejor de varios sitios al azar: el que más se aleja de lo ya colocado y de los bordes.
+- **Determinista**: usa su propio generador (`SeededRandom`, mulberry32) y un hash FNV-1a del código (`MapSeed`), porque `System.Random` no garantiza la misma secuencia entre versiones de .NET. Mismo código + misma mesa + mismo terreno = mismo mapa en cualquier dispositivo.
+
+La página `/mapa` guarda todo en el enlace (`?codigo=K7Q2XM&mesa=120x120&terreno=barricada-4.ruina-2`), así que compartir o recargar la página da el mismo mapa sin guardar nada. `TerrainSelection` convierte las cantidades a ese formato y al revés. Los estilos del plano están en `wwwroot/css/punk-map.css`.
 
 ## Fotos
 
