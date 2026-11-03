@@ -141,7 +141,7 @@ else
         <section class="paper stack cost-sheet">
             <h2 class="section-title">Coste de la miniatura</h2>
             <ul class="cost-sheet__lines">
-                @foreach (var line in _cost.Lines)
+                @foreach (var line in _cost.Lines.Where(l => l.Kind != CostLineKind.Unpriced))
                 {
                     <li class="cost-sheet__line cost-sheet__line--@line.Kind.ToString().ToLowerInvariant()">
                         <span>@LineLabel(line)</span>
@@ -149,10 +149,6 @@ else
                     </li>
                 }
             </ul>
-            @if (_cost.Unpriced.Any())
-            {
-                <p class="cost-sheet__hint">Lo marcado con «?» no tiene precio en el reglamento y no suma. Si lo pagaste, súmalo al coste base.</p>
-            }
         </section>
 
         <section class="paper stack">
@@ -305,7 +301,6 @@ else
     {
         CostLineKind.Base => line.Points.ToString(),
         CostLineKind.Included => "0",
-        CostLineKind.Unpriced => "?",
         _ => $"+{line.Points}",
     };
 

@@ -122,9 +122,8 @@
     padding: 4px 0; border-bottom: 1px dashed var(--punk-ink-muted);
 }
 .cost-sheet__line--base { font-weight: 700; }
-.cost-sheet__line--included, .cost-sheet__line--unpriced { color: var(--punk-ink-muted); }
+.cost-sheet__line--included { color: var(--punk-ink-muted); }
 .cost-sheet__points { font-variant-numeric: tabular-nums; white-space: nowrap; }
-.cost-sheet__hint { font-size: 0.9rem; margin: 0; color: var(--punk-ink-muted); }
 
 .cost-total {
     display: inline-flex; align-items: baseline; gap: 4px;
