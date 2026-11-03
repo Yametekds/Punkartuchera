@@ -2,8 +2,6 @@
 @page "/bandas"
 @inject BandService Bands
 @inject IRulesCatalog Rules
-@inject BandExchangeService Exchange
-@inject NavigationManager Navigation
 
 <PageTitle>Bandas · Punkartuchera</PageTitle>
 
@@ -12,20 +10,14 @@
         <span class="page-kicker">Tu chusma, tus normas</span>
         <h1 class="page-title distress">Tus bandas</h1>
     </div>
-    <label class="btn btn--ghost" title="Abre el archivo .punkband que te ha pasado el rival">
+    <button type="button" class="btn btn--ghost" title="Escanea el QR del rival o abre su archivo" @onclick="() => _importing = true">
         <Icon Path="@Icons.Inbox" /> Cargar rival
-        <InputFile class="visually-hidden" OnChange="ImportRival" />
-    </label>
+    </button>
 </header>
 
 @if (_importing)
 {
-    <p class="muted" role="status">Cacheando a la banda rival…</p>
-}
-
-@if (_importError is not null)
-{
-    <p class="notice notice--danger">@_importError</p>
+    <RivalImportSheet OnClose="() => _importing = false" />
 }
 
 <PlaceholderNotice />
@@ -84,33 +76,8 @@ else
 @code {
     private IReadOnlyList<Band>? _bands;
     private bool _importing;
-    private string? _importError;
 
     protected override async Task OnInitializedAsync() => _bands = await Bands.GetAllAsync();
-
-    private async Task ImportRival(InputFileChangeEventArgs e)
-    {
-        _importError = null;
-        _importing = true;
-        try
-        {
-            await using var stream = e.File.OpenReadStream(BandExchangeService.MaxFileBytes);
-            var band = await Exchange.ImportAsync(stream);
-            Navigation.NavigateTo($"bandas/{band.Id}");
-        }
-        catch (BandExchangeException ex)
-        {
-            _importError = ex.Message;
-        }
-        catch (IOException)
-        {
-            _importError = "No se pudo leer el archivo. ¿Seguro que es una banda y no pesa una barbaridad?";
-        }
-        finally
-        {
-            _importing = false;
-        }
-    }
 
     private string FactionName(Band band) => Rules.FindFaction(band.FactionId)?.Name ?? "Sin facción";
 
