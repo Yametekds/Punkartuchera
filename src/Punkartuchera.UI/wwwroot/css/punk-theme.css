@@ -54,6 +54,8 @@
     --punk-gap: 14px;
     --punk-tabbar-height: 0px;  /* sin barra inferior: la navegación va en el menú lateral */
     --punk-shadow: 0 10px 22px rgba(0, 0, 0, .55), 0 2px 0 rgba(0, 0, 0, .6);
+    --punk-paper-burn-sides: linear-gradient(to right, rgba(110, 55, 15, .4), rgba(110, 55, 15, 0) 18px, rgba(110, 55, 15, 0) calc(100% - 18px), rgba(110, 55, 15, .4));
+    --punk-paper-burn-top: linear-gradient(to bottom, rgba(110, 55, 15, .5), rgba(110, 55, 15, 0) 20px);
     --punk-rough: polygon(0 3%, 3% 0, 30% 2%, 55% 0, 80% 1%, 100% 0, 99% 30%, 100% 62%, 98% 100%, 70% 98%, 42% 100%, 14% 98%, 0 100%, 1% 66%, 0 35%);
 
     color-scheme: dark;
@@ -166,8 +168,9 @@ h1:focus { outline: none; }
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     padding: max(10px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
     background-color: var(--punk-bar);
-    background-image: var(--punk-tex-metal), var(--punk-tex-grain);
+    background-image: var(--punk-tex-grain), var(--punk-tex-plate);
     background-position: left bottom;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 /* Borde rasgado de la chapa: la misma chapa recortada (::after) sobre un filo rojo (::before) */
 .punk-topbar::before, .punk-topbar::after {
@@ -180,8 +183,10 @@ h1:focus { outline: none; }
 .punk-topbar::after {
     bottom: -14px; height: 14px;
     background-color: inherit;
-    background-image: inherit;
-    background-position: left top;
+    background-image: var(--punk-edge-shade-bar), var(--punk-tex-grain), var(--punk-tex-plate);
+    background-size: 100% 100%, auto, auto;
+    background-position: center, left top, left top;
+    background-repeat: no-repeat, repeat, repeat;
     -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
     mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
 }
@@ -368,14 +373,12 @@ a.card:active { transform: scale(.99); }
     display: block;
     padding: 18px 16px 16px;
     background-color: var(--punk-accent);
-    background-image: var(--punk-tex-paper), var(--punk-tex-fibre);
+    /* Bordes tostados arriba y a los lados con degradados (no sombras interiores,
+       que también oscurecen el pie y dejan un corte con el desgarro) */
+    background-image: var(--punk-paper-burn-sides), var(--punk-paper-burn-top), var(--punk-tex-paper), var(--punk-tex-fibre);
     background-position: left bottom;
     color: var(--punk-ink);
-    /* Bordes tostados arriba y a los lados; abajo no, para que el desgarro siga igual */
-    box-shadow: var(--punk-shadow),
-        inset 0 16px 22px -16px rgba(110, 55, 15, .55),
-        inset 16px 0 22px -16px rgba(110, 55, 15, .45),
-        inset -16px 0 22px -16px rgba(110, 55, 15, .45);
+    box-shadow: var(--punk-shadow);
     text-decoration: none;
 }
 /* Borde inferior rasgado: el mismo papel recortado con la forma del desgarro.
@@ -384,8 +387,11 @@ a.card:active { transform: scale(.99); }
 .paper::after, .torn-bottom::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 13px;
     background-color: inherit;
-    background-image: inherit;
-    background-position: left top;
+    background-image: var(--punk-edge-shade-sand), var(--punk-paper-burn-sides), var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-size: 100% 100%, 100% 100%, auto, auto;
+    /* el borde pisa 1px el pie del bloque: la textura empieza 1px más abajo para no repetir esa fila */
+    background-position: center, left top, left 0 top 1px, left 0 top 1px;
+    background-repeat: no-repeat, no-repeat, repeat, repeat;
     -webkit-mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
     mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
     pointer-events: none;
@@ -774,7 +780,7 @@ textarea.field__input { resize: vertical; }
     display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center;
     padding: 14px 14px 16px;
     background-color: var(--punk-bar);
-    background-image: var(--punk-tex-grain), var(--punk-tex-metal);
+    background-image: var(--punk-tex-grain), var(--punk-tex-plate);
     background-position: left bottom;
     border: 2px solid var(--punk-black);
     border-bottom: 0;
@@ -808,15 +814,17 @@ textarea.field__input { resize: vertical; }
     margin-top: -2px;
     padding: 22px 16px 18px;
     background-color: var(--punk-accent);
-    background-image: var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-image: linear-gradient(to top, rgba(92, 46, 12, .45), rgba(92, 46, 12, 0) 18px), var(--punk-tex-paper), var(--punk-tex-fibre);
     color: var(--punk-ink);
-    clip-path: polygon(0 0, 100% 0, 100% 97%, 96% 100%, 74% 98.6%, 52% 100%, 27% 98.8%, 6% 100%, 0 98%);
+    clip-path: polygon(0 0, 100% 0, 100% 96.8%, 94.3% 100%, 91.6% 98.8%, 88.9% 97.6%, 84.6% 97.6%, 80.6% 99.8%, 75.8% 98.5%, 70.6% 98.2%, 64.6% 99%, 60.1% 99.1%, 54.4% 98.5%, 50.1% 98.3%, 44.4% 98.9%, 41.8% 97.5%, 37.9% 99.8%, 33.1% 98.4%, 27.9% 98.2%, 25% 99.2%, 19.3% 99.2%, 15.3% 99.6%, 8.8% 99.9%, 3.4% 99.8%, 0 98.4%);
 }
 .datacard__body::before {
     content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px;
     background-color: var(--punk-bar);
-    background-image: var(--punk-tex-grain), var(--punk-tex-metal);
-    background-position: left top;
+    background-image: var(--punk-edge-shade-bar), var(--punk-tex-grain), var(--punk-tex-plate);
+    background-size: 100% 100%, auto, auto;
+    background-position: center, left 0 top 2px, left 0 top 2px;
+    background-repeat: no-repeat, repeat, repeat;
     -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
     mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
 }
