@@ -50,8 +50,11 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
         return faction is null || troop is null ? null : new TroopChoice(faction, troop);
     }
 
-    /// <summary>Un miembro con el perfil, el coste base, el equipo fijo y las reglas de la tropa.</summary>
-    public Miniature FromTroop(Troop troop)
+    /// <summary>
+    /// Un miembro con el perfil, el coste base, el equipo fijo, las reglas de la tropa
+    /// y su foto oficial si la hay.
+    /// </summary>
+    public Miniature FromTroop(Troop troop, string? factionId = null)
     {
         var member = new Miniature
         {
@@ -70,6 +73,7 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             member.Notes = string.Join(", ", troop.Rules.Select(r => r.Name));
         }
 
+        member.Photo = BestPhoto(factionId, troop.Name, member.Gear.Select(g => g.Name));
         return member;
     }
 
@@ -92,7 +96,33 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             AddGear(member, name);
         }
 
+        member.Photo = BestPhoto(list.FactionId, preset.Troop, member.Gear.Select(g => g.Name));
         return member;
+    }
+
+    /// <summary>Fotos oficiales de una tropa; los mercenarios valen para cualquier facción.</summary>
+    public IReadOnlyList<OfficialMini> PhotosFor(string? factionId, string? troopName) =>
+        string.IsNullOrWhiteSpace(troopName)
+            ? []
+            : book.Minis
+                .Where(m => RulesText.Fold(m.Troop) == RulesText.Fold(troopName.Trim()))
+                .Where(m => factionId is null || m.FactionId == factionId || m.FactionId == "mercenarios")
+                .ToList();
+
+    /// <summary>
+    /// La foto oficial que mejor encaja con el equipo: gana la miniatura cuyo nombre
+    /// menciona más armas o piezas que lleva ("Ascua con escopeta" para un Ascua con escopeta).
+    /// </summary>
+    public PhotoRef? BestPhoto(string? factionId, string troopName, IEnumerable<string> gear)
+    {
+        var folded = gear.Select(g => RulesText.Fold(g)).Where(g => g.Length > 0).ToList();
+        var best = PhotosFor(factionId, troopName)
+            .Select((mini, index) => (Mini: mini, Index: index, Score: folded.Count(g => RulesText.Fold(mini.Name).Contains(g, StringComparison.Ordinal))))
+            .OrderByDescending(c => c.Score)
+            .ThenBy(c => c.Index)
+            .Select(c => c.Mini)
+            .FirstOrDefault();
+        return best is null ? null : PhotoRef.Official(best.Image);
     }
 
     public IReadOnlyList<Miniature> FromList(PresetList list) =>

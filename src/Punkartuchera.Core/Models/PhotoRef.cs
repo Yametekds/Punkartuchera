@@ -9,6 +9,9 @@ public sealed record PhotoRef(PhotoSource Source, string Key)
     public static PhotoRef Stored(string key) => new(PhotoSource.Stored, key);
 
     public static PhotoRef Stock(string key) => new(PhotoSource.Stock, key);
+
+    /// <summary>Foto oficial de la miniatura; la clave es su dirección web.</summary>
+    public static PhotoRef Official(string url) => new(PhotoSource.Official, url);
 }
 
 public enum PhotoSource
@@ -17,5 +20,8 @@ public enum PhotoSource
     Stored,
 
     /// <summary>Imagen genérica incluida en la aplicación.</summary>
-    Stock
+    Stock,
+
+    /// <summary>Foto oficial de la miniatura pintada, enlazada desde la tienda del fabricante.</summary>
+    Official
 }
