@@ -366,11 +366,10 @@
             "Bomba incendiaria",
             "Bomba incendiaria"
           ],
-          "armor": "Traje voltaico",
           "gear": [
             "Protección contra la contaminación",
-            "Cacharras",
-            "Chasqueador"
+            "Cacharras del oficio",
+            "Chasqueador y traje voltaico"
           ]
         }
       ]
@@ -424,7 +423,7 @@
             "Bomba incendiaria"
           ],
           "gear": [
-            "Chasqueador"
+            "Chasqueador y traje voltaico"
           ]
         }
       ]
@@ -451,7 +450,7 @@
           ],
           "armor": "Cuero endurecido",
           "gear": [
-            "Motocicleta"
+            "Darle caña (moto)"
           ]
         },
         {
@@ -515,7 +514,7 @@
           ],
           "armor": "Chaleco antibalas",
           "gear": [
-            "Motocicleta"
+            "Darle caña (moto)"
           ]
         },
         {
@@ -548,7 +547,7 @@
           "cost": 30,
           "weapons": [],
           "gear": [
-            "Bidón de gasofa"
+            "Bonzo (bidón de gasofa)"
           ]
         },
         {

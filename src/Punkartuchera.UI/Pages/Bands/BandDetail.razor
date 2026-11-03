@@ -2,6 +2,7 @@
 @inject BandService Bands
 @inject IRulesCatalog Rules
 @inject Rulebook Book
+@inject GearLookup Lookup
 @inject NavigationManager Navigation
 @inject BandExchangeService Exchange
 @inject FileSharer Sharer
@@ -105,7 +106,7 @@ else
                 <div class="datacard-list">
                     @foreach (var member in _band.Members)
                     {
-                        <MemberCard Member="member" HideAmmo="_band.IsReadOnly" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
+                        <MemberCard Member="member" FactionId="@_band.FactionId" HideAmmo="_band.IsReadOnly" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
                     }
                 </div>
                 break;
@@ -123,7 +124,16 @@ else
                             <tbody>
                                 @foreach (var row in GearRows)
                                 {
-                                    <tr><td>@row.Gear</td><td>@row.Who</td></tr>
+                                    <tr>
+                                        <td>
+                                            <strong>@row.Gear</strong>
+                                            @if (Lookup.Find(row.Gear, _band.FactionId) is { } info)
+                                            {
+                                                <span class="gear-item__data" style="display:block">@info.Summary</span>
+                                            }
+                                        </td>
+                                        <td>@row.Who</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

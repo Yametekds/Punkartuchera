@@ -99,7 +99,9 @@ else
                              ValueChanged="value => _member.Stats[stat.Key] = value" />
                 }
             </div>
-            <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" />
+            <div class="ammo-stepper">
+                <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" />
+            </div>
         </section>
 
         <section class="paper stack">
