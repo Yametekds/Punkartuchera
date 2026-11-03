@@ -1,0 +1,150 @@
+[
+  {
+    "id": "carroneros",
+    "name": "Carroñeros",
+    "summary": "Chatarreros nómadas que reniegan de Samanthia y de los cachivaches: rebuscan en las ruinas del Mundo de Antaño con vigías, trampas y Sondas muy apañados.",
+    "restrictions": [
+      "Usa Pistones, Engranajes y Sondas de los Chatarreros. Sin Dinamos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Mercenario o una Personalidad de los Carroñeros.",
+      "Un Vigía por cada fracción de 150 puntos.",
+      "Sin puño balístico, bombeadora ni balas apañadas.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Sondas carroñeros", "text": "Sus Sondas no tienen Infiltración ni Raudo de base. Cada uno puede comprar DOS habilidades de la lista; ninguna se repite en la banda salvo Infiltrador y Velocista." }
+    ],
+    "troops": [
+      {
+        "name": "Vigía", "cost": 25, "page": 2,
+        "stats": { "a": "2", "c": "3", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Rifle", "cost": 8 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "equipmentOptions": [{ "name": "Trampa", "cost": 5 }],
+        "specialRules": ["Retraso (2)"],
+        "rules": [{ "name": "Preparar el terreno", "text": "Tras desplegar, coloca una barricada de hasta 5 × 2,5 cm a ras de suelo entre su zona de despliegue y la mitad de la mesa: Cobertura de tamaño 1, protección ligera." }]
+      },
+      {
+        "name": "Señor Lao", "cost": 55, "page": 4, "personality": true,
+        "stats": { "a": "3", "c": "3", "p": "5", "ag": "6", "f": "3 (5)", "d": "3", "t": "4" },
+        "weapons": "Cuchillos arrojadizos y maza", "armor": "Cuero endurecido",
+        "specialRules": ["Personalidad", "Retraso (3)", "Todoterreno"],
+        "rules": [
+          { "name": "Señor de los cuchillos", "text": "Sus cuchillos arrojadizos no pierden Fuerza ni Penetración a media y larga distancia. Uniendo 2 Acciones dobla los alcances y tiene F+1 y Pen 3 a todas las distancias." },
+          { "name": "Supervisor de trampas", "text": "+1 a la tabla de las trampas de su banda." }
+        ]
+      }
+    ],
+    "gear": [
+      { "name": "Trampa", "cost": 5, "page": 5, "text": "Un marcador por Vigía. Se colocan antes de desplegar, a ras de suelo, fuera de la zona rival y a 20 cm entre sí. La primera miniatura que se acerque a 2,5 cm tira 1d10: 1-3 nada; 4-6 disparo de Precisión 4 y F3 con Veneno (5); 7-9 marcador de Fuego con Incendiaria (3); 10 plantilla de lágrima centrada en ella, F5 y Pen 4 a todos los tocados." }
+    ],
+    "extras": [
+      {
+        "title": "Habilidades de Sonda", "page": 3,
+        "items": [
+          { "name": "Acusica", "cost": 5, "text": "Los aliados que le ven cuentan con Línea de visión hacia los enemigos que él ve a la hora de Asaltarlos." },
+          { "name": "Ajustador", "cost": 6, "text": "Con Infiltración puede aparecer en cualquier Turno, también después del cuarto." },
+          { "name": "Emboscador", "cost": 8, "text": "Con Infiltración no necesita estar fuera de la vista enemiga para aparecer." },
+          { "name": "Felino", "cost": 4, "text": "Al sufrir una Caída o Asaltar hacia abajo, con una tirada de Agilidad no queda Tumbado." },
+          { "name": "Flacucho", "cost": 5, "text": "Gana Escurridizo y pasa por huecos más estrechos que su peana." },
+          { "name": "Infiltrador", "cost": 7, "text": "Gana Infiltración." },
+          { "name": "Navajero", "cost": 5, "text": "Con filo pequeño tira dos dados de Combate y elige." },
+          { "name": "Saltador", "cost": 5, "text": "Al Saltar, su peana cuenta como de 50 mm." },
+          { "name": "Velocista", "cost": 5, "text": "Gana Raudo." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "innovadores",
+    "name": "Innovadores",
+    "summary": "Los inventores secretos de Samantha, por fin a la vista tras la caída de Liberty City: exoarmaduras de vapor que asustan… y a veces revientan.",
+    "restrictions": [
+      "Usa Pistones y Dinamos de los Chatarreros. Sin Engranajes ni Sondas.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Mercenario o una Personalidad de los Innovadores.",
+      "Sus Pistones no pueden llevar puño balístico ni lanzaarpones (son para los Ingenios).",
+      "Su equipo solo lo pueden usar los Innovadores.",
+      "Máximo un Gato parameño."
+    ],
+    "troops": [
+      {
+        "name": "Ingenio", "cost": 70, "page": 7,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "2", "f": "6", "d": "5", "t": "4" },
+        "weaponRule": "Al menos una y como máximo dos",
+        "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Puño balístico acoplado", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Lanzavapor acoplado", "cost": 10 }, { "name": "Lanzaarpones acoplado", "cost": 18 }],
+        "armor": "Exoarmadura",
+        "equipment": "Protección contra la contaminación"
+      },
+      {
+        "name": "El Profesor", "cost": 70, "page": 8, "personality": true,
+        "stats": { "a": "2", "c": "3 (2)", "p": "6", "ag": "4", "f": "3", "d": "3", "t": "7" },
+        "weapons": "Pistola de aspecto sospechoso", "armor": "Ropas resistentes",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Pistola de aspecto sospechoso", "text": "Alcances de pistola, sin balas. Si impacta no hace daño: recoloca al enemigo a 1d10 × 5 cm, a ras de suelo y a 5 cm de cualquier miniatura. Si falla, el rival recoloca a su miniatura." },
+          { "name": "Voy pedo, no idiota", "text": "En cualquier momento de su activación, gratis: repite una tirada fallida y pierde 1 punto permanente en todos sus Atributos salvo Acciones y Técnica." },
+          { "name": "¡Burp!", "text": "En contacto con una Exoarmadura, 1 Acción y tirada de Técnica: si la supera quita 1d3 marcadores de vapor; si falla añade 1d3." }
+        ]
+      }
+    ],
+    "weapons": [
+      { "name": "Guante de energía", "kind": "Melee", "cost": 3, "combat": "+0", "strength": "+0", "penetration": "2", "rules": ["Electrificación"], "page": 9, "notes": "Pueden usarlo los Pistones." },
+      { "name": "Puño balístico acoplado", "kind": "Melee", "cost": 6, "combat": "+2", "strength": "+5", "penetration": "2", "rules": ["Escasa", "Lentorra (X)"], "page": 9, "notes": "Lentorra (1). Genera un marcador de vapor extra al usarlo en Combate." },
+      { "name": "Cañón sónico", "kind": "Ranged", "cost": 10, "range": "Plantilla de lágrima", "strength": "-", "penetration": "-", "rules": ["Escasa", "Lentorra (X)", "Plantilla"], "page": 9, "notes": "Lentorra (1). Pueden usarlo los Dinamos. Los tocados tiran Dureza: si fallan por 1-3 quedan Tumbados; por 4 o más, Abatidos." },
+      { "name": "Lanzaarpones acoplado", "kind": "Ranged", "cost": 18, "range": "20/40/60", "strength": "7", "penetration": "10", "rules": ["¡¡¡CATAPUM!!!", "Escasa", "Lentorra (X)"], "page": 9, "notes": "Lentorra (1). Genera un marcador de vapor extra al Disparar." },
+      { "name": "Lanzavapor acoplado", "kind": "Ranged", "cost": 10, "range": "Plantilla de lágrima", "strength": "5", "penetration": "Ignora Blindajes", "rules": ["Escasa", "Lentorra (X)", "Plantilla"], "page": 9, "notes": "Lentorra (1). Al usarlo llega de golpe a 5 marcadores de vapor y tira en la tabla." }
+    ],
+    "armors": [
+      { "name": "Exoarmadura", "armor": "5", "page": 10, "notes": "Cada Acción que no sea quedarse quieto genera 1 marcador de vapor (y cada tirada de Combatir en Acciones rivales). Al llegar a 5: 1d10 → 1-2 impacto F6 que ignora Blindajes al Ingenio; 3-5 impacto F3 que ignora Blindajes a él y a todos a 5 cm sin Cobertura; 6-8 pierde la siguiente Acción; 9-10 sin problema. Luego se quitan los marcadores. Sus armas A dos manos se usan a una mano y no se pueden Rapiñar." }
+    ]
+  },
+  {
+    "id": "pioneros",
+    "name": "Pioneros",
+    "summary": "Los locos del «Diesel gustazo»: Chatarreros que prueban en combate mochilas cohete y ciclohetes con el combustible de la Fortaleza del Cielo.",
+    "restrictions": [
+      "Usa Dinamos, Engranajes y Sondas de los Chatarreros. Sin Pistones.",
+      "No más Dinamos que el resto de la banda junta.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo un Mercenario o una Personalidad de los Pioneros.",
+      "Su equipo solo lo pueden usar los Pioneros.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Tabla de fallos coheteros", "text": "Si falla la tirada de un aparato cohete, tira 1d10:",
+        "table": { "columns": ["1d10", "Efecto"], "rows": [
+          ["1-2", "Explota: queda Abatido sin marcador (no se puede Rapiñar ni cosechar) e impacto F7, Pen 5 a todo a 5 cm."],
+          ["3-6", "No funciona y gasta la carga."],
+          ["7-10", "Gasta el doble de cargas; si no tiene suficientes, no funciona y gasta las que le queden."]
+        ] } }
+    ],
+    "troops": [
+      {
+        "name": "Cohetero", "cost": 35, "page": 12,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "5" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Trabuco", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ropas resistentes",
+        "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
+        "equipment": "Protección contra la contaminación",
+        "equipmentOptions": [{ "name": "Ciclohete", "cost": 15 }, { "name": "Mochila cohete", "cost": 20 }]
+      },
+      {
+        "name": "Lucky Lucy", "cost": 75, "page": 13, "personality": true,
+        "stats": { "a": "2", "c": "4 (5)", "p": "3", "ag": "7", "f": "4 (6)", "d": "3", "t": "5" },
+        "weapons": "Filo medio", "armor": "Cuero endurecido",
+        "specialRules": ["Personalidad", "Combustible (X)", "Montada", "Raudo"],
+        "rules": [
+          { "name": "Sammy", "text": "Moto cohete con Combustible (6), Montada y Raudo. Usa Apretar el turbo, Asalto propulsado y Surcar los cielos, y además:\n• Pasada llameante (2 cargas, 4+): avanza en línea recta pasando por encima de miniaturas y escenografía de tamaño 1-2; impacto F3, Pen 3 a cada miniatura que sobrevuele.\n• Propulsión (1 carga, 3+): gana Salto esta activación.\nEn la tabla de fallos coheteros resta 1 por cada Turno de juego transcurrido." }
+        ]
+      }
+    ],
+    "gear": [
+      { "name": "Mochila cohete", "cost": 20, "page": 14, "text": "Combustible (5), Escasa. Antes de usarla tira 1d10 y supera el número indicado o ve a la tabla de fallos.\n• Asalto propulsado (1 carga, 3+): +2 al Combate en un Asalto en línea recta.\n• Chorro de llamas (2 cargas, 4+): 1 Acción, plantilla de lágrima hacia atrás ignorando Coberturas, F4, Pen 3.\n• Salto (1 carga, 3+): Raudo y Salto esta activación.\n• Surcar los cielos (3 cargas, 5+): sale de la mesa; en su siguiente activación aterriza a 10 cm o más de enemigos con tirada de Técnica (se desvía 10 cm por punto fallado; fuera de la mesa queda Abatido)." },
+      { "name": "Ciclohete", "cost": 15, "page": 14, "text": "Combustible (3), Escasa, Montada, Raudo. Antes de usarlo tira 1d10 y supera el número indicado o ve a la tabla de fallos.\n• Apretar el turbo (1 carga, 3+): mueve 30 cm en línea recta sin girar.\n• Potencia bruta (1 carga, 4+): +2 al Combate en un Asalto.\nEl coste figura como 15 en la ficha del Cohetero y 12 en la página de equipo." }
+    ]
+  }
+]

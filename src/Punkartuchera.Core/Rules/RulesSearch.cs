@@ -81,16 +81,45 @@ public sealed class RulesSearch
 
             foreach (var troop in faction.Troops)
             {
-                var parts = new List<string>(troop.SpecialRules) { troop.Weapons ?? string.Empty, troop.Armor ?? string.Empty, troop.Mutations ?? string.Empty };
-                parts.AddRange(troop.WeaponOptions.Select(o => o.Name));
-                parts.AddRange(troop.Rules.Select(r => $"{r.Name} {r.Text}"));
-                var context = troop.Personality ? $"{faction.Name} · Personalidad" : faction.Name;
-                Add(RuleHitKind.Troop, troop.Name, context, string.Join(' ', parts), $"{root}/miembros#{troop.Slug}", faction.Id);
+                AddTroop(troop, faction.Name, $"{root}/miembros#{troop.Slug}", faction.Id);
+            }
+
+            foreach (var subfaction in faction.Subfactions)
+            {
+                var subRoot = $"{root}/subfaccion/{subfaction.Id}";
+                var subName = $"{faction.Name} · {subfaction.Name}";
+                Add(RuleHitKind.Faction, subfaction.Name, $"Subfacción de {faction.Name}", string.Join(' ', subfaction.Restrictions.Prepend(subfaction.Summary)), subRoot, faction.Id);
+                foreach (var rule in subfaction.Rules)
+                {
+                    Add(RuleHitKind.FactionRule, rule.Name, subName, rule.Text + " " + string.Join(' ', TableText(rule.Table)), $"{subRoot}#{rule.Slug}", faction.Id);
+                }
+
+                foreach (var group in subfaction.Extras)
+                {
+                    foreach (var item in group.Items)
+                    {
+                        Add(RuleHitKind.Extra, item.Name, $"{subName} · {group.Title}", item.Text, $"{subRoot}#{item.Slug}", faction.Id);
+                    }
+                }
+
+                foreach (var troop in subfaction.Troops)
+                {
+                    AddTroop(troop, subName, $"{subRoot}#{troop.Slug}", faction.Id);
+                }
             }
         }
     }
 
     public int Count => _entries.Count;
+
+    private void AddTroop(Troop troop, string owner, string href, string factionId)
+    {
+        var parts = new List<string>(troop.SpecialRules) { troop.Weapons ?? string.Empty, troop.Armor ?? string.Empty, troop.Mutations ?? string.Empty };
+        parts.AddRange(troop.WeaponOptions.Select(o => o.Name));
+        parts.AddRange(troop.Rules.Select(r => $"{r.Name} {r.Text}"));
+        var context = troop.Personality ? $"{owner} · Personalidad" : owner;
+        Add(RuleHitKind.Troop, troop.Name, context, string.Join(' ', parts), href, factionId);
+    }
 
     public IReadOnlyList<RuleHit> Search(string? query, string? factionId = null, int limit = 40)
     {

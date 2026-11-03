@@ -1,4 +1,5 @@
 @inject IRulesCatalog Rules
+@inject GearLookup Lookup
 
 @* Ficha de miembro estilo datacard: cabecera de chapa con atributos y cuerpo de papel. *@
 <article class="datacard">
@@ -27,7 +28,7 @@
                 </div>
             }
             <div class="statbox statbox--ammo" title="@(HideAmmo ? "Las balas del rival son secreto" : "Balas")">
-                <dt><Icon Path="@Icons.Bullet" /> Balas</dt>
+                <dt>Balas</dt>
                 <dd>@(HideAmmo ? "?" : Member.Ammo)</dd>
             </div>
         </dl>
@@ -36,17 +37,39 @@
     <div class="datacard__body">
         @if (Member.Gear.Count > 0)
         {
-            <table class="data-table">
-                <thead>
-                    <tr><th scope="col">Equipo</th><th scope="col">Notas</th></tr>
-                </thead>
-                <tbody>
-                    @foreach (var gear in Member.Gear)
-                    {
-                        <tr><td>@gear.Name</td><td>@(gear.Notes ?? "—")</td></tr>
-                    }
-                </tbody>
-            </table>
+            <ul class="gear-list">
+                @foreach (var gear in Member.Gear)
+                {
+                    var info = Lookup.Find(gear.Name, FactionId);
+                    <li class="gear-item">
+                        <div class="gear-item__head">
+                            <span class="gear-item__name">@gear.Name</span>
+                            @if (info is not null)
+                            {
+                                <span class="gear-item__kind">@KindLabel(info.Kind)</span>
+                            }
+                        </div>
+                        @if (info is not null)
+                        {
+                            <p class="gear-item__data">
+                                @info.Summary
+                                @if (info.Href is not null)
+                                {
+                                    <a class="gear-item__link" href="@info.Href" aria-label="Ver @info.Name en las reglas">reglas</a>
+                                }
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="gear-item__data gear-item__data--missing">No está en el reglamento.</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(gear.Notes))
+                        {
+                            <p class="gear-item__notes">@gear.Notes</p>
+                        }
+                    </li>
+                }
+            </ul>
         }
 
         @if (Member.Skills.Count > 0)
@@ -87,4 +110,17 @@
 
     /// <summary>Oculta las balas (fichas del rival).</summary>
     [Parameter] public bool HideAmmo { get; set; }
+
+    /// <summary>Facción de la banda, para elegir bien el equipo cuando dos facciones usan el mismo nombre.</summary>
+    [Parameter] public string? FactionId { get; set; }
+
+    private static string KindLabel(GearInfoKind kind) => kind switch
+    {
+        GearInfoKind.MeleeWeapon => "Cuerpo a cuerpo",
+        GearInfoKind.RangedWeapon => "A distancia",
+        GearInfoKind.Armor => "Blindaje",
+        GearInfoKind.Gear => "Equipo",
+        GearInfoKind.Extra => "Mejora",
+        _ => "Regla",
+    };
 }

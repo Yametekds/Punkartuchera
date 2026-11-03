@@ -28,8 +28,19 @@ public sealed class Rulebook
     [JsonIgnore]
     public List<FactionRules> Factions { get; } = [];
 
+    /// <summary>Listas preconfiguradas de las fichas de control oficiales.</summary>
+    [JsonIgnore]
+    public List<PresetList> Lists { get; } = [];
+
     public FactionRules? FindFaction(string? id) =>
         string.IsNullOrEmpty(id) ? null : Factions.FirstOrDefault(f => f.Id == id);
+
+    /// <summary>Busca una subfacción por su id dentro de cualquier facción.</summary>
+    public FactionRules? FindSubfaction(string? id) =>
+        string.IsNullOrEmpty(id) ? null : Factions.SelectMany(f => f.Subfactions).FirstOrDefault(s => s.Id == id);
+
+    public PresetList? FindList(string? id) =>
+        string.IsNullOrEmpty(id) ? null : Lists.FirstOrDefault(l => l.Id == id);
 
     public SourceDocument? FindSource(string? id) =>
         string.IsNullOrEmpty(id) ? null : Sources.FirstOrDefault(s => s.Id == id);
@@ -44,8 +55,24 @@ public sealed class Rulebook
     }
 
     /// <summary>Armas que puede usar una facción: las genéricas más las suyas.</summary>
-    public IEnumerable<Weapon> WeaponsFor(string? factionId) =>
-        Weapons.Where(w => w.FactionId is null || w.FactionId == factionId);
+    public IEnumerable<Weapon> WeaponsFor(string? factionId)
+    {
+        var shared = FindFaction(factionId)?.SharedWeapons ?? [];
+        return Weapons.Where(w => w.FactionId is null || w.FactionId == factionId || shared.Contains(w.Name));
+    }
+
+    /// <summary>
+    /// Armas de una facción o subfacción: las genéricas, las de la facción madre sin las
+    /// exclusivas de otras subfacciones, y las prestadas de otras facciones.
+    /// </summary>
+    public IEnumerable<Weapon> WeaponsFor(FactionRules faction)
+    {
+        var parentId = faction.ParentId ?? faction.Id;
+        var shared = faction.SharedWeapons.Concat(FindFaction(parentId)?.SharedWeapons ?? []).ToHashSet();
+        return Weapons.Where(w => w.FactionId is null
+            || (w.FactionId == parentId && (w.SubfactionId is null || w.SubfactionId == faction.Id))
+            || shared.Contains(w.Name));
+    }
 }
 
 public sealed class SourceDocument
@@ -151,6 +178,10 @@ public sealed class Weapon
     [JsonIgnore]
     public string? FactionId { get; set; }
 
+    /// <summary>Solo para esta subfacción.</summary>
+    [JsonIgnore]
+    public string? SubfactionId { get; set; }
+
     [JsonIgnore]
     public string Slug => RulesText.Slug(Name);
 }
@@ -174,6 +205,10 @@ public sealed class ArmorItem
     [JsonIgnore]
     public string? FactionId { get; set; }
 
+    /// <summary>Solo para esta subfacción.</summary>
+    [JsonIgnore]
+    public string? SubfactionId { get; set; }
+
     [JsonIgnore]
     public string Slug => RulesText.Slug(Name);
 }
@@ -192,6 +227,10 @@ public sealed class GearItem
 
     [JsonIgnore]
     public string? FactionId { get; set; }
+
+    /// <summary>Solo para esta subfacción.</summary>
+    [JsonIgnore]
+    public string? SubfactionId { get; set; }
 
     [JsonIgnore]
     public string Slug => RulesText.Slug(Name);
@@ -231,6 +270,19 @@ public sealed class FactionRules
 
     /// <summary>Listas propias: mutaciones, poderes psíquicos, artículos de coña…</summary>
     public List<ExtraGroup> Extras { get; set; } = [];
+
+    /// <summary>Armas de otra facción que esta también puede usar (por nombre).</summary>
+    public List<string> SharedWeapons { get; set; } = [];
+
+    /// <summary>Si es una subfacción, la facción a la que pertenece.</summary>
+    [JsonIgnore]
+    public string? ParentId { get; set; }
+
+    [JsonIgnore]
+    public bool IsSubfaction => ParentId is not null;
+
+    [JsonIgnore]
+    public List<FactionRules> Subfactions { get; } = [];
 }
 
 public sealed class PriceOption
@@ -324,4 +376,49 @@ public sealed class ExtraGroup
 
     [JsonIgnore]
     public string Slug => RulesText.Slug(Title);
+}
+
+/// <summary>Una banda lista para jugar tal como viene en una ficha de control oficial.</summary>
+public sealed class PresetList
+{
+    public string Id { get; set; } = string.Empty;
+
+    public string FactionId { get; set; } = string.Empty;
+
+    public string Name { get; set; } = string.Empty;
+
+    public string? Url { get; set; }
+
+    public List<PresetMember> Members { get; set; } = [];
+
+    [JsonIgnore]
+    public int Cost => Members.Sum(m => m.Cost);
+}
+
+public sealed class PresetMember
+{
+    /// <summary>Tipo de tropa de la facción (se usa para su perfil).</summary>
+    public string Troop { get; set; } = string.Empty;
+
+    /// <summary>Nombre impreso en la ficha si no coincide con la tropa ("Jefa", "Curtida"…).</summary>
+    public string? Name { get; set; }
+
+    public int Cost { get; set; }
+
+    /// <summary>Atributos si la ficha los da modificados; si no, los de la tropa.</summary>
+    public Dictionary<string, string>? Stats { get; set; }
+
+    public List<string> Weapons { get; set; } = [];
+
+    public string? Armor { get; set; }
+
+    public List<string> Gear { get; set; } = [];
+
+    /// <summary>Mutaciones, reglas o mejoras compradas.</summary>
+    public List<string> Skills { get; set; } = [];
+}
+
+public sealed class PresetListFile
+{
+    public List<PresetList> Lists { get; set; } = [];
 }

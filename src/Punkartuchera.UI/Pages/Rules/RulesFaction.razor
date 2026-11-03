@@ -53,6 +53,20 @@ else
             </div>
             break;
 
+        case "subfacciones":
+            <p class="rules-intro">Variantes oficiales de @_faction.Name con sus propias restricciones, reglas y tropas.</p>
+            <div class="subfaction-list">
+                @foreach (var subfaction in _faction.Subfactions)
+                {
+                    <a class="subfaction-card" href="@($"reglas/faccion/{_faction.Id}/subfaccion/{subfaction.Id}")">
+                        <span class="subfaction-card__meta">@(subfaction.Troops.Count == 1 ? "1 tropa propia" : $"{subfaction.Troops.Count} tropas propias")@(subfaction.Beta ? " · beta" : "")</span>
+                        <h2 class="subfaction-card__name">@subfaction.Name</h2>
+                        <p class="subfaction-card__summary">@subfaction.Summary</p>
+                    </a>
+                }
+            </div>
+            break;
+
         case "equipo":
             <div class="stack">
                 @if (_faction.GenericGear.Count > 0)
@@ -141,7 +155,11 @@ else
 }
 
 @code {
-    private static readonly (string Slug, string Label)[] AllTabs = [("reglas", "Reglas"), ("miembros", "Miembros"), ("equipo", "Equipo")];
+    private static readonly (string Slug, string Label)[] BaseTabs = [("reglas", "Reglas"), ("miembros", "Miembros"), ("equipo", "Equipo")];
+
+    private (string Slug, string Label)[] AllTabs => _faction is { Subfactions.Count: > 0 }
+        ? [.. BaseTabs, ("subfacciones", "Subfacciones")]
+        : BaseTabs;
 
     [Parameter] public string Id { get; set; } = string.Empty;
 

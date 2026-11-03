@@ -1,0 +1,150 @@
+[
+  {
+    "id": "amanecer-mutante",
+    "name": "Amanecer Mutante",
+    "summary": "El culto de Kim en los Gemelos: los Mutardos como siguiente paso de la evolución y los humanos como estorbo. Cabezones con el cerebro frito y una guardia pretoriana fanática.",
+    "restrictions": [
+      "Usa Bestias del Pozo, Cabezones (ver Control), Mutantes (ver Tomamos lo que queremos) y Perromorfos. Sin Pochos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de Amanecer Mutante o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Control", "text": "Los Cabezones solo tienen uno de sus Poderes psíquicos, elegido al crear la banda. A cambio cuestan 60 puntos." },
+      { "name": "Tomamos lo que queremos", "text": "Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros. Las que normalmente no tendrían cuestan el doble y ganan Escasa." }
+    ],
+    "troops": [
+      {
+        "name": "Pretoriano", "cost": 45, "page": 2,
+        "stats": { "a": "2", "c": "5", "p": "4", "ag": "4", "f": "5", "d": "4", "t": "2" },
+        "weaponRule": "Puede llevar una",
+        "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Ballesta", "cost": 8 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ninguno",
+        "equipmentOptions": [{ "name": "Escudo", "cost": 6 }],
+        "mutations": "Al menos una y como máximo dos distintas de la lista de Mutaciones, pagando su coste.",
+        "rules": [
+          { "name": "Libre del yugo", "text": "Si Kim cae, para los Pretorianos su Odio puro cuenta siempre como un 8-10." },
+          { "name": "Por Kim", "text": "Si Kim usa Absorción vital sobre un Pretoriano, pierde 1 de Dureza en vez de 2." }
+        ]
+      },
+      {
+        "name": "Kim y Fostiador", "cost": 125, "page": 3, "personality": true,
+        "stats": { "a": "3", "c": "6 (5)", "p": "3", "ag": "2 (1)", "f": "6 (10)", "d": "6", "t": "4" },
+        "weapons": "Zasca", "armor": "Piel dura 3",
+        "mutations": "Cachas y Resistente (ya en el perfil), Piel dura 3 y Piernas seguras.",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Una miniatura", "text": "Kim y Fostiador cuentan como una sola miniatura." },
+          { "name": "Zasca", "text": "A distancia: 25/50/75, F9, Pen 10, Armatoste y Mamotreto. Antes de desplegar se ponen 3 marcadores al azar (postes, farolas); en contacto con uno, 1 Acción para recargar." },
+          { "name": "Mente ocupada", "text": "No se les puede lanzar ningún Poder psíquico." },
+          { "name": "Poderes de Kim", "text": "Tiene Desarme, Potenciación y Titiritero, y además:\n• Confusión: un enemigo a 30 cm y en visión (no Bestia ni Mónguer) actúa en una Ronda de Agilidad 3 veces menor el siguiente Turno (mínimo 1).\n• Absorción vital: quita 2 de Dureza permanente a un aliado a 30 cm para dar +1 permanente a otro a 30 cm." },
+          { "name": "Odio puro", "text": "Si Kim cae, tira 1d10:",
+            "table": { "columns": ["1d10", "Efecto"], "rows": [
+              ["1-3", "Todas las miniaturas de la mesa pierden 1 de Dureza permanente."],
+              ["4-7", "Toda su banda recibe Potenciación al Combate."],
+              ["8-10", "Todas las miniaturas de la mesa tienen 1 Acción menos en su siguiente Fase de activación."]
+            ] } }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fuerza-m",
+    "name": "Fuerza M",
+    "summary": "Supergrupo mutardo del misterioso Cabezón X: mallas chillonas, nombres molones y ganas de dar caña por los desvalidos del Páramo.",
+    "restrictions": [
+      "Usa Bestias del Pozo, Cabezones y Mutantes. Sin Pochos ni Perromorfos.",
+      "Un Sidekick por Mutante; ese Mutante cuenta como 2 para el límite de miniaturas.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad de Fuerza M o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Para que no me disparen", "text": "Cada Mutante puede llevar un Sidekick que cuesta la mitad del Mutante equipado (redondeando arriba). No hace falta miniatura. Cuando el Mutante fuera a caer, cae el Sidekick en su lugar (una vez)." },
+      { "name": "Súper equipo", "text": "Al empezar su Fase de activación, tira por cada otro miembro de la banda a 5 cm (los efectos se apilan):",
+        "table": { "columns": ["1d10", "Efecto"], "rows": [
+          ["1-2", "1 Acción menos."], ["3-4", "Nada."], ["5-6", "+1 Combate."], ["7-8", "+1 Fuerza y Dureza."], ["9-10", "1 Acción más."]
+        ] } }
+    ],
+    "troops": [
+      {
+        "name": "Hilo Anal", "cost": 70, "page": 6, "personality": true,
+        "stats": { "a": "2", "c": "5", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "3" },
+        "weapons": "Garras envenenadas", "armor": "Ninguno",
+        "mutations": "Miembros extra y Sentidos aguzados (ya en el perfil), Corredor, Garras envenenadas, Piernas seguras y Telaraña.",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Telaraña", "text": "1 Acción: plantilla de lágrima. Quien toque y falle Agilidad queda atrapado y gasta Acciones en tiradas de Fuerza hasta soltarse. Contra un atrapado, +2 a Precisión o Combate; al impactarle, la telaraña se rompe." }
+        ]
+      },
+      {
+        "name": "Pajaroto Rojo", "cost": 20, "page": 7, "personality": true,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3 (4)", "d": "3", "t": "3" },
+        "weapons": "Filo pequeño", "armor": "Ninguno",
+        "mutations": "Espinas y Danza de apareamiento.",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Danza de apareamiento", "text": "1 Acción: todos los enemigos con Línea de visión hacia él se encaran hacia él." },
+          { "name": "Colorido", "text": "Si un enemigo Asalta o Dispara a su banda y Pajaroto Rojo es blanco válido, tiene que ir a por él." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "macumba",
+    "name": "Macumba",
+    "summary": "El culto vudú de Mamá Guedé en los pantanos al este de Torresbrillantes: Pochos que vuelven a caminar, caimanes de guerra y odio a los craabianos.",
+    "restrictions": [
+      "Usa Cabezones (con los Poderes de Macumba), Mutantes y Pochos. Sin Bestias del Pozo; los Perromorfos pasan a ser Caimanomorfos.",
+      "Puede usar las tropas propias de la subfacción.",
+      "Máximo una Personalidad o Mercenario.",
+      "Máximo dos grupos de Pochos por Cabezón.",
+      "Máximo un Gato parameño."
+    ],
+    "rules": [
+      { "name": "Poderes de Macumba", "text": "Los Cabezones no tienen Desarme ni Choque mental; tienen Empochizar y Muñeco vudú." }
+    ],
+    "troops": [
+      {
+        "name": "Caimanomorfo", "cost": 25, "page": 9,
+        "stats": { "a": "2", "c": "3", "p": "-", "ag": "2", "f": "5", "d": "4", "t": "-" },
+        "weapons": "Garras y dientes", "armor": "Piel escamosa (Blindaje 3)",
+        "specialRules": ["Bestia"],
+        "rules": [
+          { "name": "Sangre fría", "text": "No se le pueden lanzar Poderes psíquicos." },
+          { "name": "Desgarro", "text": "Si impacta cuerpo a cuerpo, el rival pierde 1 de Blindaje permanente aunque falle Fuerza contra Dureza." }
+        ]
+      },
+      {
+        "name": "Espíritu del pantano", "cost": 60, "page": 10,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "5", "d": "4", "t": "3" },
+        "weapons": "Garras y dientes", "armor": "Piel dura 3",
+        "mutations": "Espinas, Piel dura 3 y Piernas seguras.",
+        "rules": [{ "name": "Poderes del pantano", "text": "Gasta Acciones en los Poderes del pantano." }]
+      },
+      {
+        "name": "Mamá Guedé", "cost": 100, "page": 11, "personality": true,
+        "stats": { "a": "3", "c": "3", "p": "3", "ag": "4", "f": "2", "d": "2", "t": "4" },
+        "weapons": "Báculo de los muertos (toque de los muertos)", "armor": "Ropas resistentes",
+        "specialRules": ["Personalidad"],
+        "rules": [
+          { "name": "Toque de los muertos", "text": "Cuenta como maza. Si Abate a un enemigo, lanza uno de sus Poderes al momento sin gastar Acción." },
+          { "name": "Polvo vudú", "text": "1 Acción, 10 cm: en su siguiente Fase de activación el enemigo no puede Moverse y tiene -3 a Combate y Precisión." },
+          { "name": "Poderes de Mamá Guedé", "text": "Barrera psíquica, Titiritero, Empochizar y Muñeco vudú, y además Sacrificio: 1 Acción para Abatir a un Mutante propio en contacto y subir sus Atributos (no Acciones) 1 punto por cada 10 puntos del sacrificado, máximo 3 por Atributo." }
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "title": "Poderes de Macumba", "page": 12,
+        "items": [
+          { "name": "Empochizar", "text": "1 Acción, 30 cm: una miniatura Abatida de peana de 25 mm (que no sea Pocho) se levanta como Pocho de tu banda. Puede ir sola o unirse a un grupo." },
+          { "name": "Muñeco vudú", "text": "1 Acción, 45 cm, en visión: el enemigo hace un Movimiento gratis hacia donde quiera el Cabezón, o tiene -2 a Combate y Precisión hasta el final de su siguiente Fase de activación." },
+          { "name": "Ataque verde", "text": "Poder del pantano. Ataque a distancia (sin Apuntar ni Fuego defensivo): 1 Acción F3, Pen 3, 15/30/45; 2 Acciones F5, Pen 5, 20/40/60." },
+          { "name": "Invocar al pantano", "text": "Poder del pantano. 1 Acción, 45 cm: marcador de 10 cm de Terreno contaminado y chungo. Uno por Espíritu y partida." },
+          { "name": "Muro de zarzas", "text": "Poder del pantano. Muro de 2 × 10 cm, Cobertura de tamaño 1: con 1 Acción protección ligera a 25 cm; con 2, media a 50 cm. Uno en mesa por Espíritu." }
+        ]
+      }
+    ]
+  }
+]

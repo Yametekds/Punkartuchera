@@ -1,0 +1,136 @@
+[
+  {
+    "id": "freak-show",
+    "name": "Freak Show",
+    "page": 1,
+    "summary": "Los marginados entre los marginados han hecho de su rareza el espectáculo… y su arma contra las otras bandas.",
+    "restrictions": [
+      "Usa Acróbatas, Domadores, Forzudos y Jefes de pista de la Troupe. Sin Pachachos.",
+      "No pueden adquirir Artículos de coña.",
+      "Máximo un Jefe de pista.",
+      "No más Domadores (sin sus fieras), Forzudos o Acróbatas que Bichos raros.",
+      "Máximo una Personalidad del Freak Show o Mercenario.",
+      "Cada Domador puede llevar hasta 2 fieras, que cuentan para el máximo de miniaturas.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Rarezas", "text": "Cualquier tropa puede comprar hasta 15 puntos de Rarezas; los Bichos raros, entre 10 y 30." }
+    ],
+    "troops": [
+      {
+        "name": "Bicho raro", "cost": 12, "page": 2,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }],
+        "rules": [
+          { "name": "Hermanos de desgracias", "text": "+1 a Combate por cada Bicho raro a 10 cm (máximo +3) y -1 por cada Bicho raro Abatido a 10 cm." },
+          { "name": "Presentar a los Bichos raros", "text": "Si el Jefe de pista los presenta con El mayor espectáculo del mundo, ese Turno Hermanos de desgracias llega a 20 cm." }
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "title": "Rarezas", "page": 3,
+        "items": [
+          { "name": "Ancas", "cost": 16, "text": "Salto." },
+          { "name": "Enanismo", "cost": 5, "text": "Las Coberturas de tamaño 1 le cuentan como de tamaño 2. No combina con Gigantismo." },
+          { "name": "Faquir", "cost": 6, "text": "Ignora la Penetración de los filos (pequeño, medio y pesado)." },
+          { "name": "Feo que te cagas", "cost": 8, "text": "Quien le Asalte pierde los bonificadores de Asalto." },
+          { "name": "Gordérrimo", "cost": 8, "text": "Si cae en cuerpo a cuerpo, aplasta a quien le Abatió: tirada de Agilidad o queda atrapado (como si no existiera) hasta gastar 2 Acciones." },
+          { "name": "Gigantismo", "cost": 10, "text": "+2 Fuerza y -1 Agilidad. No combina con Enanismo." },
+          { "name": "Huesos de gelatina", "cost": 5, "text": "Escurridizo y pasa por huecos donde no cabe su peana." },
+          { "name": "Mata de pelos", "cost": 8, "text": "El enemigo en Combate con él tiene -1 a Combate." },
+          { "name": "Ojos esquivos", "cost": 10, "text": "+2 Precisión, pero no puede Apuntar." },
+          { "name": "Pedregoso", "cost": 12, "text": "+2 Dureza y -1 Agilidad." },
+          { "name": "Piel escamosa", "cost": 12, "text": "+2 Blindaje." },
+          { "name": "Siamés", "cost": 25, "text": "+1 Acción." }
+        ],
+        "intro": "Ninguna miniatura puede repetir Rareza."
+      }
+    ]
+  },
+  {
+    "id": "ilusionistas",
+    "name": "Ilusionistas",
+    "page": 4,
+    "summary": "Prestidigitadores que buscan el asombro, no la risa, y usan sus trucos para liar al enemigo.",
+    "restrictions": [
+      "Usa Acróbatas, Domadores y Jefes de pista de la Troupe. Sin Pachachos ni Forzudos.",
+      "No pueden adquirir Artículos de coña.",
+      "Máximo un Jefe de pista.",
+      "No más Domadores (sin sus fieras) o Acróbatas que Artistas.",
+      "Máximo una Personalidad de los Ilusionistas o Mercenario.",
+      "Cada Domador puede llevar hasta 2 fieras, que cuentan para el máximo de miniaturas.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "troops": [
+      {
+        "name": "Artista", "cost": 40, "page": 5,
+        "stats": { "a": "2", "c": "2", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
+        "armor": "Ninguno",
+        "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
+        "rules": [
+          { "name": "La Senda de la Ilusión", "text": "Conoce todos los Trucos. Cada Artista da 3 Puntos de Truco a la banda al empezar. 1 Acción para usar un Truco pagando sus puntos." },
+          { "name": "Observen atentamente", "text": "Cada Acción gastada genera 1 Punto de Truco." },
+          { "name": "Presentar a los Artistas", "text": "Si el Jefe de pista presenta a un Artista con El mayor espectáculo del mundo, ese Turno dobla los puntos que genere con Observen atentamente." }
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "title": "Trucos", "page": 6,
+        "items": [
+          { "name": "Abracadabra (2 PT)", "text": "Un enemigo a 30 cm en Línea de visión sufre un impacto F2, Pen 2, que ignora Blindajes." },
+          { "name": "Ahora me ves (2 PT)", "text": "Intercambia su posición con un aliado no trabado a 30 cm." },
+          { "name": "Meto mi mano en la chistera (3 PT)", "text": "Aparece un martinejo rabioso para la banda: peana 25 mm, Bestia, garras y dientes, A2 C2 F2 D2." },
+          { "name": "Nada por aquí (3 PT)", "text": "Saca una bala de la nada para su equipo." },
+          { "name": "No parpadees (3 PT)", "text": "Un enemigo a 30 cm, visible y no trabado, no hace Acciones en su próxima activación. Se anula si le atacan." },
+          { "name": "¿Parezco atrapado? (1 PT)", "text": "Trabado en Combate: se separa como si ganase la tirada." },
+          { "name": "¿Qué tienes en la oreja? (1 PT)", "text": "Trabado en Combate: le quita un arma al rival y puede equipársela." },
+          { "name": "Quiero un voluntario (2 PT)", "text": "Un aliado a 20 cm tiene +2 a Combate hasta el final del Turno." },
+          { "name": "Saca una carta (1 PT)", "text": "Trabado en Combate: el rival tiene -2 a Combate mientras sigan trabados." },
+          { "name": "Sigue el reloj con la mirada (4 PT)", "text": "Controlas a un enemigo visible a 20 cm en su próxima activación." },
+          { "name": "Todo es una ilusión (2 PT)", "text": "No puede ser objetivo de ataques este Turno." },
+          { "name": "Y cortamos por la mitad (5 PT)", "text": "Un aliado Abatido a 20 cm vuelve a estar en pie." }
+        ],
+        "intro": "Cada Truco solo una vez por Turno entre todos los Artistas. Algunos se usan trabado en Combate."
+      }
+    ]
+  },
+  {
+    "id": "cirque-du-no-se",
+    "name": "Cirque du No-sé",
+    "page": 7,
+    "summary": "Acróbatas, trapecistas, malabaristas y funambulistas que imitan las leyendas de un circo del Mundo de Antaño cuyo nombre nadie recuerda.",
+    "restrictions": [
+      "Usa Acróbatas y Jefes de pista de la Troupe. Sin Pachachos, Forzudos ni Domadores.",
+      "Los Acróbatas no pueden adquirir Artículos de coña.",
+      "Máximo un Jefe de pista.",
+      "Máximo una Personalidad del Cirque du No-sé o Mercenario.",
+      "Máximo un Gato parameño."
+    ],
+    "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
+    "rules": [
+      { "name": "Acróbatas del Cirque", "text": "Mismos Atributos que los Acróbatas de la Troupe (35 puntos), pero sin Catapulta infernal de serie: deben comprar UNA especialidad. Ninguna se repite más de 3 veces en la banda (Catapulta infernal cuenta una vez por cada 2)." }
+    ],
+    "extras": [
+      {
+        "title": "Especialidades de Acróbata", "page": 8,
+        "items": [
+          { "name": "Acróbata", "cost": 5, "text": "Catapulta infernal, si su pareja también la tiene." },
+          { "name": "Funambulista", "cost": 12, "text": "Ataca con su pértiga a un enemigo a 5 cm visible, sin Cobertura ni trabado, como en cuerpo a cuerpo sin llegar a contactar (F3, Pen 1). En contacto cuenta como arma improvisada. No lleva otras armas." },
+          { "name": "Lanzador de cuchillos", "cost": 8, "text": "+1 Precisión y +1 Fuerza con cuchillos arrojadizos." },
+          { "name": "Malabarista", "cost": 10, "text": "Bolos: maza ligera en cuerpo a cuerpo; a distancia F2, Pen 0, 10/15/20. 1 Acción de malabares da +2 Fuerza al siguiente disparo de esa activación. No lleva otras armas." },
+          { "name": "Saltimbanqui", "cost": 5, "text": "Repite una tirada en la partida." },
+          { "name": "Tragafuegos", "cost": 15, "text": "Ataque a distancia F3, Pen 2 con plantilla de lágrima. Tira 1d10: con 9-10 falla y se lo come él." }
+        ]
+      }
+    ]
+  }
+]

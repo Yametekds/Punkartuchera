@@ -1,0 +1,152 @@
+@page "/reglas/faccion/{Id}/subfaccion/{SubId}"
+@inject Rulebook Book
+@inject NavigationManager Navigation
+@inject FragmentScroller Scroller
+
+<PageTitle>@(_subfaction?.Name ?? "Subfacción") · Punkartuchera</PageTitle>
+
+@if (_faction is null || _subfaction is null)
+{
+    <section class="punk-empty">
+        <h1>Esa subfacción no existe</h1>
+        <p>Igual se escindió otra vez. Mira la lista de su facción.</p>
+        <a class="btn btn--primary" href="@($"reglas/faccion/{Id}/subfacciones")">Ver subfacciones</a>
+    </section>
+}
+else
+{
+    <div class="context-bar">
+        @if (_subfaction.Beta)
+        {
+            <span class="chip chip--faction context-bar__pill">Subfacción en beta</span>
+        }
+        <div class="context-bar__row">
+            <a class="btn btn--icon" href="@($"reglas/faccion/{_faction.Id}/subfacciones")" aria-label="Volver a las subfacciones de @_faction.Name"><Icon Path="@Icons.Back" /></a>
+            <label class="visually-hidden" for="subfaction-switch">Cambiar de subfacción</label>
+            <select id="subfaction-switch" class="field__input context-bar__select" value="@_subfaction.Id" @onchange="SwitchSubfaction">
+                @foreach (var other in _faction.Subfactions)
+                {
+                    <option value="@other.Id">@other.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <section class="paper band-hero tape rules-hero">
+        <div class="band-hero__top">
+            <span class="stamp">Subfacción de @_faction.Name</span>
+            @if (_subfaction.Beta)
+            {
+                <span class="stamp stamp--ink">Beta</span>
+            }
+        </div>
+        <h1 class="band-hero__name distress">@_subfaction.Name</h1>
+        <p class="rules-hero__summary">@_subfaction.Summary</p>
+        <SourceRef Source="@_subfaction.Source" Page="_subfaction.Page" />
+    </section>
+
+    @if (_subfaction.Restrictions.Count > 0)
+    {
+        <h2 class="section-title">Restricciones</h2>
+        <ul class="rules-restrictions">
+            @foreach (var restriction in _subfaction.Restrictions)
+            {
+                <li>@restriction</li>
+            }
+        </ul>
+    }
+
+    @if (_subfaction.Rules.Count > 0)
+    {
+        <h2 class="section-title">Reglas de la subfacción</h2>
+        <div class="rule-grid">
+            @foreach (var rule in _subfaction.Rules)
+            {
+                <article class="rule-box rules-anchor" id="@rule.Slug">
+                    <h3 class="rule-box__title">@rule.Name</h3>
+                    <p class="rules-text">@rule.Text</p>
+                    @if (rule.Table is not null)
+                    {
+                        <RuleTableView Table="rule.Table" />
+                    }
+                </article>
+            }
+        </div>
+    }
+
+    @if (_subfaction.Troops.Count > 0)
+    {
+        <h2 class="section-title">Tropas propias</h2>
+        <div class="datacard-list">
+            @foreach (var troop in _subfaction.Troops)
+            {
+                <TroopCard Troop="troop" Source="@_subfaction.Source" />
+            }
+        </div>
+    }
+
+    @foreach (var group in _subfaction.Extras)
+    {
+        <h2 class="section-title" id="@group.Slug">@group.Title</h2>
+        @if (group.Intro is not null)
+        {
+            <p class="rules-intro">@group.Intro</p>
+        }
+        <div class="rule-grid">
+            @foreach (var item in group.Items)
+            {
+                <article class="rule-box rules-anchor" id="@item.Slug">
+                    <h3 class="rule-box__title">@item.Name@(item.Cost is null ? "" : $" · {item.Cost} ptos")</h3>
+                    <p class="rules-text">@item.Text</p>
+                    @if (item.Table is not null)
+                    {
+                        <RuleTableView Table="item.Table" />
+                    }
+                </article>
+            }
+        </div>
+    }
+
+    @if (_subfaction.GenericGear.Count > 0 || _subfaction.Weapons.Count + _subfaction.Armors.Count + _subfaction.Gear.Count > 0)
+    {
+        <h2 class="section-title">Equipo</h2>
+        <div class="stack">
+            @if (_subfaction.GenericGear.Count > 0)
+            {
+                <section class="paper rules-sheet">
+                    <h3 class="section-title">Equipo genérico disponible</h3>
+                    <PriceOptionList Items="_subfaction.GenericGear" />
+                </section>
+            }
+            <GearTables Weapons="_subfaction.Weapons" ArmorItems="_subfaction.Armors" GearItems="_subfaction.Gear" />
+        </div>
+    }
+}
+
+@code {
+    [Parameter] public string Id { get; set; } = string.Empty;
+
+    [Parameter] public string SubId { get; set; } = string.Empty;
+
+    private FactionRules? _faction;
+    private FactionRules? _subfaction;
+    private bool _scrollPending;
+
+    protected override void OnParametersSet()
+    {
+        _faction = Book.FindFaction(Id);
+        _subfaction = _faction?.Subfactions.FirstOrDefault(s => s.Id == SubId);
+        _scrollPending = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_scrollPending)
+        {
+            _scrollPending = false;
+            await Scroller.ScrollToCurrentAsync();
+        }
+    }
+
+    private void SwitchSubfaction(ChangeEventArgs e) => Navigation.NavigateTo($"reglas/faccion/{Id}/subfaccion/{e.Value}");
+}
