@@ -48,7 +48,7 @@ else
             <div class="datacard-list">
                 @foreach (var troop in _faction.Troops)
                 {
-                    <TroopCard Troop="troop" Source="@_faction.Source" />
+                    <TroopCard Troop="troop" Source="@_faction.Source" FactionId="@_faction.Id" />
                 }
             </div>
             break;
