@@ -252,6 +252,15 @@ public sealed class FactionRules
 
     public string Summary { get; set; } = string.Empty;
 
+    /// <summary>Cómo se juega: estilo y puntos fuertes, resumidos de sus reglas.</summary>
+    public string? Playstyle { get; set; }
+
+    /// <summary>
+    /// Subfacción: tropas de la facción base que puede reclutar (las que nombra su restricción «Usa…»).
+    /// Vacío significa todas.
+    /// </summary>
+    public List<string> BaseTroops { get; set; } = [];
+
     /// <summary>Reglas publicadas como beta.</summary>
     public bool Beta { get; set; }
 

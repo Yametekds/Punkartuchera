@@ -4,6 +4,7 @@
   "source": "bandas",
   "page": 3,
   "summary": "Carroñeros que rebuscan en las ruinas y comercian con todos. Peor en el cuerpo a cuerpo, pero con inventos raros, bombas y exploradores que se cuelan por cualquier parte.",
+  "playstyle": "Banda numerosa y de tiro: Dinamos y Engranajes salen muy baratos y cargan bombas, vaporetas y armas de fuego, los Pistones son los más duros para el cuerpo a cuerpo y las Sondas entran por cualquier lado con Infiltración, Camuflaje y Raudo. Su equipo propio es exclusivo: quien no sea Chatarrero necesita una tirada de Técnica por objeto para usarlo.",
   "restrictions": [
     "No puede haber más Dinamos que el resto de la banda junta.",
     "Máximo una Personalidad o Mercenario.",

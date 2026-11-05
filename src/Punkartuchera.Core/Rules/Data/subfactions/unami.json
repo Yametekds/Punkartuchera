@@ -4,6 +4,8 @@
     "name": "Cambiapieles",
     "page": 1,
     "summary": "Grupos que acompañan a los Yee naaldlooshii, brujos mal vistos por la tribu que se transforman en animales, imitan a otros y poseen enemigos.",
+    "playstyle": "Unami sin Chamanes y con Yee naaldlooshii que se transforman en animales, imitan a otros y poseen enemigos con sus Ánti'jhnii. Siguen usando la reserva de Puntos de Mojo.",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "restrictions": [
       "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
       "Un Yee naaldlooshii por cada fracción de 200 puntos.",
@@ -45,6 +47,8 @@
     "name": "Descastados",
     "page": 4,
     "summary": "Unami que no soportan la mente colmena y sirven a la tribu como exploradores por el Páramo, lejos de Majauchsuwi.",
+    "playstyle": "Unami sin mente colmena: cada miniatura tiene 2 Acciones fijas y la banda junta unos pocos Puntos de Mojo para Dones o Acciones extra. Los Renegados ni generan Puntos de Mojo ni se benefician de ellos.",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "restrictions": [
       "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
       "No más Truenos que el resto de la banda junta.",
@@ -77,6 +81,8 @@
     "name": "Apostadores",
     "page": 7,
     "summary": "Unami fusionados con los espíritus ludópatas del viejo casino: el azar es sagrado y la vida, una apuesta constante.",
+    "playstyle": "Todo al azar: sin Dones de Majauchsuwi, pagan Puntos de Mojo por tirar dos dados al Disparar o jugarse el Combate a par o impar, y pueden repetir una tirada fallida a riesgo de caer si vuelven a fallar. Los Croupiers sustituyen a los Chamanes.",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "restrictions": [
       "Usa Sombras, Truenos y Vientos de los Unami. Sin Chamanes.",
       "No más Truenos que el resto de la banda junta.",
