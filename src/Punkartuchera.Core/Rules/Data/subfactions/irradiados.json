@@ -141,7 +141,7 @@
       { "name": "Rifle de fusión", "kind": "Ranged", "cost": 12, "range": "20/40/60", "strength": "5", "penetration": "5", "rules": ["A dos manos", "Contaminante", "Escasa", "Fusión", "Lentorra (X)"], "page": 10, "notes": "Lentorra (1). Solo la Rebelión Isotópica." }
     ],
     "gear": [
-      { "name": "Munición atómica", "page": 10, "text": "Sustituye a la munición normal o a la de los Irradiados (solo un tipo por miniatura). El arma gana Contaminante, Fusión y Veneno (3)." }
+      { "name": "Munición atómica", "cost": 15, "page": 10, "text": "Precio por bala. Sustituye a la munición normal o a la de los Irradiados (solo un tipo por miniatura). El arma gana Contaminante, Fusión y Veneno (3)." }
     ]
   }
 ]

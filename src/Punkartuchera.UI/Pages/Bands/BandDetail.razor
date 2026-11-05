@@ -66,9 +66,9 @@ else
             {
                 <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Ammo)</span><span class="counter__label">balas</span></span>
             }
-            @if (_band.Members.Any(m => m.Cost is not null))
+            @if (_band.Cost is { } cost)
             {
-                <span class="counter"><span class="counter__value">@_band.Members.Sum(m => m.Cost ?? 0)</span><span class="counter__label">coste</span></span>
+                <span class="counter" title="@(_band.IsReadOnly ? "Del rival solo se sabe el coste total" : null)"><span class="counter__value">@cost</span><span class="counter__label">coste</span></span>
             }
         </div>
     </section>
