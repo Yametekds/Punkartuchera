@@ -1,0 +1,142 @@
+@page "/tutoriales/{Id}"
+@using Punkartuchera.Core.Tutorials
+@inject Rulebook Book
+
+<PageTitle>@(_tutorial?.Title ?? "Tutorial") · Punkartuchera</PageTitle>
+
+@if (_tutorial is not { } tutorial)
+{
+    <section class="punk-empty">
+        <h2>Este tutorial no existe</h2>
+        <p>O te lo has inventado o se lo llevó el viento radiactivo.</p>
+        <a class="btn btn--primary" href="tutoriales">Volver a los tutoriales</a>
+    </section>
+}
+else
+{
+    <header class="page-header rules-back">
+        <a class="btn btn--icon" href="tutoriales" aria-label="Volver a los tutoriales"><Icon Path="@Icons.Back" /></a>
+        <div class="page-header__title">
+            <span class="page-kicker">@tutorial.Kicker</span>
+            <h1 class="page-title distress">@tutorial.Title</h1>
+        </div>
+    </header>
+
+    <p class="tutorial-lead">@tutorial.Summary</p>
+
+    <ol class="tutorial-steps">
+        @foreach (var (step, index) in tutorial.Steps.Select((s, i) => (s, i)))
+        {
+            <li class="paper tutorial-step">
+                <h2 class="tutorial-step__title">
+                    <span class="stamp tutorial-step__number" aria-hidden="true">@(index + 1)</span>
+                    @step.Title
+                </h2>
+
+                @foreach (var block in Blocks(step.Text))
+                {
+                    if (block.IsList)
+                    {
+                        <ul class="tutorial-step__list">
+                            @foreach (var item in block.Lines)
+                            {
+                                <li><RuleProse Text="@item" Explain="false" Inline="true" /></li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <RuleProse Text="@block.Lines[0]" Explain="false" Class="tutorial-step__text" />
+                    }
+                }
+
+                @if (Section(step.TableFrom)?.Table is { } table)
+                {
+                    <RuleTableView Table="table" />
+                }
+
+                @if (step.InApp is not null)
+                {
+                    <p class="notice tutorial-step__app"><span><strong>En la app:</strong> @step.InApp</span></p>
+                }
+
+                @if (step.RuleIds.Count > 0 || step.Link is not null)
+                {
+                    <div class="tutorial-step__refs">
+                        @foreach (var rule in step.RuleIds.Select(Section).OfType<RuleSection>())
+                        {
+                            <a class="source-ref" href="@($"reglas/basicas#{rule.Id}")">@rule.Title</a>
+                        }
+                        @if (step.Link is { } link)
+                        {
+                            <a class="btn btn--ghost tutorial-step__link" href="@link.Href">@link.Label</a>
+                        }
+                    </div>
+                }
+            </li>
+        }
+    </ol>
+
+    <nav class="tutorial-pager" aria-label="Otros tutoriales">
+        @if (Neighbour(-1) is { } previous)
+        {
+            <a class="tutorial-pager__link" href="@($"tutoriales/{previous.Id}")">
+                <small>Anterior</small>
+                <span>@previous.Title</span>
+            </a>
+        }
+        @if (Neighbour(1) is { } next)
+        {
+            <a class="tutorial-pager__link tutorial-pager__link--next" href="@($"tutoriales/{next.Id}")">
+                <small>Siguiente</small>
+                <span>@next.Title</span>
+            </a>
+        }
+    </nav>
+}
+
+@code {
+    [Parameter] public string? Id { get; set; }
+
+    private Tutorial? _tutorial;
+
+    protected override void OnParametersSet() => _tutorial = TutorialCatalog.Find(Id);
+
+    private RuleSection? Section(string? id) => id is null ? null : Book.Sections.FirstOrDefault(s => s.Id == id);
+
+    private Tutorial? Neighbour(int offset)
+    {
+        var all = TutorialCatalog.All;
+        var index = _tutorial is null ? -1 : all.ToList().IndexOf(_tutorial) + offset;
+        return index >= 0 && index < all.Count && _tutorial is not null ? all[index] : null;
+    }
+
+    private sealed record Block(bool IsList, List<string> Lines);
+
+    /// <summary>Agrupa los párrafos seguidos que empiezan por «• » en una sola lista.</summary>
+    private static List<Block> Blocks(IEnumerable<string> paragraphs)
+    {
+        var blocks = new List<Block>();
+        foreach (var paragraph in paragraphs)
+        {
+            if (paragraph.StartsWith("• ", StringComparison.Ordinal))
+            {
+                var item = paragraph[2..];
+                if (blocks.Count > 0 && blocks[^1].IsList)
+                {
+                    blocks[^1].Lines.Add(item);
+                }
+                else
+                {
+                    blocks.Add(new Block(true, [item]));
+                }
+            }
+            else
+            {
+                blocks.Add(new Block(false, [paragraph]));
+            }
+        }
+
+        return blocks;
+    }
+}
