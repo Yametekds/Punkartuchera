@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Tutoriales: índice de guías y pasos numerados sobre papel.
+   Solo usa las variables y texturas de punk-theme.css.
+   ========================================================================== */
+
+.tutorial-lead { max-width: 40rem; margin: 0 0 18px; color: var(--punk-text-muted); }
+
+/* ---------- Índice ---------- */
+
+.tutorial-card {
+    display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-content: start;
+    min-height: 170px;
+}
+.tutorial-card__number {
+    grid-row: span 4;
+    font-family: var(--punk-font-display); font-size: 3.2rem; line-height: 1;
+    color: var(--punk-rust);
+}
+.tutorial-card__kicker { font-size: .9rem; color: var(--punk-ink-muted); }
+.tutorial-card__title {
+    font-family: var(--punk-font-display); font-size: 1.45rem; line-height: 1.1;
+    text-transform: uppercase; letter-spacing: .02em;
+}
+.tutorial-card__summary { font-size: .95rem; }
+.tutorial-card__meta {
+    font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1px;
+    font-size: .78rem; color: var(--punk-ink-muted);
+}
+
+/* ---------- Pasos ---------- */
+
+.tutorial-steps {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 30px;
+    max-width: 46rem;
+}
+.tutorial-step { display: flex; flex-direction: column; gap: 10px; }
+.tutorial-step:nth-child(odd) { transform: rotate(-.4deg); }
+.tutorial-step:nth-child(even) { transform: rotate(.3deg); }
+.tutorial-step__title {
+    display: flex; align-items: center; gap: 12px; margin: 0;
+    font-family: var(--punk-font-display); font-size: 1.3rem; line-height: 1.15;
+    text-transform: uppercase; letter-spacing: .02em; color: var(--punk-ink);
+}
+.tutorial-step__number {
+    flex: none; min-width: 2.2rem; justify-content: center;
+    color: var(--punk-rust); font-size: 1.1rem;
+}
+.tutorial-step__text { margin: 0; }
+.tutorial-step__list { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
+.tutorial-step__list li::marker { color: var(--punk-rust); }
+.tutorial-step__app { margin: 4px 0 0; }
+.tutorial-step__refs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.tutorial-step__link { margin-left: auto; }
+.tutorial-step .rules-table-wrap { margin: 2px 0; }
+
+/* ---------- Anterior / siguiente ---------- */
+
+.tutorial-pager {
+    display: flex; flex-wrap: wrap; gap: var(--punk-gap);
+    max-width: 46rem; margin: 40px 0 24px;
+}
+.tutorial-pager__link {
+    flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px;
+    padding: 12px 14px;
+    background-color: var(--punk-surface); background-image: var(--punk-tex-grain);
+    color: var(--punk-text); text-decoration: none;
+}
+.tutorial-pager__link:hover, .tutorial-pager__link:focus-visible { background-color: var(--punk-surface-2); }
+.tutorial-pager__link small {
+    font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1px;
+    font-size: .75rem; color: var(--punk-text-muted);
+}
+.tutorial-pager__link span { font-family: var(--punk-font-display); font-size: 1.1rem; color: var(--punk-accent); }
+.tutorial-pager__link--next { text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+    .tutorial-step:nth-child(odd), .tutorial-step:nth-child(even) { transform: none; }
+}

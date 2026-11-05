@@ -7,6 +7,7 @@ public static class Icons
     public const string Book = "M4 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4V4zm16 0h-3a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h4V4z";
     public const string Map = "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2V6zm6-2v14m6-12v14";
     public const string Dice = "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4-3.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z";
+    public const string Signpost = "M11 2h2v3h5l3 2.5-3 2.5h-5v2h6v5h-6v5h-2v-5H6l-3-2.5L6 12h5v-2H5V5h6V2z";
     public const string Plus = "M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7V4z";
     public const string Back = "M15 5l-7 7 7 7";
     public const string Camera = "M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zm8 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z";
