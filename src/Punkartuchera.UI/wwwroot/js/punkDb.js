@@ -2,8 +2,8 @@
 // Cada almacén guarda registros { key, value } donde value es siempre un string.
 
 const DB_NAME = 'punkartuchera';
-const DB_VERSION = 1;
-const STORES = ['bands', 'photos'];
+const DB_VERSION = 2;
+const STORES = ['bands', 'photos', 'matches'];
 
 let dbPromise;
 

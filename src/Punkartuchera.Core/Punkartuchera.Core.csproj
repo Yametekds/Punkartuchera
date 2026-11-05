@@ -14,4 +14,8 @@
     <EmbeddedResource Include="Rules\Data\minis.json" LogicalName="Punkartuchera.Rules.minis.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Punkartuchera.Relay.Contracts\Punkartuchera.Relay.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
