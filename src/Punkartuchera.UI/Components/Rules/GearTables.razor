@@ -89,7 +89,7 @@
             {
                 <article class="rule-box rules-anchor" id="@item.Slug">
                     <h3 class="rule-box__title">@item.Name@(item.Cost is null ? "" : $" · {item.Cost} ptos") @FactionStamp(item.FactionId)</h3>
-                    <p class="rules-text">@item.Text</p>
+                    <RuleProse Text="@item.Text" />
                     <SourceRef Source="@item.Source" Page="item.Page" />
                 </article>
             }
@@ -123,5 +123,5 @@
         @<a class="rules-owner" href="@($"reglas/faccion/{factionId}")">@(Book.FindFaction(factionId)?.Name)</a>;
 
     private static RenderFragment? Notes(string? notes) => string.IsNullOrWhiteSpace(notes) ? null :
-        @<span class="rules-note">@notes</span>;
+        @<RuleProse Text="@notes" Class="rules-note" Inline="true" Explain="false" />;
 }

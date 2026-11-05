@@ -360,3 +360,42 @@ public class OfficialMiniTests
         Assert.True(members.Count(m => m.Photo is { Source: PhotoSource.Official }) >= 5);
     }
 }
+
+public class RuleMentionTests
+{
+    private static readonly Rulebook Book = RulebookLoader.LoadEmbedded();
+    private readonly RuleMentions _mentions = new(Book);
+
+    [Fact]
+    public void Finds_special_rules_named_in_a_text()
+    {
+        var pieces = _mentions.Split("Gana Escurridizo y obtiene Ímpetu (2).");
+
+        Assert.Equal(["Gana ", "Escurridizo", " y obtiene ", "Ímpetu (2)", "."], pieces.Select(p => p.Text));
+        Assert.Equal("Escurridizo", pieces[1].Rule!.Name);
+        Assert.Equal("Ímpetu (X)", pieces[3].Rule!.Name);
+    }
+
+    [Fact]
+    public void Ignores_lowercase_words_and_parts_of_words()
+    {
+        Assert.All(_mentions.Split("Una munición escasa, raudos y montadas."), p => Assert.Null(p.Rule));
+    }
+
+    [Fact]
+    public void Whale_oil_explains_slippery()
+    {
+        var oil = Book.FindFaction("craabianos")!.Gear.First(g => g.Name.StartsWith("Aceite"));
+        var rule = Assert.Single(_mentions.Split(oil.Text), p => p.Rule is not null).Rule!;
+        Assert.Equal("Escurridizo", rule.Name);
+        Assert.StartsWith("Se separa del Combate", RuleMentions.Gloss(rule));
+    }
+
+    [Fact]
+    public void Long_rules_are_shortened_for_the_side_note()
+    {
+        var gloss = RuleMentions.Gloss(new SpecialRule { Name = "X", Text = string.Join(' ', Enumerable.Repeat("palabra", 40)) });
+        Assert.True(gloss.Length <= 111);
+        Assert.EndsWith("…", gloss);
+    }
+}
