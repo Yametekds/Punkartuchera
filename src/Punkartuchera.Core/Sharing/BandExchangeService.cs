@@ -30,6 +30,9 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         band.Ownership = BandOwnership.Rival;
         band.SourceId = null;
 
+        band.TotalCost = null;
+        band.KeepOnlyTotalCost();
+
         var package = new BandPackage { Band = band };
         foreach (var member in band.Members)
         {
@@ -113,6 +116,14 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
         var saved = new Dictionary<string, string>();
         var kept = new HashSet<string>();
+
+        foreach (var member in band.Members)
+        {
+            member.Included ??= [];
+        }
+
+        // Archivos antiguos traían el coste por miniatura: se queda solo el total.
+        band.KeepOnlyTotalCost();
 
         foreach (var member in band.Members)
         {
