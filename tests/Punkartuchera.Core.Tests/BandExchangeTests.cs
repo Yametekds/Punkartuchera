@@ -132,7 +132,8 @@ public class BandExchangeTests
         Assert.Equal(["Duro", "Retraso (2)"], leader.Skills);
         Assert.Equal("Tubería", leader.Gear[0].Name);
         Assert.Equal("Oxidada", leader.Gear[0].Notes);
-        Assert.Equal(12, leader.Cost);
+        Assert.Null(leader.Cost);
+        Assert.Equal(rival.TotalCost, band.Members.Sum(m => m.Cost ?? 0));
         Assert.Equal("Cojea", leader.Notes);
         Assert.Null(leader.Photo);
         Assert.Equal(PhotoRef.Stock("cresta"), rival.Members[1].Photo);

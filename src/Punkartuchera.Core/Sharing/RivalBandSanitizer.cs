@@ -78,6 +78,11 @@ public static class RivalBandSanitizer
             };
         }
 
+        // Del rival solo se guarda el coste total: el de cada miniatura dejaría adivinar sus balas.
+        // Archivos antiguos traían el coste por miniatura; se suma antes de borrarlo.
+        band.KeepOnlyTotalCost();
+        band.TotalCost = band.TotalCost is { } total ? Math.Clamp(total, 0, MaxCost) : null;
+
         band.Name = band.Name.Length == 0 ? "Rival sin nombre" : band.Name;
     }
 

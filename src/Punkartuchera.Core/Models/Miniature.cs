@@ -27,7 +27,17 @@ public sealed class Miniature
     /// <summary>Balas disponibles. No se comparte al exportar la banda a un rival.</summary>
     public int Ammo { get; set; }
 
+    /// <summary>Coste total de la miniatura: base, compras y balas.</summary>
     public int? Cost { get; set; }
+
+    /// <summary>Coste base (el de la tropa en el reglamento o el que se puso a mano).</summary>
+    public int? BaseCost { get; set; }
+
+    /// <summary>Equipo y habilidades que ya entran en el coste base y no se pagan aparte.</summary>
+    public List<string> Included { get; set; } = [];
+
+    /// <summary>Precio por bala con el que se calculó <see cref="Cost"/>; nulo si el coste no cuenta las balas.</summary>
+    public int? BulletPrice { get; set; }
 
     public string? Notes { get; set; }
 

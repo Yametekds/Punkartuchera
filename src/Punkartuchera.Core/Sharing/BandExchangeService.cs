@@ -27,6 +27,9 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         band.Ownership = BandOwnership.Rival;
         band.SourceId = null;
 
+        band.TotalCost = null;
+        band.KeepOnlyTotalCost();
+
         var package = new BandPackage { Band = band };
         foreach (var member in band.Members)
         {

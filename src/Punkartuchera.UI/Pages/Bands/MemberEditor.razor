@@ -6,6 +6,7 @@
 @inject BandService Bands
 @inject IRulesCatalog Rules
 @inject RosterBuilder Roster
+@inject UnitCostCalculator Costs
 @inject IPhotoStore Photos
 @inject NavigationManager Navigation
 
@@ -55,7 +56,7 @@ else
                 @if (_picked is not null)
                 {
                     <p class="recruit-picker__summary">
-                        Perfil, coste base, equipo fijo y reglas cargados. Añade las armas y mejoras que compres y súmalas al coste.
+                        Perfil, coste base, equipo fijo y reglas cargados. Lo que compres aparte se suma solo al coste.
                         <a href="@RulesHref(_picked)">Ver su ficha en las reglas</a>
                     </p>
                 }
@@ -78,7 +79,7 @@ else
             </label>
             <label class="field">
                 <span class="field__label">Tipo</span>
-                <input class="field__input" list="member-roles" @bind="_member.Role" maxlength="40" placeholder="Elige o escribe" />
+                <input class="field__input" list="member-roles" @bind="_member.Role" @bind:after="Recalculate" maxlength="40" placeholder="Elige o escribe" />
                 <datalist id="member-roles">
                     @foreach (var role in Rules.Roles)
                     {
@@ -87,8 +88,8 @@ else
                 </datalist>
             </label>
             <label class="field field--narrow">
-                <span class="field__label">Coste</span>
-                <input class="field__input" type="number" min="0" @bind="_member.Cost" />
+                <span class="field__label">Coste base</span>
+                <input class="field__input" type="number" min="0" value="@_member.BaseCost" @onchange="SetBaseCost" />
             </label>
         </section>
 
@@ -104,15 +105,50 @@ else
                 }
             </div>
             <div class="ammo-stepper">
-                <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" />
+                <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" @bind-Value:after="Recalculate" />
+                <span class="ammo-stepper__price">@_cost.BulletPrice ptos por bala</span>
             </div>
         </section>
 
         <section class="paper stack">
             <h2 class="section-title">Habilidades</h2>
-            <TagEditor Items="_member.Skills" Placeholder="Nueva habilidad" />
+            <TagEditor Items="_member.Skills" Placeholder="Nueva habilidad" ItemsChanged="Recalculate" />
             <h2 class="section-title">Equipo</h2>
-            <TagEditor Items="_gearNames" Placeholder="Nuevo equipo" />
+            <TagEditor Items="_gearNames" Placeholder="Nuevo equipo" ItemsChanged="Recalculate" />
+        </section>
+
+        @if (_options.Count > 0)
+        {
+            <section class="paper stack">
+                <h2 class="section-title">Comprar del reglamento</h2>
+                @foreach (var group in _options.GroupBy(o => o.Group))
+                {
+                    <div class="buy-group">
+                        <span class="field__label">@group.Key</span>
+                        <div class="buy-group__list">
+                            @foreach (var option in group)
+                            {
+                                <button type="button" class="buy-option" @onclick="() => Buy(option)">
+                                    @option.Name <span class="buy-option__cost">+@option.Cost</span>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+
+        <section class="paper stack cost-sheet">
+            <h2 class="section-title">Coste de la miniatura</h2>
+            <ul class="cost-sheet__lines">
+                @foreach (var line in _cost.Lines.Where(l => l.Kind != CostLineKind.Unpriced))
+                {
+                    <li class="cost-sheet__line cost-sheet__line--@line.Kind.ToString().ToLowerInvariant()">
+                        <span>@LineLabel(line)</span>
+                        <span class="cost-sheet__points">@LinePoints(line)</span>
+                    </li>
+                }
+            </ul>
         </section>
 
         <section class="paper stack">
@@ -128,6 +164,7 @@ else
         }
 
         <div class="actions actions--sticky">
+            <span class="cost-total" aria-live="polite"><strong>@_cost.Total</strong> ptos</span>
             <button type="button" class="btn btn--primary" disabled="@_saving" @onclick="Save">Guardar</button>
             <a class="btn btn--ghost" href="@BandHref">Cancelar</a>
             @if (!IsNew)
@@ -153,6 +190,8 @@ else
     private string? _error;
 
     private IReadOnlyList<TroopChoice> _choices = [];
+    private IReadOnlyList<PurchaseOption> _options = [];
+    private UnitCost _cost = new([], UnitCostCalculator.DefaultBulletPrice);
     private TroopChoice? _picked;
     private string _choiceKey = string.Empty;
 
@@ -176,6 +215,8 @@ else
             _gearNames = _member?.Gear.Select(g => g.Name).ToList() ?? [];
             _choices = Roster.ChoicesFor(_band.FactionId, _band.SubfactionId);
         }
+
+        Recalculate();
 
         _loading = false;
     }
@@ -204,6 +245,76 @@ else
         filled.Ammo = _member.Ammo;
         _member = filled;
         _gearNames = _member.Gear.Select(g => g.Name).ToList();
+        Recalculate();
+    }
+
+    /// <summary>Vuelve a calcular el coste y las compras posibles con lo que hay ahora en la ficha.</summary>
+    private void Recalculate()
+    {
+        if (_member is null || _band is null)
+        {
+            return;
+        }
+
+        SyncGear();
+        _cost = Costs.Calculate(_member, _band.FactionId, _band.SubfactionId);
+        _options = Costs.OptionsFor(_member.Role, _band.FactionId, _band.SubfactionId);
+    }
+
+    private void SetBaseCost(ChangeEventArgs e)
+    {
+        if (_member is null)
+        {
+            return;
+        }
+
+        if (_member.BaseCost is null)
+        {
+            // Ficha de antes: lo que ya llevaba queda dentro del coste base.
+            _member.Included = [.. _gearNames, .. _member.Skills];
+        }
+
+        _member.BaseCost = int.TryParse(e.Value?.ToString(), out var value) ? Math.Max(0, value) : 0;
+        Recalculate();
+    }
+
+    private void Buy(PurchaseOption option)
+    {
+        if (_member is null)
+        {
+            return;
+        }
+
+        var list = option.IsSkill ? _member.Skills : _gearNames;
+        list.Add(option.Name);
+        Recalculate();
+    }
+
+    private static string LineLabel(CostLine line) => line.Kind switch
+    {
+        CostLineKind.Ammo => $"{line.Quantity} {(line.Quantity == 1 ? "bala" : "balas")}",
+        CostLineKind.Included => $"{line.Label} (incluido)",
+        _ => line.Label,
+    };
+
+    private static string LinePoints(CostLine line) => line.Kind switch
+    {
+        CostLineKind.Base => line.Points.ToString(),
+        CostLineKind.Included => "0",
+        _ => $"+{line.Points}",
+    };
+
+    private void SyncGear()
+    {
+        if (_member is null)
+        {
+            return;
+        }
+
+        var notesByName = _member.Gear.GroupBy(g => g.Name).ToDictionary(g => g.Key, g => g.First().Notes);
+        _member.Gear = _gearNames
+            .Select(name => new Equipment { Name = name, Notes = notesByName.GetValueOrDefault(name) })
+            .ToList();
     }
 
     private static string RulesHref(TroopChoice choice) => choice.Owner.IsSubfaction
@@ -221,10 +332,8 @@ else
         _saving = true;
         try
         {
-            var notesByName = _member.Gear.GroupBy(g => g.Name).ToDictionary(g => g.Key, g => g.First().Notes);
-            _member.Gear = _gearNames
-                .Select(name => new Equipment { Name = name, Notes = notesByName.GetValueOrDefault(name) })
-                .ToList();
+            SyncGear();
+            _cost = Costs.Apply(_member, _band.FactionId, _band.SubfactionId);
 
             await Bands.SaveMemberAsync(_band, _member);
             _saved = true;
