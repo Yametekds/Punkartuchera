@@ -3,6 +3,7 @@
     "id": "carroneros",
     "name": "Carroñeros",
     "summary": "Chatarreros nómadas que reniegan de Samanthia y de los cachivaches: rebuscan en las ruinas del Mundo de Antaño con vigías, trampas y Sondas muy apañados.",
+    "bannedGear": [{ "names": ["Puño balístico", "Bombeadora"] }],
     "restrictions": [
       "Usa Pistones, Engranajes y Sondas de los Chatarreros. Sin Dinamos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -43,6 +44,8 @@
     "extras": [
       {
         "title": "Habilidades de Sonda", "page": 3,
+        "perBand": 1, "perBandExcept": ["Infiltrador", "Velocista"],
+        "buyers": [{ "troop": "Sonda", "max": 2 }],
         "items": [
           { "name": "Acusica", "cost": 5, "text": "Los aliados que le ven cuentan con Línea de visión hacia los enemigos que él ve a la hora de Asaltarlos." },
           { "name": "Ajustador", "cost": 6, "text": "Con Infiltración puede aparecer en cualquier Turno, también después del cuarto." },
@@ -61,6 +64,7 @@
     "id": "innovadores",
     "name": "Innovadores",
     "summary": "Los inventores secretos de Samantha, por fin a la vista tras la caída de Liberty City: exoarmaduras de vapor que asustan… y a veces revientan.",
+    "bannedGear": [{ "names": ["Puño balístico", "Lanzaarpones"], "troops": ["Pistón"] }],
     "restrictions": [
       "Usa Pistones y Dinamos de los Chatarreros. Sin Engranajes ni Sondas.",
       "Puede usar las tropas propias de la subfacción.",

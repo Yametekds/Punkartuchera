@@ -4,6 +4,7 @@
     "name": "Freak Show",
     "page": 1,
     "summary": "Los marginados entre los marginados han hecho de su rareza el espectáculo… y su arma contra las otras bandas.",
+    "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas, Domadores, Forzudos y Jefes de pista de la Troupe. Sin Pachachos.",
       "No pueden adquirir Artículos de coña.",
@@ -34,6 +35,7 @@
     "extras": [
       {
         "title": "Rarezas", "page": 3,
+        "buyers": [{ "troop": "Bicho raro", "minPoints": 10, "maxPoints": 30 }, { "troop": "*", "maxPoints": 15 }],
         "items": [
           { "name": "Ancas", "cost": 16, "text": "Salto." },
           { "name": "Enanismo", "cost": 5, "text": "Las Coberturas de tamaño 1 le cuentan como de tamaño 2. No combina con Gigantismo." },
@@ -57,6 +59,7 @@
     "name": "Ilusionistas",
     "page": 4,
     "summary": "Prestidigitadores que buscan el asombro, no la risa, y usan sus trucos para liar al enemigo.",
+    "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas, Domadores y Jefes de pista de la Troupe. Sin Pachachos ni Forzudos.",
       "No pueden adquirir Artículos de coña.",
@@ -108,6 +111,7 @@
     "name": "Cirque du No-sé",
     "page": 7,
     "summary": "Acróbatas, trapecistas, malabaristas y funambulistas que imitan las leyendas de un circo del Mundo de Antaño cuyo nombre nadie recuerda.",
+    "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas y Jefes de pista de la Troupe. Sin Pachachos, Forzudos ni Domadores.",
       "Los Acróbatas no pueden adquirir Artículos de coña.",
@@ -122,6 +126,8 @@
     "extras": [
       {
         "title": "Especialidades de Acróbata", "page": 8,
+        "perBand": 3,
+        "buyers": [{ "troop": "Acróbata", "min": 1, "max": 1 }],
         "items": [
           { "name": "Acróbata", "cost": 5, "text": "Catapulta infernal, si su pareja también la tiene." },
           { "name": "Funambulista", "cost": 12, "text": "Ataca con su pértiga a un enemigo a 5 cm visible, sin Cobertura ni trabado, como en cuerpo a cuerpo sin llegar a contactar (F3, Pen 1). En contacto cuenta como arma improvisada. No lleva otras armas." },
