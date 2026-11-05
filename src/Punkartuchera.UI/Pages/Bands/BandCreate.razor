@@ -56,6 +56,11 @@
             </fieldset>
         }
 
+        @if (FactionBrief.For(Book, chosen.Id, _subfactionId) is { } brief)
+        {
+            <FactionBriefPanel Brief="brief" OpenRulesInNewTab="true" />
+        }
+
         @if (ListsFor(chosen.Id) is { Count: > 0 } lists && _subfactionId is null)
         {
             <fieldset class="field">

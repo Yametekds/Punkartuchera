@@ -207,3 +207,49 @@
     color: var(--punk-ink-muted); text-decoration: none;
 }
 .rule-gloss:hover, .rule-gloss:focus-visible { color: var(--punk-rust); text-decoration: underline; }
+
+/* Resumen de facción o subfacción (sobre papel) */
+.faction-brief {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 14px 0 4px;
+    border-top: 3px dashed rgba(29, 23, 18, .35);
+    color: var(--punk-ink);
+}
+.faction-brief__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.faction-brief__kicker {
+    flex-basis: 100%;
+    font-family: var(--punk-font-display); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--punk-rust);
+}
+.faction-brief__name { margin: 0; font-family: var(--punk-font-heading); font-size: 1.6rem; line-height: 1.1; }
+.faction-brief__summary { margin: 0; max-width: 65ch; font-weight: 600; }
+.faction-brief__play { margin: 0; max-width: 65ch; }
+.faction-brief__facts { margin: 4px 0 0; display: grid; gap: 10px; }
+.faction-brief__facts dt {
+    font-family: var(--punk-font-display); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--punk-ink-muted); margin-bottom: 4px;
+}
+.faction-brief__facts dd { margin: 0; max-width: 70ch; }
+.faction-brief__cost { font-variant-numeric: tabular-nums; opacity: .7; font-size: .8rem; }
+.faction-brief__rules { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.faction-brief__rules strong { color: var(--punk-rust); }
+.faction-brief__limits summary { cursor: pointer; font-weight: 600; }
+.faction-brief__limits .rules-restrictions { margin-top: 8px; }
+.faction-brief__link { align-self: flex-start; color: var(--punk-ink); font-weight: 600; }
+.band-brief { margin: 18px 0; }
+.band-brief .faction-brief { border-top: 0; padding-top: 0; }
+.rules-hero__play { margin: 0; max-width: 70ch; }
+.rules-hero__play strong { color: var(--punk-rust); }
+
+/* Tropas de una subfacción: las que toma de su facción y las propias */
+.subfaction-roster { display: grid; gap: 12px 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); margin-bottom: 8px; }
+.subfaction-roster__title {
+    margin: 0 0 6px; font-family: var(--punk-font-display); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--punk-accent);
+}
+.subfaction-roster__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.subfaction-roster__list li { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px dashed var(--punk-border); }
+.subfaction-roster__list a { color: var(--punk-text); font-weight: 600; }
+.subfaction-roster__cost { color: var(--punk-text-muted); font-size: .88rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.faction-brief__legend { margin: 0; font-size: .82rem; color: var(--punk-ink-muted); }
+.faction-brief__legend .tag { font-size: .75rem; padding: 1px 6px; }

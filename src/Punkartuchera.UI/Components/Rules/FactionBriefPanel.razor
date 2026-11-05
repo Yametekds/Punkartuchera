@@ -1,0 +1,132 @@
+@* Resumen de una facción o subfacción sobre papel: de qué va, cómo se juega, tropas, reglas y límites. *@
+
+<section class="faction-brief" aria-labelledby="@HeadingId">
+    <div class="faction-brief__head">
+        <span class="faction-brief__kicker">@(Brief.Parent is null ? "Así juega la facción" : $"Subfacción de {Brief.Parent.Name}")</span>
+        <h2 class="faction-brief__name" id="@HeadingId">@Brief.Faction.Name</h2>
+        @if (Brief.Faction.Beta || Brief.Parent?.Beta == true)
+        {
+            <span class="stamp stamp--ink">Beta</span>
+        }
+    </div>
+
+    <p class="faction-brief__summary">@Brief.Faction.Summary</p>
+    @if (Brief.Faction.Playstyle is { } playstyle)
+    {
+        <p class="faction-brief__play">@playstyle</p>
+    }
+
+    <dl class="faction-brief__facts">
+        @if (Brief.TroopLine is { } troopLine)
+        {
+            <div>
+                <dt>De @Brief.Parent!.Name</dt>
+                <dd>@troopLine</dd>
+            </div>
+        }
+
+        @if (Brief.Troops.Count > 0)
+        {
+            <div>
+                <dt>Tropas @(Brief.CostRange is { } range && range.Min != range.Max ? $"· de {range.Min} a {range.Max} ptos" : null)</dt>
+                <dd>
+                    <ul class="tags">
+                        @foreach (var troop in Brief.Troops)
+                        {
+                            <li class="tag @(IsOwn(troop) ? "tag--skill" : null)">@troop.Name <span class="faction-brief__cost">@troop.Cost</span></li>
+                        }
+                    </ul>
+                </dd>
+            </div>
+        }
+
+        @if (Brief.Personalities.Count > 0)
+        {
+            <div>
+                <dt>@(Brief.Faction.Troops.All(t => t.Personality) && Brief.Parent is null ? "Personajes" : "Personalidades")</dt>
+                <dd>
+                    <ul class="tags">
+                        @foreach (var troop in Brief.Personalities)
+                        {
+                            <li class="tag @(IsOwn(troop) ? "tag--skill" : null)">@troop.Name <span class="faction-brief__cost">@troop.Cost</span></li>
+                        }
+                    </ul>
+                </dd>
+            </div>
+        }
+
+        @if (Brief.KeyRules.Count > 0)
+        {
+            <div>
+                <dt>@(Brief.Parent is null ? "Reglas de facción" : "Reglas propias")</dt>
+                <dd>
+                    <ul class="faction-brief__rules">
+                        @foreach (var rule in Brief.KeyRules)
+                        {
+                            <li><strong>@rule.Name.</strong> @rule.Summary</li>
+                        }
+                    </ul>
+                </dd>
+            </div>
+        }
+
+        @if (Brief.CommonSpecialRules.Count > 0)
+        {
+            <div>
+                <dt>Habitual en sus tropas</dt>
+                <dd>
+                    <ul class="tags">
+                        @foreach (var rule in Brief.CommonSpecialRules)
+                        {
+                            <li class="tag">@rule</li>
+                        }
+                    </ul>
+                </dd>
+            </div>
+        }
+
+        @if (Brief.Faction.Extras.Count > 0)
+        {
+            <div>
+                <dt>Listas propias</dt>
+                <dd>@string.Join(" · ", Brief.Faction.Extras.Select(e => e.Title))</dd>
+            </div>
+        }
+    </dl>
+
+    @if (Brief.OwnTroops.Count > 0)
+    {
+        <p class="faction-brief__legend"><span class="tag tag--skill">Rombo</span> = tropa propia de @Brief.Faction.Name</p>
+    }
+
+    @if (Brief.Restrictions.Count > 0)
+    {
+        <details class="faction-brief__limits">
+            <summary>Límites de la banda (@Brief.Restrictions.Count)</summary>
+            <ul class="rules-restrictions">
+                @foreach (var restriction in Brief.Restrictions)
+                {
+                    <li>@restriction</li>
+                }
+            </ul>
+        </details>
+    }
+
+    @if (ShowRulesLink)
+    {
+        <a class="faction-brief__link" href="@Brief.RulesHref" target="@(OpenRulesInNewTab ? "_blank" : null)">Reglas completas de @Brief.Faction.Name</a>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired] public FactionBrief Brief { get; set; } = default!;
+
+    [Parameter] public bool ShowRulesLink { get; set; } = true;
+
+    /// <summary>En formularios, para no perder lo escrito al consultar las reglas.</summary>
+    [Parameter] public bool OpenRulesInNewTab { get; set; }
+
+    private string HeadingId => $"brief-{Brief.Faction.Id}";
+
+    private bool IsOwn(Troop troop) => Brief.OwnTroops.Contains(troop);
+}

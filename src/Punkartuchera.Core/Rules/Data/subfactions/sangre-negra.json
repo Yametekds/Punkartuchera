@@ -3,6 +3,8 @@
     "id": "crematorio",
     "name": "Crematorio",
     "summary": "La rama más fanática de Cunnilingus: ya no adoran la Sangre Negra sino el fuego, y disfrutan quemando enemigos y quemándose ellos.",
+    "playstyle": "Fuego por todas partes: cualquier arma cuerpo a cuerpo puede ser flamígera gratis y cada miniatura Abatida por llamas da marcadores para que la banda actúe antes. Sin Chispas ni Ascuas; los Pirómanos y Chamusquina ponen las llamas.",
+    "baseTroops": ["Ceniza", "Quemado", "Guardián de la Llama"],
     "restrictions": [
       "Usa Cenizas, Quemados y Guardianes de la Llama. Sin Chispas ni Ascuas.",
       "Puede usar las tropas propias de la subfacción.",
@@ -48,6 +50,8 @@
     "id": "nuevos-hijos",
     "name": "Nuevos Hijos",
     "summary": "Los seguidores de Rogelio en la Fortaleza del Cielo: melenudos, ricos de vender combustible y con balas de sobra para motivar a la tropa.",
+    "playstyle": "Banda rica: puedes guardar puntos sin gastar y usarlos durante la partida para mejorar activaciones. No llevan lanzallamas ni cócteles molotov y pueden sumar hasta dos miniaturas entre Mercenarios y Personalidades.",
+    "baseTroops": ["Ceniza", "Ascua", "Chispa", "Guardián de la Llama"],
     "restrictions": [
       "Usa Cenizas (E95), Ascuas (E98), Chispas (Diésel) y Guardianes de la Llama (Surtidor). Sin Quemados.",
       "Sin lanzallamas ni cócteles molotov.",
@@ -86,6 +90,8 @@
     "id": "rugientes",
     "name": "Rugientes",
     "summary": "Los moteros exploradores de Cunnilingus: Chispas en moto, sidecar o quad con Cenizas de paquete que se tiran contra el enemigo con lanzatruenos.",
+    "playstyle": "Toda la banda motorizada: los Chispas empiezan montados y llevan a un Ceniza de paquete que dispara la lanzatrueno hasta bajarse. Banda pequeña y muy rápida, sin Mercenarios.",
+    "baseTroops": ["Ceniza", "Chispa"],
     "restrictions": [
       "Solo Cenizas y Chispas de los Hijos de la Sangre Negra.",
       "Máximo una Personalidad; no admite Mercenarios.",

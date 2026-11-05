@@ -5,6 +5,7 @@
   "page": 81,
   "isMercenaries": true,
   "summary": "Tipos que venden su arma al mejor postor. Se pueden unir a cualquier banda (salvo que digan lo contrario).",
+  "playstyle": "No forman banda propia: se contrata como mucho uno por banda, con el equipo cerrado e incluido en el coste salvo las balas. No usan ni se benefician de las reglas o el equipo de la banda que los contrata.",
   "restrictions": [
     "Como máximo un Mercenario por banda, pagando sus puntos y contando para el máximo de miniaturas.",
     "No usan ni se benefician de reglas o equipo de la banda (balas apañadas, poderes, inmunidades, walkie-talkie…).",

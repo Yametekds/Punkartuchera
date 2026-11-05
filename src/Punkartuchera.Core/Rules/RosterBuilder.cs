@@ -14,15 +14,18 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
     {
     }
 
-    /// <summary>Tropas que puede reclutar una banda: las de su facción, las de su subfacción y los mercenarios.</summary>
+    /// <summary>
+    /// Tropas que puede reclutar una banda: las de su facción (solo las que admite su subfacción),
+    /// las propias de la subfacción y los mercenarios.
+    /// </summary>
     public IReadOnlyList<TroopChoice> ChoicesFor(string? factionId, string? subfactionId = null)
     {
         var choices = new List<TroopChoice>();
         var faction = book.FindFaction(factionId);
         if (faction is not null)
         {
-            choices.AddRange(faction.Troops.Select(t => new TroopChoice(faction, t)));
             var subfaction = faction.Subfactions.FirstOrDefault(s => s.Id == subfactionId);
+            choices.AddRange(FactionBrief.BaseTroopsFor(faction, subfaction).Select(t => new TroopChoice(faction, t)));
             if (subfaction is not null)
             {
                 choices.AddRange(subfaction.Troops.Select(t => new TroopChoice(subfaction, t)));

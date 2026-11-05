@@ -201,6 +201,12 @@ else
                             }
                         </div>
                     </div>
+                    @if (FactionBrief.For(Book, _band.FactionId, _band.SubfactionId) is { } brief)
+                    {
+                        <div class="paper band-brief">
+                            <FactionBriefPanel Brief="brief" />
+                        </div>
+                    }
                     <div class="actions">
                         @if (!_band.IsReadOnly)
                         {

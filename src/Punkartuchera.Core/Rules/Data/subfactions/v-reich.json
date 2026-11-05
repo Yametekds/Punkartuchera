@@ -3,6 +3,8 @@
     "id": "division-cientifica",
     "name": "División Científica",
     "summary": "Los laboratorios del V Reich que intentan crear al humano perfecto. Casi todo sale mal, pero los engendros también sirven de carne de cañón.",
+    "playstyle": "Experimentos de laboratorio: Engendros, Subhumanos científicos con Modificaciones y Tierdoktors que los azuzan, con Übersoldats y un Mariscal al mando. Sin Soldats ni Sanitarios, y Engendros y Subhumanos no compran equipo genérico.",
+    "baseTroops": ["Mariscal", "Subhumano", "Übersoldat"],
     "restrictions": [
       "Usa Mariscales, Subhumanos (ver Modificaciones) y Übersoldats. Sin Soldats ni Sanitarios.",
       "Puede usar las tropas propias de la subfacción.",
@@ -63,6 +65,8 @@
     "id": "fuerte-thule",
     "name": "Fuerte Thule",
     "summary": "La nueva base del V Reich en el sur, al mando de la joven Eva: tiran de reclutas locales sin foguear que se acojonan cuando cae alguien.",
+    "playstyle": "Reclutas baratos e inexpertos para llenar filas, con Soldats, Sanitarios y un Mariscal de núcleo y Eva y UNO como personalidad. Los Übersoldats pierden el filo medio pero pueden llevar escudo. Sin Subhumanos.",
+    "baseTroops": ["Mariscal", "Sanitario", "Soldat", "Übersoldat"],
     "restrictions": [
       "Usa Mariscales, Sanitarios y Soldats. Los Übersoldats no tienen filo medio pero pueden llevar escudo por 6 puntos. Sin Subhumanos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -102,6 +106,8 @@
     "id": "organizacion-kraken",
     "name": "Organización Kraken",
     "summary": "La sección marginal del V Reich que sigue a Casco Rojo, convencida de que una amenaza submarina viene a por la humanidad. Tecnología de Xerum 515 y la Campana.",
+    "playstyle": "Tecnología rara del V Reich: Ingenieros baratos, Gólems y el equipo de Xerum 515, con Casco Rojo al mando. Sin Übersoldats.",
+    "baseTroops": ["Mariscal", "Sanitario", "Soldat", "Subhumano"],
     "restrictions": [
       "Usa Mariscales, Sanitarios, Soldats y Subhumanos. Sin Übersoldats.",
       "Puede usar las tropas propias de la subfacción.",
