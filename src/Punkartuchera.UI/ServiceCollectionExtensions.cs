@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRulesCatalog, RulebookCatalog>();
         services.AddSingleton<RulesSearch>();
         services.AddSingleton<GearLookup>();
+        services.AddSingleton<UnitCostCalculator>();
         services.AddSingleton(sp => new RosterBuilder(sp.GetRequiredService<Rulebook>(), sp.GetRequiredService<IRulesCatalog>()));
         services.AddScoped<FragmentScroller>();
         services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();

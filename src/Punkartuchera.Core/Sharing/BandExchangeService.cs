@@ -19,9 +19,6 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
     /// <summary>Tamaño máximo aceptado al importar.</summary>
     public const long MaxFileBytes = 20 * 1024 * 1024;
 
-    private static readonly HashSet<string> AllowedPhotoTypes =
-        new(StringComparer.OrdinalIgnoreCase) { "image/jpeg", "image/png", "image/webp" };
-
     public async Task<ExportedBand> ExportAsync(Guid bandId, CancellationToken cancellationToken = default)
     {
         var source = await GetExportableAsync(bandId, cancellationToken);
@@ -29,6 +26,9 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         band.Notes = null;
         band.Ownership = BandOwnership.Rival;
         band.SourceId = null;
+
+        band.TotalCost = null;
+        band.KeepOnlyTotalCost();
 
         var package = new BandPackage { Band = band };
         foreach (var member in band.Members)
@@ -73,7 +73,8 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
     {
         var package = await ReadAsync(content, cancellationToken);
         var packaged = package.Photos
-            .Where(p => AllowedPhotoTypes.Contains(p.ContentType) && p.Data.Length > 0)
+            .OfType<PackagedPhoto>()
+            .Where(p => !string.IsNullOrEmpty(p.Key) && RivalBandSanitizer.IsImage(p.Data, p.ContentType))
             .GroupBy(p => p.Key)
             .ToDictionary(g => g.Key, g => g.First());
         return await SaveRivalAsync(package.Band, packaged, cancellationToken);
@@ -102,11 +103,9 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         var previous = (await bands.GetAllAsync(cancellationToken))
             .FirstOrDefault(b => b.IsReadOnly && b.SourceId == sourceId);
 
+        RivalBandSanitizer.Sanitize(band, rules);
         band.Id = previous?.Id ?? Guid.NewGuid();
         band.SourceId = sourceId;
-        band.Ownership = BandOwnership.Rival;
-        band.Notes = null;
-        band.Name = string.IsNullOrWhiteSpace(band.Name) ? "Rival sin nombre" : band.Name.Trim();
         band.CreatedAt = previous?.CreatedAt ?? DateTimeOffset.UtcNow;
         band.UpdatedAt = DateTimeOffset.UtcNow;
         band.SchemaVersion = Band.CurrentSchemaVersion;
@@ -116,10 +115,6 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
         foreach (var member in band.Members)
         {
-            member.Ammo = 0;
-            member.Stats ??= [];
-            member.Skills ??= [];
-            member.Gear ??= [];
             if (member.Photo is null
                 && previous?.Members.FirstOrDefault(m => m.Name == member.Name)?.Photo is { Source: PhotoSource.Stored } earlier)
             {
@@ -166,10 +161,13 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
     private static async Task<BandPackage> ReadAsync(Stream content, CancellationToken cancellationToken)
     {
+        // Se lee con tope: quien llame no tiene por qué haber limitado el tamaño del flujo.
+        using var buffer = await ReadLimitedAsync(content, MaxFileBytes, cancellationToken);
+
         BandPackage? package;
         try
         {
-            package = await JsonSerializer.DeserializeAsync(content, PunkJsonContext.Default.BandPackage, cancellationToken);
+            package = await JsonSerializer.DeserializeAsync(buffer, PunkJsonContext.Default.BandPackage, cancellationToken);
         }
         catch (JsonException)
         {
@@ -189,6 +187,26 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         package.Band.Members ??= [];
         package.Photos ??= [];
         return package;
+    }
+
+    private static async Task<MemoryStream> ReadLimitedAsync(Stream content, long maxBytes, CancellationToken cancellationToken)
+    {
+        var buffer = new MemoryStream();
+        var chunk = new byte[81920];
+        int read;
+        while ((read = await content.ReadAsync(chunk, cancellationToken)) > 0)
+        {
+            if (buffer.Length + read > maxBytes)
+            {
+                await buffer.DisposeAsync();
+                throw new BandExchangeException("El archivo pesa demasiado para ser una banda.");
+            }
+
+            buffer.Write(chunk, 0, read);
+        }
+
+        buffer.Position = 0;
+        return buffer;
     }
 
     private static string FileNameFor(string bandName)

@@ -20,6 +20,15 @@ public static class BandQrCodec
     /// </summary>
     public const int MaxLength = 2400;
 
+    /// <summary>Lo más que cabe en un QR (versión 40, modo alfanumérico). Un texto más largo no viene de un QR.</summary>
+    public const int MaxReadLength = 4296;
+
+    /// <summary>
+    /// Tope del JSON descomprimido. Una banda normal ocupa unos pocos KB; sin tope, un QR pequeño
+    /// podría descomprimirse en megas (bomba de descompresión).
+    /// </summary>
+    public const int MaxJsonBytes = 64 * 1024;
+
     /// <exception cref="BandExchangeException">Si la banda no cabe ni quitando las notas.</exception>
     public static BandQrPayload Encode(Band band, IReadOnlyList<string> statOrder)
     {
@@ -53,7 +62,7 @@ public static class BandQrCodec
     public static Band Decode(string text)
     {
         text = text.Trim();
-        if (!LooksLikeBand(text))
+        if (!LooksLikeBand(text) || text.Length > MaxReadLength)
         {
             throw new BandExchangeException("Ese QR no es una banda de Punkartuchera.");
         }
@@ -67,8 +76,8 @@ public static class BandQrCodec
                 throw new InvalidDataException();
             }
 
-            using var input = new DeflateStream(new MemoryStream(bytes, 4, bytes.Length - 4), CompressionMode.Decompress);
-            compact = JsonSerializer.Deserialize(input, QrJsonContext.Default.CompactBand);
+            var json = Inflate(bytes.AsSpan(4).ToArray(), MaxJsonBytes);
+            compact = JsonSerializer.Deserialize(json, QrJsonContext.Default.CompactBand);
         }
         catch (Exception ex) when (ex is FormatException or InvalidDataException or JsonException or IOException)
         {
@@ -78,6 +87,26 @@ public static class BandQrCodec
         return compact is null
             ? throw new BandExchangeException("El QR se ha leído mal. Acércate un poco y vuelve a escanearlo.")
             : FromCompact(compact);
+    }
+
+    /// <summary>Descomprime sin pasar de <paramref name="maxBytes"/>.</summary>
+    /// <exception cref="InvalidDataException">Si el resultado sería más grande.</exception>
+    private static byte[] Inflate(byte[] compressed, int maxBytes)
+    {
+        using var input = new DeflateStream(new MemoryStream(compressed), CompressionMode.Decompress);
+        var output = new byte[maxBytes + 1];
+        var total = 0;
+        int read;
+        while ((read = input.Read(output, total, output.Length - total)) > 0)
+        {
+            total += read;
+            if (total > maxBytes)
+            {
+                throw new InvalidDataException("El contenido del QR es demasiado grande.");
+            }
+        }
+
+        return output[..total];
     }
 
     private static string Pack(CompactBand compact)
@@ -107,6 +136,7 @@ public static class BandQrCodec
             Id = band.Id.ToString("N"),
             Name = band.Name,
             Faction = band.FactionId,
+            TotalCost = band.Cost,
             StatKeys = keys,
             Members = band.Members.Select(m => new CompactMember
             {
@@ -115,7 +145,6 @@ public static class BandQrCodec
                 Stats = keys.Select(k => m.Stats.TryGetValue(k, out var v) ? v : (int?)null).ToList(),
                 Skills = m.Skills.Count == 0 ? null : m.Skills,
                 Gear = m.Gear.Select(g => string.IsNullOrWhiteSpace(g.Notes) ? new List<string> { g.Name } : [g.Name, g.Notes]).ToList(),
-                Cost = m.Cost,
                 Notes = NullIfEmpty(m.Notes),
                 Portrait = m.Photo is { Source: PhotoSource.Stock } photo ? photo.Key : null,
             }).ToList(),
@@ -125,21 +154,23 @@ public static class BandQrCodec
     private static Band FromCompact(CompactBand compact)
     {
         var keys = compact.StatKeys ?? [];
-        return new Band
+        var band = new Band
         {
             Id = Guid.TryParseExact(compact.Id, "N", out var id) ? id : Guid.NewGuid(),
             Name = compact.Name ?? string.Empty,
             FactionId = compact.Faction ?? string.Empty,
             Ownership = BandOwnership.Rival,
-            Members = (compact.Members ?? []).Select(m =>
+            TotalCost = compact.TotalCost,
+            // El JSON puede traer nulos donde no debería: se saltan en vez de romper.
+            Members = (compact.Members ?? []).OfType<CompactMember>().Select(m =>
             {
                 var member = new Miniature
                 {
                     Name = m.Name ?? string.Empty,
                     Role = m.Role ?? string.Empty,
-                    Skills = m.Skills ?? [],
+                    Skills = (m.Skills ?? []).OfType<string>().ToList(),
                     Gear = (m.Gear ?? [])
-                        .Where(g => g.Count > 0)
+                        .Where(g => g is { Count: > 0 } && g[0] is not null)
                         .Select(g => new Equipment { Name = g[0], Notes = g.Count > 1 ? g[1] : null })
                         .ToList(),
                     Cost = m.Cost,
@@ -149,15 +180,19 @@ public static class BandQrCodec
                 var stats = m.Stats ?? [];
                 for (var i = 0; i < Math.Min(keys.Count, stats.Count); i++)
                 {
-                    if (stats[i] is { } value)
+                    if (stats[i] is { } value && keys[i] is { } key)
                     {
-                        member.Stats[keys[i]] = value;
+                        member.Stats[key] = value;
                     }
                 }
 
                 return member;
             }).ToList(),
         };
+
+        // Códigos antiguos traían el coste por miniatura: se queda solo el total.
+        band.KeepOnlyTotalCost();
+        return band;
     }
 
     private static string? NullIfEmpty(string? value) => string.IsNullOrWhiteSpace(value) ? null : value;
@@ -173,6 +208,8 @@ internal sealed class CompactBand
     [JsonPropertyName("n")] public string? Name { get; set; }
 
     [JsonPropertyName("f")] public string? Faction { get; set; }
+
+    [JsonPropertyName("t")] public int? TotalCost { get; set; }
 
     [JsonPropertyName("k")] public List<string>? StatKeys { get; set; }
 
