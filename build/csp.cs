@@ -6,9 +6,13 @@
 // service worker) se autorizan uno a uno por su hash SHA-256: cualquier otro script en
 // línea, por ejemplo uno inyectado, el navegador no lo ejecuta.
 //
+// Si junto al index.html hay un appsettings.json con Relay:BaseUrl (el relé de partidas en
+// línea), se permite conectar con ese origen y con Azure SignalR Service.
+//
 // Uso: dotnet run build/csp.cs -- <ruta a index.html> [más archivos .html]
 
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -35,6 +39,13 @@ foreach (var path in args)
         .Distinct()
         .ToList();
 
+    var connect = new List<string> { "'self'" };
+    if (RelayOrigin(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(path))!, "appsettings.json")) is { } relay)
+    {
+        // El relé da la dirección de SignalR al negociar: <nombre>.service.signalr.net, por HTTPS y WebSocket.
+        connect.AddRange([relay, "https://*.service.signalr.net", "wss://*.service.signalr.net"]);
+    }
+
     string[] policy =
     [
         "default-src 'self'",
@@ -46,7 +57,7 @@ foreach (var path in args)
         // data: y blob: para las fotos guardadas y el encuadre; la tienda oficial para las fotos de las miniaturas.
         "img-src 'self' data: blob: https://www.badrollgames.com",
         "media-src 'self' blob:",
-        "connect-src 'self'",
+        $"connect-src {string.Join(' ', connect)}",
         "worker-src 'self'",
         "manifest-src 'self'",
         "object-src 'none'",
@@ -69,3 +80,20 @@ foreach (var path in args)
 }
 
 return 0;
+
+// Origen (esquema, host y puerto) del relé configurado, o null si no hay.
+static string? RelayOrigin(string appSettingsPath)
+{
+    if (!File.Exists(appSettingsPath))
+    {
+        return null;
+    }
+
+    using var json = JsonDocument.Parse(File.ReadAllText(appSettingsPath));
+    return json.RootElement.TryGetProperty("Relay", out var relay)
+        && relay.TryGetProperty("BaseUrl", out var url)
+        && Uri.TryCreate(url.GetString(), UriKind.Absolute, out var uri)
+        && uri.Scheme is "https" or "http"
+        ? uri.GetLeftPart(UriPartial.Authority)
+        : null;
+}
