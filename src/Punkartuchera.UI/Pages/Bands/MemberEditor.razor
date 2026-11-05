@@ -7,6 +7,7 @@
 @inject IRulesCatalog Rules
 @inject RosterBuilder Roster
 @inject UnitCostCalculator Costs
+@inject LoadoutAdvisor Advisor
 @inject IPhotoStore Photos
 @inject NavigationManager Navigation
 
@@ -110,32 +111,42 @@ else
             </div>
         </section>
 
-        <section class="paper stack">
-            <h2 class="section-title">Habilidades</h2>
-            <TagEditor Items="_member.Skills" Placeholder="Nueva habilidad" ItemsChanged="Recalculate" />
-            <h2 class="section-title">Equipo</h2>
-            <TagEditor Items="_gearNames" Placeholder="Nuevo equipo" ItemsChanged="Recalculate" />
+        <section class="paper stack loadout">
+            <div class="loadout__head">
+                <h2 class="section-title">Equipo</h2>
+                <button type="button" class="btn btn--ghost loadout__add" @onclick="() => _picker = LoadoutSlot.Gear">Añadir equipo</button>
+            </div>
+            @if (_loadout.Limit is { } limit)
+            {
+                <p class="loadout__limit">
+                    <strong>Armas: @_loadout.Weapons de @limit.Max</strong> · @limit.Text
+                </p>
+            }
+            @if (_loadout.Closed)
+            {
+                <p class="loadout__limit">Equipo cerrado: viene incluido en su coste. Solo se le compran balas.</p>
+            }
+            <TagEditor Items="_gearNames" AllowTyping="false" ItemsChanged="Recalculate" />
+            @foreach (var warning in _loadout.Warnings)
+            {
+                <p class="notice notice--warning"><span>@warning</span></p>
+            }
+
+            <div class="loadout__head">
+                <h2 class="section-title">Habilidades</h2>
+                <button type="button" class="btn btn--ghost loadout__add" @onclick="() => _picker = LoadoutSlot.Skill">Añadir habilidad</button>
+            </div>
+            <TagEditor Items="_member.Skills" AllowTyping="false" ItemsChanged="Recalculate" />
         </section>
 
-        @if (_options.Count > 0)
+        @if (_picker is { } slot)
         {
-            <section class="paper stack">
-                <h2 class="section-title">Comprar del reglamento</h2>
-                @foreach (var group in _options.GroupBy(o => o.Group))
-                {
-                    <div class="buy-group">
-                        <span class="field__label">@group.Key</span>
-                        <div class="buy-group__list">
-                            @foreach (var option in group)
-                            {
-                                <button type="button" class="buy-option" @onclick="() => Buy(option)">
-                                    @option.Name <span class="buy-option__cost">+@option.Cost</span>
-                                </button>
-                            }
-                        </div>
-                    </div>
-                }
-            </section>
+            var isSkill = slot == LoadoutSlot.Skill;
+            <LoadoutPicker Options="@(isSkill ? _loadout.Skills : _loadout.Gear)"
+                           Title="@(isSkill ? "Añadir habilidad" : "Añadir equipo")"
+                           Intro="@PickerIntro(isSkill)"
+                           ManualPlaceholder="@(isSkill ? "Nueva habilidad" : "Nuevo equipo")"
+                           OnPick="Buy" OnManual="name => AddManual(name, isSkill)" OnClose="() => _picker = null" />
         }
 
         <section class="paper stack cost-sheet">
@@ -190,7 +201,8 @@ else
     private string? _error;
 
     private IReadOnlyList<TroopChoice> _choices = [];
-    private IReadOnlyList<PurchaseOption> _options = [];
+    private Loadout _loadout = new([], [], null, 0, false, false, []);
+    private LoadoutSlot? _picker;
     private UnitCost _cost = new([], UnitCostCalculator.DefaultBulletPrice);
     private TroopChoice? _picked;
     private string _choiceKey = string.Empty;
@@ -258,7 +270,7 @@ else
 
         SyncGear();
         _cost = Costs.Calculate(_member, _band.FactionId, _band.SubfactionId);
-        _options = Costs.OptionsFor(_member.Role, _band.FactionId, _band.SubfactionId);
+        _loadout = Advisor.Advise(_member, _band.FactionId, _band.SubfactionId, _band.Members);
     }
 
     private void SetBaseCost(ChangeEventArgs e)
@@ -278,16 +290,51 @@ else
         Recalculate();
     }
 
-    private void Buy(PurchaseOption option)
+    /// <summary>Añade una compra del reglamento. Se puede seguir añadiendo con la ventana abierta.</summary>
+    private void Buy(LoadoutOption option)
     {
         if (_member is null)
         {
             return;
         }
 
-        var list = option.IsSkill ? _member.Skills : _gearNames;
-        list.Add(option.Name);
+        LoadoutAdvisor.Add(option.Slot == LoadoutSlot.Skill ? _member.Skills : _gearNames, option);
         Recalculate();
+    }
+
+    private void AddManual(string name, bool isSkill)
+    {
+        if (_member is null)
+        {
+            return;
+        }
+
+        var list = isSkill ? _member.Skills : _gearNames;
+        if (!list.Contains(name, StringComparer.OrdinalIgnoreCase))
+        {
+            list.Add(name);
+        }
+
+        _picker = null;
+        Recalculate();
+    }
+
+    private string? PickerIntro(bool isSkill)
+    {
+        if (_loadout.Closed)
+        {
+            return "Personalidades y mercenarios llevan el equipo cerrado: el reglamento no les deja comprar nada más.";
+        }
+
+        var options = isSkill ? _loadout.Skills : _loadout.Gear;
+        if (options.Count == 0)
+        {
+            return isSkill ? "Su facción no tiene mejoras con precio para comprar." : "El reglamento no le da nada más para comprar.";
+        }
+
+        return _loadout.FromTroopList
+            ? $"Lo que el reglamento deja comprar a {_member?.Role}."
+            : "Sin tipo de tropa del reglamento: se muestra todo lo que tiene precio en su facción.";
     }
 
     private static string LineLabel(CostLine line) => line.Kind switch

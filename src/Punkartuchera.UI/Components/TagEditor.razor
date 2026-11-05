@@ -10,16 +10,22 @@
             </li>
         }
     </ul>
+    @if (AllowTyping)
+    {
     <div class="tag-editor__add">
         <input class="field__input" placeholder="@Placeholder" @bind="_draft" @bind:event="oninput" @onkeydown="OnKeyDown" maxlength="80" />
         <button type="button" class="btn btn--ghost" @onclick="Add" disabled="@string.IsNullOrWhiteSpace(_draft)">Añadir</button>
     </div>
+    }
 </div>
 
 @code {
     [Parameter, EditorRequired] public List<string> Items { get; set; } = [];
 
     [Parameter] public string Placeholder { get; set; } = "Añadir…";
+
+    /// <summary>Con false solo muestra y quita; lo nuevo se añade desde fuera.</summary>
+    [Parameter] public bool AllowTyping { get; set; } = true;
 
     [Parameter] public EventCallback ItemsChanged { get; set; }
 
