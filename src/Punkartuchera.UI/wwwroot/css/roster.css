@@ -115,18 +115,39 @@ button.gear-item__link {
 .ammo-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .ammo-stepper__price { color: var(--punk-ink-muted); font-size: 0.9rem; }
 
-.buy-group { display: grid; gap: 6px; }
-.buy-group__list { display: flex; flex-wrap: wrap; gap: 6px; }
-.buy-option {
-    display: inline-flex; align-items: center; gap: 6px;
-    min-height: 36px; padding: 4px 10px;
+/* Equipo y habilidades de la ficha: añadir desde el reglamento */
+.loadout__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.loadout__head .section-title { margin: 0; }
+.loadout__add { min-height: 36px; padding: 4px 12px; }
+.loadout__limit { margin: 0; font-size: .9rem; color: var(--punk-ink-muted); }
+.loadout__limit strong { color: var(--punk-ink); font-family: var(--punk-font-display); font-weight: normal; }
+
+.loadout-picker { max-height: min(86vh, 720px); overflow-y: auto; }
+.loadout-picker__list { display: grid; gap: 14px; }
+.loadout-group { display: grid; gap: 6px; }
+.loadout-group__title {
+    margin: 0; font-family: var(--punk-font-display); font-weight: normal; font-size: 1.05rem;
+    color: var(--punk-blood); border-bottom: 2px solid var(--punk-ink); padding-bottom: 2px;
+}
+.loadout-option {
+    display: grid; gap: 2px; width: 100%;
+    min-height: 44px; padding: 6px 10px;
     font: inherit; color: var(--punk-ink); text-align: left;
     background: var(--punk-accent);
     border: 2px solid var(--punk-black);
     cursor: pointer;
 }
-.buy-option:hover, .buy-option:focus-visible { background: var(--punk-accent-strong); }
-.buy-option__cost { font-family: var(--punk-font-display); color: var(--punk-blood); }
+.loadout-option:hover:not(:disabled), .loadout-option:focus-visible { background: var(--punk-accent-strong); }
+.loadout-option:disabled { cursor: not-allowed; background: rgba(29, 23, 18, .08); border-style: dashed; }
+.loadout-option__head { display: flex; align-items: baseline; gap: 8px; }
+.loadout-option__name { flex: 1; font-weight: 600; }
+.loadout-option:disabled .loadout-option__name { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--punk-blood); }
+.loadout-option__cost { font-family: var(--punk-font-display); color: var(--punk-blood); white-space: nowrap; }
+.loadout-option__owned { font-size: .75rem; padding: 1px 6px; }
+.loadout-option__summary { font-size: .82rem; color: var(--punk-ink-muted); }
+.loadout-option__replaces { font-size: .82rem; font-weight: 600; }
+.loadout-option__blocked { font-size: .82rem; color: var(--punk-blood); font-weight: 600; }
+.loadout-picker__manual { display: grid; gap: 6px; padding-top: 10px; border-top: 2px dashed rgba(29, 23, 18, .35); }
 
 .cost-sheet__lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .cost-sheet__line {
