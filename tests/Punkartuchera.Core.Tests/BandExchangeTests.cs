@@ -45,7 +45,7 @@ public class BandExchangeTests
 
         var leader = rival.Members[0];
         Assert.Equal("Morro", leader.Name);
-        Assert.Equal(5, leader.Stats["mov"]);
+        Assert.Equal(5, leader.Stats["c"]);
         Assert.Equal(["Duro", "Retraso (2)"], leader.Skills);
         Assert.Equal("Tubería", leader.Gear[0].Name);
         Assert.Equal(PhotoSource.Stored, leader.Photo!.Source);
@@ -128,11 +128,12 @@ public class BandExchangeTests
         var leader = rival.Members[0];
         Assert.Equal("Morro", leader.Name);
         Assert.Equal("Líder", leader.Role);
-        Assert.Equal(5, leader.Stats["mov"]);
+        Assert.Equal(5, leader.Stats["c"]);
         Assert.Equal(["Duro", "Retraso (2)"], leader.Skills);
         Assert.Equal("Tubería", leader.Gear[0].Name);
         Assert.Equal("Oxidada", leader.Gear[0].Notes);
-        Assert.Equal(12, leader.Cost);
+        Assert.Null(leader.Cost);
+        Assert.Equal(rival.TotalCost, band.Members.Sum(m => m.Cost ?? 0));
         Assert.Equal("Cojea", leader.Notes);
         Assert.Null(leader.Photo);
         Assert.Equal(PhotoRef.Stock("cresta"), rival.Members[1].Photo);
@@ -145,13 +146,13 @@ public class BandExchangeTests
         var fromFile = await _host.ImportAsync(new MemoryStream((await _mine.ExportAsync(band.Id)).Content));
         var photoKey = fromFile.Members[0].Photo!.Key;
 
-        band.Members[0].Stats["mov"] = 6;
+        band.Members[0].Stats["c"] = 6;
         await _myBands.SaveAsync(band);
         var fromQr = await _host.ImportQrAsync((await _mine.ExportQrAsync(band.Id)).Text);
 
         Assert.Equal(fromFile.Id, fromQr.Id);
         Assert.Single(await _hostBands.GetAllAsync());
-        Assert.Equal(6, fromQr.Members[0].Stats["mov"]);
+        Assert.Equal(6, fromQr.Members[0].Stats["c"]);
         Assert.Equal(PhotoRef.Stored(photoKey), fromQr.Members[0].Photo);
         Assert.NotNull(await _hostPhotos.GetAsync(photoKey));
     }
@@ -224,7 +225,7 @@ public class BandExchangeTests
                     Cost = 12,
                     Notes = "Cojea",
                     Photo = PhotoRef.Stored(photoKey),
-                    Stats = { ["mov"] = 5 },
+                    Stats = { ["c"] = 5 },
                     Skills = ["Duro", "Retraso (2)"],
                     Gear = [new Equipment { Name = "Tubería", Notes = "Oxidada" }],
                 },
