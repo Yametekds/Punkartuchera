@@ -64,7 +64,7 @@ else
             {
                 <article class="rule-box rules-anchor" id="@rule.Slug">
                     <h3 class="rule-box__title">@rule.Name</h3>
-                    <p class="rules-text">@rule.Text</p>
+                    <RuleProse Text="@rule.Text" />
                     @if (rule.Table is not null)
                     {
                         <RuleTableView Table="rule.Table" />
@@ -97,7 +97,7 @@ else
             {
                 <article class="rule-box rules-anchor" id="@item.Slug">
                     <h3 class="rule-box__title">@item.Name@(item.Cost is null ? "" : $" · {item.Cost} ptos")</h3>
-                    <p class="rules-text">@item.Text</p>
+                    <RuleProse Text="@item.Text" />
                     @if (item.Table is not null)
                     {
                         <RuleTableView Table="item.Table" />

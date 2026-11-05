@@ -30,7 +30,7 @@
         {
             <article class="rule-box rules-anchor" id="@rule.Slug">
                 <h3 class="rule-box__title">@rule.Name</h3>
-                <p class="rules-text">@rule.Text</p>
+                <RuleProse Text="@rule.Text" Except="@rule.Name" Explain="false" />
                 <SourceRef Source="@rule.Source" Page="rule.Page" />
             </article>
         }

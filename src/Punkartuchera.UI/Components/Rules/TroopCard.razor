@@ -76,7 +76,7 @@
         {
             <div class="rule-box">
                 <h4 class="rule-box__title">@rule.Name</h4>
-                <p class="rules-text">@rule.Text</p>
+                <RuleProse Text="@rule.Text" />
                 @if (rule.Table is not null)
                 {
                     <RuleTableView Table="rule.Table" />

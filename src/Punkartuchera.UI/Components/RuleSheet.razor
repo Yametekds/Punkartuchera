@@ -11,13 +11,13 @@
     <span class="chip rule-sheet__kind">@KindLabel(Info.Kind)</span>
 
     <div class="rule-sheet__body">
-        <p class="rules-text">@Info.Summary</p>
+        <RuleProse Text="@Info.Summary" Explain="false" />
 
         @foreach (var rule in _rules)
         {
             <div class="rule-sheet__rule">
                 <h3 class="rule-sheet__rule-name">@rule.Name</h3>
-                <p class="rules-text">@rule.Text</p>
+                <RuleProse Text="@rule.Text" Except="@rule.Name" Explain="false" />
             </div>
         }
     </div>

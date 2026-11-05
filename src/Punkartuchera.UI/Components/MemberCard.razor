@@ -52,7 +52,7 @@
                         @if (info is not null)
                         {
                             <p class="gear-item__data">
-                                @info.Summary
+                                <RuleProse Text="@info.Summary" Class="" Inline="true" Explain="@(info.Kind is not (GearInfoKind.MeleeWeapon or GearInfoKind.RangedWeapon or GearInfoKind.Armor))" />
                                 <button type="button" class="gear-item__link" aria-label="Qué dice el reglamento de @gear.Name" @onclick="() => Open(info, gear.Name)">regla</button>
                             </p>
                         }

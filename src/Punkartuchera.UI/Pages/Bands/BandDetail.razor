@@ -123,7 +123,7 @@ else
                                             @if (Lookup.Find(row.Gear, _band.FactionId) is { } info)
                                             {
                                                 <span class="gear-item__data" style="display:block">
-                                                    @info.Summary
+                                                    <RuleProse Text="@info.Summary" Class="" Inline="true" Explain="@(info.Kind is not (GearInfoKind.MeleeWeapon or GearInfoKind.RangedWeapon or GearInfoKind.Armor))" />
                                                     <button type="button" class="gear-item__link" aria-label="Qué dice el reglamento de @row.Gear" @onclick="() => { _openRule = info; _openRuleTitle = row.Gear; }">regla</button>
                                                 </span>
                                             }
