@@ -27,6 +27,16 @@ jobs:
       - name: Tests
         run: dotnet test --configuration Release
 
+      - name: Dirección del relé
+        # Variable del repositorio (Settings → Secrets and variables → Actions → Variables).
+        # Sin ella, la app sale sin partidas en línea. Se escribe antes de publicar para que
+        # el service worker calcule bien la huella de appsettings.json.
+        if: ${{ vars.RELAY_URL != '' }}
+        env:
+          RELAY_URL: ${{ vars.RELAY_URL }}
+        run: |
+          jq -n --arg url "$RELAY_URL" '{Relay: {BaseUrl: $url}}' > src/Punkartuchera.Web/wwwroot/appsettings.json
+
       - name: Publicar
         run: dotnet publish src/Punkartuchera.Web/Punkartuchera.Web.csproj --configuration Release --output publish
 
