@@ -1,0 +1,115 @@
+@* Ventana para añadir equipo o habilidades: lo que permite el reglamento, con precio y perfil. *@
+<div class="sheet-scrim" @onclick="Close"></div>
+<section class="sheet paper loadout-picker" role="dialog" aria-modal="true" aria-labelledby="loadout-picker-title">
+    <header class="sheet__head">
+        <h2 id="loadout-picker-title" class="sheet__title">@Title</h2>
+        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+    </header>
+
+    @if (Intro is not null)
+    {
+        <p class="sheet__small">@Intro</p>
+    }
+
+    @if (Options.Count > 6)
+    {
+        <input class="field__input" type="search" placeholder="Buscar…" @bind="_filter" @bind:event="oninput" aria-label="Buscar" />
+    }
+
+    <div class="loadout-picker__list">
+        @* En cada grupo, primero lo que se puede añadir; si no, el orden del reglamento. *@
+        @foreach (var group in Visible.GroupBy(o => o.Group))
+        {
+            <div class="loadout-group">
+                <h3 class="loadout-group__title">@group.Key</h3>
+                @foreach (var option in group.OrderBy(o => o.CanAdd ? 0 : 1))
+                {
+                    <button type="button" class="loadout-option" disabled="@(!option.CanAdd)" @onclick="() => Pick(option)">
+                        <span class="loadout-option__head">
+                            <span class="loadout-option__name">@option.Name</span>
+                            @if (option.Owned > 0 && option.Each)
+                            {
+                                <span class="chip loadout-option__owned">lleva @option.Owned</span>
+                            }
+                            <span class="loadout-option__cost">+@option.Cost@(option.Each ? " c/u" : "")</span>
+                        </span>
+                        @if (option.Blocked is not null)
+                        {
+                            <span class="loadout-option__blocked">@option.Blocked</span>
+                        }
+                        else
+                        {
+                            @if (option.Replaces is not null)
+                            {
+                                <span class="loadout-option__replaces">Sustituye a @option.Replaces</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(option.Summary))
+                            {
+                                <span class="loadout-option__summary">@option.Summary</span>
+                            }
+                        }
+                    </button>
+                }
+            </div>
+        }
+
+        @if (Options.Count > 0 && !Visible.Any())
+        {
+            <p class="sheet__small">Nada con ese nombre en su lista.</p>
+        }
+    </div>
+
+    <div class="loadout-picker__manual">
+        <span class="field__label">¿No está? Escríbelo a mano</span>
+        <div class="tag-editor__add">
+            <input class="field__input" placeholder="@ManualPlaceholder" @bind="_manual" @bind:event="oninput" @onkeydown="OnKeyDown" maxlength="80" />
+            <button type="button" class="btn btn--ghost" @onclick="AddManual" disabled="@string.IsNullOrWhiteSpace(_manual)">Añadir</button>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<LoadoutOption> Options { get; set; } = [];
+
+    [Parameter] public string Title { get; set; } = "Añadir";
+
+    [Parameter] public string? Intro { get; set; }
+
+    [Parameter] public string ManualPlaceholder { get; set; } = "Nombre";
+
+    [Parameter] public EventCallback<LoadoutOption> OnPick { get; set; }
+
+    [Parameter] public EventCallback<string> OnManual { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string _filter = string.Empty;
+    private string _manual = string.Empty;
+
+    private IEnumerable<LoadoutOption> Visible
+    {
+        get
+        {
+            var key = RulesText.Fold(_filter.Trim());
+            return key.Length == 0 ? Options : Options.Where(o => RulesText.Fold(o.Name).Contains(key, StringComparison.Ordinal));
+        }
+    }
+
+    private Task Pick(LoadoutOption option) => option.CanAdd ? OnPick.InvokeAsync(option) : Task.CompletedTask;
+
+    private async Task AddManual()
+    {
+        var value = _manual.Trim();
+        if (value.Length == 0)
+        {
+            return;
+        }
+
+        _manual = string.Empty;
+        await OnManual.InvokeAsync(value);
+    }
+
+    private Task OnKeyDown(KeyboardEventArgs e) => e.Key == "Enter" ? AddManual() : Task.CompletedTask;
+
+    private Task Close() => OnClose.InvokeAsync();
+}
