@@ -99,6 +99,18 @@
 .official-grid__credit { margin: 4px 0 0; font-size: .78rem; color: var(--punk-text-muted); }
 .paper .official-grid__credit { color: var(--punk-ink-muted); }
 
+/* ---------- Ventana de regla ---------- */
+button.gear-item__link {
+    padding: 0; border: 0; background: none; cursor: pointer;
+    font: inherit; text-decoration: underline; text-underline-offset: 2px;
+}
+.tag--button { font: inherit; cursor: pointer; border: 0; text-decoration: underline dotted; text-underline-offset: 3px; }
+.rule-sheet { max-height: min(80vh, 640px); overflow-y: auto; }
+.rule-sheet__kind { align-self: flex-start; }
+.rule-sheet__body { display: grid; gap: 10px; }
+.rule-sheet__body .rules-text { white-space: pre-line; color: var(--punk-ink); }
+.rule-sheet__rule { padding-top: 8px; border-top: 1px dashed var(--punk-ink-muted); }
+.rule-sheet__rule-name { margin: 0 0 4px; font-family: var(--punk-font-display); font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; }
 /* ---------- Coste de la miniatura ---------- */
 .ammo-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .ammo-stepper__price { color: var(--punk-ink-muted); font-size: 0.9rem; }

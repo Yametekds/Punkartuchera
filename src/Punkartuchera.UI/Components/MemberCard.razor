@@ -46,17 +46,14 @@
                             <span class="gear-item__name">@gear.Name</span>
                             @if (info is not null)
                             {
-                                <span class="gear-item__kind">@KindLabel(info.Kind)</span>
+                                <span class="gear-item__kind">@RuleSheet.KindLabel(info.Kind)</span>
                             }
                         </div>
                         @if (info is not null)
                         {
                             <p class="gear-item__data">
-                                @info.Summary
-                                @if (info.Href is not null)
-                                {
-                                    <a class="gear-item__link" href="@info.Href" aria-label="Ver @info.Name en las reglas">reglas</a>
-                                }
+                                <RuleProse Text="@info.Summary" Class="" Inline="true" Explain="@(info.Kind is not (GearInfoKind.MeleeWeapon or GearInfoKind.RangedWeapon or GearInfoKind.Armor))" />
+                                <button type="button" class="gear-item__link" aria-label="Qué dice el reglamento de @gear.Name" @onclick="() => Open(info, gear.Name)">regla</button>
                             </p>
                         }
                         else
@@ -79,7 +76,17 @@
                 <ul class="tags">
                     @foreach (var skill in Member.Skills)
                     {
-                        <li class="tag tag--skill">@skill</li>
+                        var rule = Lookup.Find(skill, FactionId);
+                        <li>
+                            @if (rule is null)
+                            {
+                                <span class="tag tag--skill">@skill</span>
+                            }
+                            else
+                            {
+                                <button type="button" class="tag tag--skill tag--button" aria-label="Qué dice el reglamento de @skill" @onclick="() => Open(rule, skill)">@skill</button>
+                            }
+                        </li>
                     }
                 </ul>
             </div>
@@ -102,6 +109,11 @@
     </div>
 </article>
 
+@if (_open is not null)
+{
+    <RuleSheet Info="_open" Title="@_openTitle" OnClose="() => _open = null" />
+}
+
 @code {
     [Parameter, EditorRequired] public Miniature Member { get; set; } = default!;
 
@@ -114,13 +126,12 @@
     /// <summary>Facción de la banda, para elegir bien el equipo cuando dos facciones usan el mismo nombre.</summary>
     [Parameter] public string? FactionId { get; set; }
 
-    private static string KindLabel(GearInfoKind kind) => kind switch
+    private GearInfo? _open;
+    private string? _openTitle;
+
+    private void Open(GearInfo info, string title)
     {
-        GearInfoKind.MeleeWeapon => "Cuerpo a cuerpo",
-        GearInfoKind.RangedWeapon => "A distancia",
-        GearInfoKind.Armor => "Blindaje",
-        GearInfoKind.Gear => "Equipo",
-        GearInfoKind.Extra => "Mejora",
-        _ => "Regla",
-    };
+        _open = info;
+        _openTitle = title;
+    }
 }

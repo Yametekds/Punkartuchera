@@ -1,0 +1,60 @@
+@inject GearLookup Lookup
+
+@* Ventana con lo que dice el reglamento de un objeto o habilidad, sin salir de la ficha. *@
+<div class="sheet-scrim" @onclick="Close"></div>
+<section class="sheet paper rule-sheet" role="dialog" aria-modal="true" aria-labelledby="rule-sheet-title">
+    <header class="sheet__head">
+        <h2 id="rule-sheet-title" class="sheet__title">@Title</h2>
+        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+    </header>
+
+    <span class="chip rule-sheet__kind">@KindLabel(Info.Kind)</span>
+
+    <div class="rule-sheet__body">
+        <RuleProse Text="@Info.Summary" Explain="false" />
+
+        @foreach (var rule in _rules)
+        {
+            <div class="rule-sheet__rule">
+                <h3 class="rule-sheet__rule-name">@rule.Name</h3>
+                <RuleProse Text="@rule.Text" Except="@rule.Name" Explain="false" />
+            </div>
+        }
+    </div>
+
+    @if (Info.Href is not null)
+    {
+        <div class="actions">
+            <a class="btn btn--blood" href="@Info.Href" @onclick="Close">Ver en las reglas</a>
+        </div>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired] public GearInfo Info { get; set; } = default!;
+
+    /// <summary>Nombre tal como aparece en la ficha ("Filo medio incrustado").</summary>
+    [Parameter] public string? Title { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private IReadOnlyList<RuleDetail> _rules = [];
+
+    protected override void OnParametersSet()
+    {
+        Title ??= Info.Name;
+        _rules = Lookup.RulesOf(Info);
+    }
+
+    private Task Close() => OnClose.InvokeAsync();
+
+    public static string KindLabel(GearInfoKind kind) => kind switch
+    {
+        GearInfoKind.MeleeWeapon => "Cuerpo a cuerpo",
+        GearInfoKind.RangedWeapon => "A distancia",
+        GearInfoKind.Armor => "Blindaje",
+        GearInfoKind.Gear => "Equipo",
+        GearInfoKind.Extra => "Mejora",
+        _ => "Regla",
+    };
+}
