@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Serialization;
 using Punkartuchera.Core.Storage;
@@ -9,13 +10,13 @@ public sealed class IndexedDbBandRepository(KeyValueDb db) : IBandRepository
     public async Task<IReadOnlyList<Band>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var values = await db.GetAllAsync(KeyValueDb.BandsStore, cancellationToken);
-        return values.Select(BandSerializer.Deserialize).ToList();
+        return values.Select(TryDeserialize).OfType<Band>().ToList();
     }
 
     public async Task<Band?> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var json = await db.GetAsync(KeyValueDb.BandsStore, Key(id), cancellationToken);
-        return json is null ? null : BandSerializer.Deserialize(json);
+        return json is null ? null : TryDeserialize(json);
     }
 
     public Task SaveAsync(Band band, CancellationToken cancellationToken = default) =>
@@ -25,4 +26,17 @@ public sealed class IndexedDbBandRepository(KeyValueDb db) : IBandRepository
         db.RemoveAsync(KeyValueDb.BandsStore, Key(id), cancellationToken);
 
     private static string Key(Guid id) => id.ToString("N");
+
+    /// <summary>Un registro dañado no debe tumbar la lista entera: se ignora y se ven las demás bandas.</summary>
+    private static Band? TryDeserialize(string json)
+    {
+        try
+        {
+            return BandSerializer.Deserialize(json);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
 }

@@ -17,6 +17,9 @@ public interface IRulesCatalog
     IReadOnlyList<string> Roles { get; }
 
     Faction? FindFaction(string? id);
+
+    /// <summary>Si la dirección es la foto de una miniatura oficial del catálogo.</summary>
+    bool IsOfficialPhoto(string? url);
 }
 
 public sealed record Faction(string Id, string Name, string? Description = null);
