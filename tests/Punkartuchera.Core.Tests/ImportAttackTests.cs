@@ -119,7 +119,8 @@ public class ImportAttackTests
         Assert.Equal(c.Max, member.Stats["c"]);
         Assert.Equal(a.Min, member.Stats["a"]);
         Assert.All(member.Stats.Keys, k => Assert.Contains(Rules.Stats, s => s.Key == k));
-        Assert.Equal(0, member.Cost);
+        Assert.Null(member.Cost); // del rival solo se guarda el total
+        Assert.Equal(0, rival.TotalCost);
     }
 
     [Fact]
@@ -313,7 +314,8 @@ public class ImportAttackTests
         Assert.Equal(["Duro"], member.Skills);
         Assert.Equal("Tubería", Assert.Single(member.Gear).Name);
         Assert.Null(member.Photo);
-        Assert.Equal(0, member.Cost);
+        Assert.Null(member.Cost); // del rival solo se guarda el total
+        Assert.Equal(0, rival.TotalCost);
     }
 
     // ---------- Utilidades ----------
