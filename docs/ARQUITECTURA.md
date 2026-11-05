@@ -42,6 +42,8 @@ Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`
 - Al importar se guarda como `Rival` (solo lectura) con un `Id` nuevo y `SourceId` = el `Id` original; si llega otra vez la misma banda, sustituye a la copia anterior y borra sus fotos. Se descartan fotos que no sean JPEG, PNG o WebP y se rechazan archivos de otro formato o de una versión más nueva.
 
 - El QR lo genera `BandQrCodec`: `PKB1:` + Base45( CRC-32 + JSON compacto comprimido con Deflate ). Base45 usa justo el alfabeto del modo alfanumérico de los QR. El JSON lleva nombres de propiedad de una letra y los atributos como lista en el orden de `IRulesCatalog.Stats`; los retratos genéricos van por clave y las fotos propias no van. Si la suma de comprobación no cuadra, la lectura se rechaza. Una banda normal ocupa unos 400 caracteres; el máximo es `BandQrCodec.MaxLength` (2400): si se pasa, primero se quitan las notas y, si aún no cabe, se pide mandar el archivo.
+- Todo lo que llega del rival se trata como no fiable y pasa por `RivalBandSanitizer` antes de guardarse: se quitan nulos, se recortan textos y listas (`MaxMembers`, `MaxTextLength`, `MaxListItems`...), los atributos se limitan a los del reglamento y a su rango, los miembros reciben identificadores nuevos, y las fotos solo se aceptan si sus bytes son de verdad JPEG, PNG o WebP (`IsImage`) y no pasan de `MaxPhotoBytes`. Los retratos genéricos tienen que existir en `StockPortraits` y las fotos oficiales tienen que estar en el catálogo (`IRulesCatalog.IsOfficialPhoto`); si no, se descartan, para que una banda manipulada no pueda hacer que la app cargue imágenes de otra web.
+- El archivo se lee con tope (`MaxFileBytes`) aunque quien llame no lo limite. El QR se rechaza si es más largo de lo que cabe en un QR (`MaxReadLength`) o si descomprimido pasa de `MaxJsonBytes`.
 - Una banda que llega por QR sustituye a la copia que ya hubiera de esa banda y conserva las fotos de los miembros que siguen llamándose igual (por ejemplo, si antes llegó el archivo).
 
 En la interfaz:
@@ -100,3 +102,12 @@ La página `/mapa` guarda todo en el enlace (`?codigo=K7Q2XM&mesa=120x120&terren
 ## Fotos
 
 `PhotoPicker` abre la cámara (`capture="environment"`) o la galería y, al elegir una foto, muestra un editor de encuadre cuadrado: se arrastra para moverla y se acerca pellizcando, con la rueda o con la barra. Todo ocurre en `wwwroot/js/photoCrop.js` (a través de `PhotoCropper`): la foto se decodifica ya reducida a 2048 px de lado como mucho, con la orientación EXIF aplicada, y el encuadre se guarda como JPEG de 600 × 600 px, así que da igual lo que pese la original. Las fotos HEIC que el navegador no sabe abrir muestran un aviso. Los retratos genéricos están en `wwwroot/img/stock/` (`StockImages`).
+
+## Seguridad
+
+- Blazor escapa todo el texto que pinta: nombres, notas o habilidades del rival se ven tal cual, nunca se ejecutan. No uses `MarkupString` con datos de bandas.
+- `PhotoUrlProvider` solo devuelve direcciones de retratos genéricos conocidos y de fotos oficiales del catálogo, también para bandas guardadas antes de que existieran estas comprobaciones.
+- `IndexedDbBandRepository` ignora registros dañados en lugar de romper la lista de bandas.
+- Al publicar, `build/csp.cs` añade al `index.html` una política de seguridad de contenido (CSP) en una etiqueta `meta`, porque GitHub Pages no deja poner cabeceras. Autoriza por su hash los scripts en línea del propio `index.html` y limita de dónde se cargan scripts, estilos, fuentes e imágenes. Si junto al `index.html` hay un `appsettings.json` con `Relay:BaseUrl`, permite conectar con ese relé y con Azure SignalR Service. Si añades otro servicio externo, añade su dirección a `connect-src` en ese archivo. Para probarla en local: `dotnet publish` y después `dotnet run build/csp.cs -- <carpeta>/wwwroot/index.html`.
+- El flujo de publicación da a cada trabajo solo los permisos que usa, fija las acciones por su commit y falla si alguna dependencia tiene vulnerabilidades conocidas.
+- `tests/Punkartuchera.Core.Tests/ImportAttackTests.cs` reúne los ataques simulados contra la importación de bandas (archivos y QR rotos, inflados o manipulados). Si cambias el formato de intercambio, añade ahí el ataque correspondiente.

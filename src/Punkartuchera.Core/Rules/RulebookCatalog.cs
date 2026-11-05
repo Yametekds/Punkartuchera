@@ -5,6 +5,8 @@ namespace Punkartuchera.Core.Rules;
 /// </summary>
 public sealed class RulebookCatalog : IRulesCatalog
 {
+    private readonly HashSet<string> _officialPhotos;
+
     public RulebookCatalog(Rulebook book)
     {
         Book = book;
@@ -20,6 +22,7 @@ public sealed class RulebookCatalog : IRulesCatalog
             .Select(t => t.Name)
             .Distinct(StringComparer.CurrentCultureIgnoreCase)
             .ToList();
+        _officialPhotos = book.Minis.Select(m => m.Image).Where(i => i.Length > 0).ToHashSet(StringComparer.Ordinal);
     }
 
     public Rulebook Book { get; }
@@ -34,4 +37,6 @@ public sealed class RulebookCatalog : IRulesCatalog
 
     public Faction? FindFaction(string? id) =>
         string.IsNullOrEmpty(id) ? null : Factions.FirstOrDefault(f => f.Id == id);
+
+    public bool IsOfficialPhoto(string? url) => url is not null && _officialPhotos.Contains(url);
 }
