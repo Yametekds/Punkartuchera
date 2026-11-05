@@ -48,6 +48,7 @@
     "id": "nuevos-hijos",
     "name": "Nuevos Hijos",
     "summary": "Los seguidores de Rogelio en la Fortaleza del Cielo: melenudos, ricos de vender combustible y con balas de sobra para motivar a la tropa.",
+    "bannedGear": [{ "names": ["Lanzallamas", "Cóctel molotov"] }],
     "restrictions": [
       "Usa Cenizas (E95), Ascuas (E98), Chispas (Diésel) y Guardianes de la Llama (Surtidor). Sin Quemados.",
       "Sin lanzallamas ni cócteles molotov.",

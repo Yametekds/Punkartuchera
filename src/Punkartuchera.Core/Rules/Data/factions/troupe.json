@@ -117,6 +117,8 @@
   "extras": [
     {
       "title": "Artículos de coña",
+      "perBand": 3,
+      "buyers": [{ "troop": "Pachacho", "max": 2 }, { "troop": "Acróbata", "max": 1 }, { "troop": "Forzudo", "max": 1 }],
       "intro": "Un solo uso. Ninguna miniatura repite artículo y ninguno se repite más de tres veces en la banda.",
       "page": 71,
       "items": [

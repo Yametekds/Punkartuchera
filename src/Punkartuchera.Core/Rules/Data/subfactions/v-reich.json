@@ -3,6 +3,7 @@
     "id": "division-cientifica",
     "name": "División Científica",
     "summary": "Los laboratorios del V Reich que intentan crear al humano perfecto. Casi todo sale mal, pero los engendros también sirven de carne de cañón.",
+    "noGenericGear": ["Engendro", "Subhumano científico"],
     "restrictions": [
       "Usa Mariscales, Subhumanos (ver Modificaciones) y Übersoldats. Sin Soldats ni Sanitarios.",
       "Puede usar las tropas propias de la subfacción.",
