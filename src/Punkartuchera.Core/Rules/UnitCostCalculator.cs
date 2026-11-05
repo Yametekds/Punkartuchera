@@ -200,7 +200,8 @@ public sealed partial class UnitCostCalculator(Rulebook book)
             itemFaction is null || (itemFaction == factionId && (itemSubfaction is null || itemSubfaction == subfactionId));
     }
 
-    private Troop? FindTroop(string? name, string? factionId, string? subfactionId)
+    /// <summary>La tropa del reglamento con ese nombre: de la subfacción, de la facción o mercenaria.</summary>
+    public Troop? FindTroop(string? name, string? factionId, string? subfactionId = null)
     {
         var key = RulesText.Fold(name?.Trim());
         if (key.Length == 0)
@@ -219,7 +220,7 @@ public sealed partial class UnitCostCalculator(Rulebook book)
         troop is not null ? $"Coste base ({troop.Name})" : "Coste base";
 
     /// <summary>"2 pistolas" → (2, "pistolas"); "Bomba x3" → (3, "Bomba").</summary>
-    private static (int Quantity, string Name) Parse(string name)
+    public static (int Quantity, string Name) Parse(string name)
     {
         var text = name.Trim();
         if (LeadingCount().Match(text) is { Success: true } lead)
@@ -238,6 +239,13 @@ public sealed partial class UnitCostCalculator(Rulebook book)
     /// <summary>"pistolas" → "pistola", "cuchillos arrojadizos" → "cuchillo arrojadizo".</summary>
     private static string Singular(string key) =>
         string.Join(' ', key.Split(' ').Select(w => w.Length > 3 && w.EndsWith('s') ? w[..^1] : w));
+
+    /// <summary>Si dos nombres son el mismo objeto: "Pistolas" y "pistola", "Bomba (humo)" y "Bomba".</summary>
+    public static bool SameItem(string? a, string? b)
+    {
+        var (left, right) = (Key(a), Key(b));
+        return left.Length > 0 && (left == right || Singular(left) == Singular(right));
+    }
 
     private static string Key(string? name) =>
         Spaces().Replace(Parenthesis().Replace(RulesText.Fold(name), " "), " ").Trim().TrimEnd('.');
