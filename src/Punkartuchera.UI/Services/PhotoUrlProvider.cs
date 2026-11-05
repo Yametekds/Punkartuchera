@@ -1,10 +1,11 @@
 using Punkartuchera.Core.Models;
+using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Storage;
 
 namespace Punkartuchera.UI.Services;
 
 /// <summary>Resuelve la URL de la imagen de una miniatura y cachea las fotos ya leídas.</summary>
-public sealed class PhotoUrlProvider(IPhotoStore photos)
+public sealed class PhotoUrlProvider(IPhotoStore photos, IRulesCatalog rules)
 {
     private readonly Dictionary<string, string?> _cache = [];
 
@@ -17,7 +18,8 @@ public sealed class PhotoUrlProvider(IPhotoStore photos)
             case { Source: PhotoSource.Stock }:
                 return StockImages.Url(photo.Key);
             case { Source: PhotoSource.Official }:
-                return photo.Key;
+                // Solo direcciones del catálogo: una banda rival manipulada no puede hacer que se cargue otra web.
+                return rules.IsOfficialPhoto(photo.Key) ? photo.Key : null;
         }
 
         if (_cache.TryGetValue(photo.Key, out var cached))
