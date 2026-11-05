@@ -3,7 +3,14 @@ using System.Text.RegularExpressions;
 namespace Punkartuchera.Core.Rules;
 
 /// <summary>Lo que dice el reglamento de un arma, blindaje o pieza de equipo que lleva un miembro.</summary>
-public sealed record GearInfo(string Name, GearInfoKind Kind, string Summary, string? Href);
+public sealed record GearInfo(string Name, GearInfoKind Kind, string Summary, string? Href)
+{
+    /// <summary>Reglas especiales que lleva (armas y blindajes): "A dos manos", "Escasa"…</summary>
+    public IReadOnlyList<string> SpecialRules { get; init; } = [];
+}
+
+/// <summary>Una regla especial con su texto, para explicarla sin salir de la ficha.</summary>
+public sealed record RuleDetail(string Name, string Text, string Href);
 
 public enum GearInfoKind
 {
@@ -23,19 +30,21 @@ public enum GearInfoKind
 public sealed partial class GearLookup
 {
     private readonly List<(string Key, string? FactionId, GearInfo Info)> _entries = [];
+    private readonly Rulebook _book;
 
     public GearLookup(Rulebook book)
     {
+        _book = book;
         foreach (var weapon in book.Weapons)
         {
             Add(weapon.Name, weapon.FactionId, Describe(weapon), $"reglas/equipo#{weapon.Slug}",
-                weapon.Kind == WeaponKind.Melee ? GearInfoKind.MeleeWeapon : GearInfoKind.RangedWeapon);
+                weapon.Kind == WeaponKind.Melee ? GearInfoKind.MeleeWeapon : GearInfoKind.RangedWeapon, weapon.Rules);
         }
 
         foreach (var armor in book.Armors)
         {
             var text = Join($"Blindaje {armor.Armor}", string.Join(", ", armor.Rules), armor.Notes);
-            Add(armor.Name, armor.FactionId, text, $"reglas/equipo#{armor.Slug}", GearInfoKind.Armor);
+            Add(armor.Name, armor.FactionId, text, $"reglas/equipo#{armor.Slug}", GearInfoKind.Armor, armor.Rules);
         }
 
         foreach (var gear in book.Gear)
@@ -104,8 +113,16 @@ public sealed partial class GearLookup
         }
     }
 
-    private void Add(string name, string? factionId, string summary, string? href, GearInfoKind kind) =>
-        _entries.Add((Key(name), factionId, new GearInfo(name, kind, summary, href)));
+    /// <summary>El texto de cada regla especial que lleva una pieza de equipo.</summary>
+    public IReadOnlyList<RuleDetail> RulesOf(GearInfo info) =>
+        info.SpecialRules
+            .Select(name => (Name: name, Rule: _book.FindSpecialRule(name)))
+            .Where(r => r.Rule is not null)
+            .Select(r => new RuleDetail(r.Name, r.Rule!.Text, $"reglas/especiales#{r.Rule.Slug}"))
+            .ToList();
+
+    private void Add(string name, string? factionId, string summary, string? href, GearInfoKind kind, IReadOnlyList<string>? rules = null) =>
+        _entries.Add((Key(name), factionId, new GearInfo(name, kind, summary, href) { SpecialRules = rules ?? [] }));
 
     private static string Key(string? name) =>
         Spaces().Replace(Parenthesis().Replace(RulesText.Fold(name), " "), " ").Trim();

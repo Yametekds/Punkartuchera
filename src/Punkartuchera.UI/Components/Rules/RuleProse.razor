@@ -1,0 +1,58 @@
+@inject RuleMentions Mentions
+
+@* Texto del reglamento con las reglas especiales que nombra explicadas al lado y enlazadas a su definición. *@
+@if (Inline)
+{
+    <span class="@Class">@Body</span>
+}
+else
+{
+    <p class="@Class">@Body</p>
+}
+
+@code {
+    [Parameter] public string? Text { get; set; }
+
+    [Parameter] public string Class { get; set; } = "rules-text";
+
+    /// <summary>Dentro de una línea (span) en vez de párrafo.</summary>
+    [Parameter] public bool Inline { get; set; }
+
+    /// <summary>Pone al lado la explicación de cada regla la primera vez que sale.</summary>
+    [Parameter] public bool Explain { get; set; } = true;
+
+    /// <summary>Regla que no se enlaza (la que se está definiendo).</summary>
+    [Parameter] public string? Except { get; set; }
+
+    private RenderFragment Body => builder =>
+    {
+        var explained = new HashSet<string>();
+        var seq = 0;
+        foreach (var piece in Mentions.Split(Text, Except))
+        {
+            if (piece.Rule is not { } rule)
+            {
+                builder.AddContent(seq++, piece.Text);
+                continue;
+            }
+
+            var href = $"reglas/especiales#{rule.Slug}";
+            builder.OpenElement(seq++, "a");
+            builder.AddAttribute(seq++, "class", "rule-ref");
+            builder.AddAttribute(seq++, "href", href);
+            builder.AddAttribute(seq++, "title", rule.Text);
+            builder.AddContent(seq++, piece.Text);
+            builder.CloseElement();
+
+            if (Explain && explained.Add(rule.Name))
+            {
+                builder.AddContent(seq++, " ");
+                builder.OpenElement(seq++, "a");
+                builder.AddAttribute(seq++, "class", "rule-gloss");
+                builder.AddAttribute(seq++, "href", href);
+                builder.AddContent(seq++, $"({RuleMentions.Gloss(rule)})");
+                builder.CloseElement();
+            }
+        }
+    };
+}

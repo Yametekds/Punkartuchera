@@ -122,7 +122,10 @@ else
                                             <strong>@row.Gear</strong>
                                             @if (Lookup.Find(row.Gear, _band.FactionId) is { } info)
                                             {
-                                                <span class="gear-item__data" style="display:block">@info.Summary</span>
+                                                <span class="gear-item__data" style="display:block">
+                                                    <RuleProse Text="@info.Summary" Class="" Inline="true" Explain="@(info.Kind is not (GearInfoKind.MeleeWeapon or GearInfoKind.RangedWeapon or GearInfoKind.Armor))" />
+                                                    <button type="button" class="gear-item__link" aria-label="Qué dice el reglamento de @row.Gear" @onclick="() => { _openRule = info; _openRuleTitle = row.Gear; }">regla</button>
+                                                </span>
                                             }
                                         </td>
                                         <td>@row.Who</td>
@@ -221,7 +224,15 @@ else
     }
 }
 
+@if (_openRule is not null)
+{
+    <RuleSheet Info="_openRule" Title="@_openRuleTitle" OnClose="() => _openRule = null" />
+}
+
 @code {
+    private GearInfo? _openRule;
+    private string? _openRuleTitle;
+
     private const string TabMembers = "Miembros";
     private const string TabGear = "Equipo";
     private const string TabDetails = "Datos";

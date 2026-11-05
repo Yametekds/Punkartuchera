@@ -92,7 +92,7 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
         };
 
         member.Skills.AddRange(troop?.SpecialRules.Where(r => r is not "Personalidad" and not "Mercenario") ?? []);
-        member.Skills.AddRange(preset.Skills);
+        member.Skills.AddRange(preset.Skills.Where(s => !member.Skills.Contains(s)));
         foreach (var name in preset.Weapons.Append(IsNone(preset.Armor) ? null : preset.Armor).Concat(preset.Gear))
         {
             AddGear(member, name);
