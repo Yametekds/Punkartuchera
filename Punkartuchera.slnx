@@ -1,10 +1,13 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Punkartuchera.Core/Punkartuchera.Core.csproj" />
+    <Project Path="src/Punkartuchera.Relay.Contracts/Punkartuchera.Relay.Contracts.csproj" />
+    <Project Path="src/Punkartuchera.Relay/Punkartuchera.Relay.csproj" />
     <Project Path="src/Punkartuchera.UI/Punkartuchera.UI.csproj" />
     <Project Path="src/Punkartuchera.Web/Punkartuchera.Web.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Punkartuchera.Core.Tests/Punkartuchera.Core.Tests.csproj" />
+    <Project Path="tests/Punkartuchera.Relay.Tests/Punkartuchera.Relay.Tests.csproj" />
   </Folder>
 </Solution>

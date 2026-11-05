@@ -10,6 +10,7 @@ public sealed class KeyValueDb(IJSRuntime js) : IAsyncDisposable
 {
     public const string BandsStore = "bands";
     public const string PhotosStore = "photos";
+    public const string MatchesStore = "matches";
 
     private Task<IJSObjectReference>? _module;
 
