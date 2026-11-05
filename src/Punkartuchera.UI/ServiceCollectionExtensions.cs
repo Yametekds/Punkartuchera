@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Punkartuchera.Core.Maps;
 using Punkartuchera.Core.Matches;
@@ -30,12 +31,31 @@ public static class ServiceCollectionExtensions
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
-        services.AddScoped<IMatchService, LocalMatchService>();
+        services.AddScoped<IActiveMatchStore, IndexedDbActiveMatchStore>();
+        services.AddScoped<IMatchRelay>(sp => RelayUrl(sp.GetService<IConfiguration>()) is { } url
+            ? new SignalRMatchRelay(new HttpClient { BaseAddress = url, Timeout = TimeSpan.FromSeconds(20) })
+            : new DisabledMatchRelay());
+        services.AddScoped<IMatchService, MatchService>();
         services.AddScoped<BandService>();
         services.AddScoped<BandExchangeService>();
         services.AddScoped<PhotoUrlProvider>();
         services.AddScoped<FileSharer>();
         services.AddScoped<PhotoCropper>();
         return services;
+    }
+
+    /// <summary>
+    /// Dirección del relé (<c>Relay:BaseUrl</c> en <c>appsettings.json</c>). Vacía = sin partidas en línea.
+    /// Solo se acepta HTTPS, salvo en localhost para probar.
+    /// </summary>
+    internal static Uri? RelayUrl(IConfiguration? configuration)
+    {
+        var value = configuration?["Relay:BaseUrl"];
+        if (string.IsNullOrWhiteSpace(value) || !Uri.TryCreate(value.TrimEnd('/') + "/", UriKind.Absolute, out var url))
+        {
+            return null;
+        }
+
+        return url.Scheme == Uri.UriSchemeHttps || url.IsLoopback ? url : null;
     }
 }

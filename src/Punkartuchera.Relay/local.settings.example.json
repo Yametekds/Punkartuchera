@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "Relay__TablesConnectionString": "UseDevelopmentStorage=true",
+    "Relay__SignalREndpoint": "https://<tu-signalr>.service.signalr.net"
+  },
+  "Host": {
+    "CORS": "http://localhost:5080,https://localhost:5081",
+    "CORSCredentials": false
+  }
+}
