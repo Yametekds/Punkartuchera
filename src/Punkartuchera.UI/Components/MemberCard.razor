@@ -24,9 +24,10 @@
         <dl class="datacard__stats" style="--stat-count: @(Rules.Stats.Count + (ShowAmmo ? 1 : 0))">
             @foreach (var stat in Rules.Stats)
             {
-                <div class="statbox" title="@stat.Name">
+                var change = StatChanges?.GetValueOrDefault(stat.Key) ?? 0;
+                <div class="statbox @(change != 0 ? "statbox--changed" : null)" title="@(change != 0 ? $"{stat.Name}: {Signed(change)} en esta partida" : stat.Name)">
                     <dt>@stat.Abbreviation</dt>
-                    <dd>@Member.GetStat(stat.Key, stat.Default)</dd>
+                    <dd>@Math.Max(0, Member.GetStat(stat.Key, stat.Default) + change)</dd>
                 </div>
             }
             @if (ShowAmmo)
@@ -188,6 +189,11 @@
 
     /// <summary>False quita la casilla de balas entera (ficha durante la partida).</summary>
     [Parameter] public bool ShowAmmo { get; set; } = true;
+
+    /// <summary>Lo que suben o bajan los Atributos durante la partida (El mar siempre reclama), por clave.</summary>
+    [Parameter] public IReadOnlyDictionary<string, int>? StatChanges { get; set; }
+
+    private static string Signed(int value) => value > 0 ? $"+{value}" : $"−{-value}";
 
     /// <summary>Facción de la banda, para elegir bien el equipo cuando dos facciones usan el mismo nombre.</summary>
     [Parameter] public string? FactionId { get; set; }

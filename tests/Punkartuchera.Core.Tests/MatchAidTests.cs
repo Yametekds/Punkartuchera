@@ -86,6 +86,41 @@ public class MatchAidTests
         Assert.Contains(aids, a => a.Name == "Reclamar la atención");
     }
 
+    [Fact]
+    public void The_sea_always_claims_asks_which_attribute_and_takes_one_point()
+    {
+        var aids = For(Band("craabianos", null, ("Marinero", 30), ("Grumete", 18), ("Custodio del Abismo", 60), ("Ochodedos", 0)));
+
+        var sea = Assert.Single(aids.Of(0), a => a.Key == "mar");
+        Assert.Equal(AidKind.Pick, sea.Kind);
+        Assert.DoesNotContain(sea.Choices, c => c.StatKey == "a"); // Acciones no se tira.
+        Assert.DoesNotContain(aids.Of(1), a => a.Key == "mar"); // Grumetes no.
+        Assert.DoesNotContain(aids.Of(3), a => a.Key == "mar"); // Los Mercenarios no son craabianos.
+        Assert.Contains(aids.Band, a => a.Key == "ofrendas");
+
+        var combat = sea.Choices.ToList().FindIndex(c => c.StatKey == "c") + 1;
+        var counters = new Dictionary<string, int> { [MatchAid.MemberKey("mar", 0)] = combat };
+        Assert.Equal(-1, aids.StatChanges(counters, 0)["c"]);
+        Assert.Empty(aids.StatChanges(counters, 2));
+        Assert.Contains("Combate", sea.Note!(new AidState(combat, 1, 0, 4)));
+
+        var toughness = sea.Choices.ToList().FindIndex(c => c.StatKey == "d") + 1;
+        Assert.Contains("Abatida", sea.Note!(new AidState(toughness, 1, 0, 4)));
+
+        // Deshacer: vuelve a 0 y la ficha queda como estaba.
+        counters[MatchAid.MemberKey("mar", 0)] = 0;
+        Assert.Empty(aids.StatChanges(counters, 0));
+    }
+
+    [Fact]
+    public void Resacados_do_not_have_the_sea_always_claims()
+    {
+        var aids = For(Band("craabianos", "resacados", ("Marinero", 30)));
+
+        Assert.DoesNotContain(aids.Of(0), a => a.Key == "mar");
+        Assert.Contains(aids.Of(0), a => a.Key == "bebida");
+    }
+
     private BandAids For(Band band) => _catalog.For(band, band.Members.Select(m => m.Role).ToList());
 
     private static Band Band(string factionId, string? subfactionId, params (string Role, int Cost)[] members) => new()

@@ -20,7 +20,7 @@
 
     @if (Member is not null)
     {
-        <MemberCard Member="Member" FactionId="@FactionId" ShowAmmo="false" />
+        <MemberCard Member="Member" FactionId="@FactionId" ShowAmmo="false" StatChanges="StatChanges" />
     }
 
     @if (_troop is not null)
@@ -94,6 +94,9 @@
     [Parameter] public string? SubfactionId { get; set; }
 
     [Parameter] public IReadOnlyList<MatchAid> Aids { get; set; } = [];
+
+    /// <summary>Atributos que ha perdido o ganado en esta partida.</summary>
+    [Parameter] public IReadOnlyDictionary<string, int>? StatChanges { get; set; }
 
     /// <summary>Pinta cada ayuda con sus controles (los pone la página, que sabe guardar).</summary>
     [Parameter, EditorRequired] public RenderFragment<MatchAid> AidTemplate { get; set; } = default!;
