@@ -1,6 +1,7 @@
 [
   {
     "id": "amanecer-mutante",
+    "baseTroops": ["Mutante", "Perromorfo", "Bestia del pozo", "Cabezón"],
     "name": "Amanecer Mutante",
     "summary": "El culto de Kim en los Gemelos: los Mutardos como siguiente paso de la evolución y los humanos como estorbo. Cabezones con el cerebro frito y una guardia pretoriana fanática.",
     "restrictions": [
@@ -14,6 +15,19 @@
       { "name": "Tomamos lo que queremos", "text": "Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros. Las que normalmente no tendrían cuestan el doble y ganan Escasa." }
     ],
     "troops": [
+      {
+        "name": "Cabezón",
+        "replaces": "Cabezón",
+        "cost": 60,
+        "page": 1,
+        "stats": { "a": "3", "c": "1", "p": "3", "ag": "3", "f": "2", "d": "2", "t": "4" },
+        "weaponRule": "Puede llevar una",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Control", "text": "Solo tiene uno de los Poderes psíquicos de la facción, elegido al crear la banda." }
+        ]
+      },
       {
         "name": "Pretoriano", "cost": 45, "page": 2,
         "stats": { "a": "2", "c": "5", "p": "4", "ag": "4", "f": "5", "d": "4", "t": "2" },
@@ -50,6 +64,7 @@
   },
   {
     "id": "fuerza-m",
+    "baseTroops": ["Mutante", "Bestia del pozo", "Cabezón"],
     "name": "Fuerza M",
     "summary": "Supergrupo mutardo del misterioso Cabezón X: mallas chillonas, nombres molones y ganas de dar caña por los desvalidos del Páramo.",
     "restrictions": [
@@ -92,6 +107,7 @@
   },
   {
     "id": "macumba",
+    "baseTroops": ["Pocho", "Mutante", "Cabezón"],
     "name": "Macumba",
     "summary": "El culto vudú de Mamá Guedé en los pantanos al este de Torresbrillantes: Pochos que vuelven a caminar, caimanes de guerra y odio a los craabianos.",
     "restrictions": [
