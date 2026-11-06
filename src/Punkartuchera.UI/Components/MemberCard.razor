@@ -1,6 +1,7 @@
 @inject IRulesCatalog Rules
 @inject GearLookup Lookup
 @inject UnitRules UnitRules
+@inject CloseCombat CloseCombat
 
 @* Ficha de miembro estilo datacard: cabecera de chapa con atributos y cuerpo de papel. *@
 <article class="datacard">
@@ -68,6 +69,29 @@
                     </li>
                 }
             </ul>
+        }
+
+        @if (_melee.Count > 0)
+        {
+            <div class="melee-fallback">
+                <span class="datacard__label">En cuerpo a cuerpo</span>
+                <ul class="melee-fallback__list">
+                    @foreach (var fallback in _melee)
+                    {
+                        <li class="melee-fallback__item melee-fallback__item--@fallback.Reason.ToString().ToLowerInvariant()">
+                            <span class="melee-fallback__name">
+                                @if (fallback.From is not null)
+                                {
+                                    @fallback.From<span class="melee-fallback__as"> como </span>
+                                }
+                                @fallback.Profile.Name.ToLowerInvariant()
+                            </span>
+                            <span class="melee-fallback__profile">C @(fallback.Profile.Combat ?? "+0") · F @fallback.Profile.Strength · Pen @fallback.Profile.Penetration</span>
+                            <small class="melee-fallback__why">@fallback.Explanation</small>
+                        </li>
+                    }
+                </ul>
+            </div>
         }
 
         @if (Member.Skills.Count > 0)
@@ -166,8 +190,13 @@
     [Parameter] public string? SubfactionId { get; set; }
 
     private IReadOnlyList<UnitRule> _rules = [];
+    private IReadOnlyList<MeleeFallback> _melee = [];
 
-    protected override void OnParametersSet() => _rules = UnitRules.For(Member, FactionId, SubfactionId);
+    protected override void OnParametersSet()
+    {
+        _rules = UnitRules.For(Member, FactionId, SubfactionId);
+        _melee = CloseCombat.For(Member, FactionId);
+    }
 
     private GearInfo? _open;
     private string? _openTitle;
