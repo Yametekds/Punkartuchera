@@ -14,7 +14,13 @@ public enum AidKind
 
     /// <summary>Solo un recordatorio que se calcula con lo que pasa en la mesa (no se guarda nada).</summary>
     Info,
+
+    /// <summary>Regla de una vez por partida en la que hay que apuntar qué se eligió (el Atributo que se repitió).</summary>
+    Pick,
 }
+
+/// <summary>Una opción de una ayuda de elegir. Si toca un Atributo, cuánto le suma o le resta el resto de la partida.</summary>
+public sealed record AidChoice(string Label, string? StatKey = null, int StatDelta = 0);
 
 /// <summary>Lo que hace falta para escribir la nota de una ayuda con el estado de la partida.</summary>
 public sealed record AidState(int Value, int Round, int DownAllies, int StandingAllies);
@@ -49,6 +55,14 @@ public sealed class MatchAid
 
     /// <summary>En un contador de banda: lo que suma al empezar cada ronda por cada miembro en pie (Mojo unami).</summary>
     public int PerStandingEachRound { get; init; }
+
+    /// <summary>
+    /// En una ayuda de elegir (<see cref="AidKind.Pick"/>): las opciones. Se guarda la posición + 1; 0 es que aún no se ha usado.
+    /// </summary>
+    public IReadOnlyList<AidChoice> Choices { get; init; } = [];
+
+    /// <summary>La opción elegida para un valor guardado, si hay alguna.</summary>
+    public AidChoice? ChoiceFor(int value) => value > 0 && value <= Choices.Count ? Choices[value - 1] : null;
 
     /// <summary>Línea que cambia con el valor: "La próxima tira 1d10 −2".</summary>
     public Func<AidState, string?>? Note { get; init; }
@@ -88,6 +102,24 @@ public sealed class BandAids
     public MatchAid? FindBand(string key) => Band.FirstOrDefault(a => a.Key == key);
 
     public bool IsEmpty => Band.Count == 0 && Members.All(m => m.Count == 0);
+
+    /// <summary>
+    /// Cambios de Atributos que arrastra un miembro por lo que se ha apuntado en la partida
+    /// (El mar siempre reclama: −1 al Atributo que repitió). Por clave de Atributo.
+    /// </summary>
+    public IReadOnlyDictionary<string, int> StatChanges(IReadOnlyDictionary<string, int> counters, int index)
+    {
+        var changes = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        foreach (var aid in Of(index))
+        {
+            if (aid.Kind == AidKind.Pick && aid.ChoiceFor(ValueOf(counters, aid, index)) is { StatKey: { } key, StatDelta: not 0 } choice)
+            {
+                changes[key] = changes.GetValueOrDefault(key) + choice.StatDelta;
+            }
+        }
+
+        return changes;
+    }
 
     /// <summary>Valor de una ayuda: lo apuntado en la partida o, si no se ha tocado, el de partida.</summary>
     public static int ValueOf(IReadOnlyDictionary<string, int> counters, MatchAid aid, int? index = null) =>
@@ -144,7 +176,8 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
 
         var factionId = band.FactionId;
         var subfactionId = band.SubfactionId;
-        var troops = roles.Select(r => costs.FindTroop(r, factionId, subfactionId)?.Name ?? r.Trim()).ToList();
+        var infos = roles.Select(r => costs.FindTroop(r, factionId, subfactionId)).ToList();
+        var troops = roles.Select((r, i) => infos[i]?.Name ?? r.Trim()).ToList();
         var gearByIndex = roles.Select((_, i) => GearOf(band, i)).ToList();
         var has = new HashSet<string>(troops, StringComparer.OrdinalIgnoreCase);
 
@@ -188,11 +221,17 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
                 }
                 else
                 {
-                    ForMembers((t, _) => !Is(t, Grumete), new MatchAid
+                    // Solo las miniaturas craabianas: ni los Grumetes ni los Mercenarios.
+                    ForMembers((t, i) => !Is(t, Grumete) && !IsMercenary(infos[i]), TheSeaAlwaysClaims());
+                    if (has.Contains("Custodio del Abismo"))
                     {
-                        Key = "mar", Name = "El mar siempre reclama", Kind = AidKind.Once, Rule = "El mar siempre reclama",
-                        Hint = "Repite una tirada de Atributo y después pierde 1 punto en ese Atributo.",
-                    });
+                        bandAids.Add(new MatchAid
+                        {
+                            Key = "ofrendas", Name = "Ofrendas", Rule = "Ofrenda a las profundidades",
+                            Hint = "Cada enemigo Abatido que unge un Custodio (1 Acción, una vez por miniatura): un aliado podrá tirar el segundo dado al usar El mar siempre reclama.",
+                            Note = s => s.Value > 0 ? $"Quedan {s.Value} para repartir." : null,
+                        });
+                    }
                 }
 
                 ForTroop("Davinnie Jones", new MatchAid
@@ -359,6 +398,27 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
 
         return new BandAids(bandAids, memberAids.Select(m => (IReadOnlyList<MatchAid>)m).ToList(), downFeeds);
     }
+
+    /// <summary>
+    /// El mar siempre reclama: una vez por partida repite una tirada de un Atributo y pierde 1 punto de ese Atributo para siempre.
+    /// Se elige cuál para que la ficha lo reste. Acciones no se tira, así que no sale.
+    /// </summary>
+    private MatchAid TheSeaAlwaysClaims()
+    {
+        var choices = book.Attributes.Where(a => a.Key != "a").Select(a => new AidChoice(a.Name, a.Key, -1)).ToList();
+        return new MatchAid
+        {
+            Key = "mar", Name = "El mar siempre reclama", Kind = AidKind.Pick, Max = choices.Count, Rule = "El mar siempre reclama",
+            Hint = "Una vez por partida repite una tirada de Atributo y después pierde 1 punto en ese Atributo. Elige cuál.",
+            Choices = choices,
+            Note = s => s.Value > 0 && s.Value <= choices.Count
+                ? $"−1 a {choices[s.Value - 1].Label} el resto de la partida." + (choices[s.Value - 1].StatKey is "ag" or "f" or "d" ? " Si llega a 0, queda Abatida." : null)
+                : null,
+        };
+    }
+
+    private static bool IsMercenary(Troop? troop) =>
+        troop is not null && troop.SpecialRules.Any(r => RulesText.Fold(r) == RulesText.Fold("Mercenario"));
 
     private static void AddIdos(
         string? subfactionId, int cost, List<string> troops, HashSet<string> has, List<MatchAid> bandAids,
