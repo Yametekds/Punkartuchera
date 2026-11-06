@@ -75,11 +75,11 @@ public static class TutorialCatalog
             ]),
             new("Genera el mapa",
             [
-                "En Mapa eliges el tamaño de mesa y cuánta chatarra de cada tipo tienes. La app reparte la escenografía de forma equilibrada para los dos lados y deja libres las zonas de despliegue.",
+                "En Mapa eliges la mesa (90×90 o 120×120), si el despliegue va arriba y abajo o a los lados, cuánta chatarra de cada tipo tienes y de qué material es. La app reparte la escenografía de forma equilibrada para los dos lados, a 10 cm entre piezas y de los bordes siempre que quepa.",
                 "Cada mapa tiene un código. Mismo código y misma chatarra, mismo mapa: pásale el enlace al rival y veréis lo mismo.",
             ])
             {
-                InApp = "Las medidas de las piezas del generador son orientativas. El tamaño y la cobertura de cada elemento los pactáis antes de jugar (mira el tutorial de terreno).",
+                InApp = "Cada pieza sale con su color y su trama según el material, y con la marca del reglamento (2M, 3P…). Lo de siempre es la escenografía que pide el reglamento para esa mesa.",
                 Link = new("mapa", "Generar un mapa"),
             },
             new("Lleva la partida",
@@ -368,7 +368,7 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["coberturas"],
-                InApp = "El generador de Mapa te reparte la chatarra con medidas orientativas. El tamaño y el grado de cada pieza los decidís vosotros con estas reglas.",
+                InApp = "En el generador de Mapa eliges el material de cada tipo de pieza y el plano ya sale con la marca de cada una. Si vuestra escenografía es distinta, cambiad el material y listo.",
                 Link = new("mapa", "Generar un mapa"),
             },
         ]);

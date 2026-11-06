@@ -361,6 +361,37 @@
       ]
     },
     {
+      "id": "mesa", "category": "Mesa y escenario", "title": "Mesa y escenografía", "source": "escenarios", "page": 1,
+      "keywords": ["mesa", "90x90", "120x120", "escenografía", "colocar escenografía", "10 cm", "elementos"],
+      "body": [
+        "Mesa recomendada: 90×90 cm hasta 400 puntos y 120×120 cm para partidas más grandes.",
+        "Mucha escenografía, con bastantes sitios para cubrirse y cortar Líneas de visión, para que cuerpo a cuerpo y disparo estén igualados. Vale usar cajas o latas si decidís antes qué es cada cosa.",
+        "Colocación reglada: se sortea quién empieza y se colocan elementos por turnos según el tamaño de la mesa.",
+        "Siempre que se pueda, cada elemento a 10 cm como mínimo de otro elemento y de los bordes de la mesa."
+      ],
+      "table": {
+        "columns": ["Mesa", "Tamaño 3", "Tamaño 2", "Tamaño 1"],
+        "rows": [["90×90 cm", "4", "6", "8"], ["120×120 cm", "6", "8", "10"]]
+      }
+    },
+    {
+      "id": "terreno-mesa", "category": "Mesa y escenario", "title": "Decidir el terreno", "source": "escenarios", "page": 2,
+      "keywords": ["terreno", "acuerdo", "chungo", "impasable", "coberturas", "contaminado", "20x20"],
+      "body": [
+        "Después de colocar la escenografía, los jugadores pactan qué zonas son Terreno chungo, pila chungo o impasable, qué Cobertura da cada elemento y de qué tamaño es.",
+        "Muchos escenarios añaden zonas de Terreno contaminado de unos 20×20 cm que coloca cada jugador por turnos."
+      ]
+    },
+    {
+      "id": "despliegue", "category": "Mesa y escenario", "title": "Zonas de despliegue", "source": "escenarios", "page": 2,
+      "keywords": ["despliegue", "zona de despliegue", "15 cm", "30 cm", "extremos opuestos"],
+      "body": [
+        "Salvo que el escenario diga otra cosa, las zonas se sortean con un dado (o por acuerdo).",
+        "Cada zona ocupa todo el ancho de la mesa en extremos opuestos: 15 cm de profundidad en mesas de 90×90 y 30 cm en las de 120×120.",
+        "Se despliega en orden ascendente de Agilidad, alternando. Solo se puede desplegar encima de un elemento si tiene un acceso (al menos una escalerilla) dentro de tu zona."
+      ]
+    },
+    {
       "id": "puntos", "category": "Creación de bandas", "title": "Puntos y máximo de miniaturas", "source": "bandas", "page": 1,
       "keywords": ["puntos", "límite", "lista", "máximo de miniaturas", "350", "500"],
       "body": [
