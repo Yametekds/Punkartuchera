@@ -33,6 +33,8 @@
     "extras": [
       {
         "title": "Mejoras mecánicas", "page": 3,
+        "perBand": 2,
+        "buyers": [{ "troop": "Robotrón", "max": 2 }],
         "items": [
           { "name": "Aleación especial", "cost": 10, "text": "Pasa a Blindaje 5." },
           { "name": "Análisis de objetivos", "cost": 10, "text": "Elige un enemigo: +2 a Combate y Precisión al atacarle." },
