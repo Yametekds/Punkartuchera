@@ -89,6 +89,12 @@
   "extras": [
     {
       "title": "Mutaciones",
+      "perBand": 3,
+      "buyers": [
+        { "troop": "Mutante", "min": 1, "max": 3 },
+        { "troop": "Bestia del pozo", "max": 1, "only": ["Carga brutal", "Espinas", "Esputo ácido", "Garras envenenadas", "Miembros extra", "Cola afilada", "Extremidad prensil", "Piernas seguras"] },
+        { "troop": "Pretoriano", "min": 1, "max": 2 }
+      ],
       "intro": "No puede haber más de tres Mutardos con la misma mutación en la banda.",
       "page": 50,
       "items": [
@@ -100,7 +106,7 @@
         { "name": "Espinas", "cost": 6, "text": "Disparo con 1 Acción: 10/20/30, F2, Pen 3/2/1." },
         { "name": "Esputo ácido", "cost": 5, "text": "Al Asaltar o ser Asaltado, si no estaba trabado, disparo gratis de F1 y Pen 3 sin modificadores de distancia ni Cobertura (salvo equipo como un escudo)." },
         { "name": "Extremidad prensil", "cost": 5, "text": "Un enemigo trabado con él tiene -1 al Combate y -1 a Agilidad para Separarse." },
-        { "name": "Garras", "cost": 2, "text": "Garras y dientes. No se combina con otras armas." },
+        { "name": "Garras", "cost": 2, "text": "Garras y dientes. No se combina con otras armas.", "bans": ["Armas"] },
         { "name": "Garras envenenadas", "cost": 8, "text": "Como Garras, con Veneno (2)." },
         { "name": "Miembros extra", "cost": 10, "text": "+2 a Combate." },
         { "name": "Mimetismo", "cost": 5, "text": "Camuflaje." },

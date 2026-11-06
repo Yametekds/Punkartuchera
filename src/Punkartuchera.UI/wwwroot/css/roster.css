@@ -50,6 +50,29 @@
 .gear-item__link { margin-left: 4px; color: var(--punk-rust); font-weight: 700; white-space: nowrap; }
 .gear-item__notes { margin: 2px 0 0; font-size: .82rem; color: var(--punk-ink-muted); }
 
+/* Reglas especiales de la miniatura con su texto completo, plegables para no alargar la lista. */
+.unit-rules { border-top: 1px solid rgba(29, 23, 18, .25); padding-top: 6px; }
+.unit-rules__summary {
+    display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none;
+    min-height: 44px;
+}
+.unit-rules__summary::-webkit-details-marker { display: none; }
+.unit-rules__summary::after {
+    content: "+"; margin-left: auto; font-family: var(--punk-font-display); font-size: 1.2rem; color: var(--punk-rust);
+}
+.unit-rules[open] > .unit-rules__summary::after { content: "−"; }
+.unit-rules__count {
+    min-width: 22px; padding: 0 6px; border-radius: 999px; text-align: center;
+    background: var(--punk-rust); color: #fff; font-size: .75rem; font-weight: 700; line-height: 20px;
+}
+.unit-rules__list { margin: 0; display: grid; gap: 10px; }
+.unit-rules__item { display: grid; gap: 2px; }
+.unit-rules__name { font-weight: 700; color: var(--punk-rust); }
+.unit-rules__from { margin-left: 6px; font-weight: 400; font-size: .75rem; color: var(--punk-ink-muted); }
+.unit-rules__item dd { margin: 0; }
+.unit-rules__item .rules-text { margin: 0; font-size: .88rem; line-height: 1.4; color: var(--punk-ink); max-width: 65ch; }
+.unit-rules__item .data-table { color: var(--punk-ink); font-size: .82rem; }
+
 /* Balas con forma de bala: punta de plomo y casquillo de latón con culote */
 .datacard__stats .statbox--ammo {
     position: relative;

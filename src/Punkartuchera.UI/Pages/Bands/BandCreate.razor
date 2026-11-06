@@ -15,10 +15,12 @@
     </div>
 </header>
 
-<form class="paper tape stack" @onsubmit="Create">
+<form class="paper tape stack" @onsubmit="Create" novalidate>
     <label class="field">
         <span class="field__label">Nombre</span>
-        <input class="field__input" @bind="_name" @bind:event="oninput" maxlength="@BandService.MaxNameLength" placeholder="Los Oxidados de Puentechatarra" required />
+        <input class="field__input" id="band-name" @bind="_name" @bind:event="oninput" @bind:after="ClearNameWarning" @ref="_nameInput"
+               maxlength="@BandService.MaxNameLength" placeholder="Los Oxidados de Puentechatarra" required
+               aria-invalid="@(_missingName ? "true" : null)" aria-describedby="@(_missingName ? "band-name-warning" : null)" />
     </label>
 
     <fieldset class="field">
@@ -90,10 +92,15 @@
     }
 
     <div class="actions">
-        <button type="submit" class="btn btn--blood" disabled="@(_saving || string.IsNullOrWhiteSpace(_name) || _factionId is null)">
+        <button type="submit" class="btn btn--blood" disabled="@(_saving || _factionId is null)">
             <Icon Path="@Icons.Plus" /> Montar banda
         </button>
     </div>
+
+    @if (_missingName)
+    {
+        <p class="shout" id="band-name-warning" role="alert">¡eh! ¡que no le has puesto nombre colega!</p>
+    }
 </form>
 
 @code {
@@ -103,6 +110,16 @@
     private string? _listId;
     private string? _error;
     private bool _saving;
+    private bool _missingName;
+    private ElementReference _nameInput;
+
+    private void ClearNameWarning()
+    {
+        if (!string.IsNullOrWhiteSpace(_name))
+        {
+            _missingName = false;
+        }
+    }
 
     private IReadOnlyList<PresetList> ListsFor(string factionId) =>
         Book.Lists.Where(l => l.FactionId == factionId).ToList();
@@ -121,6 +138,13 @@
     private async Task Create()
     {
         _error = null;
+        if (string.IsNullOrWhiteSpace(_name))
+        {
+            _missingName = true;
+            await _nameInput.FocusAsync();
+            return;
+        }
+
         _saving = true;
         try
         {

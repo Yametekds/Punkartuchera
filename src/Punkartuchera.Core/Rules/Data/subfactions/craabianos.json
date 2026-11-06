@@ -1,12 +1,12 @@
 [
   {
     "id": "abisales",
+    "baseTroops": ["Marinero", "Arponero", "Capitán", "Custodio del Abismo"],
     "name": "Abisales",
     "beta": true,
     "page": 1,
     "summary": "Secta interna que pactó con los Señores de las Profundidades: larvas en las entrañas, branquias en el cuello y ofrendas de carne fresca al fondo de la fosa.",
     "playstyle": "Craabianos de las profundidades: los Grumetes pasan a ser Híbridos escurridizos y de piel escamosa que se mueven gratis cuando un Custodio acierta sus Plegarias inmundas. A cambio, su pólvora mojada hace que cañones de mano, pistolas de mecha y trabucos puedan reventar.",
-    "baseTroops": ["Marinero", "Arponero", "Capitán", "Custodio del Abismo"],
     "restrictions": [
       "Usa Marineros, Arponeros, Capitanes y Custodios del Abismo de los Craabianos. Sin Grumetes (se han convertido en Híbridos).",
       "Máximo un Capitán.",
@@ -37,12 +37,12 @@
   },
   {
     "id": "mariscadores",
+    "baseTroops": ["Grumete", "Marinero", "Capitán", "Custodio del Abismo"],
     "name": "Mariscadores",
     "beta": true,
     "page": 3,
     "summary": "Orilleros pragmáticos que saquean la marea baja y han domado golicentollos como monturas acorazadas.",
     "playstyle": "Craabianos de orilla sin Sangre salada y con Todoterreno en toda la banda salvo los Grumetes, así que se mueven bien por cualquier terreno. Las redes llegan más lejos y los Tenaceros montan golicentollos acorazados; nadie más puede llevar Armadura quitinosa.",
-    "baseTroops": ["Grumete", "Marinero", "Capitán", "Custodio del Abismo"],
     "restrictions": [
       "Usa Grumetes, Marineros, Capitanes y Custodios del Abismo de los Craabianos. Sin Arponeros.",
       "Máximo un Capitán.",
@@ -55,7 +55,7 @@
     "rules": [
       { "name": "Pies en la roca", "text": "No tienen Sangre salada y toda la banda salvo los Grumetes tiene Todoterreno." },
       { "name": "Pesca de orilla", "text": "La Red gana +5 cm en todas sus distancias." },
-      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa." }
+      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa.", "bans": ["Armadura quitinosa"], "exceptTroops": ["Tenacero"] }
     ],
     "troops": [
       {
@@ -72,12 +72,12 @@
   },
   {
     "id": "resacados",
+    "baseTroops": ["Grumete", "Marinero", "Capitán", "Arponero"],
     "name": "Resacados",
     "beta": true,
     "page": 5,
     "summary": "Desertores de Vientocho que encontraron un resort lleno de bodegas: o van borrachos como cubas o con una resaca volcánica.",
     "playstyle": "Desertores borrachos: sin El mar siempre reclama ni Sangre salada, empiezan con resaca y cada miniatura puede beber una vez por partida para quitarse los penalizadores o tomar una bebida especial de la carta. El Barman ocupa el sitio de los Custodios del Abismo.",
-    "baseTroops": ["Grumete", "Marinero", "Capitán", "Arponero"],
     "restrictions": [
       "Usa Grumetes, Marineros, Capitanes y Arponeros de los Craabianos. Sin Custodios del Abismo.",
       "Máximo un Capitán.",

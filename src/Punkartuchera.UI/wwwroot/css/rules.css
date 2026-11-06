@@ -204,9 +204,12 @@
 .rule-ref:hover, .rule-ref:focus-visible { color: var(--punk-rust); }
 .rule-gloss {
     font-style: italic; font-weight: 300; font-size: .92em;
-    color: var(--punk-ink-muted); text-decoration: none;
+    color: var(--punk-text-muted); text-decoration: none;
 }
-.rule-gloss:hover, .rule-gloss:focus-visible { color: var(--punk-rust); text-decoration: underline; }
+.paper .rule-gloss, .datacard .rule-gloss, .sheet .rule-gloss { color: var(--punk-ink-muted); }
+.rule-gloss:hover, .rule-gloss:focus-visible { color: var(--punk-accent); text-decoration: underline; }
+.paper .rule-gloss:hover, .paper .rule-gloss:focus-visible,
+.datacard .rule-gloss:hover, .sheet .rule-gloss:hover { color: var(--punk-rust); }
 
 /* Resumen de facción o subfacción (sobre papel) */
 .faction-brief {
