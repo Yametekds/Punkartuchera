@@ -17,7 +17,8 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
     /// <summary>
     /// Tropas que puede reclutar una banda. Sin subfacción: las de su facción y los mercenarios.
     /// Con subfacción: primero las propias de la subfacción, luego las de la facción madre que
-    /// permite (con el nombre que reciben allí y sin las que sustituye) y los mercenarios si los admite.
+    /// permite (con el nombre que reciben allí y sin las que sustituye), sus personalidades
+    /// y los mercenarios si los admite.
     /// </summary>
     public IReadOnlyList<TroopChoice> ChoicesFor(string? factionId, string? subfactionId = null)
     {
@@ -36,13 +37,17 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
                 .Select(t => RulesText.Fold(t.Replaces))
                 .ToHashSet();
             var allowed = subfaction.BaseTroops.Select(RulesText.Fold).ToHashSet();
-            foreach (var troop in faction.Troops.Where(t => !t.Personality && allowed.Contains(RulesText.Fold(t.Name)) && !replaced.Contains(RulesText.Fold(t.Name))))
+            var fromParent = faction.Troops
+                .Where(t => allowed.Contains(RulesText.Fold(t.Name)) && !replaced.Contains(RulesText.Fold(t.Name)))
+                .ToList();
+            foreach (var troop in fromParent.Where(t => !t.Personality))
             {
                 var label = subfaction.TroopNames.GetValueOrDefault(troop.Name);
                 choices.Add(new TroopChoice(faction, troop, label, $"De {faction.Name}"));
             }
 
             choices.AddRange(subfaction.Troops.Where(t => t.Personality).Select(t => new TroopChoice(subfaction, t)));
+            choices.AddRange(fromParent.Where(t => t.Personality).Select(t => new TroopChoice(faction, t)));
         }
 
         if (subfaction is not { NoMercenaries: true })

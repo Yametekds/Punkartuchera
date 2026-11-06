@@ -107,7 +107,7 @@
   },
   {
     "id": "macumba",
-    "baseTroops": ["Pocho", "Mutante", "Cabezón"],
+    "baseTroops": ["Pocho", "Mutante", "Cabezón", "Magmador"],
     "name": "Macumba",
     "summary": "El culto vudú de Mamá Guedé en los pantanos al este de Torresbrillantes: Pochos que vuelven a caminar, caimanes de guerra y odio a los craabianos.",
     "restrictions": [

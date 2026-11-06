@@ -299,7 +299,10 @@ public sealed class FactionRules
     /// <summary>Tropas que no pueden comprar el equipo genérico de la facción.</summary>
     public List<string> NoGenericGear { get; set; } = [];
 
-    /// <summary>Subfacciones: tropas de la facción madre que puede reclutar (sin sus personalidades).</summary>
+    /// <summary>
+    /// Subfacciones: tropas de la facción madre que puede reclutar. Sus personalidades solo si se nombran
+    /// (cuando la subfacción admite «una Personalidad» sin decir de quién).
+    /// </summary>
     public List<string> BaseTroops { get; set; } = [];
 
     /// <summary>Subfacciones: nombre que reciben aquí las tropas de la facción madre ("Piltrafa" → "Ninja negro").</summary>

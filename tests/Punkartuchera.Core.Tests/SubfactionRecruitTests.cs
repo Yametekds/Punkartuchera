@@ -27,11 +27,12 @@ public class SubfactionRecruitTests
     {
         var faction = Book.FindFaction(factionId)!;
         var subfaction = Book.FindSubfaction(subfactionId)!;
-        var baseNames = faction.Troops.Where(t => !t.Personality).Select(t => t.Name).ToList();
+        var baseNames = faction.Troops.Select(t => t.Name).ToList();
 
         Assert.NotEmpty(subfaction.BaseTroops);
         Assert.All(subfaction.BaseTroops, name => Assert.Contains(name, baseNames));
         Assert.All(subfaction.TroopNames.Keys, name => Assert.Contains(name, subfaction.BaseTroops));
+        Assert.DoesNotContain(subfaction.Troops, t => t.Personality && subfaction.BaseTroops.Contains(t.Name));
         Assert.All(subfaction.Troops.Where(t => t.Replaces is not null), t => Assert.Contains(t.Replaces, baseNames));
     }
 
@@ -45,7 +46,6 @@ public class SubfactionRecruitTests
         var fromFaction = choices.Where(c => c.Owner == faction).ToList();
 
         Assert.All(subfaction.Troops, t => Assert.Contains(choices, c => c.Owner == subfaction && c.Troop == t));
-        Assert.All(fromFaction, c => Assert.False(c.Troop.Personality, c.Troop.Name));
         Assert.All(fromFaction, c => Assert.Contains(c.Troop.Name, subfaction.BaseTroops));
         Assert.All(subfaction.Troops.Where(t => t.Replaces is not null), t => Assert.DoesNotContain(fromFaction, c => c.Troop.Name == t.Replaces));
         if (subfaction.Troops.Any(t => !t.Personality))
@@ -65,6 +65,16 @@ public class SubfactionRecruitTests
         Assert.DoesNotContain("Aberración", names);
         Assert.DoesNotContain("Tío", names);
         Assert.Contains("Crazy Mel", names);
+    }
+
+    [Fact]
+    public void Open_personality_slot_admits_the_named_base_personality()
+    {
+        var names = _builder.ChoicesFor("pandilleros", "ostra-azul").Select(c => c.Troop.Name).ToList();
+
+        Assert.Contains("Clint Tirofijo", names);
+        Assert.Single(names, n => n == "Lord Homoeroticus");
+        Assert.DoesNotContain("Jefe", names);
     }
 
     [Fact]
