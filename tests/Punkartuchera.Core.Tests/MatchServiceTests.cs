@@ -124,6 +124,9 @@ public class MatchServiceTests
     [InlineData("{\"type\":\"round\",\"round\":-1,\"stamp\":99}")]
     [InlineData("{\"type\":\"hello\",\"band\":\"PKB1:ESTONOESUNABANDA\"}")]
     [InlineData("{\"type\":\"status\"}")]
+    [InlineData("{\"type\":\"round\",\"round\":7,\"stamp\":99}")]
+    [InlineData("{\"type\":\"status\",\"members\":[],\"score\":-3}")]
+    [InlineData("{\"type\":\"status\",\"members\":[],\"counters\":{\"ambrosia\":5000}}")]
     public async Task Bad_messages_from_the_rival_are_ignored(string message)
     {
         await StartOnlineAsync();
@@ -220,6 +223,59 @@ public class MatchServiceTests
 
         Assert.False(service.SupportsOnlineMatches);
         await Assert.ThrowsAsync<MatchException>(() => service.CreateOnlineAsync(Guid.NewGuid()));
+    }
+
+    [Fact]
+    public async Task Score_and_counters_reach_the_rival_but_only_the_owner_changes_them()
+    {
+        await StartOnlineAsync();
+
+        await _host.Matches.SetScoreAsync(MatchSide.Own, 3);
+        await _host.Matches.SetCountersAsync(MatchSide.Own, new Dictionary<string, int> { ["ambrosia"] = 4, ["dosis@0"] = 1 });
+
+        var atGuest = _guest.Matches.Current!;
+        Assert.Equal(3, atGuest.RivalScore);
+        Assert.Equal(4, atGuest.RivalCounters["ambrosia"]);
+        Assert.Equal(1, atGuest.RivalCounters["dosis@0"]);
+        Assert.Equal(0, atGuest.OwnScore);
+
+        await Assert.ThrowsAsync<MatchException>(() => _guest.Matches.SetScoreAsync(MatchSide.Rival, 0));
+        await Assert.ThrowsAsync<MatchException>(() => _guest.Matches.SetCountersAsync(MatchSide.Rival, new Dictionary<string, int> { ["ambrosia"] = 0 }));
+    }
+
+    [Fact]
+    public async Task A_match_lasts_six_rounds_and_closing_the_last_one_ends_it_for_both()
+    {
+        await StartOnlineAsync();
+
+        await _host.Matches.SetRoundAsync(9);
+        Assert.Equal(ActiveMatch.MaxRound, _host.Matches.Current!.Round);
+        Assert.Equal(6, ActiveMatch.MaxRound);
+
+        await _guest.Matches.FinishAsync();
+        Assert.True(_guest.Matches.Current!.Over);
+        Assert.True(_host.Matches.Current.Over);
+
+        // Reabrir la última ronda deshace el final en los dos móviles.
+        await _host.Matches.SetRoundAsync(6);
+        Assert.False(_host.Matches.Current.Over);
+        Assert.False(_guest.Matches.Current.Over);
+    }
+
+    [Fact]
+    public async Task Local_match_keeps_both_scores_and_counters()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+
+        await _host.Matches.SetScoreAsync(MatchSide.Rival, 2);
+        await _host.Matches.SetCountersAsync(MatchSide.Rival, new Dictionary<string, int> { ["mojo"] = 6 });
+
+        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange);
+        var match = await reloaded.RestoreAsync();
+        Assert.Equal(2, match!.RivalScore);
+        Assert.Equal(6, match.RivalCounters["mojo"]);
     }
 
     private async Task StartOnlineAsync()

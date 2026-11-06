@@ -1,0 +1,109 @@
+@using Punkartuchera.Core.Matches
+@inject UnitCostCalculator Costs
+@inject IRulesCatalog Rules
+
+@* Todo lo de un miembro durante la partida: atributos, equipo, habilidades y reglas de su tropa. Nunca las balas. *@
+<div class="sheet-scrim" @onclick="Close"></div>
+<section class="sheet paper rule-sheet match-sheet" role="dialog" aria-modal="true" aria-labelledby="match-sheet-title">
+    <header class="sheet__head">
+        <h2 id="match-sheet-title" class="sheet__title">@Name</h2>
+        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+    </header>
+
+    <div class="match-sheet__state">
+        @if (Role is { Length: > 0 })
+        {
+            <span class="chip">@Role</span>
+        }
+        <span class="chip @(Down ? "match-sheet__down" : null)">@(Down ? "Baja" : "En pie")</span>
+    </div>
+
+    @if (Member is not null)
+    {
+        <MemberCard Member="Member" FactionId="@FactionId" ShowAmmo="false" />
+    }
+
+    @if (_troop is not null)
+    {
+        @if (_troop.Profiles.Count > 0)
+        {
+            @foreach (var profile in _troop.Profiles)
+            {
+                <div class="rule-sheet__rule">
+                    <h3 class="rule-sheet__rule-name">@profile.Name</h3>
+                    <p class="match-sheet__profile">
+                        @foreach (var stat in Rules.Stats)
+                        {
+                            <span><abbr title="@stat.Name">@stat.Abbreviation</abbr> @profile.Stat(stat.Key)</span>
+                        }
+                    </p>
+                </div>
+            }
+        }
+
+        @if (_troop.SpecialRules.Count > 0)
+        {
+            <div class="rule-sheet__rule">
+                <h3 class="rule-sheet__rule-name">Reglas especiales</h3>
+                <SpecialRuleTags Names="_troop.SpecialRules" />
+            </div>
+        }
+
+        @foreach (var rule in _troop.Rules)
+        {
+            <div class="rule-sheet__rule">
+                <h3 class="rule-sheet__rule-name">@rule.Name</h3>
+                <RuleProse Text="@rule.Text" Except="@rule.Name" Explain="false" />
+                @if (rule.Table is { } table)
+                {
+                    <RuleTableView Table="table" />
+                }
+            </div>
+        }
+    }
+    else if (Member is null)
+    {
+        <p class="muted">No queda la ficha de este miembro en el móvil.</p>
+    }
+
+    @if (Aids.Count > 0)
+    {
+        <div class="rule-sheet__rule">
+            <h3 class="rule-sheet__rule-name">En la partida</h3>
+            <div class="match-aids match-aids--sheet">
+                @foreach (var aid in Aids)
+                {
+                    @AidTemplate(aid)
+                }
+            </div>
+        </div>
+    }
+</section>
+
+@code {
+    [Parameter] public Miniature? Member { get; set; }
+
+    [Parameter] public string Name { get; set; } = string.Empty;
+
+    [Parameter] public string? Role { get; set; }
+
+    [Parameter] public bool Down { get; set; }
+
+    [Parameter] public string? FactionId { get; set; }
+
+    [Parameter] public string? SubfactionId { get; set; }
+
+    [Parameter] public IReadOnlyList<MatchAid> Aids { get; set; } = [];
+
+    /// <summary>Pinta cada ayuda con sus controles (los pone la página, que sabe guardar).</summary>
+    [Parameter, EditorRequired] public RenderFragment<MatchAid> AidTemplate { get; set; } = default!;
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private Troop? _troop;
+
+    protected override void OnParametersSet() =>
+        _troop = Costs.FindTroop(Member?.Role ?? Role, FactionId, SubfactionId);
+
+    private Task Close() => OnClose.InvokeAsync();
+}

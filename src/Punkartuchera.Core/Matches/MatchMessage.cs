@@ -10,14 +10,19 @@ namespace Punkartuchera.Core.Matches;
 /// <list type="bullet">
 /// <item><c>hello</c>: la banda en formato QR, la ronda y el estado de cada miembro. Se manda al conectar;
 /// con <see cref="Reply"/> pide al otro que conteste con el suyo.</item>
-/// <item><c>status</c>: estado de cada miembro propio, en el orden de la banda enviada.</item>
-/// <item><c>round</c>: cambio de ronda.</item>
+/// <item><c>status</c>: estado de cada miembro propio, en el orden de la banda enviada, más los puntos
+/// del marcador y los contadores propios (dosis, cargas, reglas de un solo uso…).</item>
+/// <item><c>round</c>: cambio de ronda o fin de la partida.</item>
 /// <item><c>bye</c>: lo manda el relé cuando el rival cierra la partida.</item>
 /// </list>
 /// </summary>
 public sealed class MatchMessage
 {
     public const int MaxMembers = 60;
+
+    public const int MaxCounters = 200;
+
+    public const int MaxCounterKey = 48;
 
     [JsonPropertyName("type")] public string Type { get; set; } = string.Empty;
 
@@ -29,7 +34,13 @@ public sealed class MatchMessage
 
     [JsonPropertyName("stamp")] public long? Stamp { get; set; }
 
+    [JsonPropertyName("over")] public bool? Over { get; set; }
+
     [JsonPropertyName("members")] public List<MemberFlags>? Members { get; set; }
+
+    [JsonPropertyName("score")] public int? Score { get; set; }
+
+    [JsonPropertyName("counters")] public Dictionary<string, int>? Counters { get; set; }
 
     public static string Serialize(MatchMessage message) =>
         JsonSerializer.Serialize(message, MatchJsonContext.Default.MatchMessage);
@@ -52,8 +63,8 @@ public sealed class MatchMessage
 
             var valid = message.Type switch
             {
-                MessageTypes.Hello => message.Band is { Length: > 0 and <= 4096 } && ValidRound(message) && ValidMembers(message),
-                MessageTypes.Status => message.Members is not null && ValidMembers(message),
+                MessageTypes.Hello => message.Band is { Length: > 0 and <= 4096 } && ValidRound(message) && ValidMembers(message) && ValidCounters(message),
+                MessageTypes.Status => message.Members is not null && ValidMembers(message) && ValidCounters(message),
                 MessageTypes.Round => message.Round is not null && message.Stamp is not null && ValidRound(message),
                 MessageTypes.Bye => true,
                 _ => false,
@@ -71,6 +82,11 @@ public sealed class MatchMessage
 
     private static bool ValidMembers(MatchMessage m) =>
         m.Members is null || m.Members.Count <= MaxMembers;
+
+    private static bool ValidCounters(MatchMessage m) =>
+        m.Score is null or (>= 0 and <= ActiveMatch.MaxCount)
+        && (m.Counters is null || (m.Counters.Count <= MaxCounters
+            && m.Counters.All(c => c.Key.Length is > 0 and <= MaxCounterKey && c.Value is >= 0 and <= ActiveMatch.MaxCount)));
 }
 
 public sealed class MemberFlags

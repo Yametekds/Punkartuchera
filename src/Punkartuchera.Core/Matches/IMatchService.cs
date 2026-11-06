@@ -34,6 +34,15 @@ public interface IMatchService
     /// <summary>Cambia de ronda. Al cambiar, nadie ha actuado todavía.</summary>
     Task SetRoundAsync(int round, CancellationToken cancellationToken = default);
 
+    /// <summary>Cierra la última ronda: la partida queda acabada con el resultado del marcador.</summary>
+    Task FinishAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Puntos de un bando en el marcador. En línea, solo los propios.</summary>
+    Task SetScoreAsync(MatchSide side, int score, CancellationToken cancellationToken = default);
+
+    /// <summary>Cambia a la vez varios contadores de un bando (por ejemplo, gastar una dosis de la reserva). En línea, solo los propios.</summary>
+    Task SetCountersAsync(MatchSide side, IReadOnlyDictionary<string, int> values, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Marca a un miembro como activado o como baja. En línea solo se pueden tocar los de la banda propia:
     /// los del rival los marca él en su móvil.
