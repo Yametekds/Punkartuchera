@@ -1,5 +1,6 @@
 @inject IRulesCatalog Rules
 @inject GearLookup Lookup
+@inject UnitRules UnitRules
 
 @* Ficha de miembro estilo datacard: cabecera de chapa con atributos y cuerpo de papel. *@
 <article class="datacard">
@@ -92,6 +93,41 @@
             </div>
         }
 
+        @if (_rules.Count > 0)
+        {
+            <details class="unit-rules">
+                <summary class="unit-rules__summary">
+                    <span class="datacard__label">Reglas especiales</span>
+                    <span class="unit-rules__count">@_rules.Count</span>
+                </summary>
+                <dl class="unit-rules__list">
+                    @foreach (var rule in _rules)
+                    {
+                        <div class="unit-rules__item">
+                            <dt class="unit-rules__name">
+                                @rule.Name
+                                @if (rule.From is not null)
+                                {
+                                    <small class="unit-rules__from">@rule.From</small>
+                                }
+                                else if (rule.Origin == UnitRuleOrigin.Skill)
+                                {
+                                    <small class="unit-rules__from">habilidad</small>
+                                }
+                            </dt>
+                            <dd>
+                                <RuleProse Text="@rule.Text" Except="@rule.Name" Explain="false" />
+                                @if (rule.Table is not null)
+                                {
+                                    <RuleTableView Table="rule.Table" />
+                                }
+                            </dd>
+                        </div>
+                    }
+                </dl>
+            </details>
+        }
+
         @if (!string.IsNullOrWhiteSpace(Member.Notes))
         {
             <p class="datacard__notes">@Member.Notes</p>
@@ -125,6 +161,13 @@
 
     /// <summary>Facción de la banda, para elegir bien el equipo cuando dos facciones usan el mismo nombre.</summary>
     [Parameter] public string? FactionId { get; set; }
+
+    /// <summary>Subfacción de la banda, para encontrar sus tropas y reglas.</summary>
+    [Parameter] public string? SubfactionId { get; set; }
+
+    private IReadOnlyList<UnitRule> _rules = [];
+
+    protected override void OnParametersSet() => _rules = UnitRules.For(Member, FactionId, SubfactionId);
 
     private GearInfo? _open;
     private string? _openTitle;

@@ -73,13 +73,16 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
         var band = (others ?? []).Where(m => m.Id != member.Id).Append(member).ToList();
 
         var worn = member.Gear.Select(g => Describe(g.Name, factionId)).ToList();
-        var weapons = worn.Count(w => w.Slot == LoadoutSlot.Weapon);
+        var weapons = CountWeapons(worn);
         var state = new Worn(
             Weapons: weapons,
             TwoHanded: worn.Any(w => w.TwoHanded),
             Alone: worn.FirstOrDefault(w => w.Alone)?.Name,
             Armor: worn.FirstOrDefault(w => w.Slot == LoadoutSlot.Armor)?.Name,
-            Shield: worn.Any(w => IsShield(w.Name)));
+            Shield: worn.Any(w => IsShield(w.Name)),
+            Bulky: worn.FirstOrDefault(w => w.Bulky)?.Name,
+            Bomb: worn.Any(w => w.Bomb));
+        var restrictions = Restrictions(member, troop, factionId, subfactionId, band);
 
         var gear = new List<LoadoutOption>();
         var skills = new List<LoadoutOption>();
@@ -94,15 +97,17 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
                 }
 
                 seen.Add(candidate.Name);
-                var option = Evaluate(candidate, member, band, limit, state, factionId);
+                var option = Evaluate(candidate, member, band, limit, state, restrictions, factionId, subfactionId);
                 (option.Slot == LoadoutSlot.Skill ? skills : gear).Add(option);
             }
         }
 
-        var warnings = Warnings(limit, worn);
+        var optional = restrictions.Any(r => r.Self && (r.Rule.WeaponOptional || r.Rule.Bans.Any(IsWeaponsBan)));
+        var warnings = Warnings(optional && limit is not null ? limit with { Min = 0 } : limit, worn);
         if (!closed)
         {
             warnings.AddRange(ExtraWarnings(member, troop, factionId, subfactionId));
+            warnings.AddRange(BanWarnings(member, worn, restrictions, factionId, subfactionId));
         }
 
         return new Loadout(gear, skills, limit, weapons, closed, troop is not null, warnings);
@@ -262,7 +267,9 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
             itemFaction is null || (itemFaction == factionId && (itemSubfaction is null || itemSubfaction == subfactionId));
     }
 
-    private LoadoutOption Evaluate(Candidate candidate, Miniature member, List<Miniature> band, WeaponLimit? limit, Worn worn, string? factionId)
+    private LoadoutOption Evaluate(
+        Candidate candidate, Miniature member, List<Miniature> band, WeaponLimit? limit, Worn worn,
+        IReadOnlyList<Restriction> restrictions, string? factionId, string? subfactionId)
     {
         var item = Describe(candidate.Name, factionId);
         var slot = candidate.Group is not null ? LoadoutSlot.Skill : item.Slot;
@@ -290,6 +297,31 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
             if (candidate.Each && owned >= MaxEach)
             {
                 return $"Como máximo {MaxEach}";
+            }
+
+            if (owned == 0 && restrictions.FirstOrDefault(r => !UnitCostCalculator.SameItem(r.Rule.Name, candidate.Name)
+                    && r.Rule.Bans.Any(ban => Matches(ban, item, slot, factionId, subfactionId))) is { } restriction)
+            {
+                return restriction switch
+                {
+                    { Self: false } => $"{restriction.Rule.Name} ({restriction.Owner}): nadie más de la banda puede llevarlo",
+                    { Item: true } => $"No se combina con {restriction.Rule.Name}",
+                    _ => $"{restriction.Rule.Name}: no puede llevarlo",
+                };
+            }
+
+            // Lo que no se combina con algo que ya lleva (Garras con armas, un solo tipo de munición…).
+            if (owned == 0 && BansOf(candidate.Name, candidate.Group, factionId, subfactionId) is { Count: > 0 } bans
+                && Wearing(member, factionId).Where(w => bans.Any(ban => Matches(ban, w.Item, w.Slot, factionId, subfactionId)))
+                    .Select(w => w.Item.Name).FirstOrDefault() is { } clash)
+            {
+                return $"No se combina con {clash}";
+            }
+
+            if (owned == 0 && FindGear(candidate.Name, factionId, subfactionId) is { Requires.Count: > 0 } needs
+                && !member.Gear.Any(g => needs.Requires.Any(r => StartsWithItem(UnitCostCalculator.Parse(g.Name).Name, r))))
+            {
+                return $"Necesita llevar {JoinOr(needs.Requires)}";
             }
 
             // Miniaturas de la banda (sin contar esta) que ya lo llevan.
@@ -323,6 +355,11 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
                 }
             }
 
+            if (owned == 0 && item.Bulky && worn.Bulky is not null)
+            {
+                return $"Ya lleva algo con Armatoste ({worn.Bulky})";
+            }
+
             if (slot == LoadoutSlot.Weapon && owned == 0)
             {
                 if (worn.Alone is not null)
@@ -335,7 +372,8 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
                     return "No se combina con otras armas";
                 }
 
-                if (limit is not null && worn.Weapons >= limit.Max)
+                // Todas las bombas juntas cuentan como una sola arma.
+                if (limit is not null && worn.Weapons >= limit.Max && !(item.Bomb && worn.Bomb))
                 {
                     return limit.Max == 1 ? "Ya lleva su arma" : $"Ya lleva {limit.Max} armas";
                 }
@@ -408,10 +446,175 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
 
     private static bool SameTroop(string a, string b) => RulesText.Fold(a) == RulesText.Fold(b);
 
+    /// <summary>
+    /// Las reglas que vetan equipo a esta miniatura: las de su tropa (Escoria), las de su facción o
+    /// subfacción que le tocan (Ligeras de ropa), lo que ya lleva y no se combina con otras cosas
+    /// (Garras, munición especial) y las de otras miniaturas que vetan al resto de la banda (Imperdonable).
+    /// </summary>
+    private List<Restriction> Restrictions(Miniature member, Troop? troop, string? factionId, string? subfactionId, List<Miniature> band)
+    {
+        var faction = book.FindFaction(factionId);
+        var subfaction = faction?.Subfactions.FirstOrDefault(s => s.Id == subfactionId);
+        var list = new List<Restriction>();
+
+        foreach (var rule in troop?.Rules ?? [])
+        {
+            if (rule.Bans.Count > 0 && !rule.BansOthers)
+            {
+                list.Add(new Restriction(rule, troop!.Name, Self: true, Item: false));
+            }
+        }
+
+        foreach (var owner in new[] { faction, subfaction }.OfType<FactionRules>())
+        {
+            foreach (var rule in owner.Rules.Where(r => r.Bans.Count > 0 && !r.BansOthers && AppliesTo(r, troop)))
+            {
+                list.Add(new Restriction(rule, owner.Name, Self: true, Item: false));
+            }
+        }
+
+        foreach (var skill in member.Skills)
+        {
+            if (FindExtra(skill, faction, subfaction) is { Bans.Count: > 0 } extra)
+            {
+                list.Add(new Restriction(extra, member.Name, Self: true, Item: true));
+            }
+        }
+
+        foreach (var gear in member.Gear)
+        {
+            if (FindGear(UnitCostCalculator.Parse(gear.Name).Name, faction, subfaction) is { Bans.Count: > 0 } item)
+            {
+                list.Add(new Restriction(new NamedText { Name = item.Name, Text = item.Text, Bans = item.Bans }, member.Name, Self: true, Item: true));
+            }
+        }
+
+        foreach (var other in band.Where(m => m.Id != member.Id))
+        {
+            var theirs = costs.FindTroop(other.Role, factionId, subfactionId);
+            foreach (var rule in theirs?.Rules.Where(r => r.BansOthers && r.Bans.Count > 0) ?? [])
+            {
+                list.Add(new Restriction(rule, other.Name, Self: false, Item: false));
+            }
+        }
+
+        return list;
+    }
+
+    private static bool AppliesTo(NamedText rule, Troop? troop) =>
+        troop is null
+            ? rule.Troops.Count == 0 && rule.ExceptTroops.Count == 0
+            : (rule.Troops.Count == 0 || rule.Troops.Any(t => SameTroop(t, troop.Name)))
+                && !rule.ExceptTroops.Any(t => SameTroop(t, troop.Name));
+
+    /// <summary>Lo que ya lleva que choca con las reglas que le vetan equipo.</summary>
+    private IEnumerable<string> BanWarnings(Miniature member, List<Item> worn, List<Restriction> restrictions, string? factionId, string? subfactionId)
+    {
+        var bought = worn.Select(w => (w.Name, Item: w, w.Slot))
+            .Concat(member.Skills.Select(s => (Name: s, Item: Describe(s, factionId), Slot: LoadoutSlot.Skill)))
+            .Where(w => !member.Included.Any(i => UnitCostCalculator.SameItem(i, w.Name)));
+
+        foreach (var (name, item, slot) in bought)
+        {
+            var hit = restrictions.FirstOrDefault(r => !UnitCostCalculator.SameItem(r.Rule.Name, UnitCostCalculator.Parse(name).Name)
+                && r.Rule.Bans.Any(ban => Matches(ban, item, slot, factionId, subfactionId)));
+            if (hit is null)
+            {
+                continue;
+            }
+
+            yield return hit switch
+            {
+                { Self: false } => $"{hit.Rule.Name} ({hit.Owner}): nadie más de la banda puede llevar {name}.",
+                { Item: true } => $"{name} no se combina con {hit.Rule.Name}.",
+                _ => $"{hit.Rule.Name}: no puede llevar {name}.",
+            };
+        }
+    }
+
+    /// <summary>
+    /// Si un veto alcanza a algo: por nombre ("Ballesta" veta "Ballesta pesada"), por regla especial
+    /// del objeto ("Arma de fuego"), por clase ("Armas", "Blindaje") o por cómo se llama en la ficha
+    /// ("Filo medio incrustado" es un Arma incrustada).
+    /// </summary>
+    private bool Matches(string ban, Item item, LoadoutSlot slot, string? factionId, string? subfactionId)
+    {
+        if (IsWeaponsBan(ban))
+        {
+            return slot == LoadoutSlot.Weapon;
+        }
+
+        if (RulesText.Fold(ban) == "blindaje")
+        {
+            return slot == LoadoutSlot.Armor;
+        }
+
+        var name = UnitCostCalculator.Parse(item.Name).Name;
+        if (StartsWithItem(name, ban))
+        {
+            return true;
+        }
+
+        var key = RulesText.Fold(RulesText.StripParameter(ban));
+        if (slot != LoadoutSlot.Skill && item.Info?.SpecialRules.Any(r => RulesText.Fold(RulesText.StripParameter(r)) == key) == true)
+        {
+            return true;
+        }
+
+        var faction = book.FindFaction(factionId);
+        var aliases = FindGear(ban, faction, faction?.Subfactions.FirstOrDefault(s => s.Id == subfactionId))?.Aliases ?? [];
+        return aliases.Any(a => RulesText.Fold(name).Contains(RulesText.Fold(a), StringComparison.Ordinal));
+    }
+
+    private static bool IsWeaponsBan(string ban) => RulesText.Fold(ban) is "armas" or "arma";
+
+    private static bool StartsWithItem(string name, string prefix) =>
+        UnitCostCalculator.SameItem(name, prefix)
+        || RulesText.Fold(name).StartsWith(RulesText.Fold(prefix) + " ", StringComparison.Ordinal);
+
+    /// <summary>Con qué no se combina algo que se quiere comprar.</summary>
+    private List<string> BansOf(string name, ExtraGroup? group, string? factionId, string? subfactionId)
+    {
+        if (group is not null)
+        {
+            return group.Items.FirstOrDefault(i => UnitCostCalculator.SameItem(i.Name, name))?.Bans ?? [];
+        }
+
+        var faction = book.FindFaction(factionId);
+        return FindGear(name, faction, faction?.Subfactions.FirstOrDefault(s => s.Id == subfactionId))?.Bans ?? [];
+    }
+
+    /// <summary>Todo lo que lleva: equipo y habilidades.</summary>
+    private IEnumerable<(Item Item, LoadoutSlot Slot)> Wearing(Miniature member, string? factionId) =>
+        member.Gear.Select(g => Describe(g.Name, factionId)).Select(i => (i, i.Slot))
+            .Concat(member.Skills.Select(s => (Describe(s, factionId), LoadoutSlot.Skill)));
+
+    private GearItem? FindGear(string name, string? factionId, string? subfactionId)
+    {
+        var faction = book.FindFaction(factionId);
+        return FindGear(name, faction, faction?.Subfactions.FirstOrDefault(s => s.Id == subfactionId));
+    }
+
+    private GearItem? FindGear(string name, FactionRules? faction, FactionRules? subfaction) =>
+        book.Gear.Concat(faction?.Gear ?? []).Concat(subfaction?.Gear ?? [])
+            .FirstOrDefault(g => UnitCostCalculator.SameItem(g.Name, name));
+
+    private static NamedText? FindExtra(string name, FactionRules? faction, FactionRules? subfaction) =>
+        new[] { faction, subfaction }.OfType<FactionRules>()
+            .SelectMany(f => f.Extras).SelectMany(g => g.Items)
+            .FirstOrDefault(i => UnitCostCalculator.SameItem(i.Name, name));
+
+    private static string JoinOr(IReadOnlyList<string> names) =>
+        (names.Count == 1 ? names[0] : $"{string.Join(", ", names.Take(names.Count - 1))} o {names[^1]}").ToLowerInvariant();
+
+    /// <summary>Armas que cuentan para el máximo: todas las bombas juntas son una sola.</summary>
+    private static int CountWeapons(List<Item> worn) =>
+        worn.Count(w => w.Slot == LoadoutSlot.Weapon && !w.Bomb) + (worn.Any(w => w.Slot == LoadoutSlot.Weapon && w.Bomb) ? 1 : 0);
+
     private static List<string> Warnings(WeaponLimit? limit, List<Item> worn)
     {
         var warnings = new List<string>();
-        var weapons = worn.Count(w => w.Slot == LoadoutSlot.Weapon);
+        var weapons = CountWeapons(worn);
         if (limit is not null && weapons < limit.Min)
         {
             warnings.Add("Le falta un arma: el reglamento pide al menos una.");
@@ -437,6 +640,11 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
             warnings.Add("Lleva más de un blindaje.");
         }
 
+        if (worn.Count(w => w.Bulky) > 1)
+        {
+            warnings.Add("Lleva más de un objeto con Armatoste.");
+        }
+
         return warnings;
     }
 
@@ -455,7 +663,9 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
         return new Item(name, info, slot, info?.Kind,
             TwoHanded: alone && rules.Contains("mamotreto") || rules.Contains("a dos manos"),
             Alone: alone,
-            Scarce: rules.Contains("escasa"));
+            Scarce: rules.Contains("escasa"),
+            Bulky: rules.Contains("armatoste"),
+            Bomb: rules.Contains("bomba"));
     }
 
     private static bool IsShield(string name) => RulesText.Fold(UnitCostCalculator.Parse(name).Name) == "escudo";
@@ -469,7 +679,11 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
 
     private sealed record Candidate(string Name, int Cost, bool Each, ExtraGroup? Group, ExtraBuyer? Buyer, int? PerBand);
 
-    private sealed record Item(string Name, GearInfo? Info, LoadoutSlot Slot, GearInfoKind? Kind, bool TwoHanded, bool Alone, bool Scarce);
+    private sealed record Item(string Name, GearInfo? Info, LoadoutSlot Slot, GearInfoKind? Kind, bool TwoHanded, bool Alone, bool Scarce, bool Bulky, bool Bomb);
 
-    private sealed record Worn(int Weapons, bool TwoHanded, string? Alone, string? Armor, bool Shield);
+    private sealed record Worn(int Weapons, bool TwoHanded, string? Alone, string? Armor, bool Shield, string? Bulky, bool Bomb);
+
+    /// <param name="Self">El veto es para esta miniatura; si no, viene de otra de la banda.</param>
+    /// <param name="Item">Viene de algo que lleva (Garras, munición) y no de una regla.</param>
+    private sealed record Restriction(NamedText Rule, string Owner, bool Self, bool Item);
 }

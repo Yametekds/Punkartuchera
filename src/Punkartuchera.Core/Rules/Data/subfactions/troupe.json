@@ -38,11 +38,11 @@
         "buyers": [{ "troop": "Bicho raro", "minPoints": 10, "maxPoints": 30 }, { "troop": "*", "maxPoints": 15 }],
         "items": [
           { "name": "Ancas", "cost": 16, "text": "Salto." },
-          { "name": "Enanismo", "cost": 5, "text": "Las Coberturas de tamaño 1 le cuentan como de tamaño 2. No combina con Gigantismo." },
+          { "name": "Enanismo", "cost": 5, "text": "Las Coberturas de tamaño 1 le cuentan como de tamaño 2. No combina con Gigantismo.", "bans": ["Gigantismo"] },
           { "name": "Faquir", "cost": 6, "text": "Ignora la Penetración de los filos (pequeño, medio y pesado)." },
           { "name": "Feo que te cagas", "cost": 8, "text": "Quien le Asalte pierde los bonificadores de Asalto." },
           { "name": "Gordérrimo", "cost": 8, "text": "Si cae en cuerpo a cuerpo, aplasta a quien le Abatió: tirada de Agilidad o queda atrapado (como si no existiera) hasta gastar 2 Acciones." },
-          { "name": "Gigantismo", "cost": 10, "text": "+2 Fuerza y -1 Agilidad. No combina con Enanismo." },
+          { "name": "Gigantismo", "cost": 10, "text": "+2 Fuerza y -1 Agilidad. No combina con Enanismo.", "bans": ["Enanismo"] },
           { "name": "Huesos de gelatina", "cost": 5, "text": "Escurridizo y pasa por huecos donde no cabe su peana." },
           { "name": "Mata de pelos", "cost": 8, "text": "El enemigo en Combate con él tiene -1 a Combate." },
           { "name": "Ojos esquivos", "cost": 10, "text": "+2 Precisión, pero no puede Apuntar." },
@@ -130,9 +130,9 @@
         "buyers": [{ "troop": "Acróbata", "min": 1, "max": 1 }],
         "items": [
           { "name": "Acróbata", "cost": 5, "text": "Catapulta infernal, si su pareja también la tiene." },
-          { "name": "Funambulista", "cost": 12, "text": "Ataca con su pértiga a un enemigo a 5 cm visible, sin Cobertura ni trabado, como en cuerpo a cuerpo sin llegar a contactar (F3, Pen 1). En contacto cuenta como arma improvisada. No lleva otras armas." },
+          { "name": "Funambulista", "cost": 12, "text": "Ataca con su pértiga a un enemigo a 5 cm visible, sin Cobertura ni trabado, como en cuerpo a cuerpo sin llegar a contactar (F3, Pen 1). En contacto cuenta como arma improvisada. No lleva otras armas.", "bans": ["Armas"] },
           { "name": "Lanzador de cuchillos", "cost": 8, "text": "+1 Precisión y +1 Fuerza con cuchillos arrojadizos." },
-          { "name": "Malabarista", "cost": 10, "text": "Bolos: maza ligera en cuerpo a cuerpo; a distancia F2, Pen 0, 10/15/20. 1 Acción de malabares da +2 Fuerza al siguiente disparo de esa activación. No lleva otras armas." },
+          { "name": "Malabarista", "cost": 10, "text": "Bolos: maza ligera en cuerpo a cuerpo; a distancia F2, Pen 0, 10/15/20. 1 Acción de malabares da +2 Fuerza al siguiente disparo de esa activación. No lleva otras armas.", "bans": ["Armas"] },
           { "name": "Saltimbanqui", "cost": 5, "text": "Repite una tirada en la partida." },
           { "name": "Tragafuegos", "cost": 15, "text": "Ataque a distancia F3, Pen 2 con plantilla de lágrima. Tira 1d10: con 9-10 falla y se lo come él." }
         ]

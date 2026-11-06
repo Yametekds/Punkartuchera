@@ -11,7 +11,7 @@
       "Máximo un Gato parameño."
     ],
     "rules": [
-      { "name": "Colorinchis", "text": "Todos llevan Ropas resistentes y no pueden comprar otro Blindaje. No están obligados a llevar arma y no pueden llevar Arma de fuego ni ballestas. Armas renombradas: shuriken (cuchillos arrojadizos), tonfa (maza ligera), sai (filo pequeño), nunchakus (maza), katana (filo medio) y yumi (arco).",
+      { "name": "Colorinchis", "text": "Todos llevan Ropas resistentes y no pueden comprar otro Blindaje. No están obligados a llevar arma y no pueden llevar Arma de fuego ni ballestas. Armas renombradas: shuriken (cuchillos arrojadizos), tonfa (maza ligera), sai (filo pequeño), nunchakus (maza), katana (filo medio) y yumi (arco).", "bans": ["Blindaje", "Arma de fuego", "Ballesta"], "weaponOptional": true,
         "table": { "columns": ["Color", "Tropa", "Reglas extra"], "rows": [
           ["Ninja negro", "Piltrafa", "—"],
           ["Ninja rojo", "Machaca", "Brinca como un hámster"],
@@ -54,7 +54,7 @@
     ],
     "rules": [
       { "name": "Hasta el coño me tenéis", "text": "Cada Frau Abatida da un marcador a la banda. Al empezar su Fase de activación, una Frau puede gastar hasta 3: +5 cm por marcador a su última Acción de Movimiento al Asaltar." },
-      { "name": "Ligeras de ropa", "text": "Llevan Ropas resistentes de base y no pueden comprar mejor Blindaje." }
+      { "name": "Ligeras de ropa", "text": "Llevan Ropas resistentes de base y no pueden comprar mejor Blindaje.", "bans": ["Blindaje"] }
     ],
     "troops": [
       {
