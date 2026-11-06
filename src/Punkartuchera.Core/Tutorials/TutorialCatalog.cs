@@ -75,11 +75,11 @@ public static class TutorialCatalog
             ]),
             new("Genera el mapa",
             [
-                "En Mapa eliges el tamaño de mesa y cuánta chatarra de cada tipo tienes. La app reparte la escenografía de forma equilibrada para los dos lados y deja libres las zonas de despliegue.",
+                "En Mapa eliges la mesa (90×90 o 120×120), si el despliegue va arriba y abajo o a los lados, cuánta chatarra de cada tipo tienes y de qué material es. La app reparte la escenografía de forma equilibrada para los dos lados, a 10 cm entre piezas y de los bordes siempre que quepa.",
                 "Cada mapa tiene un código. Mismo código y misma chatarra, mismo mapa: pásale el enlace al rival y veréis lo mismo.",
             ])
             {
-                InApp = "Las medidas de las piezas del generador son orientativas. El tamaño y la cobertura de cada elemento los pactáis antes de jugar (mira el tutorial de terreno).",
+                InApp = "Cada pieza sale con su color y su trama según el material, y con la marca del reglamento (2M, 3P…). Lo de siempre es la escenografía que pide el reglamento para esa mesa.",
                 Link = new("mapa", "Generar un mapa"),
             },
             new("Lleva la partida",
@@ -109,6 +109,10 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["medidas"],
+                Images =
+                [
+                    new("medidas.webp", "Dos miniaturas sobre la mesa con flechas entre sus peanas", "Entre dos miniaturas se mide siempre de borde a borde de las peanas, por el lado más cercano. Ni nariz, ni lanza, ni pluma del casco: peana.", 4),
+                ],
             },
             new("Los Atributos",
             [
@@ -168,6 +172,10 @@ public static class TutorialCatalog
             {
                 TableFrom = "disparar",
                 RuleIds = ["disparar", "distancias", "disparar-combate"],
+                Images =
+                [
+                    new("linea-vision.webp", "Un tirador frente a cuatro objetivos marcados A, B, C y D, uno tras una caseta y otro tras unos bidones", "Línea de visión del Cardenal Nuclear. A: está fuera de su arco frontal, no lo ve. B: delante y sin nada en medio, lo ve. C: detrás de una Cobertura de tamaño 2 con peana de 25 mm, tapado del todo, no lo ve. D: detrás de algo de tamaño 1, que no tapa entera una peana de 25 mm, así que sí lo ve.", 5),
+                ],
                 InApp = "Las armas de fuego gastan balas. En Reglas › Armas y equipo tienes el alcance corto, medio y largo de cada arma.",
             },
             new("A hostias: Asaltar y Combatir",
@@ -179,6 +187,11 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["asaltar", "combatir", "combate-multiple", "separarse"],
+                Images =
+                [
+                    new("asalto.webp", "Un Bruto avanza en dos movimientos hacia una Mutante", "Un Bruto de los Pandilleros gasta dos Acciones de Movimiento para llegar a la peana de una Mutante. Como la veía al empezar las dos, cada una le da +1: entra en Combate con +2.", 12),
+                    new("combate-multiple.webp", "Seis miniaturas en un Combate múltiple, marcadas de A a F", "Combate múltiple: los Pandilleros A, B y C y los Mutardos D y E están metidos porque cada uno toca al menos a un enemigo. F solo toca a uno de los suyos, así que se queda mirando.", 14),
+                ],
             },
             new("Impactos: Fuerza contra Dureza",
             [
@@ -301,6 +314,11 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["obstaculos", "saltar", "trepar"],
+                Images =
+                [
+                    new("obstaculo-estrecho.webp", "Una miniatura salta una valla estrecha de tamaño 1", "Valla de tamaño 1 y más estrecha que la peana (25 mm): la Pachacha la cruza y aparece al otro lado, gastando solo lo que avanza en horizontal.", 10),
+                    new("obstaculo-ancho.webp", "Una miniatura se sube encima de un coche", "Coche de tamaño 1 pero más ancho que la peana: la Pachacha se queda encima. Si el coche cuenta como Terreno chungo o pila chungo, se aplica mientras esté ahí arriba.", 10),
+                ],
             },
             new("Caídas",
             [
@@ -331,6 +349,10 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["coberturas", "blindaje"],
+                Images =
+                [
+                    new("cobertura-coche.webp", "Un tirador del V Reich apunta a dos Mutardos, A junto a un coche y B al descubierto", "El del V Reich apunta a dos Mutardos. Al A alguna línea le cruza el coche: Cobertura parcial, y como un coche es Pesada, +7 al Blindaje. Al B no le tapa nada: a pelo.", 20),
+                ],
             },
             new("Cobertura parcial o total",
             [
@@ -341,6 +363,10 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["cobertura-parcial-total", "aplicar-cobertura"],
+                Images =
+                [
+                    new("cobertura-parcial-total.webp", "Tres viñetas vistas desde arriba, A, B y C, con dos miniaturas a cada lado de un obstáculo", "Visto desde arriba. A: todas las líneas entre peanas cruzan el trasto, Cobertura total; como es de tamaño 2 y las peanas son de 25 mm, ni se ven. B: unas líneas lo cruzan y otras no, Cobertura parcial. C: ninguna línea pasa por el trasto, así que no cubre a nadie.", 19),
+                ],
             },
             new("Evitar, apilar y las alturas",
             [
@@ -350,6 +376,11 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["disparar-combate", "apilar-coberturas", "alturas"],
+                Images =
+                [
+                    new("apilar-coberturas.webp", "Un tirador junto a unos neumáticos dispara hacia un objetivo tras otros neumáticos y un coche", "Apilar: el Chispa está pegado a los neumáticos A, así que esos no cuentan. El objetivo se cubre con los neumáticos B (Ligera) y el coche C (Pesada): se coge la mejor, +7, y +1 por la otra.", 21),
+                    new("alturas.webp", "Tres Pandilleros, A, B y C, en lo alto de un edificio, y un enemigo abajo", "Alturas: A y C están a menos de una peana del borde, así que pueden disparar abajo. B está más adentro: ni dispara ni le pueden disparar. A, pegado al borde, no tiene Cobertura si le disparan desde el suelo.", 22),
+                ],
             },
             new("Carne de cañón: miniaturas como Cobertura",
             [
@@ -359,6 +390,10 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["miniaturas-cobertura"],
+                Images =
+                [
+                    new("miniaturas-cobertura.webp", "Una arquera dispara a un Mutardo B que está medio tapado por otro Mutardo A", "El Mutardo A tapa a medias al B: se dispara como a un Combate, con -3. Si fallas por ese -3, la flecha se la come A.", 21),
+                ],
                 Link = new("reglas/especiales", "Ver reglas especiales"),
             },
             new("Prepara la mesa",
@@ -368,7 +403,7 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["coberturas"],
-                InApp = "El generador de Mapa te reparte la chatarra con medidas orientativas. El tamaño y el grado de cada pieza los decidís vosotros con estas reglas.",
+                InApp = "En el generador de Mapa eliges el material de cada tipo de pieza y el plano ya sale con la marca de cada una. Si vuestra escenografía es distinta, cambiad el material y listo.",
                 Link = new("mapa", "Generar un mapa"),
             },
         ]);

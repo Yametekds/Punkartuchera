@@ -1,7 +1,10 @@
 @using System.Globalization
 @using Punkartuchera.Core.Maps
-@* Plano de la mesa visto desde arriba, en centímetros. El norte es la banda B y el sur la banda A. *@
+@* Plano de la mesa visto desde arriba, en centímetros. La banda B despliega arriba (o a la
+   izquierda) y la A abajo (o a la derecha). Cada pieza se pinta con el color del grado de su
+   Cobertura y la trama de su material, y lleva la marca del reglamento (tamaño y grado, como 2M). *@
 <svg class="map-diagram" viewBox="@ViewBox" role="img" aria-label="@Description">
+    <MapPatterns Prefix="map" Materials="UsedMaterials" />
     <rect class="map-board" x="0" y="0" width="@W" height="@H" />
 
     @for (var x = GridStep; x < W; x += GridStep)
@@ -13,25 +16,47 @@
         <line class="map-grid" x1="0" y1="@y" x2="@W" y2="@y" />
     }
 
-    <rect class="map-deploy map-deploy--north" x="0" y="0" width="@W" height="@D" />
-    <rect class="map-deploy map-deploy--south" x="0" y="@(H - D)" width="@W" height="@D" />
-    <text class="map-deploy__label" x="@(W / 2)" y="@Num(D / 2.0)">Despliegue B</text>
-    <text class="map-deploy__label" x="@(W / 2)" y="@Num(H - D / 2.0)">Despliegue A</text>
-    <line class="map-midline" x1="0" y1="@Num(H / 2.0)" x2="@W" y2="@Num(H / 2.0)" />
+    @if (Vertical)
+    {
+        <g>
+            <rect class="map-deploy map-deploy--north" x="0" y="0" width="@D" height="@H" />
+            <rect class="map-deploy map-deploy--south" x="@(W - D)" y="0" width="@D" height="@H" />
+            <text class="map-deploy__label" transform="translate(@Num(D / 2.0) @Num(H / 2.0)) rotate(-90)">Despliegue B</text>
+            <text class="map-deploy__label" transform="translate(@Num(W - D / 2.0) @Num(H / 2.0)) rotate(90)">Despliegue A</text>
+            <line class="map-midline" x1="@Num(W / 2.0)" y1="0" x2="@Num(W / 2.0)" y2="@H" />
+        </g>
+    }
+    else
+    {
+        <g>
+            <rect class="map-deploy map-deploy--north" x="0" y="0" width="@W" height="@D" />
+            <rect class="map-deploy map-deploy--south" x="0" y="@(H - D)" width="@W" height="@D" />
+            <text class="map-deploy__label" x="@(W / 2)" y="@Num(D / 2.0)">Despliegue B</text>
+            <text class="map-deploy__label" x="@(W / 2)" y="@Num(H - D / 2.0)">Despliegue A</text>
+            <line class="map-midline" x1="0" y1="@Num(H / 2.0)" x2="@W" y2="@Num(H / 2.0)" />
+        </g>
+    }
 
     @foreach (var piece in Layout.Pieces)
     {
-        <g class="map-piece @PieceClass(piece.Type)">
-            <title>@piece.Type.Name (@piece.Width × @piece.Depth cm)</title>
+        var fill = MapPatterns.Fill("map", piece.Material);
+        var showMark = piece.Mark.Length > 0 && Math.Min(piece.Width, piece.Depth) >= 9;
+        var size = LabelSize(piece);
+        <g class="map-piece @(piece.Type.Size == 0 ? "map-piece--flat" : null)">
+            <title>@piece.Type.Name: @piece.Material.Name, @CoverText(piece) (@piece.Width × @piece.Depth cm)</title>
             @if (piece.Type.Shape == TerrainShape.Circle)
             {
-                <ellipse cx="@Num(piece.X)" cy="@Num(piece.Y)" rx="@Num(piece.Width / 2.0)" ry="@Num(piece.Depth / 2.0)" />
+                <ellipse cx="@Num(piece.X)" cy="@Num(piece.Y)" rx="@Num(piece.Width / 2.0)" ry="@Num(piece.Depth / 2.0)" fill="@fill" />
             }
             else
             {
-                <rect x="@Num(piece.Left)" y="@Num(piece.Top)" width="@piece.Width" height="@piece.Depth" />
+                <rect x="@Num(piece.Left)" y="@Num(piece.Top)" width="@piece.Width" height="@piece.Depth" fill="@fill" />
             }
-            <text x="@Num(piece.X)" y="@Num(piece.Y)" style="font-size: @Num(LabelSize(piece))px">@piece.Type.Abbreviation</text>
+            <text x="@Num(piece.X)" y="@Num(showMark ? piece.Y - size * .45 : piece.Y)" style="font-size: @Num(size)px">@piece.Type.Abbreviation</text>
+            @if (showMark)
+            {
+                <g><text class="map-piece__mark" x="@Num(piece.X)" y="@Num(piece.Y + size * .6)" style="font-size: @Num(size * .8)px">@piece.Mark</text></g>
+            }
         </g>
     }
 </svg>
@@ -41,6 +66,8 @@
 
     [Parameter, EditorRequired] public MapLayout Layout { get; set; } = default!;
 
+    private bool Vertical => Layout.Orientation == DeploymentOrientation.Vertical;
+
     private int W => Layout.Board.Width;
 
     private int H => Layout.Board.Height;
@@ -49,13 +76,18 @@
 
     private string ViewBox => $"0 0 {W} {H}";
 
-    private string Description => $"Mapa {Layout.Code}: mesa de {W} por {H} centímetros con {Layout.Pieces.Count} piezas de escenografía.";
+    private IEnumerable<TerrainMaterial> UsedMaterials => Layout.Pieces.Select(p => p.Material).Distinct();
 
-    /// <summary>Clase según lo que hace la pieza en juego, para colorearla igual que en la leyenda.</summary>
-    public static string PieceClass(TerrainType type) =>
-        type.BlocksSight ? "map-piece--block" : type.Cover > 0 ? "map-piece--cover" : "map-piece--hazard";
+    private string Description =>
+        $"Mapa {Layout.Code}: mesa de {W} por {H} centímetros con {Layout.Pieces.Count} piezas de escenografía y despliegue "
+        + (Vertical ? "a izquierda y derecha." : "arriba y abajo.");
 
-    private static double LabelSize(PlacedTerrain piece) => Math.Clamp(Math.Min(piece.Width, piece.Depth) * 0.6, 2.6, 5);
+    public static string CoverText(PlacedTerrain piece) =>
+        piece.Type.Size == 0 || piece.Material.Grade == CoverGrade.None
+            ? "no da Cobertura"
+            : $"Cobertura {piece.Material.GradeName.ToLowerInvariant()} de tamaño {piece.Type.Size}";
+
+    private static double LabelSize(PlacedTerrain piece) => Math.Clamp(Math.Min(piece.Width, piece.Depth) * 0.42, 2.4, 4.6);
 
     private static string Num(double value) => value.ToString("0.##", CultureInfo.InvariantCulture);
 }

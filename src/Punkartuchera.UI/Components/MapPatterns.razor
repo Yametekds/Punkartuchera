@@ -1,0 +1,55 @@
+@using Punkartuchera.Core.Maps
+@* Tramas de los materiales. Cada SVG lleva las suyas con un prefijo propio, porque las de un SVG
+   oculto (pestaña cerrada en el móvil) no se pintan en los demás. *@
+<defs>
+    @foreach (var material in Materials)
+    {
+        <pattern id="@Id(Prefix, material)" class="map-mat @GradeClass(material)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <rect class="map-mat__fill" width="4" height="4" />
+            @switch (material.Pattern)
+            {
+                case MaterialPattern.Dots:
+                    <circle class="map-mat__dot" cx="1" cy="1" r=".5" />
+                    <circle class="map-mat__dot" cx="3" cy="3" r=".5" />
+                    break;
+                case MaterialPattern.Planks:
+                    <path class="map-mat__line" d="M0 1H4M0 3H4" />
+                    break;
+                case MaterialPattern.Rings:
+                    <circle class="map-mat__line" cx="2" cy="2" r="1.1" />
+                    break;
+                case MaterialPattern.Bricks:
+                    <path class="map-mat__line" d="M0 .2H4M0 2.2H4M1 .2V2.2M3 2.2V4" />
+                    break;
+                case MaterialPattern.Diagonal:
+                    <path class="map-mat__line" d="M-1 1L1 -1M0 4L4 0M3 5L5 3" />
+                    break;
+                case MaterialPattern.Crosshatch:
+                    <path class="map-mat__line" d="M-1 1L1 -1M0 4L4 0M3 5L5 3M-1 3L1 5M0 0L4 4M3 -1L5 1" />
+                    break;
+                case MaterialPattern.Waves:
+                    <path class="map-mat__line" d="M0 1.2Q1 .2 2 1.2T4 1.2M0 3.2Q1 2.2 2 3.2T4 3.2" />
+                    break;
+            }
+        </pattern>
+    }
+</defs>
+
+@code {
+    [Parameter, EditorRequired] public string Prefix { get; set; } = string.Empty;
+
+    [Parameter] public IEnumerable<TerrainMaterial> Materials { get; set; } = TerrainMaterial.All;
+
+    public static string Id(string prefix, TerrainMaterial material) => $"{prefix}-{material.Id}";
+
+    public static string Fill(string prefix, TerrainMaterial material) => $"url(#{Id(prefix, material)})";
+
+    /// <summary>El color va con el grado de la Cobertura; la trama, con el material.</summary>
+    public static string GradeClass(TerrainMaterial material) => material.Grade switch
+    {
+        CoverGrade.Light => "map-mat--light",
+        CoverGrade.Medium => "map-mat--medium",
+        CoverGrade.Heavy => "map-mat--heavy",
+        _ => "map-mat--toxic",
+    };
+}

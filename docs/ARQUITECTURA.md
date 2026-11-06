@@ -21,7 +21,7 @@ Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core  ─�
 | `IBandRepository` | `IndexedDbBandRepository` (UI), `InMemoryBandRepository` (Core, tests) | Guardar bandas. Una versión en la nube implementa esta interfaz. |
 | `IPhotoStore` | `IndexedDbPhotoStore`, `InMemoryPhotoStore` | Fotos de miniaturas, separadas de la banda. |
 | `IRulesCatalog` | `RulebookCatalog` | Facciones, atributos y tipos de miembro, sacados del reglamento (`Rulebook`). |
-| `ITerrainCatalog` | `DefaultTerrainCatalog` (**provisional**) | Tipos de escenografía (huella en cm, cobertura, si tapa la vista) y tamaños de mesa. |
+| `ITerrainCatalog` | `DefaultTerrainCatalog` | Tipos de escenografía (huella en cm, tamaño 1-3, material por defecto), materiales con su grado de Cobertura y mesas del reglamento (90×90 y 120×120, despliegue de 15 y 30 cm). |
 | `IMatchService` | `MatchService` | Partida activa, en un móvil o en dos unidos por código. |
 | `IMatchRelay` | `SignalRMatchRelay` (UI), `DisabledMatchRelay` (sin relé configurado) | Cliente del relé en línea. |
 | `IActiveMatchStore` | `IndexedDbActiveMatchStore`, `InMemoryActiveMatchStore` | Guarda la partida activa para que sobreviva a recargar. |

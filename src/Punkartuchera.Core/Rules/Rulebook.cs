@@ -223,6 +223,18 @@ public sealed class GearItem
 
     public int? Cost { get; set; }
 
+    /// <summary>Cuántos puede haber como máximo en toda la banda (Gato parameño, Tótem…).</summary>
+    public int? PerBand { get; set; }
+
+    /// <summary>Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio).</summary>
+    public List<string> Requires { get; set; } = [];
+
+    /// <summary>Palabras que, en el nombre de lo que lleva, cuentan como este objeto ("incrustado").</summary>
+    public List<string> Aliases { get; set; } = [];
+
+    /// <summary>Con qué no se combina en la misma miniatura (un solo tipo de munición…), como en <see cref="NamedText.Bans"/>.</summary>
+    public List<string> Bans { get; set; } = [];
+
     public string Text { get; set; } = string.Empty;
 
     public string? Source { get; set; }
@@ -278,6 +290,27 @@ public sealed class FactionRules
     /// <summary>Armas de otra facción que esta también puede usar (por nombre).</summary>
     public List<string> SharedWeapons { get; set; } = [];
 
+    /// <summary>Subfacciones: equipo de la facción madre que no se puede comprar (todas las tropas o solo algunas).</summary>
+    public List<GearBan> BannedGear { get; set; } = [];
+
+    /// <summary>Subfacciones: listas de la facción madre que no se pueden comprar ("Artículos de coña").</summary>
+    public List<string> BannedExtras { get; set; } = [];
+
+    /// <summary>Tropas que no pueden comprar el equipo genérico de la facción.</summary>
+    public List<string> NoGenericGear { get; set; } = [];
+
+    /// <summary>
+    /// Subfacciones: tropas de la facción madre que puede reclutar. Sus personalidades solo si se nombran
+    /// (cuando la subfacción admite «una Personalidad» sin decir de quién).
+    /// </summary>
+    public List<string> BaseTroops { get; set; } = [];
+
+    /// <summary>Subfacciones: nombre que reciben aquí las tropas de la facción madre ("Piltrafa" → "Ninja negro").</summary>
+    public Dictionary<string, string> TroopNames { get; set; } = [];
+
+    /// <summary>No admite Mercenarios.</summary>
+    public bool NoMercenaries { get; set; }
+
     /// <summary>Si es una subfacción, la facción a la que pertenece.</summary>
     [JsonIgnore]
     public string? ParentId { get; set; }
@@ -298,6 +331,9 @@ public sealed class PriceOption
     /// <summary>El coste es por unidad (bombas, granadas…).</summary>
     public bool Each { get; set; }
 
+    /// <summary>Tropas que no pueden comprarlo ("Todos menos los Subhumanos").</summary>
+    public List<string> ExcludeTroops { get; set; } = [];
+
     public string? Notes { get; set; }
 }
 
@@ -312,6 +348,24 @@ public sealed class NamedText
 
     public RuleTable? Table { get; set; }
 
+    /// <summary>
+    /// Lo que la regla no deja llevar: nombres de objetos ("Arma incrustada"), reglas especiales
+    /// que tenga el objeto ("Arma de fuego") o "Armas" y "Blindaje" para toda esa clase de equipo.
+    /// </summary>
+    public List<string> Bans { get; set; } = [];
+
+    /// <summary>A quién se aplica una regla de facción o subfacción. Vacío: a todas las tropas.</summary>
+    public List<string> Troops { get; set; } = [];
+
+    /// <summary>Tropas a las que no se aplica ("Nadie salvo los Tenaceros…").</summary>
+    public List<string> ExceptTroops { get; set; } = [];
+
+    /// <summary>El veto es para el resto de la banda, no para quien tiene la regla (Imperdonable).</summary>
+    public bool BansOthers { get; set; }
+
+    /// <summary>Quien tiene la regla no está obligado a llevar arma.</summary>
+    public bool WeaponOptional { get; set; }
+
     [JsonIgnore]
     public string Slug => RulesText.Slug(Name);
 }
@@ -319,6 +373,9 @@ public sealed class NamedText
 public sealed class Troop
 {
     public string Name { get; set; } = string.Empty;
+
+    /// <summary>Tropa de la facción madre a la que sustituye esta versión de la subfacción.</summary>
+    public string? Replaces { get; set; }
 
     public int Cost { get; set; }
 
@@ -374,12 +431,52 @@ public sealed class ExtraGroup
 
     public string? Intro { get; set; }
 
+    /// <summary>Cuántas miniaturas de la banda pueden llevar la misma (Reliquias: 1, Mutaciones: 3).</summary>
+    public int? PerBand { get; set; }
+
+    /// <summary>Las que no cuentan para <see cref="PerBand"/>.</summary>
+    public List<string> PerBandExcept { get; set; } = [];
+
+    /// <summary>Quién puede comprar de esta lista y cuánto. Vacío: cualquier tropa que no tenga el equipo cerrado.</summary>
+    public List<ExtraBuyer> Buyers { get; set; } = [];
+
     public int? Page { get; set; }
 
     public List<NamedText> Items { get; set; } = [];
 
     [JsonIgnore]
     public string Slug => RulesText.Slug(Title);
+}
+
+/// <summary>Equipo vetado en una subfacción, para todas las tropas o solo para algunas.</summary>
+public sealed class GearBan
+{
+    public List<string> Names { get; set; } = [];
+
+    /// <summary>Vacío: ninguna tropa.</summary>
+    public List<string> Troops { get; set; } = [];
+}
+
+/// <summary>Una tropa que puede comprar de una lista propia, con sus límites.</summary>
+public sealed class ExtraBuyer
+{
+    /// <summary>Nombre de la tropa, o "*" para cualquiera.</summary>
+    public string Troop { get; set; } = string.Empty;
+
+    /// <summary>Cuántas puede llevar como mínimo (aviso si no llega).</summary>
+    public int Min { get; set; }
+
+    /// <summary>Cuántas puede llevar como máximo.</summary>
+    public int? Max { get; set; }
+
+    /// <summary>Puntos máximos que puede gastar en la lista.</summary>
+    public int? MaxPoints { get; set; }
+
+    /// <summary>Puntos mínimos que tiene que gastar (aviso si no llega).</summary>
+    public int MinPoints { get; set; }
+
+    /// <summary>Si solo puede elegir algunas de la lista.</summary>
+    public List<string> Only { get; set; } = [];
 }
 
 /// <summary>Una banda lista para jugar tal como viene en una ficha de control oficial.</summary>

@@ -1,8 +1,10 @@
 [
   {
     "id": "carroneros",
+    "baseTroops": ["Pistón", "Engranaje", "Sonda"],
     "name": "Carroñeros",
     "summary": "Chatarreros nómadas que reniegan de Samanthia y de los cachivaches: rebuscan en las ruinas del Mundo de Antaño con vigías, trampas y Sondas muy apañados.",
+    "bannedGear": [{ "names": ["Puño balístico", "Bombeadora"] }],
     "restrictions": [
       "Usa Pistones, Engranajes y Sondas de los Chatarreros. Sin Dinamos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -15,6 +17,17 @@
       { "name": "Sondas carroñeros", "text": "Sus Sondas no tienen Infiltración ni Raudo de base. Cada uno puede comprar DOS habilidades de la lista; ninguna se repite en la banda salvo Infiltrador y Velocista." }
     ],
     "troops": [
+      {
+        "name": "Sonda",
+        "replaces": "Sonda",
+        "cost": 25,
+        "page": 3,
+        "stats": { "a": "2", "c": "3", "p": "3", "ag": "5", "f": "2", "d": "3", "t": "5" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }],
+        "armor": "Ropas resistentes",
+        "specialRules": ["Camuflaje", "Todoterreno"]
+      },
       {
         "name": "Vigía", "cost": 25, "page": 2,
         "stats": { "a": "2", "c": "3", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "3" },
@@ -43,6 +56,8 @@
     "extras": [
       {
         "title": "Habilidades de Sonda", "page": 3,
+        "perBand": 1, "perBandExcept": ["Infiltrador", "Velocista"],
+        "buyers": [{ "troop": "Sonda", "max": 2 }],
         "items": [
           { "name": "Acusica", "cost": 5, "text": "Los aliados que le ven cuentan con Línea de visión hacia los enemigos que él ve a la hora de Asaltarlos." },
           { "name": "Ajustador", "cost": 6, "text": "Con Infiltración puede aparecer en cualquier Turno, también después del cuarto." },
@@ -59,8 +74,10 @@
   },
   {
     "id": "innovadores",
+    "baseTroops": ["Pistón", "Dinamo"],
     "name": "Innovadores",
     "summary": "Los inventores secretos de Samantha, por fin a la vista tras la caída de Liberty City: exoarmaduras de vapor que asustan… y a veces revientan.",
+    "bannedGear": [{ "names": ["Puño balístico", "Lanzaarpones"], "troops": ["Pistón"] }],
     "restrictions": [
       "Usa Pistones y Dinamos de los Chatarreros. Sin Engranajes ni Sondas.",
       "Puede usar las tropas propias de la subfacción.",
@@ -103,6 +120,7 @@
   },
   {
     "id": "pioneros",
+    "baseTroops": ["Dinamo", "Engranaje", "Sonda"],
     "name": "Pioneros",
     "summary": "Los locos del «Diesel gustazo»: Chatarreros que prueban en combate mochilas cohete y ciclohetes con el combustible de la Fortaleza del Cielo.",
     "restrictions": [
