@@ -1,0 +1,12 @@
+@using Punkartuchera.Core.Maps
+<svg class="material-swatch" viewBox="0 0 12 12" aria-hidden="true">
+    <MapPatterns Prefix="@_prefix" Materials="[Material]" />
+    <rect class="material-swatch__shape" x=".6" y=".6" width="10.8" height="10.8" fill="@MapPatterns.Fill(_prefix, Material)" />
+</svg>
+
+@code {
+    private static int _next;
+    private readonly string _prefix = $"sw{Interlocked.Increment(ref _next)}";
+
+    [Parameter, EditorRequired] public TerrainMaterial Material { get; set; } = default!;
+}
