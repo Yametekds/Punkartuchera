@@ -72,7 +72,7 @@
       "specialRules": ["Personalidad", "Retraso (2)"],
       "rules": [
         { "name": "Por un puñado de balas", "text": "Cada vez que falla un disparo, cambia de bando al empezar el siguiente Turno. Puede volver a pasar." },
-        { "name": "Imperdonable", "text": "Ninguna otra miniatura de su banda puede llevar armas con Arma de fuego." },
+        { "name": "Imperdonable", "text": "Ninguna otra miniatura de su banda puede llevar armas con Arma de fuego.", "bans": ["Arma de fuego"], "bansOthers": true },
         { "name": "Alégrame el día", "text": "Una vez por partida, sin balas, puede disparar igual: si la Precisión sale par le quedaba una bala; si sale impar, no." },
         { "name": "El Jinete Paliducho", "text": "Quien le dispare tiene -1 a Precisión." }
       ]

@@ -99,7 +99,7 @@
         "specialRules": ["Bestia"],
         "rules": [
           { "name": "Monstruosidad tentacular", "text": "Quien la Asalte pierde los bonificadores de Asalto, y quien intente Separarse tiene -3 a su Agilidad." },
-          { "name": "No entra más", "text": "No puede usar Ambrosía." }
+          { "name": "No entra más", "text": "No puede usar Ambrosía.", "bans": ["Ambrosía"] }
         ]
       },
       {
