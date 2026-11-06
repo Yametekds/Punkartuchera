@@ -517,8 +517,8 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
     private static MatchAid Once(string key, string name, string rule, string? hint = null) =>
         new() { Key = key, Name = name, Rule = rule, Hint = hint, Kind = AidKind.Once, Max = 1 };
 
-    /// <summary>"Por cada fracción de 100 puntos": cuenta también la última parte incompleta.</summary>
-    public static int Fractions(int cost, int size) => cost <= 0 ? 0 : (cost + size - 1) / size;
+    /// <summary>"Por cada fracción de 100 puntos": solo cuentan las completas (335 puntos dan 3).</summary>
+    public static int Fractions(int cost, int size) => cost <= 0 ? 0 : cost / size;
 
     private static int CardsAllowed(int round) => (round + 1) / 2;
 

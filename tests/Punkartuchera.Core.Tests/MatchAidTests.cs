@@ -26,7 +26,7 @@ public class MatchAidTests
         var aids = For(band);
 
         var ambrosia = Assert.Single(aids.Band, a => a.Key == "ambrosia");
-        Assert.Equal(4, ambrosia.Start); // 335 puntos: cuatro fracciones de 100.
+        Assert.Equal(3, ambrosia.Start); // 335 puntos: tres fracciones completas de 100.
         Assert.DoesNotContain(aids.Of(0), a => a.Key == "dosis");
         Assert.DoesNotContain(aids.Of(7), a => a.Key == "dosis"); // Madre nunca la toma.
 
