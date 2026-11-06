@@ -51,7 +51,7 @@
     "rules": [
       { "name": "Pies en la roca", "text": "No tienen Sangre salada y toda la banda salvo los Grumetes tiene Todoterreno." },
       { "name": "Pesca de orilla", "text": "La Red gana +5 cm en todas sus distancias." },
-      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa." }
+      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa.", "bans": ["Armadura quitinosa"], "exceptTroops": ["Tenacero"] }
     ],
     "troops": [
       {

@@ -102,7 +102,7 @@
     { "name": "Granada santa", "kind": "Ranged", "cost": 5, "range": "F × 5", "strength": "-", "penetration": "-", "rules": ["Bomba", "Escasa"], "page": 40, "notes": "Deja un marcador permanente de Radiación y quien recibe el impacto tira Radiación al momento. Precio por granada." }
   ],
   "gear": [
-    { "name": "Munición irradiada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Cada impacto da -3 permanente en las tiradas de Radiación de la víctima, pero el arma tiene -1 a Fuerza y Penetración. Un solo tipo de munición por miniatura." },
-    { "name": "Munición contaminada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Da Contaminante al arma, pero -1 a Precisión. Un solo tipo de munición por miniatura." }
+    { "name": "Munición irradiada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Cada impacto da -3 permanente en las tiradas de Radiación de la víctima, pero el arma tiene -1 a Fuerza y Penetración. Un solo tipo de munición por miniatura.", "bans": ["Munición contaminada", "Munición atómica"] },
+    { "name": "Munición contaminada", "cost": 15, "page": 40, "text": "Mismo precio que una bala. Da Contaminante al arma, pero -1 a Precisión. Un solo tipo de munición por miniatura.", "bans": ["Munición irradiada", "Munición atómica"] }
   ]
 }

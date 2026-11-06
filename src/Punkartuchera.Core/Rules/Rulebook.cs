@@ -226,6 +226,15 @@ public sealed class GearItem
     /// <summary>Cuántos puede haber como máximo en toda la banda (Gato parameño, Tótem…).</summary>
     public int? PerBand { get; set; }
 
+    /// <summary>Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio).</summary>
+    public List<string> Requires { get; set; } = [];
+
+    /// <summary>Palabras que, en el nombre de lo que lleva, cuentan como este objeto ("incrustado").</summary>
+    public List<string> Aliases { get; set; } = [];
+
+    /// <summary>Con qué no se combina en la misma miniatura (un solo tipo de munición…), como en <see cref="NamedText.Bans"/>.</summary>
+    public List<string> Bans { get; set; } = [];
+
     public string Text { get; set; } = string.Empty;
 
     public string? Source { get; set; }
@@ -326,6 +335,24 @@ public sealed class NamedText
     public string Text { get; set; } = string.Empty;
 
     public RuleTable? Table { get; set; }
+
+    /// <summary>
+    /// Lo que la regla no deja llevar: nombres de objetos ("Arma incrustada"), reglas especiales
+    /// que tenga el objeto ("Arma de fuego") o "Armas" y "Blindaje" para toda esa clase de equipo.
+    /// </summary>
+    public List<string> Bans { get; set; } = [];
+
+    /// <summary>A quién se aplica una regla de facción o subfacción. Vacío: a todas las tropas.</summary>
+    public List<string> Troops { get; set; } = [];
+
+    /// <summary>Tropas a las que no se aplica ("Nadie salvo los Tenaceros…").</summary>
+    public List<string> ExceptTroops { get; set; } = [];
+
+    /// <summary>El veto es para el resto de la banda, no para quien tiene la regla (Imperdonable).</summary>
+    public bool BansOthers { get; set; }
+
+    /// <summary>Quien tiene la regla no está obligado a llevar arma.</summary>
+    public bool WeaponOptional { get; set; }
 
     [JsonIgnore]
     public string Slug => RulesText.Slug(Name);
