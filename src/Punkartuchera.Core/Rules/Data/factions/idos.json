@@ -23,7 +23,7 @@
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
       "armor": "Ninguno",
       "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
-      "rules": [{ "name": "Escoria", "text": "No puede tomar Ambrosía ni llevar armas incrustadas." }]
+      "rules": [{ "name": "Escoria", "text": "No puede tomar Ambrosía ni llevar armas incrustadas.", "bans": ["Arma incrustada", "Ambrosía"] }]
     },
     {
       "name": "Aberración", "cost": 35, "page": 24,
@@ -92,7 +92,7 @@
       "rules": [
         { "name": "Cosechadora", "text": "Cosecha como un Cosechador y cuenta como uno para las restricciones." },
         { "name": "Presencia perturbadora", "text": "El enemigo que quiera Disparar, Asaltar o dañar a Madre o a un aliado a 15 cm de ella debe superar Dureza o pierde la Acción." },
-        { "name": "Lucidez", "text": "Los Idos que toman Ambrosía a 20 cm de ella no tiran: siempre funciona. Ella nunca la toma." },
+        { "name": "Lucidez", "text": "Los Idos que toman Ambrosía a 20 cm de ella no tiran: siempre funciona. Ella nunca la toma.", "bans": ["Ambrosía"] },
         { "name": "Mascota", "text": "Va siempre con Madre. Hasta que caiga, es la mascota la que combate y recibe los disparos con su perfil. Garras y dientes." }
       ]
     }
@@ -104,6 +104,6 @@
     { "name": "Cuero humano", "armor": "3", "page": 30, "notes": "Los disparos a distancia corta contra quien lo lleva tienen -1 a Precisión." }
   ],
   "gear": [
-    { "name": "Arma incrustada", "cost": 10, "page": 30, "text": "Un Ido puede incrustarse una hoz, filo pequeño o filo medio: +1 al Combate, no puede Rapiñar ni ser desarmado y el arma no se puede Rapiñar." }
+    { "name": "Arma incrustada", "cost": 10, "page": 30, "requires": ["Hoz", "Filo pequeño", "Filo medio"], "aliases": ["incrustado", "incrustada"], "text": "Un Ido puede incrustarse una hoz, filo pequeño o filo medio: +1 al Combate, no puede Rapiñar ni ser desarmado y el arma no se puede Rapiñar." }
   ]
 }

@@ -18,7 +18,7 @@
         "stats": { "a": "2", "c": "4", "p": "-", "ag": "2", "f": "8", "d": "6", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Armadura metálica",
         "specialRules": ["Mónguer"],
-        "rules": [{ "name": "Desmadrado", "text": "Si al empezar su activación no está a 15 cm de un Tierdoktor, tiene que Asaltar (o atacar si ya está en contacto) a cualquier miniatura, amiga o enemiga, que pueda. No puede usar Walkie-talkie." }]
+        "rules": [{ "name": "Desmadrado", "text": "Si al empezar su activación no está a 15 cm de un Tierdoktor, tiene que Asaltar (o atacar si ya está en contacto) a cualquier miniatura, amiga o enemiga, que pueda. No puede usar Walkie-talkie.", "bans": ["Walkie-talkie"] }]
       },
       {
         "name": "Subhumano científico", "cost": 10, "page": 3,

@@ -99,7 +99,7 @@ else
                 <div class="datacard-list">
                     @foreach (var member in _band.Members)
                     {
-                        <MemberCard Member="member" FactionId="@_band.FactionId" HideAmmo="_band.IsReadOnly" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
+                        <MemberCard Member="member" FactionId="@_band.FactionId" SubfactionId="@_band.SubfactionId" HideAmmo="_band.IsReadOnly" Href="@(_band.IsReadOnly ? null : $"bandas/{_band.Id}/miembro/{member.Id}")" />
                     }
                 </div>
                 break;
