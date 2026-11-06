@@ -1,6 +1,8 @@
 [
   {
     "id": "flipaos-de-los-ninjas",
+    "baseTroops": ["Piltrafa", "Machaca", "Curtido", "Jefe"],
+    "troopNames": {"Piltrafa": "Ninja negro", "Machaca": "Ninja rojo", "Curtido": "Ninja morado", "Jefe": "Ninja blanco"},
     "name": "Flipaos de los Ninjas",
     "summary": "Pandilleros que han visto demasiadas pelis de ninjas. Se organizan por colores de pijama, pelean a mano limpia y actúan como una mafia de fanáticos.",
     "restrictions": [
@@ -41,6 +43,8 @@
   },
   {
     "id": "fraus",
+    "baseTroops": ["Piltrafa", "Machaca", "Bruto", "Jefe"],
+    "troopNames": {"Jefe": "Jefa", "Bruto": "Bruta"},
     "name": "Fraus",
     "summary": "Amazonas de Ovariazos, cerca del Bosque Vivo. Van ligeras de ropa, montan bestias y se cabrean más cuantas más caen.",
     "restrictions": [
@@ -89,6 +93,7 @@
   },
   {
     "id": "ostra-azul",
+    "baseTroops": ["Piltrafa", "Machaca", "Curtido", "Clint Tirofijo"],
     "sharedWeapons": ["Látigo"],
     "name": "La Ostra Azul",
     "summary": "La banda de Lord Homoeroticus en Pozoguay: cuero, tachuelas y un apetito que descoloca al enemigo.",

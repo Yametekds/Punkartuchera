@@ -1,6 +1,7 @@
 [
   {
     "id": "crematorio",
+    "baseTroops": ["Ceniza", "Quemado", "Guardián de la Llama"],
     "name": "Crematorio",
     "summary": "La rama más fanática de Cunnilingus: ya no adoran la Sangre Negra sino el fuego, y disfrutan quemando enemigos y quemándose ellos.",
     "restrictions": [
@@ -46,6 +47,8 @@
   },
   {
     "id": "nuevos-hijos",
+    "baseTroops": ["Ceniza", "Guardián de la Llama", "Ascua", "Chispa"],
+    "troopNames": {"Ceniza": "E95", "Ascua": "E98", "Chispa": "Diésel", "Guardián de la Llama": "Surtidor"},
     "name": "Nuevos Hijos",
     "summary": "Los seguidores de Rogelio en la Fortaleza del Cielo: melenudos, ricos de vender combustible y con balas de sobra para motivar a la tropa.",
     "bannedGear": [{ "names": ["Lanzallamas", "Cóctel molotov"] }],
@@ -85,6 +88,8 @@
   },
   {
     "id": "rugientes",
+    "baseTroops": ["Ceniza", "Chispa"],
+    "noMercenaries": true,
     "name": "Rugientes",
     "summary": "Los moteros exploradores de Cunnilingus: Chispas en moto, sidecar o quad con Cenizas de paquete que se tiran contra el enemigo con lanzatruenos.",
     "restrictions": [
@@ -101,7 +106,7 @@
     ],
     "troops": [
       {
-        "name": "Chispa rugiente", "cost": 40, "page": 10,
+        "name": "Chispa rugiente", "replaces": "Chispa", "cost": 40, "page": 10,
         "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "4", "d": "4", "t": "3" },
         "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos), como el Chispa",
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
