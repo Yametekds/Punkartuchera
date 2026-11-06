@@ -50,6 +50,17 @@ else
                     }
                 }
 
+                @foreach (var image in step.Images)
+                {
+                    <figure class="tutorial-figure">
+                        <img src="@($"_content/Punkartuchera.UI/img/tutoriales/{image.File}")" alt="@image.Alt" loading="lazy" decoding="async" />
+                        <figcaption>
+                            <span>@image.Caption</span>
+                            <SourceRef Source="reglas" Page="image.Page" />
+                        </figcaption>
+                    </figure>
+                }
+
                 @if (Section(step.TableFrom)?.Table is { } table)
                 {
                     <RuleTableView Table="table" />

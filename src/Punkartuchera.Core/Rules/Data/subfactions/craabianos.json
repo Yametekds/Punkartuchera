@@ -1,6 +1,7 @@
 [
   {
     "id": "abisales",
+    "baseTroops": ["Marinero", "Arponero", "Capitán", "Custodio del Abismo"],
     "name": "Abisales",
     "beta": true,
     "page": 1,
@@ -35,6 +36,7 @@
   },
   {
     "id": "mariscadores",
+    "baseTroops": ["Grumete", "Marinero", "Capitán", "Custodio del Abismo"],
     "name": "Mariscadores",
     "beta": true,
     "page": 3,
@@ -51,7 +53,7 @@
     "rules": [
       { "name": "Pies en la roca", "text": "No tienen Sangre salada y toda la banda salvo los Grumetes tiene Todoterreno." },
       { "name": "Pesca de orilla", "text": "La Red gana +5 cm en todas sus distancias." },
-      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa." }
+      { "name": "Movimientos libres", "text": "Nadie salvo los Tenaceros puede llevar Armadura quitinosa.", "bans": ["Armadura quitinosa"], "exceptTroops": ["Tenacero"] }
     ],
     "troops": [
       {
@@ -68,6 +70,7 @@
   },
   {
     "id": "resacados",
+    "baseTroops": ["Grumete", "Marinero", "Capitán", "Arponero"],
     "name": "Resacados",
     "beta": true,
     "page": 5,

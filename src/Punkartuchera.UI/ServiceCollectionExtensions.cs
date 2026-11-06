@@ -26,9 +26,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<RuleMentions>();
         services.AddSingleton<UnitCostCalculator>();
         services.AddSingleton<LoadoutAdvisor>();
-        services.AddSingleton<Punkartuchera.Core.Matches.MatchAidCatalog>();
+        services.AddSingleton<UnitRules>();
         services.AddSingleton(sp => new RosterBuilder(sp.GetRequiredService<Rulebook>(), sp.GetRequiredService<IRulesCatalog>()));
         services.AddScoped<FragmentScroller>();
+        services.AddSingleton<Punkartuchera.Core.Matches.MatchAidCatalog>();
         services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();

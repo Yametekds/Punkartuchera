@@ -1,6 +1,7 @@
 [
   {
     "id": "cambiapieles",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "name": "Cambiapieles",
     "page": 1,
     "summary": "Grupos que acompañan a los Yee naaldlooshii, brujos mal vistos por la tribu que se transforman en animales, imitan a otros y poseen enemigos.",
@@ -42,6 +43,7 @@
   },
   {
     "id": "descastados",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "name": "Descastados",
     "page": 4,
     "summary": "Unami que no soportan la mente colmena y sirven a la tribu como exploradores por el Páramo, lejos de Majauchsuwi.",
@@ -69,11 +71,12 @@
       }
     ],
     "gear": [
-      { "name": "Tótem", "cost": 15, "page": 6, "text": "Hasta 3 por banda, a ras de suelo en cualquier sitio libre. 40 mm, elemento grande con protección ligera. A 15 cm de él los Dones de Majauchsuwi cuestan 1 PdM menos. 15 puntos cada uno." }
+      { "name": "Tótem", "cost": 15, "perBand": 3, "page": 6, "text": "Hasta 3 por banda, a ras de suelo en cualquier sitio libre. 40 mm, elemento grande con protección ligera. A 15 cm de él los Dones de Majauchsuwi cuestan 1 PdM menos. 15 puntos cada uno." }
     ]
   },
   {
     "id": "apostadores",
+    "baseTroops": ["Sombra", "Trueno", "Viento"],
     "name": "Apostadores",
     "page": 7,
     "summary": "Unami fusionados con los espíritus ludópatas del viejo casino: el azar es sagrado y la vida, una apuesta constante.",

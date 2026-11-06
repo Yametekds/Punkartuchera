@@ -48,7 +48,7 @@ else
                             <optgroup label="@group.Key">
                                 @foreach (var choice in group)
                                 {
-                                    <option value="@choice.Key">@choice.Troop.Name · @choice.Troop.Cost ptos</option>
+                                    <option value="@choice.Key">@ChoiceLabel(choice)</option>
                                 }
                             </optgroup>
                         }
@@ -242,11 +242,16 @@ else
         }
 
         _choiceKey = e.Value?.ToString() ?? string.Empty;
-        _picked = Roster.FindChoice(_choiceKey);
+        _picked = _choices.FirstOrDefault(c => c.Key == _choiceKey) ?? Roster.FindChoice(_choiceKey);
         var filled = _picked is null
             ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
             : Roster.FromTroop(_picked.Troop, _picked.Owner.ParentId ?? _picked.Owner.Id);
         filled.Id = _member.Id;
+        if (_picked?.Label is { } label)
+        {
+            // La subfacción la llama de otra forma; el papel sigue siendo la tropa del reglamento.
+            filled.Name = label;
+        }
 
         // La foto oficial acompaña a la tropa elegida, pero una foto propia no se pisa.
         if (_member.Photo is not null and not { Source: PhotoSource.Official })
@@ -363,6 +368,10 @@ else
             .Select(name => new Equipment { Name = name, Notes = notesByName.GetValueOrDefault(name) })
             .ToList();
     }
+
+    private static string ChoiceLabel(TroopChoice choice) => choice.Label is null
+        ? $"{choice.Troop.Name} · {choice.Troop.Cost} ptos"
+        : $"{choice.Label} ({choice.Troop.Name}) · {choice.Troop.Cost} ptos";
 
     private static string RulesHref(TroopChoice choice) => choice.Owner.IsSubfaction
         ? $"reglas/faccion/{choice.Owner.ParentId}/subfaccion/{choice.Owner.Id}#{choice.Troop.Slug}"

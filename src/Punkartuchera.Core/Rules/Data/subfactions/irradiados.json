@@ -1,6 +1,7 @@
 [
   {
     "id": "herederos-mecanicos",
+    "baseTroops": ["Mártir", "Penitente", "Cardenal Nuclear"],
     "name": "Herederos Mecánicos",
     "page": 1,
     "summary": "La Inteligencia Suprema saquea el Cementerio de Máquinas y monta sus propios Robotrones: chatarra tambaleante que acompaña a Irradiados escogidos.",
@@ -33,6 +34,8 @@
     "extras": [
       {
         "title": "Mejoras mecánicas", "page": 3,
+        "perBand": 2,
+        "buyers": [{ "troop": "Robotrón", "max": 2 }],
         "items": [
           { "name": "Aleación especial", "cost": 10, "text": "Pasa a Blindaje 5." },
           { "name": "Análisis de objetivos", "cost": 10, "text": "Elige un enemigo: +2 a Combate y Precisión al atacarle." },
@@ -51,6 +54,7 @@
   },
   {
     "id": "inquisicion-atomica",
+    "baseTroops": ["Mártir", "Penitente", "Paladín"],
     "name": "Inquisición Atómica",
     "page": 4,
     "summary": "Paladines fanáticos que siguen a la Gran Inquisidora en una Guerra Santa contra todo hereje del Páramo, reclutando escuderos entre los supervivientes.",
@@ -103,6 +107,7 @@
   },
   {
     "id": "rebelion-isotopica",
+    "baseTroops": ["Discípulo", "Cardenal Nuclear", "Paladín"],
     "name": "Rebelión Isotópica",
     "page": 8,
     "summary": "Habitantes de Aurora que han descubierto que la Inteligencia Suprema es una máquina. Quieren reconstruir la civilización con el átomo, con armas nucleares hechas deprisa y corriendo.",
@@ -141,7 +146,7 @@
       { "name": "Rifle de fusión", "kind": "Ranged", "cost": 12, "range": "20/40/60", "strength": "5", "penetration": "5", "rules": ["A dos manos", "Contaminante", "Escasa", "Fusión", "Lentorra (X)"], "page": 10, "notes": "Lentorra (1). Solo la Rebelión Isotópica." }
     ],
     "gear": [
-      { "name": "Munición atómica", "cost": 15, "page": 10, "text": "Precio por bala. Sustituye a la munición normal o a la de los Irradiados (solo un tipo por miniatura). El arma gana Contaminante, Fusión y Veneno (3)." }
+      { "name": "Munición atómica", "cost": 15, "page": 10, "text": "Precio por bala. Sustituye a la munición normal o a la de los Irradiados (solo un tipo por miniatura). El arma gana Contaminante, Fusión y Veneno (3).", "bans": ["Munición irradiada", "Munición contaminada"] }
     ]
   }
 ]
