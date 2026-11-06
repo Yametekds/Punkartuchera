@@ -1,6 +1,7 @@
 [
   {
     "id": "herederos-mecanicos",
+    "baseTroops": ["Mártir", "Penitente", "Cardenal Nuclear"],
     "name": "Herederos Mecánicos",
     "page": 1,
     "summary": "La Inteligencia Suprema saquea el Cementerio de Máquinas y monta sus propios Robotrones: chatarra tambaleante que acompaña a Irradiados escogidos.",
@@ -53,6 +54,7 @@
   },
   {
     "id": "inquisicion-atomica",
+    "baseTroops": ["Mártir", "Penitente", "Paladín"],
     "name": "Inquisición Atómica",
     "page": 4,
     "summary": "Paladines fanáticos que siguen a la Gran Inquisidora en una Guerra Santa contra todo hereje del Páramo, reclutando escuderos entre los supervivientes.",
@@ -105,6 +107,7 @@
   },
   {
     "id": "rebelion-isotopica",
+    "baseTroops": ["Discípulo", "Cardenal Nuclear", "Paladín"],
     "name": "Rebelión Isotópica",
     "page": 8,
     "summary": "Habitantes de Aurora que han descubierto que la Inteligencia Suprema es una máquina. Quieren reconstruir la civilización con el átomo, con armas nucleares hechas deprisa y corriendo.",

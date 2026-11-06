@@ -299,6 +299,15 @@ public sealed class FactionRules
     /// <summary>Tropas que no pueden comprar el equipo genérico de la facción.</summary>
     public List<string> NoGenericGear { get; set; } = [];
 
+    /// <summary>Subfacciones: tropas de la facción madre que puede reclutar (sin sus personalidades).</summary>
+    public List<string> BaseTroops { get; set; } = [];
+
+    /// <summary>Subfacciones: nombre que reciben aquí las tropas de la facción madre ("Piltrafa" → "Ninja negro").</summary>
+    public Dictionary<string, string> TroopNames { get; set; } = [];
+
+    /// <summary>No admite Mercenarios.</summary>
+    public bool NoMercenaries { get; set; }
+
     /// <summary>Si es una subfacción, la facción a la que pertenece.</summary>
     [JsonIgnore]
     public string? ParentId { get; set; }
@@ -361,6 +370,9 @@ public sealed class NamedText
 public sealed class Troop
 {
     public string Name { get; set; } = string.Empty;
+
+    /// <summary>Tropa de la facción madre a la que sustituye esta versión de la subfacción.</summary>
+    public string? Replaces { get; set; }
 
     public int Cost { get; set; }
 

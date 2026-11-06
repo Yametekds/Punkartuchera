@@ -1,6 +1,7 @@
 [
   {
     "id": "freak-show",
+    "baseTroops": ["Domador", "Acróbata", "Forzudo", "Jefe de pista"],
     "name": "Freak Show",
     "page": 1,
     "summary": "Los marginados entre los marginados han hecho de su rareza el espectáculo… y su arma contra las otras bandas.",
@@ -56,6 +57,7 @@
   },
   {
     "id": "ilusionistas",
+    "baseTroops": ["Domador", "Acróbata", "Jefe de pista"],
     "name": "Ilusionistas",
     "page": 4,
     "summary": "Prestidigitadores que buscan el asombro, no la risa, y usan sus trucos para liar al enemigo.",
@@ -108,6 +110,7 @@
   },
   {
     "id": "cirque-du-no-se",
+    "baseTroops": ["Acróbata", "Jefe de pista"],
     "name": "Cirque du No-sé",
     "page": 7,
     "summary": "Acróbatas, trapecistas, malabaristas y funambulistas que imitan las leyendas de un circo del Mundo de Antaño cuyo nombre nadie recuerda.",
@@ -136,6 +139,19 @@
           { "name": "Saltimbanqui", "cost": 5, "text": "Repite una tirada en la partida." },
           { "name": "Tragafuegos", "cost": 15, "text": "Ataque a distancia F3, Pen 2 con plantilla de lágrima. Tira 1d10: con 9-10 falla y se lo come él." }
         ]
+      }
+    ],
+    "troops": [
+      {
+        "name": "Acróbata",
+        "replaces": "Acróbata",
+        "cost": 35,
+        "page": 8,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "4" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ninguno",
+        "specialRules": ["Escurridizo", "Todoterreno", "Raudo"]
       }
     ]
   }
