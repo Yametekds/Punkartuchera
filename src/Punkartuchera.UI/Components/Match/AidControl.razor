@@ -1,0 +1,71 @@
+@using Punkartuchera.Core.Matches
+
+@* Una ayuda de partida: contador, regla de un solo uso o recordatorio. *@
+<div class="aid aid--@Aid.Kind.ToString().ToLowerInvariant() @(Detailed ? "aid--detailed" : null)">
+    @switch (Aid.Kind)
+    {
+        case AidKind.Counter:
+            @if (Editable)
+            {
+                <Stepper Label="@Aid.Name" Value="Value" Min="0" Max="CounterMax" Compact="true" ValueChanged="OnChange" />
+            }
+            else
+            {
+                <span class="aid__readonly"><span class="aid__name">@Aid.Name</span> <strong>@Value</strong></span>
+            }
+            break;
+
+        case AidKind.Once:
+            <button type="button" class="chip aid__once" aria-pressed="@(Value > 0)" disabled="@(!Editable)"
+                    @onclick="() => OnChange.InvokeAsync(Value > 0 ? 0 : 1)">
+                @(Value > 0 ? "✓ " : null)@Aid.Name
+            </button>
+            break;
+
+        default:
+            <span class="aid__name">@Aid.Name</span>
+            break;
+    }
+
+    @if (Aid.Note?.Invoke(State) is { } note)
+    {
+        <span class="aid__note">@note</span>
+    }
+    else if (Aid.Kind == AidKind.Info)
+    {
+        <span class="aid__note aid__note--muted">Nada por ahora.</span>
+    }
+
+    @if (Detailed && Aid.Hint is not null)
+    {
+        <span class="aid__hint">@Aid.Hint</span>
+    }
+
+    @if (Detailed && OnRule.HasDelegate && Aid.Rule is not null)
+    {
+        <button type="button" class="gear-item__link aid__rule" aria-label="Qué dice el reglamento de @Aid.Rule" @onclick="() => OnRule.InvokeAsync(Aid.Rule)">regla</button>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public MatchAid Aid { get; set; } = default!;
+
+    [Parameter] public int Value { get; set; }
+
+    [Parameter] public AidState State { get; set; } = new(0, 1, 0, 0);
+
+    [Parameter] public bool Editable { get; set; }
+
+    /// <summary>Lo que queda en la reserva de la que gasta (dosis de Ambrosía), si gasta de alguna.</summary>
+    [Parameter] public int? PoolLeft { get; set; }
+
+    /// <summary>Con la explicación de la regla y el enlace a ella.</summary>
+    [Parameter] public bool Detailed { get; set; }
+
+    [Parameter] public EventCallback<int> OnChange { get; set; }
+
+    [Parameter] public EventCallback<string> OnRule { get; set; }
+
+    // Si gasta de una reserva vacía, no puede subir.
+    private int CounterMax => PoolLeft is <= 0 ? Value : Aid.Max;
+}
