@@ -93,7 +93,7 @@
   },
   {
     "id": "ostra-azul",
-    "baseTroops": ["Piltrafa", "Machaca", "Curtido"],
+    "baseTroops": ["Piltrafa", "Machaca", "Curtido", "Clint Tirofijo"],
     "sharedWeapons": ["Látigo"],
     "name": "La Ostra Azul",
     "summary": "La banda de Lord Homoeroticus en Pozoguay: cuero, tachuelas y un apetito que descoloca al enemigo.",
