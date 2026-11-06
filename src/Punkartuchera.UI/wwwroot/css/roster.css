@@ -200,3 +200,6 @@ button.gear-item__link {
     font-size: 1.1rem;
 }
 .cost-total strong { font-size: 1.6rem; color: var(--punk-text); }
+.subfaction-card__line { margin: 0; font-size: .85rem; color: var(--punk-text-muted); }
+.subfaction-card__tags { margin-top: 4px; }
+.subfaction-card__tags .tag { font-size: .78rem; padding: 2px 8px; }

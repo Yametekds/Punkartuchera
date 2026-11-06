@@ -5,6 +5,7 @@
     "name": "Freak Show",
     "page": 1,
     "summary": "Los marginados entre los marginados han hecho de su rareza el espectáculo… y su arma contra las otras bandas.",
+    "playstyle": "Los Bichos raros sustituyen a los Pachachos y cualquier tropa puede comprar Rarezas (sin repetirlas), así que cada miniatura es distinta. No usan Artículos de coña.",
     "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas, Domadores, Forzudos y Jefes de pista de la Troupe. Sin Pachachos.",
@@ -61,6 +62,7 @@
     "name": "Ilusionistas",
     "page": 4,
     "summary": "Prestidigitadores que buscan el asombro, no la risa, y usan sus trucos para liar al enemigo.",
+    "playstyle": "Trucos para liar al rival: los Artistas comparten una lista de Trucos (cada uno una vez por Turno entre todos) y sustituyen a los Pachachos. Sin Forzudos ni Artículos de coña.",
     "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas, Domadores y Jefes de pista de la Troupe. Sin Pachachos ni Forzudos.",
@@ -114,6 +116,7 @@
     "name": "Cirque du No-sé",
     "page": 7,
     "summary": "Acróbatas, trapecistas, malabaristas y funambulistas que imitan las leyendas de un circo del Mundo de Antaño cuyo nombre nadie recuerda.",
+    "playstyle": "Solo Acróbatas y Jefe de pista: cada Acróbata del Cirque elige una especialidad (funambulista, malabarista, tragafuegos…) en lugar de la Catapulta infernal de serie. Banda ágil y de pocas miniaturas.",
     "bannedExtras": ["Artículos de coña"],
     "restrictions": [
       "Usa Acróbatas y Jefes de pista de la Troupe. Sin Pachachos, Forzudos ni Domadores.",

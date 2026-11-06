@@ -5,6 +5,7 @@
   "page": 1,
   "beta": true,
   "summary": "El culto marinero de Vientocho, devoto del Capitán Craab: arponeros, grumetes y Custodios del Abismo que traen del mar armaduras de golicentollo y reliquias de las profundidades.",
+  "playstyle": "Infantería de abordaje: Marineros, Arponeros y un Capitán con buen Combate, apoyados por Grumetes baratos y Custodios del Abismo que rezan Plegarias inmundas y traen Reliquias. Una vez por partida cada uno (salvo los Grumetes) puede repetir una tirada de Atributo a cambio de perder un punto, y Sangre salada les quita los bonificadores de movimiento al Asaltar.",
   "restrictions": [
     "Máximo una Personalidad craabiana o Mercenario.",
     "Máximo un Capitán.",

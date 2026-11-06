@@ -58,11 +58,7 @@ else
             <div class="subfaction-list">
                 @foreach (var subfaction in _faction.Subfactions)
                 {
-                    <a class="subfaction-card" href="@($"reglas/faccion/{_faction.Id}/subfaccion/{subfaction.Id}")">
-                        <span class="subfaction-card__meta">@(subfaction.Troops.Count == 1 ? "1 tropa propia" : $"{subfaction.Troops.Count} tropas propias")@(subfaction.Beta ? " · beta" : "")</span>
-                        <h2 class="subfaction-card__name">@subfaction.Name</h2>
-                        <p class="subfaction-card__summary">@subfaction.Summary</p>
-                    </a>
+                    <SubfactionCard Brief="FactionBrief.For(subfaction, _faction)" />
                 }
             </div>
             break;
@@ -95,6 +91,10 @@ else
                 </div>
                 <h1 class="band-hero__name distress">@_faction.Name</h1>
                 <p class="rules-hero__summary">@_faction.Summary</p>
+                @if (_faction.Playstyle is { } playstyle)
+                {
+                    <p class="rules-hero__play"><strong>Cómo se juega.</strong> @playstyle</p>
+                }
                 <SourceRef Source="@_faction.Source" Page="_faction.Page" />
             </section>
 

@@ -4,6 +4,7 @@
     "baseTroops": ["Pistón", "Engranaje", "Sonda"],
     "name": "Carroñeros",
     "summary": "Chatarreros nómadas que reniegan de Samanthia y de los cachivaches: rebuscan en las ruinas del Mundo de Antaño con vigías, trampas y Sondas muy apañados.",
+    "playstyle": "Juego de trampas y emboscadas: los Vigías colocan barricadas y trampas antes de empezar y las Sondas eligen dos habilidades propias en vez de su Infiltración y Raudo de serie. Pierden los Dinamos y los cachivaches más vistosos (puño balístico, bombeadora, balas apañadas).",
     "bannedGear": [{ "names": ["Puño balístico", "Bombeadora"] }],
     "restrictions": [
       "Usa Pistones, Engranajes y Sondas de los Chatarreros. Sin Dinamos.",
@@ -77,6 +78,7 @@
     "baseTroops": ["Pistón", "Dinamo"],
     "name": "Innovadores",
     "summary": "Los inventores secretos de Samantha, por fin a la vista tras la caída de Liberty City: exoarmaduras de vapor que asustan… y a veces revientan.",
+    "playstyle": "Pocas miniaturas y muy caras: los Ingenios son exoarmaduras de vapor que hacen de núcleo de la banda, con Pistones y Dinamos de apoyo. Su equipo es exclusivo de los Innovadores y no tienen Engranajes ni Sondas.",
     "bannedGear": [{ "names": ["Puño balístico", "Lanzaarpones"], "troops": ["Pistón"] }],
     "restrictions": [
       "Usa Pistones y Dinamos de los Chatarreros. Sin Engranajes ni Sondas.",
@@ -123,6 +125,7 @@
     "baseTroops": ["Dinamo", "Engranaje", "Sonda"],
     "name": "Pioneros",
     "summary": "Los locos del «Diesel gustazo»: Chatarreros que prueban en combate mochilas cohete y ciclohetes con el combustible de la Fortaleza del Cielo.",
+    "playstyle": "Movilidad a base de cohetes: los Coheteros y Lucky Lucy cruzan la mesa con mochilas cohete y ciclohetes, a riesgo de tirar en la tabla de fallos coheteros si falla el aparato. Sin Pistones, así que el choque lo pone la velocidad.",
     "restrictions": [
       "Usa Dinamos, Engranajes y Sondas de los Chatarreros. Sin Pistones.",
       "No más Dinamos que el resto de la banda junta.",

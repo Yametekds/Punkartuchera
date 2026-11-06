@@ -5,6 +5,7 @@
     "troopNames": {"Piltrafa": "Ninja negro", "Machaca": "Ninja rojo", "Curtido": "Ninja morado", "Jefe": "Ninja blanco"},
     "name": "Flipaos de los Ninjas",
     "summary": "Pandilleros que han visto demasiadas pelis de ninjas. Se organizan por colores de pijama, pelean a mano limpia y actúan como una mafia de fanáticos.",
+    "playstyle": "Pandilleros a mano limpia: sin armas de fuego ni ballestas y solo con Ropas resistentes, pero sin penalizador por Combatir desarmados, con Todoterreno y con trucos como recolocarse una vez por partida. Se organizan por colores de pijama, de Ninja negro a Ninja blanco.",
     "restrictions": [
       "Usa Jefes, Curtidos, Machacas y Piltrafas de los Pandilleros con otros nombres (ver Colorinchis). Sin Brutos.",
       "Más Ninjas negros que rojos, más rojos que morados y más morados que blancos.",
@@ -47,6 +48,7 @@
     "troopNames": {"Jefe": "Jefa", "Bruto": "Bruta"},
     "name": "Fraus",
     "summary": "Amazonas de Ovariazos, cerca del Bosque Vivo. Van ligeras de ropa, montan bestias y se cabrean más cuantas más caen.",
+    "playstyle": "Amazonas rápidas y ligeras de ropa: no compran Blindaje mejor que Ropas resistentes, pero las Amacizonas van montadas y cada Frau que cae da marcadores para Asaltar desde más lejos. Pueden cambiar los cuchillos arrojadizos por hondas.",
     "restrictions": [
       "Usa Jefas, Machacas, Piltrafas y Brutas de los Pandilleros. Sin Curtidas.",
       "Puede usar las tropas propias de la subfacción.",
@@ -97,6 +99,7 @@
     "sharedWeapons": ["Látigo"],
     "name": "La Ostra Azul",
     "summary": "La banda de Lord Homoeroticus en Pozoguay: cuero, tachuelas y un apetito que descoloca al enemigo.",
+    "playstyle": "Pandilleros de cuero: Piltrafas, Machacas y Curtidos llevan cuero endurecido gratis y todo el que les Dispara tiene -1 a Precisión. Lord Homoeroticus manda en lugar de un Jefe y los Mamporreros sustituyen a los Brutos.",
     "restrictions": [
       "Usa Curtidos, Machacas y Piltrafas de los Pandilleros. Sin Jefes (ese es Lord Homoeroticus) ni Brutos (para eso están los Mamporreros).",
       "Puede usar las tropas propias de la subfacción.",

@@ -5,6 +5,7 @@
   "page": 1,
   "beta": true,
   "summary": "Tribu conectada a la mente de Majauchsuwi, una criatura psíquica bajo un viejo casino. No tienen Acciones fijas: las sacan de una reserva común de Puntos de Mojo. Reglas en beta.",
+  "playstyle": "Juego de gestión: no tienen Acciones fijas, sino una reserva común de Puntos de Mojo (2 por miniatura en pie) que se reparte entre activaciones, hasta 3 Acciones por miniatura. Cada tropa tiene un Don de Majauchsuwi y los Chamanes invocan Espíritus. Reglas en beta.",
   "restrictions": [
     "Máximo una Personalidad de los Unami o Mercenario.",
     "Un Chamán por cada fracción de 200 puntos.",

@@ -5,6 +5,7 @@
     "name": "Herederos Mecánicos",
     "page": 1,
     "summary": "La Inteligencia Suprema saquea el Cementerio de Máquinas y monta sus propios Robotrones: chatarra tambaleante que acompaña a Irradiados escogidos.",
+    "playstyle": "Irradiados con chatarra: los Robotrones salen muy baratos y se personalizan con Mejoras mecánicas, y los Cardenales Nucleares y Penitentes pueden resultar ser Cyborgs al caer y seguir luchando. Sin Paladines ni Discípulos.",
     "restrictions": [
       "Usa Cardenales Nucleares, Mártires y Penitentes de los Irradiados. Sin Paladines ni Discípulos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -58,6 +59,7 @@
     "name": "Inquisición Atómica",
     "page": 4,
     "summary": "Paladines fanáticos que siguen a la Gran Inquisidora en una Guerra Santa contra todo hereje del Páramo, reclutando escuderos entre los supervivientes.",
+    "playstyle": "Paladines fanáticos con escolta: cada Paladín puede llevar hasta dos Escuderos baratos y leales, y los Inquisidores sustituyen a los Cardenales Nucleares con sus Sermones. Banda de choque cuerpo a cuerpo.",
     "restrictions": [
       "Usa Penitentes, Mártires y Paladines de los Irradiados. Sin Cardenales Nucleares ni Discípulos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -111,6 +113,7 @@
     "name": "Rebelión Isotópica",
     "page": 8,
     "summary": "Habitantes de Aurora que han descubierto que la Inteligencia Suprema es una máquina. Quieren reconstruir la civilización con el átomo, con armas nucleares hechas deprisa y corriendo.",
+    "playstyle": "Irradiados de ciencia: los Científicos son muy baratos y la subfacción tiene armas con Fusión (cortadora de plasma, rifle de fusión, munición atómica) que explotan y dejan Radiación si sale 9 o 10 al impactar. Sin Mártires ni Penitentes.",
     "restrictions": [
       "Usa Cardenales Nucleares, Discípulos y Paladines de los Irradiados. Sin Mártires ni Penitentes.",
       "Puede usar las tropas propias de la subfacción.",
