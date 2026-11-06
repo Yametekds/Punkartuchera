@@ -69,7 +69,7 @@
       }
     ],
     "gear": [
-      { "name": "Tótem", "cost": 15, "page": 6, "text": "Hasta 3 por banda, a ras de suelo en cualquier sitio libre. 40 mm, elemento grande con protección ligera. A 15 cm de él los Dones de Majauchsuwi cuestan 1 PdM menos. 15 puntos cada uno." }
+      { "name": "Tótem", "cost": 15, "perBand": 3, "page": 6, "text": "Hasta 3 por banda, a ras de suelo en cualquier sitio libre. 40 mm, elemento grande con protección ligera. A 15 cm de él los Dones de Majauchsuwi cuestan 1 PdM menos. 15 puntos cada uno." }
     ]
   },
   {

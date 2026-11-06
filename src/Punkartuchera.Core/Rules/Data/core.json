@@ -459,6 +459,6 @@
     { "name": "Bayoneta", "cost": 3, "source": "equipo", "page": 3, "text": "Se acopla a un arma con Arma de fuego: +2 a la Penetración en cuerpo a cuerpo." },
     { "name": "Escudo", "cost": 6, "source": "equipo", "page": 3, "text": "Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate. Contra disparos: Cobertura +2. No se combina con armas A dos manos." },
     { "name": "Protección contra la contaminación", "cost": 5, "source": "equipo", "page": 3, "text": "Máscara de gas o similar: ignora el Terreno contaminado." },
-    { "name": "Gato parameño", "cost": 10, "source": "bandas", "page": 2, "text": "Solo uno por banda y con su miniatura a la vista. Una vez por partida, repites una tirada tuya u obligas al rival a repetir una suya." }
+    { "name": "Gato parameño", "cost": 10, "perBand": 1, "source": "bandas", "page": 2, "text": "Solo uno por banda y con su miniatura a la vista. Una vez por partida, repites una tirada tuya u obligas al rival a repetir una suya." }
   ]
 }
