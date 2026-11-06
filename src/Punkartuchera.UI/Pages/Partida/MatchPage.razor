@@ -5,6 +5,8 @@
 @inject IMatchService Matches
 @inject BandService Bands
 @inject IJSRuntime JS
+@inject MatchAidCatalog AidCatalog
+@inject GearLookup Lookup
 
 <PageTitle>Partida · Punkartuchera</PageTitle>
 
@@ -124,11 +126,39 @@ else
         </p>
     }
 
+    <section class="paper match-score" aria-label="Marcador">
+        @ScoreView(MatchSide.Own, match.OwnBandName)
+        <span class="match-score__vs" aria-hidden="true">vs</span>
+        @ScoreView(MatchSide.Rival, match.RivalBandName ?? "Rival")
+    </section>
+
+    @if (match.Over)
+    {
+        <p class="notice match-result" role="status">
+            <span><strong>Fin de la partida.</strong> @ResultText(match)</span>
+        </p>
+    }
+
     <div class="paper match-round">
-        <Stepper Label="Ronda" Value="match.Round" Min="1" Max="ActiveMatch.MaxRound" ValueChanged="SetRound" />
-        <button type="button" class="btn btn--blood" disabled="@(match.ClosedByRival || match.Round >= ActiveMatch.MaxRound)" @onclick="() => SetRound(match.Round + 1)">
-            Siguiente ronda
-        </button>
+        <Stepper Label="@($"Ronda (de {ActiveMatch.MaxRound})")" Value="match.Round" Min="1" Max="ActiveMatch.MaxRound" ValueChanged="SetRound" />
+        @if (match.Round < ActiveMatch.MaxRound)
+        {
+            <button type="button" class="btn btn--blood" disabled="@(match.ClosedByRival || _busy)" @onclick="() => SetRound(match.Round + 1)">
+                Siguiente ronda
+            </button>
+        }
+        else if (!match.Over)
+        {
+            <button type="button" class="btn btn--blood" disabled="@(match.ClosedByRival || _busy)" @onclick="Finish">
+                Cerrar la última ronda
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn--ghost" disabled="@(match.ClosedByRival || _busy)" @onclick="() => SetRound(ActiveMatch.MaxRound)">
+                Reabrir la ronda @ActiveMatch.MaxRound
+            </button>
+        }
     </div>
 
     <div class="match-sides">
@@ -148,6 +178,24 @@ else
         }
     </div>
 
+    @if (_sheet is { } open && SheetMember(open) is { } sheetMember)
+    {
+        var sheetBand = BandOf(open.Side);
+        var sheetAids = AidsOf(open.Side);
+        <MatchMemberSheet Member="Mini(sheetBand, sheetMember, open.Index)" Name="@sheetMember.Name" Role="@sheetMember.Role" Down="sheetMember.Down"
+                          FactionId="@sheetBand?.FactionId" SubfactionId="@sheetBand?.SubfactionId"
+                          Aids="sheetAids.Of(open.Index)" OnClose="() => _sheet = null">
+            <AidTemplate Context="aid">
+                @AidView((open.Side, sheetAids, aid, open.Index, true))
+            </AidTemplate>
+        </MatchMemberSheet>
+    }
+
+    @if (_rule is not null)
+    {
+        <RuleSheet Info="_rule" Title="@_ruleTitle" OnClose="() => _rule = null" />
+    }
+
     <div class="actions match-end">
         <ConfirmButton Text="@(match.ClosedByRival ? "Cerrar" : "Terminar partida")" ConfirmText="Sí, terminar" OnConfirm="End" />
     </div>
@@ -163,6 +211,10 @@ else
     private string? _code;
     private Guid? _ownId;
     private Guid? _rivalId;
+    private (MatchSide Side, int Index)? _sheet;
+    private GearInfo? _rule;
+    private string? _ruleTitle;
+    private readonly Dictionary<MatchSide, (Band? Band, int Count, BandAids Aids)> _aidCache = [];
 
     private string ConnectionText => Matches.Connection switch
     {
@@ -191,39 +243,170 @@ else
 
     private RenderFragment MatchSideView((MatchSide Side, string Name, List<MatchMember> Members, bool Editable) side) => __builder =>
     {
-        var band = side.Side == MatchSide.Own ? Band(Matches.Current?.OwnBandId) : Band(Matches.Current?.RivalBandId);
+        var band = BandOf(side.Side);
+        var aids = AidsOf(side.Side);
+        var editable = side.Editable && !Matches.Current!.ClosedByRival;
         <section class="match-side">
             <h2 class="section-title">@side.Name</h2>
             <p class="match-side__count">@side.Members.Count(m => !m.Down) en pie de @side.Members.Count</p>
+
+            @if (aids.Band.Count > 0)
+            {
+                <div class="match-pool">
+                    @foreach (var aid in aids.Band)
+                    {
+                        @AidView((side.Side, aids, aid, null, true))
+                        @if (aid.PerStandingEachRound > 0 && editable && Counters(side.Side).GetValueOrDefault(MatchAid.RefillKey(aid.Key)) != Matches.Current!.Round)
+                        {
+                            var gain = aid.PerStandingEachRound * side.Members.Count(m => !m.Down);
+                            <button type="button" class="btn btn--ghost match-pool__refill" disabled="@_busy" @onclick="() => Refill(side.Side, aid, gain)">
+                                Empieza la ronda: +@gain
+                            </button>
+                        }
+                    }
+                </div>
+            }
+
             <ul class="match-members">
                 @for (var i = 0; i < side.Members.Count; i++)
                 {
                     var index = i;
                     var member = side.Members[i];
-                    var mini = member.MemberId is { } id ? band?.FindMember(id) : band?.Members.ElementAtOrDefault(index);
+                    var mini = Mini(band, member, index);
+                    var memberAids = aids.Of(index);
                     <li class="match-member @(member.Down ? "is-down" : null) @(member.Activated ? "is-activated" : null)">
-                        <MiniPortrait Photo="mini?.Photo" Alt="@member.Name" Size="sm" />
-                        <span class="match-member__name">
-                            <strong>@member.Name</strong>
-                            <small>@member.Role</small>
-                        </span>
+                        <button type="button" class="match-member__open" aria-label="Ver la ficha de @member.Name" @onclick="() => _sheet = (side.Side, index)">
+                            <MiniPortrait Photo="mini?.Photo" Alt="@member.Name" Size="sm" />
+                            <span class="match-member__name">
+                                <strong>@member.Name</strong>
+                                <small>@member.Role</small>
+                            </span>
+                        </button>
                         <button type="button" class="chip match-toggle" aria-pressed="@member.Activated"
-                                disabled="@(!side.Editable || member.Down || Matches.Current!.ClosedByRival)"
+                                disabled="@(!editable || member.Down)"
                                 @onclick="() => Toggle(side.Side, index, activated: !member.Activated)">
                             @(member.Activated ? "Ya ha ido" : "Por actuar")
                         </button>
                         <button type="button" class="chip match-toggle match-toggle--down" aria-pressed="@member.Down"
-                                disabled="@(!side.Editable || Matches.Current!.ClosedByRival)"
+                                disabled="@(!editable)"
                                 @onclick="() => Toggle(side.Side, index, down: !member.Down)">
                             @(member.Down ? "Baja" : "En pie")
                         </button>
+                        @if (memberAids.Count > 0)
+                        {
+                            <div class="match-aids match-member__aids">
+                                @foreach (var aid in memberAids)
+                                {
+                                    @AidView((side.Side, aids, aid, index, false))
+                                }
+                            </div>
+                        }
                     </li>
                 }
             </ul>
         </section>
     };
 
+    private RenderFragment AidView((MatchSide Side, BandAids Aids, MatchAid Aid, int? Index, bool Detailed) a) => __builder =>
+    {
+        var match = Matches.Current!;
+        var counters = Counters(a.Side);
+        var members = match.MembersOf(a.Side);
+        var value = BandAids.ValueOf(counters, a.Aid, a.Index);
+        var pool = a.Aid.Pool is { } poolKey && a.Aids.FindBand(poolKey) is { } poolAid ? BandAids.ValueOf(counters, poolAid) : (int?)null;
+        var editable = (a.Side == MatchSide.Own || !match.IsOnline) && !match.ClosedByRival;
+        var state = new AidState(value, match.Round, members.Count(m => m.Down), members.Count(m => !m.Down));
+        <AidControl Aid="a.Aid" Value="value" State="state" Editable="editable" PoolLeft="pool" Detailed="a.Detailed"
+                    OnChange="v => SetAid(a.Side, a.Aids, a.Aid, a.Index, v)" OnRule="r => OpenRule(r, BandOf(a.Side)?.FactionId)" />
+    };
+
+    private RenderFragment ScoreView(MatchSide side, string name) => __builder =>
+    {
+        var match = Matches.Current!;
+        var score = match.ScoreOf(side);
+        var editable = (side == MatchSide.Own || !match.IsOnline) && !match.ClosedByRival && (side == MatchSide.Own || match.HasRival);
+        <div class="match-score__side">
+            <span class="match-score__name">@name</span>
+            <span class="match-score__value" aria-live="polite">@score</span>
+            @if (editable)
+            {
+                <span class="match-score__controls">
+                    <button type="button" class="stepper__btn" disabled="@(score <= 0)" aria-label="Quitar un punto a @name" @onclick="() => SetScore(side, score - 1)">−</button>
+                    <button type="button" class="stepper__btn" aria-label="Sumar un punto a @name" @onclick="() => SetScore(side, score + 1)">+</button>
+                </span>
+            }
+        </div>
+    };
+
     private Band? Band(Guid? id) => id is { } value && _bandsById.TryGetValue(value, out var band) ? band : null;
+
+    private Band? BandOf(MatchSide side) =>
+        side == MatchSide.Own ? Band(Matches.Current?.OwnBandId) : Band(Matches.Current?.RivalBandId);
+
+    private static Miniature? Mini(Band? band, MatchMember member, int index) =>
+        member.MemberId is { } id ? band?.FindMember(id) : band?.Members.ElementAtOrDefault(index);
+
+    private MatchMember? SheetMember((MatchSide Side, int Index) open) =>
+        Matches.Current?.MembersOf(open.Side).ElementAtOrDefault(open.Index);
+
+    private Dictionary<string, int> Counters(MatchSide side) => Matches.Current!.CountersOf(side);
+
+    /// <summary>Ayudas de cada bando; se recalculan si cambia la banda o sus miembros.</summary>
+    private BandAids AidsOf(MatchSide side)
+    {
+        var band = BandOf(side);
+        var members = Matches.Current?.MembersOf(side) ?? [];
+        var key = (band, members.Count);
+        if (_aidCache.TryGetValue(side, out var cached) && ReferenceEquals(cached.Band, band) && cached.Count == members.Count)
+        {
+            return cached.Aids;
+        }
+
+        var aids = AidCatalog.For(band, members.Select(m => Mini(band, m, members.IndexOf(m))?.Role ?? m.Role).ToList());
+        _aidCache[side] = (key.band, key.Count, aids);
+        return aids;
+    }
+
+    private Task SetAid(MatchSide side, BandAids aids, MatchAid aid, int? index, int value)
+    {
+        var counters = Counters(side);
+        var old = BandAids.ValueOf(counters, aid, index);
+        var changes = new Dictionary<string, int> { [index is { } i ? MatchAid.MemberKey(aid.Key, i) : aid.Key] = value };
+
+        // Dar una dosis la gasta de la reserva de la banda; quitarla la devuelve.
+        if (aid.Pool is { } poolKey && aids.FindBand(poolKey) is { } pool)
+        {
+            changes[poolKey] = Math.Max(0, BandAids.ValueOf(counters, pool) - (value - old));
+        }
+
+        return RunAsync(() => Matches.SetCountersAsync(side, changes));
+    }
+
+    private Task Refill(MatchSide side, MatchAid aid, int gain) => RunAsync(() => Matches.SetCountersAsync(side, new Dictionary<string, int>
+    {
+        [aid.Key] = BandAids.ValueOf(Counters(side), aid) + gain,
+        [MatchAid.RefillKey(aid.Key)] = Matches.Current!.Round,
+    }));
+
+    private Task SetScore(MatchSide side, int score) => RunAsync(() => Matches.SetScoreAsync(side, score));
+
+    private Task Finish() => RunAsync(() => Matches.FinishAsync());
+
+    private void OpenRule(string rule, string? factionId)
+    {
+        _rule = Lookup.Find(rule, factionId);
+        _ruleTitle = rule;
+    }
+
+    private static string ResultText(ActiveMatch match)
+    {
+        var rival = match.RivalBandName ?? "el rival";
+        return match.OwnScore == match.RivalScore
+            ? $"Empate a {match.OwnScore}."
+            : match.OwnScore > match.RivalScore
+                ? $"Gana {match.OwnBandName}, {match.OwnScore} a {match.RivalScore}."
+                : $"Gana {rival}, {match.RivalScore} a {match.OwnScore}.";
+    }
 
     private void SelectOwn(Guid id)
     {
@@ -244,12 +427,25 @@ else
 
     private Task SetRound(int round) => RunAsync(() => Matches.SetRoundAsync(round));
 
-    private Task Toggle(MatchSide side, int index, bool? activated = null, bool? down = null) =>
-        RunAsync(() => Matches.SetMemberAsync(side, index, activated, down));
+    private Task Toggle(MatchSide side, int index, bool? activated = null, bool? down = null) => RunAsync(async () =>
+    {
+        var wasDown = Matches.Current!.MembersOf(side).ElementAtOrDefault(index)?.Down;
+        await Matches.SetMemberAsync(side, index, activated, down);
+
+        // Reglas que suman marcadores cuando cae alguien (Hasta el coño me tenéis).
+        var aids = AidsOf(side);
+        if (down is { } nowDown && wasDown is { } before && before != nowDown
+            && aids.DownFeedOf(index) is { } feed && aids.FindBand(feed.Key) is { } target)
+        {
+            var value = BandAids.ValueOf(Counters(side), target) + (nowDown ? feed.Amount : -feed.Amount);
+            await Matches.SetCountersAsync(side, new Dictionary<string, int> { [feed.Key] = Math.Max(0, value) });
+        }
+    });
 
     private Task End() => RunAsync(async () =>
     {
         await Matches.EndAsync();
+        _sheet = null;
         _code = null;
         _rivalId = null;
     });
@@ -299,6 +495,7 @@ else
     {
         _bands = await Bands.GetAllAsync();
         _bandsById = _bands.ToDictionary(b => b.Id);
+        _aidCache.Clear();
     }
 
     private void OnMatchChanged() => _ = InvokeAsync(async () =>

@@ -38,6 +38,11 @@ public sealed class MatchService(
 
         _restored = true;
         Current = await store.LoadAsync(cancellationToken);
+        if (Current is not null)
+        {
+            // Partidas guardadas antes del límite de seis rondas.
+            Current.Round = Math.Clamp(Current.Round, 1, ActiveMatch.MaxRound);
+        }
         if (Current is { IsOnline: true, ClosedByRival: false } && relay.IsConfigured)
         {
             await TryConnectAsync(cancellationToken);
@@ -106,12 +111,13 @@ public sealed class MatchService(
         {
             var match = Current ?? throw new MatchException("No hay ninguna partida en marcha.");
             round = Math.Clamp(round, 1, ActiveMatch.MaxRound);
-            if (round == match.Round)
+            if (round == match.Round && !match.Over)
             {
                 return;
             }
 
             match.Round = round;
+            match.Over = false;
             match.RoundStamp++;
             ResetActivations(match);
             await store.SaveAsync(match, cancellationToken);
@@ -122,8 +128,89 @@ public sealed class MatchService(
         }
 
         Notify();
-        await SendAsync(new MatchMessage { Type = MessageTypes.Round, Round = Current!.Round, Stamp = Current.RoundStamp }, cancellationToken);
-        await SendAsync(StatusMessage(Current), cancellationToken);
+        await SendAsync(RoundMessage(Current!), cancellationToken);
+        await SendAsync(StatusMessage(Current!), cancellationToken);
+    }
+
+    public async Task FinishAsync(CancellationToken cancellationToken = default)
+    {
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            var match = Current ?? throw new MatchException("No hay ninguna partida en marcha.");
+            if (match.Over)
+            {
+                return;
+            }
+
+            match.Over = true;
+            match.RoundStamp++;
+            await store.SaveAsync(match, cancellationToken);
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
+        Notify();
+        await SendAsync(RoundMessage(Current!), cancellationToken);
+    }
+
+    public Task SetScoreAsync(MatchSide side, int score, CancellationToken cancellationToken = default) =>
+        ChangeSideAsync(side, match =>
+        {
+            score = Math.Clamp(score, 0, ActiveMatch.MaxCount);
+            if (side == MatchSide.Own)
+            {
+                match.OwnScore = score;
+            }
+            else
+            {
+                match.RivalScore = score;
+            }
+        }, cancellationToken);
+
+    public Task SetCountersAsync(MatchSide side, IReadOnlyDictionary<string, int> values, CancellationToken cancellationToken = default) =>
+        ChangeSideAsync(side, match =>
+        {
+            var counters = match.CountersOf(side);
+            foreach (var (key, value) in values)
+            {
+                if (key.Length is 0 or > MatchMessage.MaxCounterKey
+                    || (!counters.ContainsKey(key) && counters.Count >= MatchMessage.MaxCounters))
+                {
+                    continue;
+                }
+
+                counters[key] = Math.Clamp(value, 0, ActiveMatch.MaxCount);
+            }
+        }, cancellationToken);
+
+    /// <summary>Cambio en lo que es de un bando (marcador, contadores). En línea, el del rival lo lleva él.</summary>
+    private async Task ChangeSideAsync(MatchSide side, Action<ActiveMatch> change, CancellationToken cancellationToken)
+    {
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            var match = Current ?? throw new MatchException("No hay ninguna partida en marcha.");
+            if (side == MatchSide.Rival && match.IsOnline)
+            {
+                throw new MatchException("Lo del rival lo apunta él desde su móvil.");
+            }
+
+            change(match);
+            await store.SaveAsync(match, cancellationToken);
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
+        Notify();
+        if (side == MatchSide.Own)
+        {
+            await SendAsync(StatusMessage(Current!), cancellationToken);
+        }
     }
 
     public async Task SetMemberAsync(MatchSide side, int index, bool? activated = null, bool? down = null, CancellationToken cancellationToken = default)
@@ -306,17 +393,19 @@ public sealed class MatchService(
                         return;
                     }
 
-                    ApplyRound(match, message.Round, message.Stamp);
+                    ApplyRound(match, message.Round, message.Stamp, message.Over);
                     ApplyRivalMembers(match, message.Members);
+                    ApplyRivalCounters(match, message);
                     answer = message.Reply ? HelloMessage(match, reply: false) : null;
                     break;
 
                 case MessageTypes.Status:
                     ApplyRivalMembers(match, message.Members);
+                    ApplyRivalCounters(match, message);
                     break;
 
                 case MessageTypes.Round:
-                    if (ApplyRound(match, message.Round, message.Stamp))
+                    if (ApplyRound(match, message.Round, message.Stamp, message.Over))
                     {
                         answer = StatusMessage(match);
                     }
@@ -391,7 +480,7 @@ public sealed class MatchService(
         return true;
     }
 
-    private static bool ApplyRound(ActiveMatch match, int? round, long? stamp)
+    private static bool ApplyRound(ActiveMatch match, int? round, long? stamp, bool? over)
     {
         if (round is not { } r || stamp is not { } s)
         {
@@ -407,6 +496,7 @@ public sealed class MatchService(
         var changed = r != match.Round;
         match.Round = r;
         match.RoundStamp = s;
+        match.Over = over == true;
         if (changed)
         {
             ResetActivations(match);
@@ -426,6 +516,19 @@ public sealed class MatchService(
         {
             match.Rival[i].Activated = flags[i].Activated;
             match.Rival[i].Down = flags[i].Down;
+        }
+    }
+
+    private static void ApplyRivalCounters(ActiveMatch match, MatchMessage message)
+    {
+        if (message.Score is { } score)
+        {
+            match.RivalScore = score;
+        }
+
+        if (message.Counters is { } counters)
+        {
+            match.RivalCounters = new Dictionary<string, int>(counters, StringComparer.Ordinal);
         }
     }
 
@@ -479,13 +582,26 @@ public sealed class MatchService(
         Reply = reply,
         Round = match.Round,
         Stamp = match.RoundStamp,
+        Over = match.Over ? true : null,
         Members = Flags(match.Own),
+        Score = match.OwnScore,
+        Counters = match.OwnCounters,
     };
 
     private static MatchMessage StatusMessage(ActiveMatch match) => new()
     {
         Type = MessageTypes.Status,
         Members = Flags(match.Own),
+        Score = match.OwnScore,
+        Counters = match.OwnCounters,
+    };
+
+    private static MatchMessage RoundMessage(ActiveMatch match) => new()
+    {
+        Type = MessageTypes.Round,
+        Round = match.Round,
+        Stamp = match.RoundStamp,
+        Over = match.Over ? true : null,
     };
 
     private static List<MemberFlags> Flags(List<MatchMember> members) =>

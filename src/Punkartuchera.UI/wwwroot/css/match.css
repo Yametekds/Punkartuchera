@@ -33,7 +33,7 @@
 
 .match-members { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .match-member {
-    display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 10px;
+    display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px;
     padding: 8px 10px;
     background-color: var(--punk-surface);
     background-image: var(--punk-tex-metal);
@@ -52,9 +52,80 @@
 .match-toggle:disabled { cursor: default; }
 
 @media (max-width: 420px) {
-    .match-member { grid-template-columns: auto 1fr; }
-    .match-toggle { grid-column: span 1; }
+    .match-member { grid-template-columns: 1fr 1fr; }
+    .match-member__open { grid-column: 1 / -1; }
 }
+
+/* Tocar la foto o el nombre abre la ficha entera. */
+.match-member__open {
+    display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 44px;
+    padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.match-member__open:focus-visible { outline: 2px solid var(--punk-accent); outline-offset: 2px; }
+.match-member__open:hover .match-member__name strong { text-decoration: underline; text-decoration-color: var(--punk-blood); }
+
+/* Marcador */
+.match-score {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+}
+.match-score__side { display: grid; justify-items: center; gap: 4px; min-width: 0; text-align: center; }
+.match-score__name {
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-family: var(--punk-font-display); text-transform: uppercase; letter-spacing: .04em; font-size: .9rem;
+}
+.match-score__value { font-family: var(--punk-font-display); font-size: 3rem; line-height: 1; color: var(--punk-blood); }
+.match-score__controls { display: flex; gap: 6px; }
+.match-score__vs { font-family: var(--punk-font-display); color: var(--punk-ink-muted); }
+.match-result { margin-bottom: 14px; }
+
+/* Contadores de la banda (Ambrosía, Mojo…) */
+.match-pool {
+    display: grid; gap: 10px; margin-bottom: 12px; padding: 10px 12px;
+    background-color: var(--punk-surface-2);
+    background-image: var(--punk-tex-metal);
+}
+.match-pool__refill { justify-self: start; }
+
+.aid { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.aid .stepper { flex: 0 1 auto; }
+.aid__name { font-weight: 600; }
+.aid__note { font-size: .85rem; color: var(--punk-accent); }
+.aid__note--muted { color: var(--punk-text-muted); }
+.aid__hint { flex-basis: 100%; font-size: .85rem; color: var(--punk-text-muted); }
+.aid__once { border: 0; cursor: pointer; min-height: 36px; background: var(--punk-surface); color: var(--punk-text); font: inherit; font-size: .85rem; }
+.aid__once[aria-pressed="true"] { background: var(--punk-steel); color: var(--punk-ink); text-decoration: line-through; }
+.aid__once:disabled { cursor: default; }
+.aid__readonly strong { font-family: var(--punk-font-display); }
+
+.match-member__aids {
+    grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 14px;
+    padding-top: 6px; border-top: 1px dashed rgba(236, 194, 140, .25);
+}
+
+/* Ficha durante la partida (sobre papel) */
+.match-sheet { max-height: min(88vh, 760px); }
+.match-sheet__state { display: flex; flex-wrap: wrap; gap: 6px; }
+.match-sheet__down { background: var(--punk-rust); color: var(--punk-text); }
+.match-sheet__profile { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--punk-font-display); }
+.match-sheet__profile abbr { text-decoration: none; color: var(--punk-ink-muted); }
+.match-aids--sheet { display: grid; gap: 12px; }
+.match-sheet .aid__note, .match-sheet .aid__hint, .match-sheet .aid__note--muted { color: var(--punk-ink-muted); }
+.match-sheet .aid__note { color: var(--punk-blood); }
+.match-sheet .aid__name { color: var(--punk-ink); }
 
 .match-waiting { margin: 0; }
 .match-end { margin-top: 24px; justify-content: flex-end; }
+
+/* La cabecera de la ficha es de chapa: texto claro aunque la ventana sea de papel. */
+.match-sheet .datacard__head { color: var(--punk-text); }
+
+/* Contadores de cada miembro: en una línea y pequeños, para que la lista no crezca. */
+.match-member__aids .stepper { flex-direction: row; align-items: center; gap: 8px; }
+.match-member__aids .stepper__label { font-size: .72rem; color: var(--punk-text-muted); }
+.match-member__aids .stepper__controls { border-width: 2px; }
+.match-member__aids .stepper__btn { width: 36px; height: 36px; font-size: 1.1rem; }
+.match-member__aids .stepper__value { min-width: 28px; font-size: 1.1rem; }
+.match-member__aids .aid { gap: 4px 8px; }
+.match-pool .stepper__btn, .match-member__aids .stepper__btn { color: var(--punk-accent); }
+.match-pool .gear-item__link { color: var(--punk-accent); }

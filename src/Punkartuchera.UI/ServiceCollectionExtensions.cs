@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<CloseCombat>();
         services.AddSingleton(sp => new RosterBuilder(sp.GetRequiredService<Rulebook>(), sp.GetRequiredService<IRulesCatalog>()));
         services.AddScoped<FragmentScroller>();
+        services.AddSingleton<Punkartuchera.Core.Matches.MatchAidCatalog>();
         services.AddSingleton<ITerrainCatalog, DefaultTerrainCatalog>();
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
