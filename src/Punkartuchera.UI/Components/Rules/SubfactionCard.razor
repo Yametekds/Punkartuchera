@@ -1,0 +1,35 @@
+@* Tarjeta de una subfacción en las listas: de qué va, qué tropas usa y sus reglas propias. *@
+
+<a class="subfaction-card" href="@Brief.RulesHref">
+    <span class="subfaction-card__meta">@OwnTroopsLabel@(Brief.Faction.Beta ? " · beta" : "")</span>
+    <h3 class="subfaction-card__name">@Brief.Faction.Name</h3>
+    <p class="subfaction-card__summary">@Brief.Faction.Summary</p>
+    @if (Brief.TroopLine is { } troopLine)
+    {
+        <p class="subfaction-card__line">@troopLine</p>
+    }
+    @if (Brief.OwnTroops.Count + Brief.KeyRules.Count > 0)
+    {
+        <ul class="tags subfaction-card__tags">
+            @foreach (var troop in Brief.OwnTroops)
+            {
+                <li class="tag tag--skill">@troop.Name</li>
+            }
+            @foreach (var rule in Brief.KeyRules)
+            {
+                <li class="tag">@rule.Name</li>
+            }
+        </ul>
+    }
+</a>
+
+@code {
+    [Parameter, EditorRequired] public FactionBrief Brief { get; set; } = default!;
+
+    private string OwnTroopsLabel => Brief.OwnTroops.Count switch
+    {
+        0 => "Sin tropas propias",
+        1 => "1 tropa propia",
+        var n => $"{n} tropas propias",
+    };
+}

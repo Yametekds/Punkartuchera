@@ -4,6 +4,7 @@
     "baseTroops": ["Mutante", "Perromorfo", "Bestia del pozo", "Cabezón"],
     "name": "Amanecer Mutante",
     "summary": "El culto de Kim en los Gemelos: los Mutardos como siguiente paso de la evolución y los humanos como estorbo. Cabezones con el cerebro frito y una guardia pretoriana fanática.",
+    "playstyle": "Mutardos de élite: sin Pochos, con Pretorianos fanáticos y Cabezones que solo tienen un poder pero cuestan 60 puntos. Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros, pagando el doble las que normalmente no tendrían.",
     "restrictions": [
       "Usa Bestias del Pozo, Cabezones (ver Control), Mutantes (ver Tomamos lo que queremos) y Perromorfos. Sin Pochos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -67,6 +68,7 @@
     "baseTroops": ["Mutante", "Bestia del pozo", "Cabezón"],
     "name": "Fuerza M",
     "summary": "Supergrupo mutardo del misterioso Cabezón X: mallas chillonas, nombres molones y ganas de dar caña por los desvalidos del Páramo.",
+    "playstyle": "Supergrupo de Mutantes: cada uno puede llevar un Sidekick que cae en su lugar una vez, y se potencian entre ellos con Súper equipo cuando están a 5 cm. Sin Pochos ni Perromorfos.",
     "restrictions": [
       "Usa Bestias del Pozo, Cabezones y Mutantes. Sin Pochos ni Perromorfos.",
       "Un Sidekick por Mutante; ese Mutante cuenta como 2 para el límite de miniaturas.",
@@ -110,6 +112,7 @@
     "baseTroops": ["Pocho", "Mutante", "Cabezón", "Magmador"],
     "name": "Macumba",
     "summary": "El culto vudú de Mamá Guedé en los pantanos al este de Torresbrillantes: Pochos que vuelven a caminar, caimanes de guerra y odio a los craabianos.",
+    "playstyle": "Vudú de pantano: los Cabezones cambian Desarme y Choque mental por Empochizar y Muñeco vudú, los Perromorfos pasan a ser Caimanomorfos y los Espíritus del pantano y Mamá Guedé traen sus propios poderes. Sin Bestias del pozo.",
     "restrictions": [
       "Usa Cabezones (con los Poderes de Macumba), Mutantes y Pochos. Sin Bestias del Pozo; los Perromorfos pasan a ser Caimanomorfos.",
       "Puede usar las tropas propias de la subfacción.",

@@ -5,6 +5,7 @@
     "sharedWeapons": ["Motosierra"],
     "name": "Slashers",
     "summary": "Idos a los que la Ambrosía ha convertido en asesinos de peli de terror: grandes, silenciosos, lentos… y siempre llegan.",
+    "playstyle": "Idos lentos e implacables: los Psycho-killers apenas corren pero siempre llegan, y cada enemigo que Abate un miembro de la banda le da opciones de volver a levantarse con No estaba muerto. Pueden usar motosierras y tienen personajes de peli de miedo como la Familia de la Cabaña.",
     "restrictions": [
       "Usa Cosechadores, Glotones y Despojos de los Idos. Sin Desgarradores ni Aberraciones.",
       "Puede usar las tropas propias de la subfacción.",
@@ -82,6 +83,7 @@
     "baseTroops": ["Aberración", "Desgarrador", "Cosechador", "Glotón"],
     "name": "Hermandad de la Bestia",
     "summary": "Aberraciones que han conservado una mente fría y adoran al Caos Reptante en búnkeres a oscuras. Madre los tolera… por ahora.",
+    "playstyle": "Monstruos con cabeza fría: Desgarradores, Cosechadores y Glotones ganan Locura y pierden el Blindaje por los mismos puntos, las Aberraciones dejan de ser Mónguer y las Abominaciones tentaculares sustituyen a los Despojos.",
     "restrictions": [
       "Usa Aberraciones, Desgarradores, Cosechadores y Glotones de los Idos. Sin Despojos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -174,6 +176,7 @@
     "baseTroops": ["Despojo", "Aberración", "Desgarrador", "Glotón"],
     "name": "Devoradores",
     "summary": "Idos que han cambiado la Ambrosía por el canibalismo. Les potencia, pero les deja aún más tarados, con tics y sin coordinación.",
+    "playstyle": "Caníbales en lugar de drogadictos: no usan Ambrosía y casi toda la banda puede devorar a los caídos, con una tirada que puede salir mal. Los Necrófagos van en grupos baratos ligados a los Glotones y los Despojos se pueden devorar en vida.",
     "restrictions": [
       "Usa Glotones, Aberraciones, Despojos y Desgarradores de los Idos. Sin Cosechadores.",
       "Puede usar las tropas propias de la subfacción.",

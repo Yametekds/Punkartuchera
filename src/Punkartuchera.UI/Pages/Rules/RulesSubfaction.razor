@@ -42,14 +42,53 @@ else
         </div>
         <h1 class="band-hero__name distress">@_subfaction.Name</h1>
         <p class="rules-hero__summary">@_subfaction.Summary</p>
+        @if (_subfaction.Playstyle is { } playstyle)
+        {
+            <p class="rules-hero__play"><strong>Cómo se juega.</strong> @playstyle</p>
+        }
         <SourceRef Source="@_subfaction.Source" Page="_subfaction.Page" />
     </section>
 
-    @if (_subfaction.Restrictions.Count > 0)
+    <h2 class="section-title">Quién forma la banda</h2>
+    @if (_brief!.TroopLine is { } troopLine)
+    {
+        <p class="rules-intro">@troopLine</p>
+    }
+    <div class="subfaction-roster">
+        <section>
+            <h3 class="subfaction-roster__title">De @_faction.Name</h3>
+            <ul class="subfaction-roster__list">
+                @foreach (var troop in FactionBrief.BaseTroopsFor(_faction, _subfaction))
+                {
+                    <li>
+                        <a href="@($"reglas/faccion/{_faction.Id}/miembros#{troop.Slug}")">@troop.Name</a>
+                        <span class="subfaction-roster__cost">@troop.Cost ptos@(troop.Personality ? " · personalidad" : "")</span>
+                    </li>
+                }
+            </ul>
+        </section>
+        @if (_subfaction.Troops.Count > 0)
+        {
+            <section>
+                <h3 class="subfaction-roster__title">Propias</h3>
+                <ul class="subfaction-roster__list">
+                    @foreach (var troop in _subfaction.Troops)
+                    {
+                        <li>
+                            <a href="@($"reglas/faccion/{_faction.Id}/subfaccion/{_subfaction.Id}#{troop.Slug}")">@troop.Name</a>
+                            <span class="subfaction-roster__cost">@troop.Cost ptos@(troop.Personality ? " · personalidad" : "")</span>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    </div>
+
+    @if (_brief.Restrictions.Count > 0)
     {
         <h2 class="section-title">Restricciones</h2>
         <ul class="rules-restrictions">
-            @foreach (var restriction in _subfaction.Restrictions)
+            @foreach (var restriction in _brief.Restrictions)
             {
                 <li>@restriction</li>
             }
@@ -121,6 +160,29 @@ else
             <GearTables Weapons="_subfaction.Weapons" ArmorItems="_subfaction.Armors" GearItems="_subfaction.Gear" />
         </div>
     }
+
+    @if (_faction.Rules.Count > 0)
+    {
+        <h2 class="section-title">Reglas de @_faction.Name</h2>
+        <p class="rules-intro">Siguen en vigor salvo que las reglas de arriba digan lo contrario:
+            @for (var i = 0; i < _faction.Rules.Count; i++)
+            {
+                var rule = _faction.Rules[i];
+                <a href="@($"reglas/faccion/{_faction.Id}/reglas#{rule.Slug}")">@rule.Name</a>@(i < _faction.Rules.Count - 1 ? ", " : ".")
+            }
+        </p>
+    }
+
+    @if (_faction.Subfactions.Count > 1)
+    {
+        <h2 class="section-title">Otras subfacciones de @_faction.Name</h2>
+        <div class="subfaction-list">
+            @foreach (var other in _faction.Subfactions.Where(s => s.Id != _subfaction.Id))
+            {
+                <SubfactionCard Brief="FactionBrief.For(other, _faction)" />
+            }
+        </div>
+    }
 }
 
 @code {
@@ -130,12 +192,14 @@ else
 
     private FactionRules? _faction;
     private FactionRules? _subfaction;
+    private FactionBrief? _brief;
     private bool _scrollPending;
 
     protected override void OnParametersSet()
     {
         _faction = Book.FindFaction(Id);
         _subfaction = _faction?.Subfactions.FirstOrDefault(s => s.Id == SubId);
+        _brief = _subfaction is null ? null : FactionBrief.For(_subfaction, _faction);
         _scrollPending = true;
     }
 

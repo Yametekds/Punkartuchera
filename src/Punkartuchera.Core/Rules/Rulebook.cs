@@ -264,6 +264,9 @@ public sealed class FactionRules
 
     public string Summary { get; set; } = string.Empty;
 
+    /// <summary>Cómo se juega: estilo y puntos fuertes, resumidos de sus reglas.</summary>
+    public string? Playstyle { get; set; }
+
     /// <summary>Reglas publicadas como beta.</summary>
     public bool Beta { get; set; }
 

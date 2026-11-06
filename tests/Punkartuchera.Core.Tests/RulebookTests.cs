@@ -264,6 +264,58 @@ public class RosterBuilderTests
     }
 
     [Fact]
+    public void Subfaction_choices_drop_base_troops_it_cannot_use()
+    {
+        var choices = _builder.ChoicesFor("chatarreros", "carroneros");
+
+        Assert.DoesNotContain(choices, c => c.Troop.Name == "Dinamo");
+        Assert.DoesNotContain(choices, c => c.Troop.Name == "Caronte");
+        Assert.Contains(choices, c => c.Troop.Name == "Pistón");
+        Assert.Contains(choices, c => c.Troop.Name == "Vigía");
+        Assert.Contains(_builder.ChoicesFor("chatarreros"), c => c.Troop.Name == "Dinamo");
+    }
+
+    [Fact]
+    public void Every_faction_and_subfaction_explains_how_it_plays()
+    {
+        foreach (var faction in Book.Factions)
+        {
+            Assert.False(string.IsNullOrWhiteSpace(faction.Playstyle), faction.Id);
+            foreach (var subfaction in faction.Subfactions)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(subfaction.Playstyle), subfaction.Id);
+                Assert.NotEmpty(subfaction.BaseTroops);
+                var names = faction.Troops.Select(t => t.Name).ToHashSet();
+                Assert.All(subfaction.BaseTroops, t => Assert.Contains(t, names));
+            }
+        }
+    }
+
+    [Fact]
+    public void Brief_sums_up_troops_rules_and_limits()
+    {
+        var gangers = FactionBrief.For(Book, "pandilleros")!;
+        Assert.Contains("Retraso", gangers.CommonSpecialRules);
+        Assert.Equal((20, 70), gangers.CostRange);
+        Assert.Contains(gangers.Personalities, t => t.Name == "Clint Tirofijo");
+
+        var scavengers = FactionBrief.For(Book, "chatarreros", "carroneros")!;
+        Assert.Equal("chatarreros", scavengers.Parent?.Id);
+        Assert.StartsWith("Usa Pistones", scavengers.TroopLine);
+        Assert.DoesNotContain(scavengers.Restrictions, r => r.StartsWith("Usa "));
+        Assert.Equal(["Sonda", "Vigía", "Señor Lao"], scavengers.OwnTroops.Select(t => t.Name));
+        Assert.DoesNotContain(scavengers.Troops, t => t.Name == "Dinamo");
+        Assert.Equal("reglas/faccion/chatarreros/subfaccion/carroneros", scavengers.RulesHref);
+    }
+
+    [Theory]
+    [InlineData("Primera frase. Segunda frase.", "Primera frase.")]
+    [InlineData("Si falla, tira 1d10:\n• 1-3 nada", "Si falla, tira 1d10.")]
+    [InlineData("Sin punto final", "Sin punto final")]
+    public void First_sentence_keeps_rules_short(string text, string expected) =>
+        Assert.Equal(expected, FactionBrief.FirstSentence(text));
+
+    [Fact]
     public void Preset_list_keeps_names_costs_and_printed_stats()
     {
         var list = Book.FindList("pandilleros-1")!;
