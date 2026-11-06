@@ -77,3 +77,28 @@
 @media (prefers-reduced-motion: reduce) {
     .tutorial-step:nth-child(odd), .tutorial-step:nth-child(even) { transform: none; }
 }
+
+/* ---------- Fotos de ejemplo del reglamento ---------- */
+
+.tutorial-figure {
+    margin: 4px 0;
+    display: flex; flex-direction: column; gap: 8px;
+}
+/* Foto clavada al papel: marco oscuro, un poco torcida y con su sombra */
+.tutorial-figure img {
+    display: block; width: 100%; height: auto;
+    border: 4px solid var(--punk-black);
+    box-shadow: 0 6px 14px rgba(13, 11, 9, .35);
+    transform: rotate(.6deg);
+    filter: sepia(.25) contrast(1.05);
+}
+.tutorial-step:nth-child(even) .tutorial-figure img { transform: rotate(-.5deg); }
+.tutorial-figure figcaption {
+    display: flex; flex-direction: column; gap: 2px;
+    font-size: .9rem; color: var(--punk-ink-muted);
+}
+.tutorial-figure figcaption .source-ref { font-size: .8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+    .tutorial-figure img { transform: none !important; }
+}

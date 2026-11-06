@@ -19,7 +19,16 @@ public sealed record TutorialStep(string Title, IReadOnlyList<string> Text)
 
     /// <summary>Botón a una pantalla de la app.</summary>
     public TutorialLink? Link { get; init; }
+
+    /// <summary>Ilustraciones de ejemplo sacadas del reglamento.</summary>
+    public IReadOnlyList<TutorialImage> Images { get; init; } = [];
 }
+
+/// <summary>
+/// Foto de ejemplo del reglamento oficial: <paramref name="File"/> es el nombre en
+/// <c>img/tutoriales/</c> y <paramref name="Page"/> la página del PDF de reglas de la que sale.
+/// </summary>
+public sealed record TutorialImage(string File, string Alt, string Caption, int Page);
 
 /// <summary>Enlace relativo a la base de la app (sin barra inicial).</summary>
 public sealed record TutorialLink(string Href, string Label);
