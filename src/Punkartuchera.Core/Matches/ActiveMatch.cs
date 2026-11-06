@@ -4,7 +4,11 @@ namespace Punkartuchera.Core.Matches;
 
 public sealed class ActiveMatch
 {
-    public const int MaxRound = 99;
+    /// <summary>Una partida dura seis Turnos (en la app, rondas).</summary>
+    public const int MaxRound = 6;
+
+    /// <summary>Tope de los puntos del marcador y de cualquier contador.</summary>
+    public const int MaxCount = 999;
 
     public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -26,6 +30,23 @@ public sealed class ActiveMatch
     /// a la vez (o uno estaba sin conexión), gana el cambio con el reloj más alto y, si empatan, la ronda más alta.
     /// </summary>
     public long RoundStamp { get; set; }
+
+    /// <summary>Se cerró la última ronda: la partida ha acabado y queda el resultado.</summary>
+    public bool Over { get; set; }
+
+    /// <summary>Puntos de la banda propia en el marcador (escenario y victoria).</summary>
+    public int OwnScore { get; set; }
+
+    public int RivalScore { get; set; }
+
+    /// <summary>
+    /// Contadores de la banda propia: dosis de Ambrosía, Puntos de Mojo, reglas de un solo uso…
+    /// Las claves son las de <see cref="MatchAid.Key"/>; las de un miembro llevan detrás "@" y su índice.
+    /// Solo se guardan los que han cambiado: el resto vale lo que diga la ayuda.
+    /// </summary>
+    public Dictionary<string, int> OwnCounters { get; set; } = [];
+
+    public Dictionary<string, int> RivalCounters { get; set; } = [];
 
     public DateTimeOffset StartedAt { get; set; } = DateTimeOffset.UtcNow;
 
@@ -59,6 +80,10 @@ public sealed class ActiveMatch
     public bool HasRival => RivalBandId is not null;
 
     public List<MatchMember> MembersOf(MatchSide side) => side == MatchSide.Own ? Own : Rival;
+
+    public Dictionary<string, int> CountersOf(MatchSide side) => side == MatchSide.Own ? OwnCounters : RivalCounters;
+
+    public int ScoreOf(MatchSide side) => side == MatchSide.Own ? OwnScore : RivalScore;
 }
 
 public sealed class MatchMember
