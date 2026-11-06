@@ -1,6 +1,7 @@
 [
   {
     "id": "slashers",
+    "baseTroops": ["Despojo", "Cosechador", "Glotón"],
     "sharedWeapons": ["Motosierra"],
     "name": "Slashers",
     "summary": "Idos a los que la Ambrosía ha convertido en asesinos de peli de terror: grandes, silenciosos, lentos… y siempre llegan.",
@@ -78,6 +79,7 @@
   },
   {
     "id": "hermandad-de-la-bestia",
+    "baseTroops": ["Aberración", "Desgarrador", "Cosechador", "Glotón"],
     "name": "Hermandad de la Bestia",
     "summary": "Aberraciones que han conservado una mente fría y adoran al Caos Reptante en búnkeres a oscuras. Madre los tolera… por ahora.",
     "restrictions": [
@@ -92,6 +94,54 @@
       { "name": "Dentro del plan", "text": "Sus Aberraciones no tienen Mónguer." }
     ],
     "troops": [
+      {
+        "name": "Desgarrador",
+        "replaces": "Desgarrador",
+        "cost": 40,
+        "page": 7,
+        "stats": { "a": "2", "c": "5", "p": "-", "ag": "4", "f": "4", "d": "4", "t": "1" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Furia psicópata", "text": "Avanza hacia el enemigo al que llegue antes, lo vea o no." },
+          { "name": "Mal viaje", "text": "Asalta a cualquier miniatura a distancia de Asalto, sea amiga o enemiga." }
+        ]
+      },
+      {
+        "name": "Cosechador",
+        "replaces": "Cosechador",
+        "cost": 40,
+        "page": 7,
+        "stats": { "a": "3", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Cosecha", "text": "1 Acción sobre un enemigo Abatido (una vez por cadáver) para sacar dosis de Ambrosía para la banda.", "table": { "columns": ["1d10", "Dosis"], "rows": [["1", "Ninguna"], ["2-5", "1"], ["6-9", "2"], ["10", "3"]] } },
+          { "name": "Mal viaje", "text": "No puede cosechar." }
+        ]
+      },
+      {
+        "name": "Glotón",
+        "replaces": "Glotón",
+        "cost": 45,
+        "page": 7,
+        "stats": { "a": "2", "c": "2", "p": "3", "ag": "4", "f": "4", "d": "5", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Devorador", "text": "1 Acción sobre un Abatido en contacto (amigo o enemigo, una vez por cadáver): +1 a Combate, Fuerza y Dureza. Se retira el marcador." },
+          { "name": "Mal viaje", "text": "Va hacia el Abatido sin devorar más cercano y se lo come si llega. Si ya estaba junto a uno devorado, no se mueve." }
+        ]
+      },
       {
         "name": "Abominación", "cost": 50, "page": 10,
         "stats": { "a": "2", "c": "4", "p": "-", "ag": "3", "f": "6", "d": "5", "t": "-" },
@@ -121,6 +171,7 @@
   },
   {
     "id": "devoradores",
+    "baseTroops": ["Despojo", "Aberración", "Desgarrador", "Glotón"],
     "name": "Devoradores",
     "summary": "Idos que han cambiado la Ambrosía por el canibalismo. Les potencia, pero les deja aún más tarados, con tics y sin coordinación.",
     "restrictions": [
