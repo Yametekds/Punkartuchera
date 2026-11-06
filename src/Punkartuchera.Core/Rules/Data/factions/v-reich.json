@@ -10,7 +10,7 @@
     "Máximo un Mariscal.",
     "Máximo un Gato parameño."
   ],
-  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos los Subhumanos." }],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos los Subhumanos.", "excludeTroops": ["Subhumano"] }],
   "troops": [
     {
       "name": "Subhumano", "cost": 20, "page": 73,

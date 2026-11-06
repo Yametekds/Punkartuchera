@@ -79,11 +79,24 @@ public sealed partial class FactionBrief
         return subfaction is null ? new(faction, null) : new(subfaction, faction);
     }
 
-    /// <summary>Tropas de la facción base que admite la subfacción; sin subfacción, todas.</summary>
-    public static IEnumerable<Troop> BaseTroopsFor(FactionRules faction, FactionRules? subfaction) =>
-        subfaction is null || subfaction.BaseTroops.Count == 0
-            ? faction.Troops
-            : faction.Troops.Where(t => subfaction.BaseTroops.Contains(t.Name));
+    /// <summary>
+    /// Tropas de la facción base que admite la subfacción (sin las que sustituyen sus tropas propias);
+    /// sin subfacción, todas.
+    /// </summary>
+    public static IEnumerable<Troop> BaseTroopsFor(FactionRules faction, FactionRules? subfaction)
+    {
+        if (subfaction is null || subfaction.BaseTroops.Count == 0)
+        {
+            return faction.Troops;
+        }
+
+        var allowed = subfaction.BaseTroops.Select(RulesText.Fold).ToHashSet();
+        var replaced = subfaction.Troops
+            .Where(t => t.Replaces is not null)
+            .Select(t => RulesText.Fold(t.Replaces))
+            .ToHashSet();
+        return faction.Troops.Where(t => allowed.Contains(RulesText.Fold(t.Name)) && !replaced.Contains(RulesText.Fold(t.Name)));
+    }
 
     /// <summary>«Retraso (2)» y «Retraso (3)» cuentan como la misma regla.</summary>
     public static string BaseRuleName(string rule) => ParenSuffix().Replace(rule, string.Empty).Trim();

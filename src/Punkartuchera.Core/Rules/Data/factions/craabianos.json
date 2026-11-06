@@ -108,6 +108,8 @@
   "extras": [
     {
       "title": "Reliquias abisales",
+      "perBand": 1,
+      "buyers": [{ "troop": "Capitán", "max": 1 }, { "troop": "Custodio del Abismo", "max": 2 }],
       "items": [
         { "name": "Cadena del naufragio", "cost": 7, "text": "Quien le Asalte pierde los bonificadores." },
         { "name": "Cáliz de salmuera", "cost": 5, "text": "Ignora Sangre salada." },

@@ -361,6 +361,37 @@
       ]
     },
     {
+      "id": "mesa", "category": "Mesa y escenario", "title": "Mesa y escenografía", "source": "escenarios", "page": 1,
+      "keywords": ["mesa", "90x90", "120x120", "escenografía", "colocar escenografía", "10 cm", "elementos"],
+      "body": [
+        "Mesa recomendada: 90×90 cm hasta 400 puntos y 120×120 cm para partidas más grandes.",
+        "Mucha escenografía, con bastantes sitios para cubrirse y cortar Líneas de visión, para que cuerpo a cuerpo y disparo estén igualados. Vale usar cajas o latas si decidís antes qué es cada cosa.",
+        "Colocación reglada: se sortea quién empieza y se colocan elementos por turnos según el tamaño de la mesa.",
+        "Siempre que se pueda, cada elemento a 10 cm como mínimo de otro elemento y de los bordes de la mesa."
+      ],
+      "table": {
+        "columns": ["Mesa", "Tamaño 3", "Tamaño 2", "Tamaño 1"],
+        "rows": [["90×90 cm", "4", "6", "8"], ["120×120 cm", "6", "8", "10"]]
+      }
+    },
+    {
+      "id": "terreno-mesa", "category": "Mesa y escenario", "title": "Decidir el terreno", "source": "escenarios", "page": 2,
+      "keywords": ["terreno", "acuerdo", "chungo", "impasable", "coberturas", "contaminado", "20x20"],
+      "body": [
+        "Después de colocar la escenografía, los jugadores pactan qué zonas son Terreno chungo, pila chungo o impasable, qué Cobertura da cada elemento y de qué tamaño es.",
+        "Muchos escenarios añaden zonas de Terreno contaminado de unos 20×20 cm que coloca cada jugador por turnos."
+      ]
+    },
+    {
+      "id": "despliegue", "category": "Mesa y escenario", "title": "Zonas de despliegue", "source": "escenarios", "page": 2,
+      "keywords": ["despliegue", "zona de despliegue", "15 cm", "30 cm", "extremos opuestos"],
+      "body": [
+        "Salvo que el escenario diga otra cosa, las zonas se sortean con un dado (o por acuerdo).",
+        "Cada zona ocupa todo el ancho de la mesa en extremos opuestos: 15 cm de profundidad en mesas de 90×90 y 30 cm en las de 120×120.",
+        "Se despliega en orden ascendente de Agilidad, alternando. Solo se puede desplegar encima de un elemento si tiene un acceso (al menos una escalerilla) dentro de tu zona."
+      ]
+    },
+    {
       "id": "puntos", "category": "Creación de bandas", "title": "Puntos y máximo de miniaturas", "source": "bandas", "page": 1,
       "keywords": ["puntos", "límite", "lista", "máximo de miniaturas", "350", "500"],
       "body": [
@@ -416,7 +447,9 @@
     { "name": "Lentorra (X)", "source": "reglas", "page": 25, "text": "Tras disparar necesita X Acciones para recargar. Empieza cargada. Si es cuerpo a cuerpo, su bonificador se aplica al primer Combate que Impacte y luego queda descargada (se puede usar otra arma o una improvisada)." },
     { "name": "Mamotreto", "source": "reglas", "page": 25, "text": "A dos manos y no puede llevar ninguna otra arma. Si es de distancia, en Combate cuenta como una maza pesada." },
     { "name": "Mónguer", "source": "reglas", "page": 25, "text": "No controla ni interactúa con objetivos, no puede Rapiñar ni manejar aparatos." },
+    { "name": "Mercenario", "source": "bandas", "page": 81, "text": "Vende su arma al mejor postor y se une a cualquier banda que no lo prohíba, pagando sus puntos y contando para el máximo de miniaturas. Como máximo uno por banda. No usa ni se beneficia de reglas o equipo de la banda (balas apañadas, poderes, inmunidades, walkie-talkie…). Su equipo es cerrado e incluido en el coste, salvo las balas, y no puede Rapiñar equipo (solo balas si lleva Arma de fuego). Los Atributos entre paréntesis ya incluyen su equipo y reglas." },
     { "name": "Montada", "source": "reglas", "page": 25, "text": "No controla ni interactúa con objetivos, no puede Atravesar obstáculos ni Trepar (ni por escalerilla) y tiene -1 a Precisión con cualquier arma." },
+    { "name": "Personalidad", "source": "bandas", "page": 2, "text": "Personaje único con nombre propio. Su perfil, armas y equipo vienen fijos e incluidos en su coste. Salvo que su facción diga otra cosa, la banda solo puede llevar una Personalidad o un Mercenario." },
     { "name": "Plantilla", "source": "reglas", "page": 25, "text": "Impacta automáticamente a toda miniatura en Línea de visión que toque la plantilla, ignorando Cobertura. Se coloca en contacto con su peana, dentro de su visión. No se puede usar en Fuego defensivo. Si toca a alguien en Combate, impacta a todos los implicados." },
     { "name": "Postas", "source": "reglas", "page": 26, "text": "+1 a Precisión. No se puede Evitar Cobertura ni elegir un objetivo concreto dentro de un Combate: se dispara al Combate sin penalizador e impacta a todos los implicados." },
     { "name": "Raudo", "source": "reglas", "page": 26, "text": "Mueve 15 cm por Acción de Movimiento en lugar de 10." },
@@ -459,6 +492,6 @@
     { "name": "Bayoneta", "cost": 3, "source": "equipo", "page": 3, "text": "Se acopla a un arma con Arma de fuego: +2 a la Penetración en cuerpo a cuerpo." },
     { "name": "Escudo", "cost": 6, "source": "equipo", "page": 3, "text": "Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate. Contra disparos: Cobertura +2. No se combina con armas A dos manos." },
     { "name": "Protección contra la contaminación", "cost": 5, "source": "equipo", "page": 3, "text": "Máscara de gas o similar: ignora el Terreno contaminado." },
-    { "name": "Gato parameño", "cost": 10, "source": "bandas", "page": 2, "text": "Solo uno por banda y con su miniatura a la vista. Una vez por partida, repites una tirada tuya u obligas al rival a repetir una suya." }
+    { "name": "Gato parameño", "cost": 10, "perBand": 1, "source": "bandas", "page": 2, "text": "Solo uno por banda y con su miniatura a la vista. Una vez por partida, repites una tirada tuya u obligas al rival a repetir una suya." }
   ]
 }

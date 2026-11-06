@@ -11,7 +11,7 @@
     "No puede haber más Despojos que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
-  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos las Aberraciones." }],
+  "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos las Aberraciones.", "excludeTroops": ["Aberración"] }],
   "rules": [
     { "name": "Ambrosía", "text": "La banda empieza con 1 dosis por cada fracción de 100 puntos. Antes de activar una miniatura puedes darle UNA dosis y elegir un efecto para esa Fase de activación:\n• +10 cm al Movimiento en un Asalto.\n• +2 a Fuerza.\n• +2 a Dureza.\n• +2 a Técnica.\n• Todoterreno.\n• Ignorar Furia psicópata.\nTira 1d10 (-1 por cada dosis que ya hubiera tomado) en la tabla.",
       "table": { "columns": ["1d10", "Efecto"], "rows": [["1 o menos", "Colocón malísimo: -1 Acción el resto de la partida (a 0, Abatida) y sin efecto."], ["2-3", "Mal viaje: se aplica la regla Mal viaje de su tropa esta Fase de activación."], ["4-10", "Funciona perfectamente."]] } }
@@ -24,7 +24,7 @@
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
       "armor": "Ninguno",
       "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
-      "rules": [{ "name": "Escoria", "text": "No puede tomar Ambrosía ni llevar armas incrustadas." }]
+      "rules": [{ "name": "Escoria", "text": "No puede tomar Ambrosía ni llevar armas incrustadas.", "bans": ["Arma incrustada", "Ambrosía"] }]
     },
     {
       "name": "Aberración", "cost": 35, "page": 24,
@@ -93,7 +93,7 @@
       "rules": [
         { "name": "Cosechadora", "text": "Cosecha como un Cosechador y cuenta como uno para las restricciones." },
         { "name": "Presencia perturbadora", "text": "El enemigo que quiera Disparar, Asaltar o dañar a Madre o a un aliado a 15 cm de ella debe superar Dureza o pierde la Acción." },
-        { "name": "Lucidez", "text": "Los Idos que toman Ambrosía a 20 cm de ella no tiran: siempre funciona. Ella nunca la toma." },
+        { "name": "Lucidez", "text": "Los Idos que toman Ambrosía a 20 cm de ella no tiran: siempre funciona. Ella nunca la toma.", "bans": ["Ambrosía"] },
         { "name": "Mascota", "text": "Va siempre con Madre. Hasta que caiga, es la mascota la que combate y recibe los disparos con su perfil. Garras y dientes." }
       ]
     }
@@ -105,6 +105,6 @@
     { "name": "Cuero humano", "armor": "3", "page": 30, "notes": "Los disparos a distancia corta contra quien lo lleva tienen -1 a Precisión." }
   ],
   "gear": [
-    { "name": "Arma incrustada", "cost": 10, "page": 30, "text": "Un Ido puede incrustarse una hoz, filo pequeño o filo medio: +1 al Combate, no puede Rapiñar ni ser desarmado y el arma no se puede Rapiñar." }
+    { "name": "Arma incrustada", "cost": 10, "page": 30, "requires": ["Hoz", "Filo pequeño", "Filo medio"], "aliases": ["incrustado", "incrustada"], "text": "Un Ido puede incrustarse una hoz, filo pequeño o filo medio: +1 al Combate, no puede Rapiñar ni ser desarmado y el arma no se puede Rapiñar." }
   ]
 }

@@ -1,0 +1,26 @@
+@page "/tutoriales"
+@using Punkartuchera.Core.Tutorials
+
+<PageTitle>Tutoriales · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Aprende o palma</span>
+        <h1 class="page-title distress">Tutoriales</h1>
+    </div>
+</header>
+
+<p class="tutorial-lead">Nadie nace sabiendo repartir. Elige por dónde empiezas y en un rato estás en la mesa dando guerra.</p>
+
+<div class="card-grid tutorial-grid">
+    @foreach (var (tutorial, index) in TutorialCatalog.All.Select((t, i) => (t, i)))
+    {
+        <a class="paper tutorial-card" href="@($"tutoriales/{tutorial.Id}")">
+            <span class="tutorial-card__number" aria-hidden="true">@(index + 1)</span>
+            <span class="tutorial-card__kicker scribble">@tutorial.Kicker</span>
+            <span class="tutorial-card__title">@tutorial.Title</span>
+            <span class="tutorial-card__summary">@tutorial.Summary</span>
+            <span class="tutorial-card__meta">@tutorial.Steps.Count pasos</span>
+        </a>
+    }
+</div>

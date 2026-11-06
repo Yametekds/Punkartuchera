@@ -34,18 +34,25 @@
 }
 .map-midline { stroke: var(--punk-rust); stroke-width: .6; stroke-dasharray: 3 2; }
 
-.map-piece rect, .map-piece ellipse, .map-piece circle { stroke-width: .8; }
+/* Materiales: el color va con el grado de Cobertura y la trama con el material */
+.map-mat--light { --mat-fill: #b8902f; --mat-mark: var(--punk-ink); }
+.map-mat--medium { --mat-fill: #8a3520; --mat-mark: var(--punk-accent); }
+.map-mat--heavy { --mat-fill: #3f454b; --mat-mark: #c9ccd0; }
+.map-mat--toxic { --mat-fill: var(--punk-toxic); --mat-mark: var(--punk-ink); }
+.map-mat__fill { fill: var(--mat-fill); }
+.map-mat__dot { fill: var(--mat-mark); fill-opacity: .8; }
+.map-mat__line { fill: none; stroke: var(--mat-mark); stroke-opacity: .8; stroke-width: .4; }
+
+.map-piece rect, .map-piece ellipse { stroke: var(--punk-black); stroke-width: .8; }
+.map-piece--flat rect, .map-piece--flat ellipse { fill-opacity: .85; stroke-dasharray: 1.5 1; }
 .map-piece text {
     font-family: var(--punk-font-display);
     text-anchor: middle; dominant-baseline: central;
+    fill: var(--punk-text);
+    stroke: var(--punk-black); stroke-width: .7; stroke-linejoin: round; paint-order: stroke;
     pointer-events: none;
 }
-.map-piece--block rect, .map-piece--block ellipse, .map-piece--block circle { fill: var(--punk-ink); stroke: #000; }
-.map-piece--block text { fill: var(--punk-accent); }
-.map-piece--cover rect, .map-piece--cover ellipse, .map-piece--cover circle { fill: var(--punk-steel); stroke: var(--punk-ink); }
-.map-piece--cover text { fill: #fff; }
-.map-piece--hazard rect, .map-piece--hazard ellipse, .map-piece--hazard circle { fill: var(--punk-toxic); fill-opacity: .75; stroke: var(--punk-ink); stroke-dasharray: 1.5 1; }
-.map-piece--hazard text { fill: var(--punk-ink); }
+.map-piece .map-piece__mark { fill: var(--punk-accent); }
 
 /* Balanza entre bandos */
 .map-balance { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0; }
@@ -56,13 +63,32 @@
 .map-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
 .map-legend li { display: flex; align-items: center; gap: 8px; }
 .map-legend strong { font-family: var(--punk-font-display); color: var(--punk-accent); min-width: 2ch; }
-.map-legend__swatch { width: 22px; height: 22px; flex: none; }
+.map-legend__grade { display: block; color: var(--punk-text-muted); font-size: .8rem; }
+.map-legend__mark { margin-left: auto; font-size: .8rem; color: var(--punk-accent); }
+.material-swatch { width: 26px; height: 26px; flex: none; }
+.material-swatch__shape { stroke: var(--punk-black); stroke-width: .8; }
+
+/* Botones de mesa y despliegue */
+.map-option { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; text-align: left; }
+.map-option small { font-family: var(--punk-font-body); font-size: .75rem; text-transform: none; letter-spacing: 0; color: var(--punk-text-muted); }
+.map-option.is-selected small { color: var(--punk-text); }
+.map-option__head { display: flex; align-items: center; gap: 8px; }
+.map-option__icon { width: 22px; height: 22px; flex: none; }
+.map-option__icon rect { fill: var(--punk-accent); stroke: var(--punk-black); stroke-width: 1; }
+.map-option__icon .map-option__zone { fill: var(--punk-ink); stroke: none; }
 
 /* Selector de terreno */
 .terrain-picker { display: flex; flex-direction: column; gap: 4px; }
 .terrain-row { padding: 8px 0; border-bottom: 2px dashed rgba(29, 23, 18, .3); }
 .terrain-row__info { margin: 4px 0 0; font-size: .85rem; color: var(--punk-ink-muted); max-width: 52ch; }
+.terrain-row__material { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.terrain-row__select { flex: 0 1 200px; min-width: 0; padding-top: 6px; padding-bottom: 6px; }
+.terrain-row__grade { font-size: .8rem; font-weight: 600; color: var(--punk-ink); white-space: nowrap; }
 .terrain-picker__total { margin: 8px 0 0; font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1.2px; color: var(--punk-ink); }
+.terrain-picker__rule { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .9rem; color: var(--punk-ink); }
+.terrain-picker__size { font-weight: 600; color: var(--punk-blood); }
+.terrain-picker__size.is-ok { color: var(--punk-ink); }
+.terrain-picker__size small { font-weight: 400; color: var(--punk-ink-muted); }
 .map-seed-form { display: flex; gap: 8px; }
 .map-seed-form .field__input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: .15em; font-family: var(--punk-font-display); }
 

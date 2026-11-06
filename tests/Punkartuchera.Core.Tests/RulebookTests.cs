@@ -303,7 +303,7 @@ public class RosterBuilderTests
         Assert.Equal("chatarreros", scavengers.Parent?.Id);
         Assert.StartsWith("Usa Pistones", scavengers.TroopLine);
         Assert.DoesNotContain(scavengers.Restrictions, r => r.StartsWith("Usa "));
-        Assert.Equal(["Vigía", "Señor Lao"], scavengers.OwnTroops.Select(t => t.Name));
+        Assert.Equal(["Sonda", "Vigía", "Señor Lao"], scavengers.OwnTroops.Select(t => t.Name));
         Assert.DoesNotContain(scavengers.Troops, t => t.Name == "Dinamo");
         Assert.Equal("reglas/faccion/chatarreros/subfaccion/carroneros", scavengers.RulesHref);
     }

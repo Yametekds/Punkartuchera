@@ -1,11 +1,11 @@
 [
   {
     "id": "slashers",
+    "baseTroops": ["Despojo", "Cosechador", "Glotón"],
     "sharedWeapons": ["Motosierra"],
     "name": "Slashers",
     "summary": "Idos a los que la Ambrosía ha convertido en asesinos de peli de terror: grandes, silenciosos, lentos… y siempre llegan.",
     "playstyle": "Idos lentos e implacables: los Psycho-killers apenas corren pero siempre llegan, y cada enemigo que Abate un miembro de la banda le da opciones de volver a levantarse con No estaba muerto. Pueden usar motosierras y tienen personajes de peli de miedo como la Familia de la Cabaña.",
-    "baseTroops": ["Cosechador", "Glotón", "Despojo"],
     "restrictions": [
       "Usa Cosechadores, Glotones y Despojos de los Idos. Sin Desgarradores ni Aberraciones.",
       "Puede usar las tropas propias de la subfacción.",
@@ -80,10 +80,10 @@
   },
   {
     "id": "hermandad-de-la-bestia",
+    "baseTroops": ["Aberración", "Desgarrador", "Cosechador", "Glotón"],
     "name": "Hermandad de la Bestia",
     "summary": "Aberraciones que han conservado una mente fría y adoran al Caos Reptante en búnkeres a oscuras. Madre los tolera… por ahora.",
     "playstyle": "Monstruos con cabeza fría: Desgarradores, Cosechadores y Glotones ganan Locura y pierden el Blindaje por los mismos puntos, las Aberraciones dejan de ser Mónguer y las Abominaciones tentaculares sustituyen a los Despojos.",
-    "baseTroops": ["Aberración", "Desgarrador", "Cosechador", "Glotón"],
     "restrictions": [
       "Usa Aberraciones, Desgarradores, Cosechadores y Glotones de los Idos. Sin Despojos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -97,13 +97,61 @@
     ],
     "troops": [
       {
+        "name": "Desgarrador",
+        "replaces": "Desgarrador",
+        "cost": 40,
+        "page": 7,
+        "stats": { "a": "2", "c": "5", "p": "-", "ag": "4", "f": "4", "d": "4", "t": "1" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Furia psicópata", "text": "Avanza hacia el enemigo al que llegue antes, lo vea o no." },
+          { "name": "Mal viaje", "text": "Asalta a cualquier miniatura a distancia de Asalto, sea amiga o enemiga." }
+        ]
+      },
+      {
+        "name": "Cosechador",
+        "replaces": "Cosechador",
+        "cost": 40,
+        "page": 7,
+        "stats": { "a": "3", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Cosecha", "text": "1 Acción sobre un enemigo Abatido (una vez por cadáver) para sacar dosis de Ambrosía para la banda.", "table": { "columns": ["1d10", "Dosis"], "rows": [["1", "Ninguna"], ["2-5", "1"], ["6-9", "2"], ["10", "3"]] } },
+          { "name": "Mal viaje", "text": "No puede cosechar." }
+        ]
+      },
+      {
+        "name": "Glotón",
+        "replaces": "Glotón",
+        "cost": 45,
+        "page": 7,
+        "stats": { "a": "2", "c": "2", "p": "3", "ag": "4", "f": "4", "d": "5", "t": "3" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Criaturas de pesadilla", "text": "Ya no son del todo humanos: tienen Locura, como las Aberraciones, y no llevan Blindaje (ni el de su perfil). Cuestan lo mismo." },
+          { "name": "Locura", "text": "Quien la Asalte pierde todos los bonificadores del Asalto." },
+          { "name": "Devorador", "text": "1 Acción sobre un Abatido en contacto (amigo o enemigo, una vez por cadáver): +1 a Combate, Fuerza y Dureza. Se retira el marcador." },
+          { "name": "Mal viaje", "text": "Va hacia el Abatido sin devorar más cercano y se lo come si llega. Si ya estaba junto a uno devorado, no se mueve." }
+        ]
+      },
+      {
         "name": "Abominación", "cost": 50, "page": 10,
         "stats": { "a": "2", "c": "4", "p": "-", "ag": "3", "f": "6", "d": "5", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Ninguno",
         "specialRules": ["Bestia"],
         "rules": [
           { "name": "Monstruosidad tentacular", "text": "Quien la Asalte pierde los bonificadores de Asalto, y quien intente Separarse tiene -3 a su Agilidad." },
-          { "name": "No entra más", "text": "No puede usar Ambrosía." }
+          { "name": "No entra más", "text": "No puede usar Ambrosía.", "bans": ["Ambrosía"] }
         ]
       },
       {
@@ -125,10 +173,10 @@
   },
   {
     "id": "devoradores",
+    "baseTroops": ["Despojo", "Aberración", "Desgarrador", "Glotón"],
     "name": "Devoradores",
     "summary": "Idos que han cambiado la Ambrosía por el canibalismo. Les potencia, pero les deja aún más tarados, con tics y sin coordinación.",
     "playstyle": "Caníbales en lugar de drogadictos: no usan Ambrosía y casi toda la banda puede devorar a los caídos, con una tirada que puede salir mal. Los Necrófagos van en grupos baratos ligados a los Glotones y los Despojos se pueden devorar en vida.",
-    "baseTroops": ["Glotón", "Aberración", "Despojo", "Desgarrador"],
     "restrictions": [
       "Usa Glotones, Aberraciones, Despojos y Desgarradores de los Idos. Sin Cosechadores.",
       "Puede usar las tropas propias de la subfacción.",

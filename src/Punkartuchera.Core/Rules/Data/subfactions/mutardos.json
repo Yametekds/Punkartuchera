@@ -1,10 +1,10 @@
 [
   {
     "id": "amanecer-mutante",
+    "baseTroops": ["Mutante", "Perromorfo", "Bestia del pozo", "Cabezón"],
     "name": "Amanecer Mutante",
     "summary": "El culto de Kim en los Gemelos: los Mutardos como siguiente paso de la evolución y los humanos como estorbo. Cabezones con el cerebro frito y una guardia pretoriana fanática.",
     "playstyle": "Mutardos de élite: sin Pochos, con Pretorianos fanáticos y Cabezones que solo tienen un poder pero cuestan 60 puntos. Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros, pagando el doble las que normalmente no tendrían.",
-    "baseTroops": ["Bestia del pozo", "Cabezón", "Mutante", "Perromorfo"],
     "restrictions": [
       "Usa Bestias del Pozo, Cabezones (ver Control), Mutantes (ver Tomamos lo que queremos) y Perromorfos. Sin Pochos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -16,6 +16,19 @@
       { "name": "Tomamos lo que queremos", "text": "Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros. Las que normalmente no tendrían cuestan el doble y ganan Escasa." }
     ],
     "troops": [
+      {
+        "name": "Cabezón",
+        "replaces": "Cabezón",
+        "cost": 60,
+        "page": 1,
+        "stats": { "a": "3", "c": "1", "p": "3", "ag": "3", "f": "2", "d": "2", "t": "4" },
+        "weaponRule": "Puede llevar una",
+        "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
+        "armor": "Ninguno",
+        "rules": [
+          { "name": "Control", "text": "Solo tiene uno de los Poderes psíquicos de la facción, elegido al crear la banda." }
+        ]
+      },
       {
         "name": "Pretoriano", "cost": 45, "page": 2,
         "stats": { "a": "2", "c": "5", "p": "4", "ag": "4", "f": "5", "d": "4", "t": "2" },
@@ -52,10 +65,10 @@
   },
   {
     "id": "fuerza-m",
+    "baseTroops": ["Mutante", "Bestia del pozo", "Cabezón"],
     "name": "Fuerza M",
     "summary": "Supergrupo mutardo del misterioso Cabezón X: mallas chillonas, nombres molones y ganas de dar caña por los desvalidos del Páramo.",
     "playstyle": "Supergrupo de Mutantes: cada uno puede llevar un Sidekick que cae en su lugar una vez, y se potencian entre ellos con Súper equipo cuando están a 5 cm. Sin Pochos ni Perromorfos.",
-    "baseTroops": ["Bestia del pozo", "Cabezón", "Mutante"],
     "restrictions": [
       "Usa Bestias del Pozo, Cabezones y Mutantes. Sin Pochos ni Perromorfos.",
       "Un Sidekick por Mutante; ese Mutante cuenta como 2 para el límite de miniaturas.",
@@ -96,10 +109,10 @@
   },
   {
     "id": "macumba",
+    "baseTroops": ["Pocho", "Mutante", "Cabezón", "Magmador"],
     "name": "Macumba",
     "summary": "El culto vudú de Mamá Guedé en los pantanos al este de Torresbrillantes: Pochos que vuelven a caminar, caimanes de guerra y odio a los craabianos.",
     "playstyle": "Vudú de pantano: los Cabezones cambian Desarme y Choque mental por Empochizar y Muñeco vudú, los Perromorfos pasan a ser Caimanomorfos y los Espíritus del pantano y Mamá Guedé traen sus propios poderes. Sin Bestias del pozo.",
-    "baseTroops": ["Cabezón", "Mutante", "Pocho", "Magmador", "Kim y Fostiador"],
     "restrictions": [
       "Usa Cabezones (con los Poderes de Macumba), Mutantes y Pochos. Sin Bestias del Pozo; los Perromorfos pasan a ser Caimanomorfos.",
       "Puede usar las tropas propias de la subfacción.",

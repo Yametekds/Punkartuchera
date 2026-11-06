@@ -1,10 +1,11 @@
 [
   {
     "id": "division-cientifica",
+    "baseTroops": ["Subhumano", "Übersoldat", "Mariscal"],
     "name": "División Científica",
     "summary": "Los laboratorios del V Reich que intentan crear al humano perfecto. Casi todo sale mal, pero los engendros también sirven de carne de cañón.",
     "playstyle": "Experimentos de laboratorio: Engendros, Subhumanos científicos con Modificaciones y Tierdoktors que los azuzan, con Übersoldats y un Mariscal al mando. Sin Soldats ni Sanitarios, y Engendros y Subhumanos no compran equipo genérico.",
-    "baseTroops": ["Mariscal", "Subhumano", "Übersoldat"],
+    "noGenericGear": ["Engendro", "Subhumano científico"],
     "restrictions": [
       "Usa Mariscales, Subhumanos (ver Modificaciones) y Übersoldats. Sin Soldats ni Sanitarios.",
       "Puede usar las tropas propias de la subfacción.",
@@ -19,10 +20,10 @@
         "stats": { "a": "2", "c": "4", "p": "-", "ag": "2", "f": "8", "d": "6", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Armadura metálica",
         "specialRules": ["Mónguer"],
-        "rules": [{ "name": "Desmadrado", "text": "Si al empezar su activación no está a 15 cm de un Tierdoktor, tiene que Asaltar (o atacar si ya está en contacto) a cualquier miniatura, amiga o enemiga, que pueda. No puede usar Walkie-talkie." }]
+        "rules": [{ "name": "Desmadrado", "text": "Si al empezar su activación no está a 15 cm de un Tierdoktor, tiene que Asaltar (o atacar si ya está en contacto) a cualquier miniatura, amiga o enemiga, que pueda. No puede usar Walkie-talkie.", "bans": ["Walkie-talkie"] }]
       },
       {
-        "name": "Subhumano científico", "cost": 10, "page": 3,
+        "name": "Subhumano científico", "replaces": "Subhumano", "cost": 10, "page": 3,
         "stats": { "a": "2", "c": "2", "p": "-", "ag": "2", "f": "2", "d": "2", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Ninguno (ver modificaciones)",
         "equipmentOptions": [{ "name": "Chapa soldada", "cost": 10 }, { "name": "Explosivos", "cost": 12 }, { "name": "Mandíbula cepo", "cost": 8 }, { "name": "Manostijeras", "cost": 10 }, { "name": "Zancos", "cost": 8 }],
@@ -63,10 +64,10 @@
   },
   {
     "id": "fuerte-thule",
+    "baseTroops": ["Sanitario", "Soldat", "Übersoldat", "Mariscal"],
     "name": "Fuerte Thule",
     "summary": "La nueva base del V Reich en el sur, al mando de la joven Eva: tiran de reclutas locales sin foguear que se acojonan cuando cae alguien.",
     "playstyle": "Reclutas baratos e inexpertos para llenar filas, con Soldats, Sanitarios y un Mariscal de núcleo y Eva y UNO como personalidad. Los Übersoldats pierden el filo medio pero pueden llevar escudo. Sin Subhumanos.",
-    "baseTroops": ["Mariscal", "Sanitario", "Soldat", "Übersoldat"],
     "restrictions": [
       "Usa Mariscales, Sanitarios y Soldats. Los Übersoldats no tienen filo medio pero pueden llevar escudo por 6 puntos. Sin Subhumanos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -76,6 +77,21 @@
       "Máximo un Gato parameño."
     ],
     "troops": [
+      {
+        "name": "Übersoldat",
+        "replaces": "Übersoldat",
+        "cost": 50,
+        "page": 7,
+        "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "6", "d": "5", "t": "2" },
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Rifle automático", "cost": 10 }],
+        "armor": "Cuero endurecido",
+        "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
+        "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }, { "name": "Escudo", "cost": 6 }],
+        "rules": [
+          { "name": "Übersoldats de Thule", "text": "No pueden llevar filo medio; a cambio pueden equiparse con escudo por 6 puntos." }
+        ]
+      },
       {
         "name": "Recluta", "cost": 18, "page": 8,
         "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
@@ -104,10 +120,10 @@
   },
   {
     "id": "organizacion-kraken",
+    "baseTroops": ["Subhumano", "Sanitario", "Soldat", "Mariscal"],
     "name": "Organización Kraken",
     "summary": "La sección marginal del V Reich que sigue a Casco Rojo, convencida de que una amenaza submarina viene a por la humanidad. Tecnología de Xerum 515 y la Campana.",
     "playstyle": "Tecnología rara del V Reich: Ingenieros baratos, Gólems y el equipo de Xerum 515, con Casco Rojo al mando. Sin Übersoldats.",
-    "baseTroops": ["Mariscal", "Sanitario", "Soldat", "Subhumano"],
     "restrictions": [
       "Usa Mariscales, Sanitarios, Soldats y Subhumanos. Sin Übersoldats.",
       "Puede usar las tropas propias de la subfacción.",
