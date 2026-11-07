@@ -27,6 +27,8 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 dotnet run --project src/Punkartuchera.Web
 ```
 
+Se abre en http://localhost:5080 (con el perfil `https`, también en https://localhost:5081). Son los mismos puertos que admite el relé de partidas en línea en local.
+
 Tests:
 
 ```bash
