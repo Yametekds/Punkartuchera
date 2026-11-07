@@ -11,6 +11,11 @@
     "No puede haber más Despojos que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "PerPoints", "troops": ["Cosechador", "Madre", "La Familia de la Cabaña"], "points": 200, "text": "Un Cosechador por cada fracción de 200 puntos (Madre cuenta como Cosechador)."},
+    {"kind": "NotMoreThanRest", "troops": ["Despojo"], "text": "No puede haber más Despojos que el resto de la banda junta."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos las Aberraciones.", "excludeTroops": ["Aberración"] }],
   "rules": [
     { "name": "Ambrosía", "text": "La banda empieza con 1 dosis por cada fracción de 100 puntos. Antes de activar una miniatura puedes darle UNA dosis y elegir un efecto para esa Fase de activación:\n• +10 cm al Movimiento en un Asalto.\n• +2 a Fuerza.\n• +2 a Dureza.\n• +2 a Técnica.\n• Todoterreno.\n• Ignorar Furia psicópata.\nTira 1d10 (-1 por cada dosis que ya hubiera tomado) en la tabla.",

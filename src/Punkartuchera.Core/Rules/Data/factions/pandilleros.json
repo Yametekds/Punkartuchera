@@ -11,6 +11,11 @@
     "No puede haber más Piltrafas que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "Max", "troops": ["Jefe", "Lord Homoeroticus"], "max": 1, "text": "Máximo un Jefe (Lord Homoeroticus cuenta como Jefe)."},
+    {"kind": "NotMoreThanRest", "troops": ["Piltrafa"], "text": "No puede haber más Piltrafas que el resto de la banda junta."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "troops": [
     {

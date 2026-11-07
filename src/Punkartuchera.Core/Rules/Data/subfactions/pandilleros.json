@@ -13,6 +13,11 @@
       "Máximo una Personalidad de los Flipaos o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Ladder", "troops": ["Piltrafa", "Machaca", "Curtido", "Jefe"], "text": "Más Ninjas negros que rojos, más rojos que morados y más morados que blancos."},
+      {"kind": "Max", "troops": ["Jefe"], "max": 1, "text": "Máximo un Ninja blanco."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "rules": [
       { "name": "Colorinchis", "text": "Todos llevan Ropas resistentes y no pueden comprar otro Blindaje. No están obligados a llevar arma y no pueden llevar Arma de fuego ni ballestas. Armas renombradas: shuriken (cuchillos arrojadizos), tonfa (maza ligera), sai (filo pequeño), nunchakus (maza), katana (filo medio) y yumi (arco).", "bans": ["Blindaje", "Arma de fuego", "Ballesta"], "weaponOptional": true,
         "table": { "columns": ["Color", "Tropa", "Reglas extra"], "rows": [
@@ -57,6 +62,11 @@
       "Máximo un Jefe.",
       "No más Piltrafas que el resto de la banda junta.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "Max", "troops": ["Jefe"], "max": 1, "text": "Máximo una Jefa."},
+      {"kind": "NotMoreThanRest", "troops": ["Piltrafa"], "text": "No puede haber más Piltrafas que el resto de la banda junta."}
     ],
     "rules": [
       { "name": "Hasta el coño me tenéis", "text": "Cada Frau Abatida da un marcador a la banda. Al empezar su Fase de activación, una Frau puede gastar hasta 3: +5 cm por marcador a su última Acción de Movimiento al Asaltar." },
@@ -106,6 +116,10 @@
       "Máximo una Personalidad o Mercenario.",
       "No más Piltrafas ni Mamporreros que el resto de la banda junta.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "NotMoreThanRest", "troops": ["Piltrafa", "Mamporrero"], "text": "No más Piltrafas ni Mamporreros que el resto de la banda junta."}
     ],
     "rules": [
       { "name": "Nos mola el cuero", "text": "Piltrafas, Machacas y Curtidos llevan cuero endurecido gratis en vez de ropas resistentes. Nadie puede llevar otro Blindaje." },

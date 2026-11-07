@@ -5,7 +5,7 @@
     "name": "Carroñeros",
     "summary": "Chatarreros nómadas que reniegan de Samanthia y de los cachivaches: rebuscan en las ruinas del Mundo de Antaño con vigías, trampas y Sondas muy apañados.",
     "playstyle": "Juego de trampas y emboscadas: los Vigías colocan barricadas y trampas antes de empezar y las Sondas eligen dos habilidades propias en vez de su Infiltración y Raudo de serie. Pierden los Dinamos y los cachivaches más vistosos (puño balístico, bombeadora, balas apañadas).",
-    "bannedGear": [{ "names": ["Puño balístico", "Bombeadora"] }],
+    "bannedGear": [{ "names": ["Puño balístico", "Bombeadora", "Bala apañada"] }],
     "restrictions": [
       "Usa Pistones, Engranajes y Sondas de los Chatarreros. Sin Dinamos.",
       "Puede usar las tropas propias de la subfacción.",
@@ -13,6 +13,10 @@
       "Un Vigía por cada fracción de 150 puntos.",
       "Sin puño balístico, bombeadora ni balas apañadas.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "PerPoints", "troops": ["Vigía"], "points": 150, "text": "Un Vigía por cada fracción de 150 puntos."}
     ],
     "rules": [
       { "name": "Sondas carroñeros", "text": "Sus Sondas no tienen Infiltración ni Raudo de base. Cada uno puede comprar DOS habilidades de la lista; ninguna se repite en la banda salvo Infiltrador y Velocista." }
@@ -88,6 +92,9 @@
       "Su equipo solo lo pueden usar los Innovadores.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "troops": [
       {
         "name": "Ingenio", "cost": 70, "page": 7,
@@ -133,6 +140,10 @@
       "Máximo un Mercenario o una Personalidad de los Pioneros.",
       "Su equipo solo lo pueden usar los Pioneros.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "NotMoreThanRest", "troops": ["Dinamo"], "text": "No puede haber más Dinamos que el resto de la banda junta."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
     ],
     "rules": [
       { "name": "Tabla de fallos coheteros", "text": "Si falla la tirada de un aparato cohete, tira 1d10:",

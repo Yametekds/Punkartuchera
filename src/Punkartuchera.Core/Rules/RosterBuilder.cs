@@ -50,7 +50,16 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             choices.AddRange(fromParent.Where(t => t.Personality).Select(t => new TroopChoice(faction, t)));
         }
 
-        if (subfaction is not { NoMercenaries: true })
+        foreach (var guest in faction?.GuestTroops ?? [])
+        {
+            var host = book.Factions.FirstOrDefault(f => f != faction && !f.IsMercenaries && f.Troops.Any(t => t.Name == guest));
+            if (host?.Troops.First(t => t.Name == guest) is { } troop)
+            {
+                choices.Add(new TroopChoice(host, troop, null, $"De {host.Name}"));
+            }
+        }
+
+        if (faction is not { NoMercenaries: true } && subfaction is not { NoMercenaries: true })
         {
             foreach (var mercenaries in book.Factions.Where(f => f.IsMercenaries))
             {

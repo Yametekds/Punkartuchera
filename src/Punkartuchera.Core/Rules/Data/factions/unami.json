@@ -12,6 +12,11 @@
     "No puede haber más Truenos que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad de los Unami o Mercenario."},
+    {"kind": "PerPoints", "troops": ["Chamán"], "points": 200, "text": "Un Chamán por cada fracción de 200 puntos."},
+    {"kind": "NotMoreThanRest", "troops": ["Trueno"], "text": "No puede haber más Truenos que el resto de la banda junta."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "rules": [
     { "name": "Una mente", "text": "Cada miniatura no Abatida aporta 2 Puntos de Mojo (PdM) a una reserva común al empezar el Turno. No tienen Atributo de Acciones: en su Fase de activación cada miniatura convierte PdM en Acciones (máximo 3, seguidas). Los Espíritus del Chamán y los Dones ya incluyen el PdM de su Acción. Cuando se acaba la reserva, las que no hayan actuado ya no actúan." },

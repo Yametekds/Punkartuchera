@@ -13,6 +13,11 @@
       "Máximo una Personalidad de los Cambiapieles o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "PerPoints", "troops": ["Yee naaldlooshii"], "points": 200, "text": "Un Yee naaldlooshii por cada fracción de 200 puntos."},
+      {"kind": "NotMoreThanRest", "troops": ["Trueno"], "text": "No puede haber más Truenos que el resto de la banda junta."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "troops": [
       {
@@ -55,6 +60,10 @@
       "Máximo una Personalidad de los Descastados o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "NotMoreThanRest", "troops": ["Trueno"], "text": "No puede haber más Truenos que el resto de la banda junta."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [
       { "name": "Muchas mentes", "text": "Sin Hierbas alucinógenas ni Una mente: cada miniatura tiene 2 Acciones fijas. Cada Descastado (salvo Renegados) aporta 1 PdM a la banda, que sirve para un Don de Majauchsuwi a su coste o para dar 1 Acción extra. Los PdM gastados no se recuperan." }
@@ -89,6 +98,11 @@
       "Un Croupier por cada fracción de 200 puntos.",
       "Máximo una Personalidad de los Apostadores o Mercenario.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "NotMoreThanRest", "troops": ["Trueno"], "text": "No puede haber más Truenos que el resto de la banda junta."},
+      {"kind": "PerPoints", "troops": ["Croupier"], "points": 200, "text": "Un Croupier por cada fracción de 200 puntos."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
     ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [

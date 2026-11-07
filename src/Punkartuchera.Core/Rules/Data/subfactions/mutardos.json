@@ -11,6 +11,9 @@
       "Máximo una Personalidad de Amanecer Mutante o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "rules": [
       { "name": "Control", "text": "Los Cabezones solo tienen uno de sus Poderes psíquicos, elegido al crear la banda. A cambio cuestan 60 puntos." },
       { "name": "Tomamos lo que queremos", "text": "Los Mutantes pueden comprar las armas de un Machaca de los Pandilleros. Las que normalmente no tendrían cuestan el doble y ganan Escasa." }
@@ -76,6 +79,9 @@
       "Máximo una Personalidad de Fuerza M o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "rules": [
       { "name": "Para que no me disparen", "text": "Cada Mutante puede llevar un Sidekick que cuesta la mitad del Mutante equipado (redondeando arriba). No hace falta miniatura. Cuando el Mutante fuera a caer, cae el Sidekick en su lugar (una vez)." },
       { "name": "Súper equipo", "text": "Al empezar su Fase de activación, tira por cada otro miembro de la banda a 5 cm (los efectos se apilan):",
@@ -119,6 +125,10 @@
       "Máximo una Personalidad o Mercenario.",
       "Máximo dos grupos de Pochos por Cabezón.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "PerTroop", "troops": ["Pocho"], "than": ["Cabezón"], "max": 10, "text": "Máximo dos grupos de Pochos (de 2 a 5) por cada Cabezón."}
     ],
     "rules": [
       { "name": "Poderes de Macumba", "text": "Los Cabezones no tienen Desarme ni Choque mental; tienen Empochizar y Muñeco vudú." }

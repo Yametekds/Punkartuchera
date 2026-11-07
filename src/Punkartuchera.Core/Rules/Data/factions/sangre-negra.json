@@ -10,6 +10,10 @@
     "Máximo un Guardián de la Llama.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "Max", "troops": ["Guardián de la Llama", "Cunnilingus Igni"], "max": 1, "text": "Máximo un Guardián de la Llama (Cunnilingus cuenta como tal)."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "rules": [
     { "name": "Mirada llameante", "text": "Algunas tropas mejoran cuando están en la Línea de visión de su Guardián de la Llama. Cada una lo explica en su regla Bajo la mirada llameante." }
