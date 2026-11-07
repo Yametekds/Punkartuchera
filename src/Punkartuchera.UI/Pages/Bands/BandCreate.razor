@@ -3,6 +3,7 @@
 @inject IRulesCatalog Rules
 @inject Rulebook Book
 @inject RosterBuilder Roster
+@inject StampNotifier Stamps
 @inject NavigationManager Navigation
 
 <PageTitle>Nueva banda · Punkartuchera</PageTitle>
@@ -151,6 +152,7 @@
             var list = Book.FindList(_listId);
             var members = list is null ? [] : Roster.FromList(list);
             var band = await Bands.CreateAsync(_name, _factionId ?? string.Empty, _subfactionId, members);
+            Stamps.Stamp("¡Banda montada!");
             Navigation.NavigateTo($"bandas/{band.Id}", replace: true);
         }
         catch (BandValidationException ex)

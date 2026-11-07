@@ -37,12 +37,12 @@
         </g>
     }
 
-    @foreach (var piece in Layout.Pieces)
+    @foreach (var (piece, order) in Layout.Pieces.Select((p, i) => (p, i)))
     {
         var fill = MapPatterns.Fill("map", piece.Material);
         var showMark = piece.Mark.Length > 0 && Math.Min(piece.Width, piece.Depth) >= 9;
         var size = LabelSize(piece);
-        <g class="map-piece @(piece.Type.Size == 0 ? "map-piece--flat" : null)">
+        <g class="map-piece @(piece.Type.Size == 0 ? "map-piece--flat" : null)" style="--i: @order">
             <title>@piece.Type.Name: @piece.Material.Name, @CoverText(piece) (@piece.Width × @piece.Depth cm)</title>
             @if (piece.Type.Shape == TerrainShape.Circle)
             {

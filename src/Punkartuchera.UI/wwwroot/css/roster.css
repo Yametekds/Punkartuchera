@@ -101,7 +101,7 @@
     content: ""; position: absolute; left: -4px; right: -4px; bottom: -2px; height: 5px;
     background: #8a6524; border: 2px solid var(--punk-black); border-radius: 2px;
 }
-.datacard__stats .statbox--ammo dt { color: var(--punk-ink); font-size: clamp(.5rem, 2vw, .62rem); }
+.datacard__stats .statbox--ammo dt { color: var(--punk-ink); font-size: clamp(.5rem, 2cqi, .62rem); }
 .datacard__stats .statbox--ammo dd { color: var(--punk-ink); text-shadow: 0 1px 0 rgba(255, 255, 255, .35); }
 
 .ammo-stepper .stepper__value {
