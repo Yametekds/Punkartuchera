@@ -15,10 +15,10 @@
         <nav class="topnav" aria-label="Secciones">
             @foreach (var item in AppNavigation.Items.Where(i => i.Available))
             {
-                <NavLink class="topnav__item" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                <a class="topnav__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">
                     <Icon Path="@item.Icon" />
                     <span>@item.Label</span>
-                </NavLink>
+                </a>
             }
         </nav>
         <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
@@ -68,10 +68,10 @@
     <nav class="tabbar" aria-label="Accesos rápidos">
         @foreach (var item in AppNavigation.Items.Where(i => i.Available).Take(4))
         {
-            <NavLink class="tabbar__item" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+            <a class="tabbar__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">
                 <Icon Path="@item.Icon" />
                 <span>@item.Label</span>
-            </NavLink>
+            </a>
         }
     </nav>
 
@@ -85,11 +85,17 @@
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
-        if (_drawerOpen)
-        {
-            _drawerOpen = false;
-            StateHasChanged();
-        }
+        _drawerOpen = false;
+        StateHasChanged();
+    }
+
+    // "Bandas" sigue marcada dentro de una banda o una ficha (bandas/...), no solo en la portada.
+    private bool IsActive(AppNavigation.NavItem item)
+    {
+        var path = Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].TrimEnd('/');
+        return item.Href.Length == 0
+            ? path.Length == 0 || path == "bandas" || path.StartsWith("bandas/", StringComparison.Ordinal)
+            : path == item.Href || path.StartsWith(item.Href + "/", StringComparison.Ordinal);
     }
 
     public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
