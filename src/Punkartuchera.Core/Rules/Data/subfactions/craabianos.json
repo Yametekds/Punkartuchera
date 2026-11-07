@@ -14,6 +14,11 @@
       "Máximo una Personalidad de los Abisales.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Max", "troops": ["Capitán"], "max": 1, "text": "Máximo un Capitán."},
+      {"kind": "PerPoints", "troops": ["Custodio del Abismo"], "points": 200, "text": "Un Custodio del Abismo por cada fracción de 200 puntos."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad de los Abisales.", "mercenaries": false}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [
       { "name": "Pólvora mojada", "text": "Sus cañones de mano, pistolas de mecha y trabucos tienen ¡¡¡CATAPUM!!!." },
@@ -51,6 +56,12 @@
       "Máximo una Personalidad de los Mariscadores o Mercenario.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Max", "troops": ["Capitán"], "max": 1, "text": "Máximo un Capitán."},
+      {"kind": "PerPoints", "troops": ["Custodio del Abismo"], "points": 200, "text": "Un Custodio del Abismo por cada fracción de 200 puntos."},
+      {"kind": "NotMoreThanRest", "troops": ["Grumete"], "text": "No más Grumetes que el resto de la banda junta."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [
       { "name": "Pies en la roca", "text": "No tienen Sangre salada y toda la banda salvo los Grumetes tiene Todoterreno." },
@@ -85,6 +96,12 @@
       "No más Grumetes que el resto de la banda junta.",
       "Máximo una Personalidad de los Resacados o Mercenario.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Max", "troops": ["Capitán"], "max": 1, "text": "Máximo un Capitán."},
+      {"kind": "PerPoints", "troops": ["Barman"], "points": 200, "text": "Un Barman por cada fracción de 200 puntos."},
+      {"kind": "NotMoreThanRest", "troops": ["Grumete"], "text": "No más Grumetes que el resto de la banda junta."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
     ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [

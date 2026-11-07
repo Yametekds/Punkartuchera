@@ -14,6 +14,11 @@
       "No más Despojos que el resto de la banda junta.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "PerPoints", "troops": ["Cosechador", "Madre", "La Familia de la Cabaña"], "points": 200, "text": "Un Cosechador por cada fracción de 200 puntos (Madre cuenta como Cosechador)."},
+      {"kind": "NotMoreThanRest", "troops": ["Despojo"], "text": "No puede haber más Despojos que el resto de la banda junta."}
+    ],
     "rules": [
       { "name": "No estaba muerto", "text": "Cada enemigo que Abate un miembro de la banda le da un marcador de víctima. Si cae, tira 1d10 una vez por partida: si saca igual o menos que sus marcadores, vuelve al empezar el siguiente Turno donde cayó." }
     ],
@@ -90,6 +95,10 @@
       "Máximo una Personalidad de la Hermandad de la Bestia.",
       "Un Cosechador por cada fracción de 200 puntos.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad de la Hermandad de la Bestia.", "mercenaries": false},
+      {"kind": "PerPoints", "troops": ["Cosechador", "Madre", "La Familia de la Cabaña"], "points": 200, "text": "Un Cosechador por cada fracción de 200 puntos (Madre cuenta como Cosechador)."}
     ],
     "rules": [
       { "name": "Criaturas de pesadilla", "text": "Desgarradores, Cosechadores y Glotones tienen Locura y ningún Blindaje, por los mismos puntos." },
@@ -183,6 +192,10 @@
       "Máximo una Personalidad de los Devoradores.",
       "Un grupo de Necrófagos por cada Glotón.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad de los Devoradores.", "mercenaries": false},
+      {"kind": "PerTroop", "troops": ["Necrófago"], "than": ["Glotón"], "max": 5, "text": "Un grupo de Necrófagos (de 2 a 5) por cada Glotón."}
     ],
     "rules": [
       { "name": "Canibalismo", "text": "No usan Ambrosía. Aberraciones, Desgarradores y Necrófagos pueden devorar como los Glotones, pero tiran 1d10 (en Necrófagos, para todo el grupo):",

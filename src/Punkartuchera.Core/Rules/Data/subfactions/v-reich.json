@@ -14,6 +14,10 @@
       "Engendros y Subhumanos no pueden comprar equipo genérico.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "Max", "troops": ["Mariscal"], "max": 1, "text": "Máximo un Mariscal."}
+    ],
     "troops": [
       {
         "name": "Engendro", "cost": 50, "page": 2,
@@ -76,6 +80,11 @@
       "No más Reclutas que el resto de la banda.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "Max", "troops": ["Mariscal"], "max": 1, "text": "Máximo un Mariscal."},
+      {"kind": "NotMoreThanRest", "troops": ["Recluta"], "text": "No puede haber más Reclutas que el resto de la banda."}
+    ],
     "troops": [
       {
         "name": "Übersoldat",
@@ -130,6 +139,10 @@
       "Máximo una Personalidad de la Organización Kraken o Mercenario.",
       "Máximo un Mariscal.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "Max", "troops": ["Mariscal"], "max": 1, "text": "Máximo un Mariscal."}
     ],
     "troops": [
       {

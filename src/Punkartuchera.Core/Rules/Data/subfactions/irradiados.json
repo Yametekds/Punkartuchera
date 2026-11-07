@@ -14,6 +14,11 @@
       "No más Mártires que el resto de la banda junta.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Max", "troops": ["Cardenal Nuclear"], "max": 1, "text": "Máximo un Cardenal Nuclear."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "NotMoreThanRest", "troops": ["Mártir"], "text": "No puede haber más Mártires que el resto de la banda junta."}
+    ],
     "rules": [
       { "name": "Volveré", "text": "Antes de poner el marcador de Abatido de un Cardenal Nuclear o un Penitente, tira 1d10: con 9-10 era un Cyborg. No cae: pierde todo su equipo y pasa a tener el perfil 2 4 2 4 3 3 7, garras y dientes, Armadura metálica y Radioinmune." }
     ],
@@ -68,6 +73,11 @@
       "No más Mártires que el resto de la banda junta.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+      {"kind": "PerTroop", "troops": ["Escudero"], "than": ["Paladín"], "max": 2, "text": "Hasta dos Escuderos por cada Paladín."},
+      {"kind": "NotMoreThanRest", "troops": ["Mártir"], "text": "No puede haber más Mártires que el resto de la banda junta."}
+    ],
     "troops": [
       {
         "name": "Escudero", "cost": 10, "page": 5,
@@ -120,6 +130,10 @@
       "Máximo un Cardenal Nuclear.",
       "Máximo una Personalidad de la Rebelión Isotópica o Mercenario.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Max", "troops": ["Cardenal Nuclear"], "max": 1, "text": "Máximo un Cardenal Nuclear."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
     ],
     "rules": [
       { "name": "Fusión", "text": "Si al Disparar un arma o munición con esta regla sale 9 o 10 en la tirada de Impactar, falla y explota: impacto de F7 y Pen 5 a 5 cm, y deja 3 marcadores de Radiación desviados como los objetivos aleatorios. Se tira aunque el impacto sea automático." }

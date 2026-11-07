@@ -16,6 +16,11 @@
       "Cada Domador puede llevar hasta 2 fieras, que cuentan para el máximo de miniaturas.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Max", "troops": ["Jefe de pista"], "max": 1, "text": "Máximo un Jefe de pista."},
+      {"kind": "NotMoreThan", "troops": ["Domador", "Forzudo", "Acróbata"], "than": ["Bicho raro"], "text": "No puede haber más Domadores, Forzudos o Acróbatas que Bichos raros."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [
       { "name": "Rarezas", "text": "Cualquier tropa puede comprar hasta 15 puntos de Rarezas; los Bichos raros, entre 10 y 30." }
@@ -73,6 +78,11 @@
       "Cada Domador puede llevar hasta 2 fieras, que cuentan para el máximo de miniaturas.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Max", "troops": ["Jefe de pista"], "max": 1, "text": "Máximo un Jefe de pista."},
+      {"kind": "NotMoreThan", "troops": ["Domador", "Acróbata"], "than": ["Artista"], "text": "No puede haber más Domadores o Acróbatas que Artistas."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "troops": [
       {
@@ -124,6 +134,10 @@
       "Máximo un Jefe de pista.",
       "Máximo una Personalidad del Cirque du No-sé o Mercenario.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Max", "troops": ["Jefe de pista"], "max": 1, "text": "Máximo un Jefe de pista."},
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
     ],
     "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
     "rules": [
