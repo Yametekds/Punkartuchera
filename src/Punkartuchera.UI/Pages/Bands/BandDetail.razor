@@ -3,6 +3,7 @@
 @inject IRulesCatalog Rules
 @inject Rulebook Book
 @inject GearLookup Lookup
+@inject StampNotifier Stamps
 @inject NavigationManager Navigation
 
 <PageTitle>@(_band?.Name ?? "Banda") · Punkartuchera</PageTitle>
@@ -322,6 +323,7 @@ else
             await Bands.SaveAsync(_band);
             _allBands = await Bands.GetAllAsync();
             _editing = false;
+            Stamps.Stamp("¡Guardado!");
             _error = null;
         }
         catch (BandValidationException ex)
