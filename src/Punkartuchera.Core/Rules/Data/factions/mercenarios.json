@@ -69,7 +69,8 @@
       "rules": [
         { "name": "Escudo reforzado", "text": "+3 al Blindaje en vez de +2 y sin el -1 al Combate." },
         { "name": "Hammer time", "text": "Si cae en Combate, tiene Bersérker." },
-        { "name": "Odio a Casco Rojo", "text": "Si Abate a Casco Rojo del V Reich, +3 puntos de victoria." }
+        { "name": "Odio a Casco Rojo", "text": "Si Abate a Casco Rojo del V Reich, +3 puntos de victoria." },
+        { "name": "Capitán Fascio", "text": "Puede jugar con el V Reich; entonces se ha revelado como el Capitán Fascio, un traidor." }
       ]
     },
     {

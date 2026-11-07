@@ -22,6 +22,35 @@
             </button>
             break;
 
+        case AidKind.Pick:
+            @if (Aid.ChoiceFor(Value) is { } chosen)
+            {
+                <span class="chip aid__once aid__picked" aria-pressed="true">✓ @Aid.Name · @chosen.Label</span>
+                @if (Editable)
+                {
+                    <button type="button" class="gear-item__link aid__undo" aria-label="Deshacer @Aid.Name" @onclick="Undo">deshacer</button>
+                }
+            }
+            else
+            {
+                <button type="button" class="chip aid__once" aria-pressed="false" aria-expanded="@_picking" disabled="@(!Editable)"
+                        @onclick="() => _picking = !_picking">
+                    @Aid.Name
+                </button>
+                @if (_picking && Editable)
+                {
+                    <div class="aid__choices" role="group" aria-label="¿Qué Atributo repitió?">
+                        <span class="aid__ask">¿Qué Atributo repitió?</span>
+                        @for (var i = 0; i < Aid.Choices.Count; i++)
+                        {
+                            var value = i + 1;
+                            <button type="button" class="chip aid__choice" @onclick="() => Pick(value)">@Aid.Choices[i].Label</button>
+                        }
+                    </div>
+                }
+            }
+            break;
+
         default:
             <span class="aid__name">@Aid.Name</span>
             break;
@@ -65,6 +94,16 @@
     [Parameter] public EventCallback<int> OnChange { get; set; }
 
     [Parameter] public EventCallback<string> OnRule { get; set; }
+
+    private bool _picking;
+
+    private Task Pick(int value)
+    {
+        _picking = false;
+        return OnChange.InvokeAsync(value);
+    }
+
+    private Task Undo() => OnChange.InvokeAsync(0);
 
     // Si gasta de una reserva vacía, no puede subir.
     private int CounterMax => PoolLeft is <= 0 ? Value : Aid.Max;

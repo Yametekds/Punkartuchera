@@ -20,7 +20,7 @@
   ],
   "troops": [
     {
-      "name": "Grumete", "cost": 18,
+      "name": "Grumete", "cost": 18, "page": 6,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "4", "d": "3", "t": "3" },
       "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }],
@@ -28,7 +28,7 @@
       "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }]
     },
     {
-      "name": "Marinero", "cost": 30,
+      "name": "Marinero", "cost": 30, "page": 7,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "3" },
       "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo medio", "cost": 10 }],
@@ -37,7 +37,7 @@
       "equipmentOptions": [{ "name": "Aceite de ballenorca", "cost": 3 }]
     },
     {
-      "name": "Arponero", "cost": 40,
+      "name": "Arponero", "cost": 40, "page": 8,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "3", "f": "5", "d": "5", "t": "2" },
       "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
       "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Cañón de mano", "cost": 14 }],
@@ -46,7 +46,7 @@
       "equipmentOptions": [{ "name": "Aceite de ballenorca", "cost": 3 }]
     },
     {
-      "name": "Capitán", "cost": 60,
+      "name": "Capitán", "cost": 60, "page": 9,
       "stats": { "a": "3", "c": "5", "p": "5", "ag": "5", "f": "5", "d": "4", "t": "4" },
       "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
       "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Maza", "cost": 5 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
@@ -56,7 +56,7 @@
       "rules": [{ "name": "Reliquias", "text": "Puede llevar hasta 1 Reliquia abisal." }]
     },
     {
-      "name": "Custodio del Abismo", "cost": 60,
+      "name": "Custodio del Abismo", "cost": 60, "page": 10,
       "stats": { "a": "2", "c": "5", "p": "3", "ag": "3", "f": "4", "d": "4", "t": "5" },
       "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "name": "Bloody Mary", "cost": 100, "personality": true,
+      "name": "Bloody Mary", "cost": 100, "page": 11, "personality": true,
       "stats": { "a": "3", "c": "6", "p": "5", "ag": "6", "f": "5 (8)", "d": "4", "t": "5" },
       "weapons": "Colmillo de Leviatán (filo pesado que ignora Blindajes y no tiene Armatoste)", "armor": "Armadura quitinosa",
       "specialRules": ["Personalidad"],
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "name": "Davinnie Jones", "cost": 80, "personality": true,
+      "name": "Davinnie Jones", "cost": 80, "page": 12, "personality": true,
       "stats": { "a": "2", "c": "5", "p": "5", "ag": "4", "f": "5", "d": "4", "t": "3" },
       "weapons": "Fusil arponero (F4, Pen 5, 10/30/40, A dos manos, Lentorra (1)) y maza", "armor": "Armadura quitinosa",
       "specialRules": ["Personalidad"],
