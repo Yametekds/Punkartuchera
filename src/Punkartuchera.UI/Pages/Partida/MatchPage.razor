@@ -39,6 +39,45 @@
 }
 else if (Matches.Current is not { } match)
 {
+    @if (_saved.Count > 0)
+    {
+        <h2 class="section-title">Partidas a medias</h2>
+        <ul class="match-saved">
+            @foreach (var saved in _saved)
+            {
+                <li class="card match-saved__item">
+                    <div class="match-saved__info">
+                        <strong class="match-saved__title">@saved.OwnBandName <span>vs</span> @(saved.RivalBandName ?? "Rival")</strong>
+                        <span class="match-saved__meta">
+                            @(saved.Over ? "Acabada" : $"Ronda {saved.Round} de {ActiveMatch.MaxRound}") · @saved.OwnScore a @saved.RivalScore
+                            · @(saved.IsOnline ? "En línea" : "En este móvil")
+                        </span>
+                        <span class="match-saved__meta">
+                            @SavedWhen(saved.UpdatedAt)
+                            @if (saved.Map is { } map)
+                            {
+                                <text> · Mapa @map.Code</text>
+                            }
+                            @if (saved.Photos.Count > 0)
+                            {
+                                <text> · @saved.Photos.Count @(saved.Photos.Count == 1 ? "foto" : "fotos")</text>
+                            }
+                            @if (saved.Notes is not null)
+                            {
+                                <text> · con notas</text>
+                            }
+                        </span>
+                    </div>
+                    <div class="match-saved__actions">
+                        <button type="button" class="btn btn--blood" disabled="@_busy" @onclick="() => Resume(saved.Id)">Seguir</button>
+                        <ConfirmButton Text="Borrar" ConfirmText="Sí, borrar" OnConfirm="() => Delete(saved.Id)" />
+                    </div>
+                </li>
+            }
+        </ul>
+        <h2 class="section-title">Partida nueva</h2>
+    }
+
     @if (_bands.Count(b => !b.IsReadOnly) == 0)
     {
         <section class="punk-empty">
@@ -211,13 +250,19 @@ else
         <RuleSheet Info="_rule" Title="@_ruleTitle" OnClose="() => _rule = null" />
     }
 
+    <MatchRecord Match="match" />
+
     <div class="actions match-end">
-        <ConfirmButton Text="@(match.ClosedByRival ? "Cerrar" : "Terminar partida")" ConfirmText="Sí, terminar" OnConfirm="End" />
+        <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="Pause">
+            <Icon Path="@Icons.Back" /> Dejar para luego
+        </button>
+        <ConfirmButton Text="Terminar y borrar" ConfirmText="Sí, borrarla" OnConfirm="End" />
     </div>
 }
 
 @code {
     private IReadOnlyList<Band> _bands = [];
+    private IReadOnlyList<ActiveMatch> _saved = [];
     private Dictionary<Guid, Band> _bandsById = [];
     private bool _loading = true;
     private bool _busy;
@@ -252,6 +297,7 @@ else
         }
 
         await LoadBandsAsync();
+        await LoadSavedAsync();
         _ownId = _bands.FirstOrDefault(b => !b.IsReadOnly)?.Id;
         _loading = false;
     }
@@ -460,10 +506,51 @@ else
     private Task End() => RunAsync(async () =>
     {
         await Matches.EndAsync();
+        await AfterLeavingAsync();
+    });
+
+    private Task Pause() => RunAsync(async () =>
+    {
+        await Matches.PauseAsync();
+        await AfterLeavingAsync();
+    });
+
+    private Task Resume(Guid id) => RunAsync(async () =>
+    {
+        await Matches.ResumeAsync(id);
+        _tableChecked = false;
+    });
+
+    private Task Delete(Guid id) => RunAsync(async () =>
+    {
+        await Matches.DeleteAsync(id);
+        await LoadSavedAsync();
+    });
+
+    private async Task AfterLeavingAsync()
+    {
         _sheet = null;
         _code = null;
         _rivalId = null;
-    });
+        await LoadSavedAsync();
+        await LoadBandsAsync();
+    }
+
+    private async Task LoadSavedAsync() =>
+        _saved = (await Matches.GetSavedAsync()).Where(m => m.Id != Matches.Current?.Id).ToList();
+
+    private static string SavedWhen(DateTimeOffset at)
+    {
+        var local = at.ToLocalTime();
+        var days = (DateTimeOffset.Now.Date - local.Date).Days;
+        var time = local.ToString("HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+        return days switch
+        {
+            0 => $"Hoy a las {time}",
+            1 => $"Ayer a las {time}",
+            _ => $"El {local.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)}",
+        };
+    }
 
     private async Task RunAsync(Func<Task> action)
     {

@@ -24,7 +24,7 @@ Punkartuchera.Web  ──>  Punkartuchera.UI  ──>  Punkartuchera.Core  ─�
 | `ITerrainCatalog` | `DefaultTerrainCatalog` | Tipos de escenografía (huella en cm, tamaño 1-3, material por defecto), materiales con su grado de Cobertura y mesas del reglamento (90×90 y 120×120, despliegue de 15 y 30 cm). |
 | `IMatchService` | `MatchService` | Partida activa, en un móvil o en dos unidos por código. |
 | `IMatchRelay` | `SignalRMatchRelay` (UI), `DisabledMatchRelay` (sin relé configurado) | Cliente del relé en línea. |
-| `IActiveMatchStore` | `IndexedDbActiveMatchStore`, `InMemoryActiveMatchStore` | Guarda la partida activa para que sobreviva a recargar. |
+| `ISavedMatchStore` | `IndexedDbSavedMatchStore`, `InMemorySavedMatchStore` | Guarda las partidas a medias (con mapa, fotos de la mesa y notas) y cuál está en pantalla, para seguirlas otro día. |
 
 Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`.
 
@@ -58,13 +58,15 @@ En la interfaz:
 
 ### IndexedDB
 
-Base `punkartuchera`, versión 2, almacenes `bands`, `photos` y `matches` (la partida activa, clave `current`) con registros `{ key, value }` donde `value` es texto (JSON de la banda o data URL de la foto). Acceso en `wwwroot/js/punkDb.js` a través de `KeyValueDb`.
+Base `punkartuchera`, versión 2, almacenes `bands`, `photos` y `matches` (una entrada por partida guardada, con su Id como clave, y `current` con el Id de la que está en pantalla) con registros `{ key, value }` donde `value` es texto (JSON de la banda o data URL de la foto). Acceso en `wwwroot/js/punkDb.js` a través de `KeyValueDb`.
 
 Para añadir un almacén nuevo: añádelo a `STORES` y sube `DB_VERSION` en `punkDb.js`.
 
 ## Partidas
 
 `MatchService` lleva la ronda y, por miembro, si ya ha actuado y si es baja. Los miembros se copian al empezar (`ActiveMatch.Own` y `Rival`), así editar la banda durante la partida no descoloca nada.
+
+Puede haber varias partidas guardadas a la vez: empezar otra deja la de pantalla para luego, y la lista de `/partida` deja seguir o borrar cualquiera. Cada una guarda también el mapa en el que se juega (`MatchMap`: el código y la consulta del generador, que con el mismo código dan el mismo mapa), fotos de la mesa (en el almacén de fotos, reducidas a 1600 px como mucho) y notas. Eso último no se manda al rival.
 
 - **En un móvil**: las dos bandas están en el dispositivo y se marcan las dos.
 - **En línea**: uno crea la partida y el otro entra con el código. Cada móvil manda su banda en el formato del QR y solo marca a los suyos; el estado viaja por el relé (`Punkartuchera.Relay`, Azure Functions + Azure SignalR Service). La dirección del relé va en `wwwroot/appsettings.json` (`Relay:BaseUrl`); vacía, la app solo ofrece la partida en un móvil.

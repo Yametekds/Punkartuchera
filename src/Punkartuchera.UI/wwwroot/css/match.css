@@ -208,6 +208,70 @@
 .match-pool .stepper__btn, .match-member__aids .stepper__btn { color: var(--punk-accent); }
 .match-pool .gear-item__link { color: var(--punk-accent); }
 
+/* ---------- Partidas guardadas ---------- */
+
+.match-saved { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 10px; }
+.match-saved__item {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px;
+    padding: 12px 14px;
+}
+.match-saved__info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1 1 220px; }
+.match-saved__title { font-family: var(--punk-font-display); font-size: 1.15rem; font-weight: normal; overflow-wrap: anywhere; }
+.match-saved__title span { color: var(--punk-accent); font-size: .85rem; margin: 0 4px; }
+.match-saved__meta { font-size: .85rem; color: var(--punk-text-muted); }
+.match-saved__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+/* ---------- Mapa, fotos y notas de la partida ---------- */
+
+.match-record { margin-top: 26px; }
+.match-map {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    padding: 14px; margin-bottom: 18px;
+}
+.match-map__hint, .match-map__note { margin: 0; flex: 1 1 100%; }
+.match-map__note { font-size: .82rem; }
+.match-map__form { flex: 1 1 260px; }
+
+.match-photos { display: grid; gap: 12px; margin-bottom: 18px; }
+.match-photos p { margin: 0; }
+.match-photos__hint strong { color: var(--punk-blood); }
+.photo-picker__actions label.is-disabled { opacity: .5; cursor: not-allowed; }
+.match-photos__grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+}
+/* Cada foto, como una polaroid pegada en el papel */
+.match-photos__thumb {
+    display: flex; flex-direction: column; gap: 6px; width: 100%;
+    padding: 6px 6px 8px; border: 0; cursor: pointer;
+    background: #f4ede2; color: var(--punk-ink);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+    font: inherit; font-size: .78rem;
+}
+.match-photos__grid li:nth-child(odd) .match-photos__thumb { transform: rotate(-1.5deg); }
+.match-photos__grid li:nth-child(even) .match-photos__thumb { transform: rotate(1.2deg); }
+.match-photos__thumb img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--punk-black); display: block; }
+
+.match-notes { display: grid; gap: 6px; }
+.match-notes textarea { width: 100%; min-height: 120px; font-family: var(--punk-font-body); line-height: 1.45; }
+.match-notes__state { margin: 0; font-size: .8rem; }
+.match-record__private { font-size: .82rem; margin: 10px 0 0; }
+
+/* Foto a pantalla completa */
+.photo-viewer {
+    position: fixed; inset: 0; z-index: 60;
+    display: flex; flex-direction: column;
+    background: rgba(13, 11, 9, .95);
+}
+.photo-viewer__stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 12px; }
+.photo-viewer__stage img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: var(--punk-shadow); }
+.photo-viewer__bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--punk-bar);
+}
+.photo-viewer__bar > span { flex: 1 1 auto; color: var(--punk-text-muted); }
+
 /* ---------- Modo mesa: el móvil apoyado en la mesa, a un brazo de distancia ---------- */
 
 .table-mode .punk-main { font-size: 1.12rem; }

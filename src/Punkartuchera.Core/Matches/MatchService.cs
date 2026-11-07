@@ -9,12 +9,14 @@ namespace Punkartuchera.Core.Matches;
 /// Lleva la partida activa, local o en línea. En línea, cada móvil es dueño de su banda:
 /// solo él marca a sus miembros y manda el estado al otro. La ronda la puede cambiar cualquiera.
 /// La partida se guarda en el dispositivo tras cada cambio, así sobrevive a recargar la página.
+/// Puede haber varias guardadas: la de pantalla es <see cref="Current"/> y las demás esperan a que se retomen.
 /// </summary>
 public sealed class MatchService(
-    IActiveMatchStore store,
+    ISavedMatchStore store,
     IMatchRelay relay,
     IBandRepository bands,
-    BandExchangeService exchange) : IMatchService, IAsyncDisposable
+    BandExchangeService exchange,
+    IPhotoStore photos) : IMatchService, IAsyncDisposable
 {
     // Los mensajes del rival llegan cuando quieren; el semáforo hace que se apliquen de uno en uno
     // y nunca a la vez que un cambio hecho en la pantalla.
@@ -37,18 +39,73 @@ public sealed class MatchService(
         }
 
         _restored = true;
-        Current = await store.LoadAsync(cancellationToken);
-        if (Current is not null)
+        if (await store.GetCurrentIdAsync(cancellationToken) is { } id)
         {
-            // Partidas guardadas antes del límite de seis rondas.
-            Current.Round = Math.Clamp(Current.Round, 1, ActiveMatch.MaxRound);
-        }
-        if (Current is { IsOnline: true, ClosedByRival: false } && relay.IsConfigured)
-        {
-            await TryConnectAsync(cancellationToken);
+            await OpenAsync(await store.GetAsync(id, cancellationToken), cancellationToken);
         }
 
         return Current;
+    }
+
+    public async Task<IReadOnlyList<ActiveMatch>> GetSavedAsync(CancellationToken cancellationToken = default)
+    {
+        var all = await store.GetAllAsync(cancellationToken);
+        return all
+            .Select(m => m.Id == Current?.Id ? Current : m)
+            .OrderByDescending(m => m.UpdatedAt)
+            .ToList();
+    }
+
+    public async Task<ActiveMatch> ResumeAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        _restored = true;
+        if (Current?.Id == id)
+        {
+            return Current;
+        }
+
+        var match = await store.GetAsync(id, cancellationToken)
+            ?? throw new MatchException("Esa partida ya no está guardada.");
+        await ParkCurrentAsync(cancellationToken);
+        await OpenAsync(match, cancellationToken);
+        await store.SetCurrentIdAsync(match.Id, cancellationToken);
+        Notify();
+        return match;
+    }
+
+    public async Task PauseAsync(CancellationToken cancellationToken = default)
+    {
+        await ParkCurrentAsync(cancellationToken);
+        Notify();
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        if (Current?.Id == id)
+        {
+            await EndAsync(cancellationToken);
+            return;
+        }
+
+        if (await store.GetAsync(id, cancellationToken) is not { } match)
+        {
+            return;
+        }
+
+        if (match.Ticket is { } ticket && !match.ClosedByRival && relay.IsConfigured)
+        {
+            try
+            {
+                await relay.LeaveAsync(ticket, cancellationToken);
+            }
+            catch (RelayException)
+            {
+                // Sin conexión: la partida caducará sola en el relé.
+            }
+        }
+
+        await ForgetAsync(match, cancellationToken);
+        Notify();
     }
 
     public async Task<ActiveMatch> StartLocalAsync(Guid ownBandId, Guid rivalBandId, CancellationToken cancellationToken = default)
@@ -60,7 +117,7 @@ public sealed class MatchService(
             throw new MatchException("Una banda no puede pegarse consigo misma.");
         }
 
-        await ReplaceCurrentAsync(cancellationToken);
+        await ParkCurrentAsync(cancellationToken);
         Current = new ActiveMatch
         {
             Mode = MatchMode.Local,
@@ -120,7 +177,7 @@ public sealed class MatchService(
             match.Over = false;
             match.RoundStamp++;
             ResetActivations(match);
-            await store.SaveAsync(match, cancellationToken);
+            await SaveAsync(match, cancellationToken);
         }
         finally
         {
@@ -145,7 +202,7 @@ public sealed class MatchService(
 
             match.Over = true;
             match.RoundStamp++;
-            await store.SaveAsync(match, cancellationToken);
+            await SaveAsync(match, cancellationToken);
         }
         finally
         {
@@ -199,7 +256,7 @@ public sealed class MatchService(
             }
 
             change(match);
-            await store.SaveAsync(match, cancellationToken);
+            await SaveAsync(match, cancellationToken);
         }
         finally
         {
@@ -232,7 +289,7 @@ public sealed class MatchService(
 
             members[index].Activated = activated ?? members[index].Activated;
             members[index].Down = down ?? members[index].Down;
-            await store.SaveAsync(match, cancellationToken);
+            await SaveAsync(match, cancellationToken);
         }
         finally
         {
@@ -261,7 +318,63 @@ public sealed class MatchService(
         await relay.DisconnectAsync();
         Current = null;
         Connection = RelayStatus.Offline;
-        await store.SaveAsync(null, cancellationToken);
+        await store.SetCurrentIdAsync(null, cancellationToken);
+        if (match is not null)
+        {
+            await ForgetAsync(match, cancellationToken);
+        }
+
+        Notify();
+    }
+
+    public Task SetMapAsync(MatchMap? map, CancellationToken cancellationToken = default) =>
+        ChangeLocalAsync(match => match.Map = map, cancellationToken);
+
+    public Task SetNotesAsync(string? notes, CancellationToken cancellationToken = default) =>
+        ChangeLocalAsync(match =>
+        {
+            notes = notes?.TrimEnd();
+            match.Notes = string.IsNullOrEmpty(notes) ? null : notes[..Math.Min(notes.Length, ActiveMatch.MaxNotes)];
+        }, cancellationToken);
+
+    public async Task<string> AddPhotoAsync(byte[] jpeg, CancellationToken cancellationToken = default)
+    {
+        if (Current is not { } current)
+        {
+            throw new MatchException("No hay ninguna partida en marcha.");
+        }
+
+        if (current.Photos.Count >= ActiveMatch.MaxPhotos)
+        {
+            throw new MatchException($"Caben {ActiveMatch.MaxPhotos} fotos por partida. Borra alguna antes de hacer otra.");
+        }
+
+        var key = await photos.SaveAsync(jpeg, "image/jpeg", cancellationToken);
+        await ChangeLocalAsync(match => match.Photos.Add(new MatchPhoto { Key = key, Round = match.Round }), cancellationToken);
+        return key;
+    }
+
+    public async Task RemovePhotoAsync(string key, CancellationToken cancellationToken = default)
+    {
+        await ChangeLocalAsync(match => match.Photos.RemoveAll(p => p.Key == key), cancellationToken);
+        await photos.DeleteAsync(key, cancellationToken);
+    }
+
+    /// <summary>Cambio que solo es de este dispositivo (mapa, fotos, notas): no se manda al rival.</summary>
+    private async Task ChangeLocalAsync(Action<ActiveMatch> change, CancellationToken cancellationToken)
+    {
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            var match = Current ?? throw new MatchException("No hay ninguna partida en marcha.");
+            change(match);
+            await SaveAsync(match, cancellationToken);
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
         Notify();
     }
 
@@ -273,7 +386,7 @@ public sealed class MatchService(
 
     private async Task<ActiveMatch> StartOnlineAsync(MatchMode mode, Band band, string payload, RelayTicket ticket, CancellationToken cancellationToken)
     {
-        await ReplaceCurrentAsync(cancellationToken);
+        await ParkCurrentAsync(cancellationToken);
         Current = new ActiveMatch
         {
             Mode = mode,
@@ -323,13 +436,65 @@ public sealed class MatchService(
         }
     }
 
-    /// <summary>Si había otra partida en línea, la cierra antes de empezar la nueva.</summary>
-    private async Task ReplaceCurrentAsync(CancellationToken cancellationToken)
+    /// <summary>
+    /// Deja la partida de pantalla guardada para luego. Si era en línea, se desconecta del relé
+    /// sin cerrarla: al retomarla vuelve a conectar, si el relé aún la guarda.
+    /// </summary>
+    private async Task ParkCurrentAsync(CancellationToken cancellationToken)
     {
-        if (Current is not null)
+        if (Current is not { } match)
         {
-            await EndAsync(cancellationToken);
+            return;
         }
+
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            await SaveAsync(match, cancellationToken);
+            Current = null;
+            await store.SetCurrentIdAsync(null, cancellationToken);
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
+        Connection = RelayStatus.Offline;
+        await relay.DisconnectAsync();
+    }
+
+    /// <summary>Pone en pantalla una partida guardada y, si es en línea, vuelve a conectar.</summary>
+    private async Task OpenAsync(ActiveMatch? match, CancellationToken cancellationToken)
+    {
+        Current = match;
+        if (match is null)
+        {
+            return;
+        }
+
+        // Partidas guardadas antes del límite de seis rondas.
+        match.Round = Math.Clamp(match.Round, 1, ActiveMatch.MaxRound);
+        if (match is { IsOnline: true, ClosedByRival: false } && relay.IsConfigured)
+        {
+            await TryConnectAsync(cancellationToken);
+        }
+    }
+
+    /// <summary>Borra la partida del dispositivo con sus fotos.</summary>
+    private async Task ForgetAsync(ActiveMatch match, CancellationToken cancellationToken)
+    {
+        foreach (var photo in match.Photos)
+        {
+            await photos.DeleteAsync(photo.Key, cancellationToken);
+        }
+
+        await store.DeleteAsync(match.Id, cancellationToken);
+    }
+
+    private Task SaveAsync(ActiveMatch match, CancellationToken cancellationToken)
+    {
+        match.UpdatedAt = DateTimeOffset.UtcNow;
+        return store.SaveAsync(match, cancellationToken);
     }
 
     private async Task TryConnectAsync(CancellationToken cancellationToken)
@@ -417,7 +582,7 @@ public sealed class MatchService(
                     break;
             }
 
-            await store.SaveAsync(match);
+            await SaveAsync(match, CancellationToken.None);
         }
         finally
         {
@@ -567,7 +732,7 @@ public sealed class MatchService(
         if (Current is { } match)
         {
             match.ClosedByRival = true;
-            await store.SaveAsync(match);
+            await SaveAsync(match, CancellationToken.None);
         }
 
         Connection = RelayStatus.Offline;
@@ -615,7 +780,8 @@ public sealed class MatchService(
 
     private async Task SaveAndNotifyAsync(CancellationToken cancellationToken)
     {
-        await store.SaveAsync(Current, cancellationToken);
+        await SaveAsync(Current!, cancellationToken);
+        await store.SetCurrentIdAsync(Current!.Id, cancellationToken);
         Notify();
     }
 

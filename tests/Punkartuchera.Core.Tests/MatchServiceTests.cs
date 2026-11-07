@@ -114,7 +114,8 @@ public class MatchServiceTests
         Assert.Null(_host.Matches.Current);
         Assert.True(_guest.Matches.Current!.ClosedByRival);
         Assert.Equal(RelayStatus.Offline, _guest.Matches.Connection);
-        Assert.Null(await _host.Store.LoadAsync());
+        Assert.Null(await _host.Store.GetCurrentIdAsync());
+        Assert.Empty(await _host.Store.GetAllAsync());
     }
 
     [Theory]
@@ -205,7 +206,7 @@ public class MatchServiceTests
         await _host.Matches.SetMemberAsync(MatchSide.Own, 0, activated: true);
         await _host.Matches.SetRoundAsync(2);
 
-        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange);
+        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange, _host.Photos);
         var match = await reloaded.RestoreAsync();
 
         Assert.Equal(MatchMode.Local, match!.Mode);
@@ -219,7 +220,7 @@ public class MatchServiceTests
     {
         var bands = new InMemoryBandRepository();
         var photos = new InMemoryPhotoStore();
-        var service = new MatchService(new InMemoryActiveMatchStore(), new DisabledMatchRelay(), bands, new BandExchangeService(bands, photos, Rules));
+        var service = new MatchService(new InMemorySavedMatchStore(), new DisabledMatchRelay(), bands, new BandExchangeService(bands, photos, Rules), photos);
 
         Assert.False(service.SupportsOnlineMatches);
         await Assert.ThrowsAsync<MatchException>(() => service.CreateOnlineAsync(Guid.NewGuid()));
@@ -272,10 +273,128 @@ public class MatchServiceTests
         await _host.Matches.SetScoreAsync(MatchSide.Rival, 2);
         await _host.Matches.SetCountersAsync(MatchSide.Rival, new Dictionary<string, int> { ["mojo"] = 6 });
 
-        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange);
+        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange, _host.Photos);
         var match = await reloaded.RestoreAsync();
         Assert.Equal(2, match!.RivalScore);
         Assert.Equal(6, match.RivalCounters["mojo"]);
+    }
+
+    [Fact]
+    public async Task Starting_another_match_keeps_the_first_one_saved_to_resume_later()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro", "Chispas");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        var third = await _host.AddBandAsync("Los Mutis", "Bulto");
+
+        var first = await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+        await _host.Matches.SetRoundAsync(3);
+        await _host.Matches.SetMemberAsync(MatchSide.Rival, 0, down: true);
+        var second = await _host.Matches.StartLocalAsync(own.Id, third.Id);
+
+        var saved = await _host.Matches.GetSavedAsync();
+        Assert.Equal([second.Id, first.Id], saved.Select(m => m.Id));
+
+        var resumed = await _host.Matches.ResumeAsync(first.Id);
+        Assert.Equal(3, resumed.Round);
+        Assert.True(resumed.Rival[0].Down);
+
+        // Al abrir la app otra vez sale la última que estaba en pantalla.
+        var reloaded = new MatchService(_host.Store, new FakeRelay(_server), _host.Bands, _host.Exchange, _host.Photos);
+        Assert.Equal(first.Id, (await reloaded.RestoreAsync())!.Id);
+        Assert.Equal(2, (await reloaded.GetSavedAsync()).Count);
+    }
+
+    [Fact]
+    public async Task Leaving_a_match_for_later_keeps_it_saved_but_off_screen()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        var match = await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+
+        await _host.Matches.PauseAsync();
+
+        Assert.Null(_host.Matches.Current);
+        Assert.Null(await _host.Store.GetCurrentIdAsync());
+        Assert.Equal(match.Id, Assert.Single(await _host.Matches.GetSavedAsync()).Id);
+    }
+
+    [Fact]
+    public async Task Map_photos_and_notes_are_saved_with_the_match_and_deleted_with_it()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        var match = await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+        await _host.Matches.SetRoundAsync(2);
+
+        await _host.Matches.SetMapAsync(MatchMap.FromQuery("codigo=k7q2xm&mesa=90x90&despliegue=v&terreno=ruina-2&otra=x"));
+        await _host.Matches.SetNotesAsync("Morro tiene el bidón.  ");
+        var key = await _host.Matches.AddPhotoAsync([1, 2, 3]);
+
+        var saved = (await _host.Store.GetAsync(match.Id))!;
+        Assert.Equal("K7Q2XM", saved.Map!.Code);
+        Assert.Equal("mapa?codigo=K7Q2XM&mesa=90x90&despliegue=v&terreno=ruina-2", saved.Map.Link);
+        Assert.Equal("Morro tiene el bidón.", saved.Notes);
+        var photo = Assert.Single(saved.Photos);
+        Assert.Equal(key, photo.Key);
+        Assert.Equal(2, photo.Round);
+        Assert.NotNull(await _host.Photos.GetAsync(key));
+
+        await _host.Matches.PauseAsync();
+        await _host.Matches.DeleteAsync(match.Id);
+
+        Assert.Empty(await _host.Matches.GetSavedAsync());
+        Assert.Null(await _host.Photos.GetAsync(key));
+    }
+
+    [Fact]
+    public async Task A_match_holds_a_limited_number_of_photos()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+
+        for (var i = 0; i < ActiveMatch.MaxPhotos; i++)
+        {
+            await _host.Matches.AddPhotoAsync([1]);
+        }
+
+        await Assert.ThrowsAsync<MatchException>(() => _host.Matches.AddPhotoAsync([1]));
+
+        var first = _host.Matches.Current!.Photos[0].Key;
+        await _host.Matches.RemovePhotoAsync(first);
+        Assert.Equal(ActiveMatch.MaxPhotos - 1, _host.Matches.Current.Photos.Count);
+        Assert.Null(await _host.Photos.GetAsync(first));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("mesa=90x90")]
+    [InlineData("codigo=")]
+    public void A_map_needs_a_code(string? query) => Assert.Null(MatchMap.FromQuery(query));
+
+    [Fact]
+    public void A_dictated_code_alone_is_a_map()
+    {
+        var map = MatchMap.FromCode(" k7q2-xm ")!;
+        Assert.Equal("K7Q2XM", map.Code);
+        Assert.Equal("mapa?codigo=K7Q2XM", map.Link);
+    }
+
+    [Fact]
+    public async Task Resuming_an_online_match_reconnects_and_catches_up()
+    {
+        await StartOnlineAsync();
+        var online = _guest.Matches.Current!;
+        var local = await _guest.AddBandAsync("Los Mutis", "Bulto");
+        var other = await _guest.AddBandAsync("Las Hienas", "Risas");
+        await _guest.Matches.StartLocalAsync(local.Id, other.Id);
+        Assert.Equal(RelayStatus.Offline, _guest.Matches.Connection);
+
+        await _host.Matches.SetRoundAsync(4);
+        await _guest.Matches.ResumeAsync(online.Id);
+
+        Assert.Equal(RelayStatus.Online, _guest.Matches.Connection);
+        Assert.Equal(4, _guest.Matches.Current!.Round);
     }
 
     private async Task StartOnlineAsync()
@@ -293,14 +412,14 @@ public class MatchServiceTests
         {
             Exchange = new BandExchangeService(Bands, Photos, Rules);
             Relay = new FakeRelay(server);
-            Matches = new MatchService(Store, Relay, Bands, Exchange);
+            Matches = new MatchService(Store, Relay, Bands, Exchange, Photos);
         }
 
         public InMemoryBandRepository Bands { get; } = new();
 
         public InMemoryPhotoStore Photos { get; } = new();
 
-        public InMemoryActiveMatchStore Store { get; } = new();
+        public InMemorySavedMatchStore Store { get; } = new();
 
         public BandExchangeService Exchange { get; }
 

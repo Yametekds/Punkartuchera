@@ -207,6 +207,25 @@ export async function exportJpeg() {
     return new Uint8Array(await blob.arrayBuffer());
 }
 
+// Devuelve la foto entera, sin recortar, como JPEG con el lado mayor en maxSide como mucho.
+// Para las fotos de la mesa, donde importa ver todo.
+export async function exportWhole(maxSide, quality) {
+    if (!session) throw new Error('No hay foto cargada.');
+    const ratio = Math.min(1, maxSide / Math.max(session.width, session.height));
+    const out = document.createElement('canvas');
+    out.width = Math.max(1, Math.round(session.width * ratio));
+    out.height = Math.max(1, Math.round(session.height * ratio));
+    const ctx = out.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, out.width, out.height);
+    ctx.drawImage(session.image, 0, 0, out.width, out.height);
+    const blob = await new Promise(resolve => out.toBlob(resolve, 'image/jpeg', quality));
+    if (!blob) throw new Error('No se pudo generar la foto.');
+    release();
+    return new Uint8Array(await blob.arrayBuffer());
+}
+
 export function cancel() {
     release();
 }

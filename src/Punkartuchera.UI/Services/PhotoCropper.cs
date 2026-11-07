@@ -4,7 +4,8 @@ using Microsoft.JSInterop;
 namespace Punkartuchera.UI.Services;
 
 /// <summary>
-/// Encuadra fotos en cuadrado dentro del navegador y las devuelve como JPEG de tamaño fijo,
+/// Encuadra fotos en cuadrado dentro del navegador y las devuelve como JPEG de tamaño fijo
+/// (o enteras y reducidas, para las fotos de la mesa),
 /// pese lo que pese la original.
 /// </summary>
 public sealed class PhotoCropper(IJSRuntime js) : IAsyncDisposable
@@ -33,6 +34,13 @@ public sealed class PhotoCropper(IJSRuntime js) : IAsyncDisposable
     {
         var module = await Module;
         return await module.InvokeAsync<byte[]>("exportJpeg");
+    }
+
+    /// <summary>Devuelve la foto cargada entera, sin encuadrar, como JPEG reducido.</summary>
+    public async Task<byte[]> ExportWholeJpegAsync(int maxSide = 1600, double quality = 0.8)
+    {
+        var module = await Module;
+        return await module.InvokeAsync<byte[]>("exportWhole", maxSide, quality);
     }
 
     public async Task CancelAsync()
