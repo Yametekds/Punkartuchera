@@ -192,8 +192,8 @@ h1:focus { outline: none; }
 .punk-topbar__rust {
     position: absolute; inset: 0; pointer-events: none;
     background: var(--punk-tex-rust) left 40px bottom 0 / 470px;
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .28), rgba(0, 0, 0, .2) 45%, rgba(0, 0, 0, .85));
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .28), rgba(0, 0, 0, .2) 45%, rgba(0, 0, 0, .85));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .28), rgba(0, 0, 0, .2) 45%, #000);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .28), rgba(0, 0, 0, .2) 45%, #000);
 }
 .punk-topbar > :not(.punk-topbar__rust) { position: relative; z-index: 1; }
 /* Borde rasgado: la misma chapa recortada (::after), comida por el óxido hacia la punta,
@@ -261,14 +261,14 @@ h1:focus { outline: none; }
     .tabbar::after {
         content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
         background: var(--punk-tex-rust) left 90px top 0 / 470px;
-        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, rgba(0, 0, 0, .85));
-        mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, rgba(0, 0, 0, .85));
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, #000);
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, #000);
     }
     .tabbar::before {
         content: ""; position: absolute; left: 0; right: 0; top: -13px; height: 14px; pointer-events: none;
         background-color: var(--punk-bar);
         background-image:
-            linear-gradient(to top, rgba(40, 18, 8, .1), rgba(40, 18, 8, .3)),
+            linear-gradient(to top, rgba(40, 18, 8, 0), rgba(40, 18, 8, .3)),
             var(--punk-tex-rust), var(--punk-tex-grain), var(--punk-tex-plate);
         background-size: auto, 470px, auto, auto;
         /* la última fila del borde pisa la primera de la barra: la textura empieza ahí */
@@ -900,9 +900,10 @@ textarea.field__input { resize: vertical; }
     background-image:
         var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
         linear-gradient(to bottom, rgba(255, 255, 255, .09), rgba(255, 255, 255, 0) 35%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, .25)),
+        var(--punk-tex-shots),
         var(--punk-tex-grain), var(--punk-tex-plate);
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
-    background-position: left 5px top 5px, right 5px top 5px, left 5px bottom 5px, right 5px bottom 5px, 0 0, 0 0, 0 0;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat, repeat;
+    background-position: left 5px top 5px, right 5px top 5px, left 5px bottom 5px, right 5px bottom 5px, 0 0, -30px -20px, 0 0, 0 0;
     border: 2px solid var(--punk-black);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 1px 0 0 rgba(255, 255, 255, .06), inset -1px 0 0 rgba(0, 0, 0, .5), var(--punk-shadow);
     transform: rotate(-1.5deg);
@@ -1023,9 +1024,10 @@ textarea.field__input { resize: vertical; }
     background-image:
         var(--punk-tex-rivet-rust),
         linear-gradient(to bottom, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0) 40%),
+        var(--plate-shots, linear-gradient(transparent, transparent)),
         var(--punk-tex-grain), var(--punk-tex-plate);
-    background-repeat: no-repeat, no-repeat, repeat, repeat;
-    background-position: right 2px top 2px, 0 0, left bottom, left bottom;
+    background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+    background-position: right 2px top 2px, 0 0, var(--shots-pos, 0 0), left bottom, left bottom;
     border: 2px solid var(--punk-black);
     border-bottom: 0;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 1px 0 0 rgba(255, 255, 255, .05), inset -1px 0 0 rgba(0, 0, 0, .45);
@@ -1076,6 +1078,9 @@ textarea.field__input { resize: vertical; }
     color: var(--punk-ink);
     clip-path: polygon(0 0, 100% 0, 100% 97%, 96% 100%, 74% 98.6%, 52% 100%, 27% 98.8%, 6% 100%, 0 98%);
 }
+/* Variante acribillada: algunas fichas llevan balazos en la chapa */
+.datacard:nth-child(3n + 2) { --plate-shots: var(--punk-tex-shots); --shots-pos: right -330px top -122px; }
+.datacard:nth-child(5n + 4) { --plate-shots: var(--punk-tex-shots); --shots-pos: right -250px top -118px; }
 /* Cada ficha enseña otro trozo de papel, con otro tono y la luz por otro lado */
 .datacard {
     --paper-light-card: linear-gradient(to right, rgba(255, 250, 235, .1), rgba(255, 250, 235, 0) 40%, rgba(70, 35, 8, 0) 65%, rgba(70, 35, 8, .1));

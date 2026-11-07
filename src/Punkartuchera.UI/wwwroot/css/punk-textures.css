@@ -14,6 +14,8 @@
     --punk-tex-fibre: url("../img/tex/fibre.webp");
     --punk-tex-metal: url("../img/tex/metal.webp");
     --punk-tex-plate: image-set(url("../img/tex/plate.webp") 2x);
+    /* Balazos con su abolladura, hollín y chorreón de óxido, con transparencia: va encima de la chapa */
+    --punk-tex-shots: image-set(url("../img/tex/shots.webp") 1.4x);
     --punk-tex-speckle: url("../img/tex/speckle.webp");
     /* Manchas de óxido con transparencia, para poner encima de la chapa */
     --punk-tex-rust: url("../img/tex/rust.webp");
