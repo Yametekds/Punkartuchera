@@ -45,6 +45,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<PhotoUrlProvider>();
         services.AddScoped<FileSharer>();
         services.AddScoped<PhotoCropper>();
+        services.AddScoped<StampNotifier>();
         return services;
     }
 

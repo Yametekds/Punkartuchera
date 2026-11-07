@@ -1,0 +1,51 @@
+@implements IDisposable
+@inject StampNotifier Notifier
+
+@* Sello de goma que se estampa al guardar y se desvanece solo. *@
+<div class="stamp-toast" role="status" aria-live="polite">
+    @if (_text is not null)
+    {
+        <span @key="_count" class="stamp stamp-toast__stamp">@_text</span>
+    }
+</div>
+
+@code {
+    private const int VisibleMs = 1800;
+
+    private string? _text;
+    private int _count;
+    private CancellationTokenSource? _hide;
+
+    protected override void OnInitialized() => Notifier.Stamped += OnStamped;
+
+    private void OnStamped(string text) => _ = InvokeAsync(() => ShowAsync(text));
+
+    private async Task ShowAsync(string text)
+    {
+        _hide?.Cancel();
+        _hide = new CancellationTokenSource();
+        var token = _hide.Token;
+
+        _text = text;
+        _count++;
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(VisibleMs, token);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
+        }
+
+        _text = null;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        Notifier.Stamped -= OnStamped;
+        _hide?.Cancel();
+    }
+}

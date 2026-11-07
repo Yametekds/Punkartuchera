@@ -166,7 +166,7 @@
 /* ---------- Perfil de tropa ---------- */
 
 .rules-troop__head { grid-template-columns: 1fr; }
-.datacard__stats .rules-stat--long { font-size: clamp(.95rem, 3.4vw, 1.25rem); }
+.datacard__stats .rules-stat--long { font-size: clamp(.95rem, 3.4cqi, 1.25rem); }
 
 .rules-loadout { display: grid; gap: 10px; margin: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .rules-loadout > div { display: flex; flex-direction: column; gap: 4px; }
