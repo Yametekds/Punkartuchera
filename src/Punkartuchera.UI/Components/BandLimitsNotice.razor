@@ -1,0 +1,24 @@
+@* Avisa de las restricciones de creación de banda que no se cumplen. No bloquea: sólo avisa. *@
+@inject Rulebook Book
+
+@if (Issues.Count > 0)
+{
+    <div class="notice notice--warning" role="status" id="band-limits">
+        <div>
+            <strong>@(Issues.Count == 1 ? "Esta banda se salta una restricción" : $"Esta banda se salta {Issues.Count} restricciones")</strong>
+            <ul class="band-limits">
+                @foreach (var issue in Issues)
+                {
+                    <li>@issue.Rule <span class="muted">@issue.Detail</span></li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Band Band { get; set; } = default!;
+
+    private IReadOnlyList<BandLimitIssue> Issues => new BandComposition(Book).Check(Band);
+}

@@ -281,6 +281,8 @@ public class LoadoutTests
     {
         Assert.DoesNotContain(_advisor.Advise(Recruit("chatarreros", "Pistón"), "chatarreros", "carroneros").Gear, o => o.Name == "Puño balístico");
         Assert.DoesNotContain(_advisor.Advise(Recruit("chatarreros", "Engranaje"), "chatarreros", "carroneros").Gear, o => o.Name == "Bombeadora");
+        Assert.DoesNotContain(_advisor.Advise(Recruit("chatarreros", "Engranaje"), "chatarreros", "carroneros").Gear, o => o.Name == "Bala apañada");
+        Assert.Contains(_advisor.Advise(Recruit("chatarreros", "Engranaje"), "chatarreros").Gear, o => o.Name == "Bala apañada");
         Assert.DoesNotContain(_advisor.Advise(Recruit("chatarreros", "Pistón"), "chatarreros", "innovadores").Gear, o => o.Name == "Puño balístico");
         Assert.Contains(_advisor.Advise(Recruit("chatarreros", "Pistón"), "chatarreros").Gear, o => o.Name == "Puño balístico");
         Assert.DoesNotContain(_advisor.Advise(Recruit("sangre-negra", "Ascua"), "sangre-negra", "nuevos-hijos").Gear, o => o.Name == "Cóctel molotov");

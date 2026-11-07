@@ -11,6 +11,11 @@
     "No puede haber más Mártires que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "Max", "troops": ["Cardenal Nuclear"], "max": 1, "text": "Máximo un Cardenal Nuclear."},
+    {"kind": "NotMoreThanRest", "troops": ["Mártir"], "text": "No puede haber más Mártires que el resto de la banda junta."}
+  ],
   "rules": [
     { "name": "Contaminante", "text": "Toda miniatura Abatida por un arma con esta regla pasa a ser una fuente de Radiación." },
     { "name": "Contenedor radiactivo", "text": "Al caer, el Irradiado se convierte en fuente de Radiación. Quien interactúe con su cadáver (devorar, cosechar, rapiñar…) hace una tirada de Radiación." },

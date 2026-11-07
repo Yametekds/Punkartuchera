@@ -13,6 +13,12 @@
     "No más Grumetes que el resto de la banda junta.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad craabiana o Mercenario."},
+    {"kind": "Max", "troops": ["Capitán"], "max": 1, "text": "Máximo un Capitán."},
+    {"kind": "PerPoints", "troops": ["Custodio del Abismo"], "points": 200, "text": "Un Custodio del Abismo por cada fracción de 200 puntos."},
+    {"kind": "NotMoreThanRest", "troops": ["Grumete"], "text": "No más Grumetes que el resto de la banda junta."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "rules": [
     { "name": "El mar siempre reclama", "text": "Todos salvo los Grumetes pueden repetir una tirada de Atributo una vez por partida; después pierden 1 punto permanente en ese Atributo." },

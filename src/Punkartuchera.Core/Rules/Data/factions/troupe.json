@@ -13,6 +13,11 @@
     "Máximo un cañón lanzador y un coche de Pachachos.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "Max", "troops": ["Jefe de pista"], "max": 1, "text": "Máximo un Jefe de pista."},
+    {"kind": "NotMoreThan", "troops": ["Domador", "Forzudo", "Acróbata"], "than": ["Pachacho"], "text": "No puede haber más Domadores, Forzudos o Acróbatas que Pachachos."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "troops": [
     {
