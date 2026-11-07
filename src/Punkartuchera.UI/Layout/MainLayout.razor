@@ -4,12 +4,23 @@
 
 <div class="punk-shell">
     <header class="punk-topbar">
+        <span class="punk-topbar__rust" aria-hidden="true"></span>
         <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@_drawerOpen" @onclick="() => _drawerOpen = true">
             <Icon Path="@Icons.Menu" />
         </button>
         <a class="punk-brand" href="">
             <span class="punk-brand__name">Punkartuchera</span>
         </a>
+        @* En pantallas anchas el menú va en la propia chapa y el lateral se queda para el móvil *@
+        <nav class="topnav" aria-label="Secciones">
+            @foreach (var item in AppNavigation.Items.Where(i => i.Available))
+            {
+                <NavLink class="topnav__item" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                    <Icon Path="@item.Icon" />
+                    <span>@item.Label</span>
+                </NavLink>
+            }
+        </nav>
         <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
     </header>
 
