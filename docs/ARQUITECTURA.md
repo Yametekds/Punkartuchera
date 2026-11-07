@@ -107,7 +107,7 @@ Páginas (`Pages/Rules/`): `/reglas` (buscador e índice), `/reglas/basicas`, `/
 `Core/Maps/MapGenerator` reparte la escenografía elegida sobre la mesa:
 
 - **Simetría central**: cada pieza de la mitad norte tiene su gemela girada 180° en la sur, así las dos bandas tienen el mismo terreno delante. Si un tipo es impar, la pieza que sobra va a la línea central, al centro si cabe.
-- Las zonas de despliegue quedan libres y entre piezas hay un hueco mínimo (`DefaultMinGap`, 7 cm). Si no cabe todo, lo vuelve a intentar con menos hueco y, en último caso, devuelve las piezas que no ha podido colocar (`MapLayout.Leftovers`) en lugar de amontonarlas.
+- Las zonas de despliegue quedan libres y entre piezas hay un hueco mínimo de 10 cm, también con los bordes de la mesa (`DefaultMinGap`, lo que pide el reglamento). Si no cabe todo, lo vuelve a intentar con menos hueco (entre piezas / con los bordes: 10/10, 10/5, 7/5, 5/3, 3/2 y 2/1 cm) y, en último caso, devuelve las piezas que no ha podido colocar (`MapLayout.Leftovers`) en lugar de amontonarlas.
 - Cada pieza se coloca en el mejor de varios sitios al azar: el que más se aleja de lo ya colocado y de los bordes.
 - **Determinista**: usa su propio generador (`SeededRandom`, mulberry32) y un hash FNV-1a del código (`MapSeed`), porque `System.Random` no garantiza la misma secuencia entre versiones de .NET. Mismo código + misma mesa + mismo terreno = mismo mapa en cualquier dispositivo.
 
