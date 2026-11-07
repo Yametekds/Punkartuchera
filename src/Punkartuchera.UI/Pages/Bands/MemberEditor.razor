@@ -9,6 +9,7 @@
 @inject UnitCostCalculator Costs
 @inject LoadoutAdvisor Advisor
 @inject IPhotoStore Photos
+@inject StampNotifier Stamps
 @inject NavigationManager Navigation
 
 <PageTitle>@(IsNew ? "Nuevo miembro" : _member?.Name) · Punkartuchera</PageTitle>
@@ -393,6 +394,7 @@ else
 
             await Bands.SaveMemberAsync(_band, _member);
             _saved = true;
+            Stamps.Stamp("¡Fichado!");
             await DiscardUnusedPhotosAsync(_member.Photo);
             Navigation.NavigateTo(BandHref);
         }

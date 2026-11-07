@@ -1,7 +1,7 @@
 @page "/partida"
 @using Punkartuchera.Core.Matches
 @using Punkartuchera.Relay.Contracts
-@implements IDisposable
+@implements IAsyncDisposable
 @inject IMatchService Matches
 @inject BandService Bands
 @inject IJSRuntime JS
@@ -15,7 +15,18 @@
         <span class="page-kicker">A hostias por turnos</span>
         <h1 class="page-title distress">Partida</h1>
     </div>
+    @if (!_loading && Matches.Current is not null)
+    {
+        <button type="button" class="btn btn--ghost" aria-pressed="@_tableMode" @onclick="ToggleTableMode">
+            <Icon Path="@Icons.Table" /> @(_tableMode ? "Salir del modo mesa" : "Modo mesa")
+        </button>
+    }
 </header>
+
+@if (_tableMode && !_wakeLockSupported)
+{
+    <p class="notice"><span>Este navegador no deja mantener la pantalla encendida; el resto del modo mesa sí funciona.</span></p>
+}
 
 @if (_error is not null)
 {
@@ -126,7 +137,7 @@ else
         </p>
     }
 
-    <section class="paper match-score" aria-label="Marcador">
+    <section class="match-score" aria-label="Marcador">
         @ScoreView(MatchSide.Own, match.OwnBandName)
         <span class="match-score__vs" aria-hidden="true">vs</span>
         @ScoreView(MatchSide.Rival, match.RivalBandName ?? "Rival")
@@ -140,6 +151,9 @@ else
     }
 
     <div class="paper match-round">
+        <div class="round-dial" style="--round: @match.Round; --rounds: @ActiveMatch.MaxRound" aria-hidden="true">
+            <span class="round-dial__value">@match.Round</span>
+        </div>
         <Stepper Label="@($"Ronda (de {ActiveMatch.MaxRound})")" Value="match.Round" Min="1" Max="ActiveMatch.MaxRound" ValueChanged="SetRound" />
         @if (match.Round < ActiveMatch.MaxRound)
         {
@@ -510,5 +524,55 @@ else
         StateHasChanged();
     });
 
-    public void Dispose() => Matches.Changed -= OnMatchChanged;
+    // ---------- Modo mesa: letra y botones grandes, pantalla siempre encendida ----------
+
+    private IJSObjectReference? _tableModule;
+    private bool _tableMode;
+    private bool _wakeLockSupported = true;
+    private bool _tableChecked;
+
+    private async Task<IJSObjectReference> TableModule() =>
+        _tableModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Punkartuchera.UI/js/tableMode.js");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Si la última vez se jugó en modo mesa, se vuelve a poner al abrir una partida.
+        if (_tableChecked || _loading || Matches.Current is null)
+        {
+            return;
+        }
+
+        _tableChecked = true;
+        var module = await TableModule();
+        if (await module.InvokeAsync<bool>("stored"))
+        {
+            await SetTableModeAsync(true);
+            StateHasChanged();
+        }
+    }
+
+    private Task ToggleTableMode() => SetTableModeAsync(!_tableMode);
+
+    private async Task SetTableModeAsync(bool on)
+    {
+        var module = await TableModule();
+        _wakeLockSupported = await module.InvokeAsync<bool>("set", on);
+        _tableMode = on;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        Matches.Changed -= OnMatchChanged;
+        if (_tableModule is not null)
+        {
+            try
+            {
+                await _tableModule.InvokeVoidAsync("leave");
+                await _tableModule.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+            }
+        }
+    }
 }

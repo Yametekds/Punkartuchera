@@ -4,12 +4,23 @@
 
 <div class="punk-shell">
     <header class="punk-topbar">
+        <span class="punk-topbar__rust" aria-hidden="true"></span>
         <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@_drawerOpen" @onclick="() => _drawerOpen = true">
             <Icon Path="@Icons.Menu" />
         </button>
         <a class="punk-brand" href="">
             <span class="punk-brand__name">Punkartuchera</span>
         </a>
+        @* En pantallas anchas el menú va en la propia chapa y el lateral se queda para el móvil *@
+        <nav class="topnav" aria-label="Secciones">
+            @foreach (var item in AppNavigation.Items.Where(i => i.Available))
+            {
+                <a class="topnav__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">
+                    <Icon Path="@item.Icon" />
+                    <span>@item.Label</span>
+                </a>
+            }
+        </nav>
         <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
     </header>
 
@@ -52,6 +63,19 @@
     <main class="punk-main">
         @Body
     </main>
+
+    @* En móvil y tablet, las secciones de siempre a mano del pulgar (las demás siguen en el menú) *@
+    <nav class="tabbar" aria-label="Accesos rápidos">
+        @foreach (var item in AppNavigation.Items.Where(i => i.Available).Take(4))
+        {
+            <a class="tabbar__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">
+                <Icon Path="@item.Icon" />
+                <span>@item.Label</span>
+            </a>
+        }
+    </nav>
+
+    <StampToast />
 </div>
 
 @code {
@@ -61,11 +85,17 @@
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
-        if (_drawerOpen)
-        {
-            _drawerOpen = false;
-            StateHasChanged();
-        }
+        _drawerOpen = false;
+        StateHasChanged();
+    }
+
+    // "Bandas" sigue marcada dentro de una banda o una ficha (bandas/...), no solo en la portada.
+    private bool IsActive(AppNavigation.NavItem item)
+    {
+        var path = Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].TrimEnd('/');
+        return item.Href.Length == 0
+            ? path.Length == 0 || path == "bandas" || path.StartsWith("bandas/", StringComparison.Ordinal)
+            : path == item.Href || path.StartsWith(item.Href + "/", StringComparison.Ordinal);
     }
 
     public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
