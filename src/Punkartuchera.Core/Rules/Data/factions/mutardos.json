@@ -11,6 +11,10 @@
     "Máximo un Gato parameño.",
     "No puede haber más de tres Mutardos con la misma mutación."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "PerTroop", "troops": ["Pocho"], "than": ["Cabezón"], "max": 10, "text": "Máximo dos grupos de Pochos (de 2 a 5) por cada Cabezón."}
+  ],
   "rules": [
     { "name": "En peores sitios habremos estado", "text": "Todos los Mutardos son inmunes al Terreno contaminado." }
   ],

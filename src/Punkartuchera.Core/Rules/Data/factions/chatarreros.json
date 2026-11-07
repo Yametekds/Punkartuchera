@@ -10,6 +10,10 @@
     "Máximo una Personalidad o Mercenario.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "NotMoreThanRest", "troops": ["Dinamo"], "text": "No puede haber más Dinamos que el resto de la banda junta."},
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5 }],
   "rules": [
     { "name": "Equipo chatarrero", "text": "Si alguien que no es Chatarrero quiere usar su equipo (salvo balas apañadas y mira telescópica), tiene que superar una tirada de Técnica por objeto o lo descarta inutilizado." }

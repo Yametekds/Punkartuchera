@@ -11,6 +11,9 @@
       "Máximo un Mercenario o una Personalidad de Crematorio.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."}
+    ],
     "rules": [
       { "name": "El poder del fuego", "text": "Cada miniatura (de cualquier bando) Abatida por llamas da un marcador de Churruscado. Al empezar el Turno, cada marcador gastado en una miniatura la hace actuar una Ronda de Agilidad más arriba (sin cambiar su Agilidad)." },
       { "name": "Arma flamígera", "text": "Cualquier arma cuerpo a cuerpo puede ser flamígera gratis: -1 al Combate, pero si impacta sin Abatir, el objetivo tiene -1 acumulable a la Dureza contra cualquier tipo de llamas." }
@@ -60,6 +63,9 @@
       "Hasta dos miniaturas entre Mercenarios (distintos) y Personalidades de los Nuevos Hijos.",
       "Máximo un Gato parameño."
     ],
+    "limits": [
+      {"kind": "Characters", "max": 2, "text": "Hasta dos miniaturas entre Mercenarios (distintos) y Personalidades.", "distinctMercenaries": true}
+    ],
     "rules": [
       { "name": "Será por perres", "text": "Puedes reservar hasta 25 puntos sin gastar por cada fracción de 200. Al empezar la activación de una miniatura gastas parte en hasta dos beneficios para esa activación:",
         "table": { "columns": ["Puntos", "Efecto"], "rows": [
@@ -99,6 +105,9 @@
       "Solo Cenizas y Chispas de los Hijos de la Sangre Negra.",
       "Máximo una Personalidad; no admite Mercenarios.",
       "Máximo un Gato parameño."
+    ],
+    "limits": [
+      {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad.", "mercenaries": false}
     ],
     "rules": [
       { "name": "Motorizados", "text": "Todas las miniaturas empiezan montadas: Chispas, y Cenizas de paquete." },

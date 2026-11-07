@@ -13,6 +13,12 @@
     "Máximo un Gato parameño.",
     "Equipo cerrado e incluido en el coste, salvo las balas. No pueden Rapiñar, salvo balas si llevan Arma de fuego."
   ],
+  "noMercenaries": true,
+  "guestTroops": ["Caronte"],
+  "limits": [
+    {"kind": "Unique", "text": "No se repite ningún personaje."},
+    {"kind": "Exclusive", "troops": ["Dan novato", "Dan"], "text": "No pueden ir a la vez Dan novato y Dan."}
+  ],
   "troops": [
     {
       "name": "Paul", "cost": 40, "page": 91, "personality": true,

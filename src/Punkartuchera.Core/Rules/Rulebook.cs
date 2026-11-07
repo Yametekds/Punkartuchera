@@ -275,6 +275,9 @@ public sealed class FactionRules
 
     public List<string> Restrictions { get; set; } = [];
 
+    /// <summary>Las restricciones de creación de banda que se pueden comprobar (máximos, proporciones…).</summary>
+    public List<BandLimit> Limits { get; set; } = [];
+
     public List<PriceOption> GenericGear { get; set; } = [];
 
     public List<NamedText> Rules { get; set; } = [];
@@ -313,6 +316,9 @@ public sealed class FactionRules
 
     /// <summary>No admite Mercenarios.</summary>
     public bool NoMercenaries { get; set; }
+
+    /// <summary>Tropas de otras facciones que se pueden unir a esta (Caronte en la Banda del cómic).</summary>
+    public List<string> GuestTroops { get; set; } = [];
 
     /// <summary>Si es una subfacción, la facción a la que pertenece.</summary>
     [JsonIgnore]
@@ -449,6 +455,61 @@ public sealed class ExtraGroup
 
     [JsonIgnore]
     public string Slug => RulesText.Slug(Title);
+}
+
+public enum BandLimitKind
+{
+    /// <summary>Como mucho <see cref="BandLimit.Max"/> miniaturas de esas tropas.</summary>
+    Max,
+
+    /// <summary>De cada una de esas tropas, no más miniaturas que el resto de la banda junta.</summary>
+    NotMoreThanRest,
+
+    /// <summary>De cada una de esas tropas, no más miniaturas que de las de <see cref="BandLimit.Than"/>.</summary>
+    NotMoreThan,
+
+    /// <summary>Una por cada fracción completa de <see cref="BandLimit.Points"/> puntos de la banda.</summary>
+    PerPoints,
+
+    /// <summary>Hasta <see cref="BandLimit.Max"/> por cada miniatura de <see cref="BandLimit.Than"/>.</summary>
+    PerTroop,
+
+    /// <summary>Cada tropa de la lista tiene que ser más numerosa que la siguiente, si esta aparece.</summary>
+    Ladder,
+
+    /// <summary>Personalidades (y Mercenarios si <see cref="BandLimit.Mercenaries"/>): como mucho <see cref="BandLimit.Max"/>.</summary>
+    Characters,
+
+    /// <summary>Ninguna tropa se repite.</summary>
+    Unique,
+
+    /// <summary>No pueden ir juntas las tropas de la lista.</summary>
+    Exclusive,
+}
+
+/// <summary>Una restricción de creación de banda que la app puede comprobar.</summary>
+public sealed class BandLimit
+{
+    public BandLimitKind Kind { get; set; }
+
+    /// <summary>Tropas a las que se aplica, por su nombre en el reglamento.</summary>
+    public List<string> Troops { get; set; } = [];
+
+    /// <summary>Tropas con las que se comparan (NotMoreThan, PerTroop).</summary>
+    public List<string> Than { get; set; } = [];
+
+    public int Max { get; set; } = 1;
+
+    public int Points { get; set; }
+
+    /// <summary>Characters: los Mercenarios también cuentan.</summary>
+    public bool Mercenaries { get; set; } = true;
+
+    /// <summary>Characters: un mismo Mercenario no se repite.</summary>
+    public bool DistinctMercenaries { get; set; }
+
+    /// <summary>La restricción tal y como se lee en la ficha de la facción.</summary>
+    public string Text { get; set; } = string.Empty;
 }
 
 /// <summary>Equipo vetado en una subfacción, para todas las tropas o solo para algunas.</summary>

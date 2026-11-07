@@ -10,6 +10,10 @@
     "Máximo un Mariscal.",
     "Máximo un Gato parameño."
   ],
+  "limits": [
+    {"kind": "Characters", "max": 1, "text": "Máximo una Personalidad o Mercenario."},
+    {"kind": "Max", "troops": ["Mariscal"], "max": 1, "text": "Máximo un Mariscal."}
+  ],
   "genericGear": [{ "name": "Protección contra la contaminación", "cost": 5, "notes": "Todos menos los Subhumanos.", "excludeTroops": ["Subhumano"] }],
   "troops": [
     {
