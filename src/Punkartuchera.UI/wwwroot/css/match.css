@@ -47,7 +47,7 @@
 .match-member.is-down .portrait img { filter: grayscale(1) contrast(1.15) brightness(.85); }
 .match-member__open { position: relative; }
 .match-member.is-down .match-member__open::after {
-    content: ""; position: absolute; left: -4px; top: 50%; width: min(150px, 100%); height: 46px;
+    content: ""; position: absolute; left: -4px; top: 50%; width: min(160px, 100%); height: 50px;
     transform: translateY(-50%) rotate(-4deg);
     background: var(--punk-paint-x) center / 100% 100% no-repeat;
     pointer-events: none;

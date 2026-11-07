@@ -249,22 +249,32 @@ h1:focus { outline: none; }
         height: calc(var(--punk-tabbar-height) + env(safe-area-inset-bottom));
         padding: 4px max(6px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(6px, env(safe-area-inset-left));
         background-color: var(--punk-bar);
+        /* textura anclada arriba: el desgarro (::before) la continúa sin corte */
         background-image:
             linear-gradient(to top, rgba(0, 0, 0, .25), rgba(0, 0, 0, 0) 60%),
             var(--punk-tex-grain), var(--punk-tex-plate);
-        background-position: 0 0, left top, left top;
+        background-position: 0 0, left 0 top 0, left 0 top 0;
         box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .5);
         filter: drop-shadow(0 -5px 6px rgba(0, 0, 0, .5));
+    }
+    /* Óxido: más denso junto al desgarro de arriba */
+    .tabbar::after {
+        content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+        background: var(--punk-tex-rust) left 90px top 0 / 470px;
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, rgba(0, 0, 0, .85));
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, .2), rgba(0, 0, 0, .25) 45%, rgba(0, 0, 0, .85));
     }
     .tabbar::before {
         content: ""; position: absolute; left: 0; right: 0; top: -13px; height: 14px; pointer-events: none;
         background-color: var(--punk-bar);
-        background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(58, 24, 9, .35)), var(--punk-tex-rust), var(--punk-tex-grain), var(--punk-tex-plate);
+        background-image:
+            linear-gradient(to top, rgba(40, 18, 8, .1), rgba(40, 18, 8, .3)),
+            var(--punk-tex-rust), var(--punk-tex-grain), var(--punk-tex-plate);
         background-size: auto, 470px, auto, auto;
-        background-position: 0 0, left 90px bottom 0, left bottom, left bottom;
-        -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
-        mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
-        transform: scaleY(-1);
+        /* la última fila del borde pisa la primera de la barra: la textura empieza ahí */
+        background-position: 0 0, left 90px top 13px, left 0 top 13px, left 0 top 13px;
+        -webkit-mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
+        mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
     }
     .tabbar__item {
         position: relative; z-index: 0;
@@ -494,7 +504,6 @@ a.card:active { transform: scale(.99); }
     --paper-fold-v: linear-gradient(transparent, transparent);
     --paper-fold-h: linear-gradient(transparent, transparent);
     --paper-corner: linear-gradient(transparent, transparent);
-    --paper-stain: linear-gradient(transparent, transparent);
     --tear-x: 0%;
     position: relative;
     display: block;
@@ -503,11 +512,11 @@ a.card:active { transform: scale(.99); }
     /* Bordes tostados arriba y a los lados con degradados (no sombras interiores,
        que también oscurecen el pie y dejan un corte con el desgarro) */
     background-image:
-        var(--paper-corner), var(--paper-stain),
+        var(--paper-corner),
         var(--punk-paper-burn-sides), var(--punk-paper-burn-top),
         var(--paper-fold-h), var(--paper-fold-v), var(--paper-bulge), var(--paper-light),
         var(--punk-tex-paper), var(--punk-tex-fibre);
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, left var(--px) bottom var(--py), left var(--px) bottom var(--py);
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, left var(--px) bottom var(--py), left var(--px) bottom var(--py);
     color: var(--punk-ink);
     box-shadow: var(--punk-shadow);
     text-decoration: none;
@@ -550,13 +559,6 @@ a.card:active { transform: scale(.99); }
 /* Esquina levantada: la sombra se abre hacia un lado como si la hoja no apoyara plana */
 .paper:nth-child(3n + 1) { box-shadow: 0 12px 20px -4px rgba(0, 0, 0, .55), -6px 4px 12px -6px rgba(0, 0, 0, .45), 0 2px 0 rgba(0, 0, 0, .55); }
 .paper:nth-child(3n) { box-shadow: 0 12px 20px -4px rgba(0, 0, 0, .55), 7px 6px 14px -6px rgba(0, 0, 0, .5), 0 2px 0 rgba(0, 0, 0, .55); }
-/* Cerco de taza o de lata en algunas hojas */
-.paper:nth-child(7n + 2) {
-    --paper-stain: radial-gradient(circle at 84% 24%, rgba(110, 55, 15, 0) 0 25px, rgba(110, 55, 15, .2) 27px, rgba(110, 55, 15, .07) 30px, rgba(110, 55, 15, 0) 33px);
-}
-.paper:nth-child(7n + 6) {
-    --paper-stain: radial-gradient(circle at 12% 70%, rgba(110, 55, 15, 0) 0 30px, rgba(110, 55, 15, .16) 32px, rgba(110, 55, 15, .05) 36px, rgba(110, 55, 15, 0) 38px);
-}
 /* Esquina doblada (oreja) arriba a la derecha en algunas hojas */
 .card-grid > .paper:nth-child(5n + 4) {
     --paper-corner: linear-gradient(225deg, var(--punk-bg) 0 13px, rgba(255, 250, 235, .55) 13px 14px, #c99c62 14px 27px, rgba(40, 20, 5, .35) 27px, rgba(40, 20, 5, 0) 33px);
