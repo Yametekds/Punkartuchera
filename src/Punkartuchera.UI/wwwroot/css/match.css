@@ -96,6 +96,16 @@
 .aid__once { border: 0; cursor: pointer; min-height: 36px; background: var(--punk-surface); color: var(--punk-text); font: inherit; font-size: .85rem; }
 .aid__once[aria-pressed="true"] { background: var(--punk-steel); color: var(--punk-ink); text-decoration: line-through; }
 .aid__once:disabled { cursor: default; }
+.aid__picked { display: inline-flex; align-items: center; text-decoration: none; }
+.aid__once.aid__picked[aria-pressed="true"] { text-decoration: none; }
+.aid__undo { font-size: .85rem; }
+.match-member__aids .aid__undo { color: var(--punk-accent); }
+.aid__choices { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.aid__ask { flex-basis: 100%; font-size: .85rem; font-weight: 600; }
+.aid__choice { border: 1px solid var(--punk-blood); cursor: pointer; min-height: 36px; background: transparent; color: inherit; font: inherit; font-size: .85rem; }
+.statbox--changed { background: var(--punk-blood); }
+.statbox--changed dd { color: #fff; }
+.stat--changed { color: var(--punk-blood); font-weight: 700; }
 .aid__readonly strong { font-family: var(--punk-font-display); }
 
 .match-member__aids {

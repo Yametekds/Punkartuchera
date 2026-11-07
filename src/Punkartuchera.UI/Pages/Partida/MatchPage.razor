@@ -184,7 +184,8 @@ else
         var sheetAids = AidsOf(open.Side);
         <MatchMemberSheet Member="Mini(sheetBand, sheetMember, open.Index)" Name="@sheetMember.Name" Role="@sheetMember.Role" Down="sheetMember.Down"
                           FactionId="@sheetBand?.FactionId" SubfactionId="@sheetBand?.SubfactionId"
-                          Aids="sheetAids.Of(open.Index)" OnClose="() => _sheet = null">
+                          Aids="sheetAids.Of(open.Index)" StatChanges="sheetAids.StatChanges(Counters(open.Side), open.Index)"
+                          OnClose="() => _sheet = null">
             <AidTemplate Context="aid">
                 @AidView((open.Side, sheetAids, aid, open.Index, true))
             </AidTemplate>

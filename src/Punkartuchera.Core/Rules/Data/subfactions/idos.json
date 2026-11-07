@@ -145,7 +145,7 @@
         ]
       },
       {
-        "name": "Abominación", "cost": 50, "page": 10,
+        "name": "Abominación", "cost": 50, "page": 8,
         "stats": { "a": "2", "c": "4", "p": "-", "ag": "3", "f": "6", "d": "5", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Ninguno",
         "specialRules": ["Bestia"],
@@ -155,7 +155,7 @@
         ]
       },
       {
-        "name": "El Habitante de la Oscuridad", "cost": 150, "page": 11, "personality": true,
+        "name": "El Habitante de la Oscuridad", "cost": 150, "page": 9, "personality": true,
         "stats": { "a": "2", "c": "5", "p": "-", "ag": "5", "f": "7", "d": "7", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Ninguno",
         "specialRules": ["Personalidad", "Bersérker", "Mónguer", "Todoterreno"],
@@ -193,7 +193,7 @@
     ],
     "troops": [
       {
-        "name": "Necrófago", "cost": 8, "page": 14,
+        "name": "Necrófago", "cost": 8, "page": 12,
         "stats": { "a": "1", "c": "X", "p": "-", "ag": "3", "f": "2", "d": "2", "t": "-" },
         "weapons": "Garras y dientes", "armor": "Ninguno",
         "specialRules": ["Mónguer"],
