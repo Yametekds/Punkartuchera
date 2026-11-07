@@ -97,3 +97,17 @@
     .map-panel { display: flex; }
     .page-tabs:has(+ .map-layout) { display: none; }
 }
+
+/* Al generar un mapa, las piezas caen una a una sobre la mesa (menos de medio segundo en total) */
+.map-piece {
+    transform-box: fill-box; transform-origin: center;
+    animation: map-drop .24s cubic-bezier(.3, 1.4, .5, 1) both;
+    animation-delay: min(calc(var(--i, 0) * 22ms), 260ms);
+}
+@keyframes map-drop {
+    from { opacity: 0; transform: translateY(-6%) scale(1.35); }
+    to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .map-piece { animation: none; }
+}
