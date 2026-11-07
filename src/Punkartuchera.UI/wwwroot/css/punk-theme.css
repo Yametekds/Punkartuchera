@@ -236,7 +236,52 @@ h1:focus { outline: none; }
     flex: 1;
     width: 100%; max-width: 1100px;
     margin: 0 auto;
-    padding: 30px max(16px, env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    padding: 30px max(16px, env(safe-area-inset-right)) calc(96px + var(--punk-tabbar-height) + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+
+/* Barra de pestañas inferior (móvil y tablet): la misma chapa, con el desgarro hacia arriba */
+.tabbar { display: none; }
+@media (max-width: 999px) {
+    :root { --punk-tabbar-height: 60px; }
+    .tabbar {
+        position: fixed; z-index: 12; left: 0; right: 0; bottom: 0;
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        height: calc(var(--punk-tabbar-height) + env(safe-area-inset-bottom));
+        padding: 4px max(6px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(6px, env(safe-area-inset-left));
+        background-color: var(--punk-bar);
+        background-image:
+            linear-gradient(to top, rgba(0, 0, 0, .25), rgba(0, 0, 0, 0) 60%),
+            var(--punk-tex-grain), var(--punk-tex-plate);
+        background-position: 0 0, left top, left top;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .5);
+        filter: drop-shadow(0 -5px 6px rgba(0, 0, 0, .5));
+    }
+    .tabbar::before {
+        content: ""; position: absolute; left: 0; right: 0; top: -13px; height: 14px; pointer-events: none;
+        background-color: var(--punk-bar);
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(58, 24, 9, .35)), var(--punk-tex-rust), var(--punk-tex-grain), var(--punk-tex-plate);
+        background-size: auto, 470px, auto, auto;
+        background-position: 0 0, left 90px bottom 0, left bottom, left bottom;
+        -webkit-mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
+        mask: var(--punk-edge-torn-bar) center / 100% 100% no-repeat;
+        transform: scaleY(-1);
+    }
+    .tabbar__item {
+        position: relative; z-index: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+        min-height: 48px;
+        color: var(--punk-text-muted); text-decoration: none;
+        font-family: var(--punk-font-display); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .9);
+    }
+    .tabbar__item .icon { width: 1.45rem; height: 1.45rem; color: var(--punk-steel); }
+    .tabbar__item.active { color: var(--punk-text); }
+    .tabbar__item.active .icon { color: var(--punk-accent); }
+    .tabbar__item.active::after {
+        content: ""; position: absolute; z-index: -1; left: 16%; right: 16%; bottom: 3px; height: 9px;
+        background: var(--punk-brush-red) center / 100% 100% no-repeat;
+    }
+    .tabbar__item:focus-visible { outline: 3px solid var(--punk-accent); outline-offset: -3px; }
 }
 
 .appbar-menu {
@@ -433,35 +478,95 @@ a.card { transition: transform .12s ease; }
 a.card:hover { transform: translateY(-2px) rotate(-.3deg); }
 a.card:active { transform: scale(.99); }
 
-/* Papel o cartón: fichas, carteles, notas */
+/* Papel o cartón: fichas, carteles, notas.
+   Cada hoja es distinta sin cargar nada más: las variables de abajo cambian el
+   trozo de textura que se ve (--px, --py), el tono, la luz que la comba, un
+   abombado, un doblez y el tramo del desgarro. Las fija .paper:nth-child(...)
+   más abajo, así dos hojas seguidas nunca salen iguales. */
 .paper {
+    --px: 0px; --py: 0px;
+    --paper-tone: var(--punk-accent);
+    /* combado: luz por un lado y sombra por el otro (solo depende de x, así sigue en el desgarro) */
+    --paper-light: linear-gradient(to right, rgba(255, 250, 235, .12), rgba(255, 250, 235, 0) 40%, rgba(70, 35, 8, 0) 62%, rgba(70, 35, 8, .13));
+    /* abombado en la mitad de arriba: se apaga antes de llegar al pie */
+    --paper-bulge: radial-gradient(ellipse 60% 40% at 30% 26%, rgba(255, 248, 228, .18), rgba(255, 248, 228, 0) 72%);
+    /* doblez vertical (cruza también el desgarro) y horizontal (solo arriba) */
+    --paper-fold-v: linear-gradient(transparent, transparent);
+    --paper-fold-h: linear-gradient(transparent, transparent);
+    --paper-corner: linear-gradient(transparent, transparent);
+    --paper-stain: linear-gradient(transparent, transparent);
+    --tear-x: 0%;
     position: relative;
     display: block;
     padding: 18px 16px 16px;
-    background-color: var(--punk-accent);
+    background-color: var(--paper-tone);
     /* Bordes tostados arriba y a los lados con degradados (no sombras interiores,
        que también oscurecen el pie y dejan un corte con el desgarro) */
-    background-image: var(--punk-paper-burn-sides), var(--punk-paper-burn-top), var(--punk-tex-paper), var(--punk-tex-fibre);
-    background-position: left bottom;
+    background-image:
+        var(--paper-corner), var(--paper-stain),
+        var(--punk-paper-burn-sides), var(--punk-paper-burn-top),
+        var(--paper-fold-h), var(--paper-fold-v), var(--paper-bulge), var(--paper-light),
+        var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, left var(--px) bottom var(--py), left var(--px) bottom var(--py);
     color: var(--punk-ink);
     box-shadow: var(--punk-shadow);
     text-decoration: none;
 }
 /* Borde inferior rasgado: el mismo papel recortado con la forma del desgarro.
    La textura del bloque va anclada abajo y la del borde arriba, así el dibujo
-   sigue sin corte de un lado al otro. */
+   sigue sin corte de un lado al otro. Cada hoja enseña otro tramo del mismo
+   desgarro (--tear-x), sin cambiar su forma. */
 .paper::after, .torn-bottom::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 13px;
     background-color: inherit;
-    background-image: var(--punk-paper-burn-sides), var(--punk-tex-paper), var(--punk-tex-fibre);
-    background-size: 100% 100%, auto, auto;
+    background-image: var(--punk-paper-burn-sides), var(--paper-fold-v, none), var(--paper-light, none), var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-size: 100% 100%, 100% 100%, 100% 100%, auto, auto;
     /* el borde pisa 1px el pie del bloque: la textura empieza 1px más abajo para no repetir esa fila */
-    background-position: left top, left 0 top 1px, left 0 top 1px;
-    background-repeat: no-repeat, repeat, repeat;
-    -webkit-mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
-    mask: var(--punk-edge-torn-sand) center / 100% 100% no-repeat;
+    background-position: left top, left top, left top, left var(--px, 0px) top calc(1px - var(--py, 0px)), left var(--px, 0px) top calc(1px - var(--py, 0px));
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+    -webkit-mask: var(--punk-edge-torn-sand) var(--tear-x, 0%) 0 / 170% 100% no-repeat;
+    mask: var(--punk-edge-torn-sand) var(--tear-x, 0%) 0 / 170% 100% no-repeat;
     pointer-events: none;
 }
+
+/* Variedad: ciclos de 2, 3, 4, 5 y 7 que se combinan entre sí */
+.paper:nth-child(2n) { --px: -330px; --tear-x: 100%; }
+.paper:nth-child(3n + 1) { --py: -190px; }
+.paper:nth-child(3n + 2) { --py: -560px; --tear-x: 45%; }
+.paper:nth-child(5n + 3) { --px: -710px; }
+.paper:nth-child(4n + 2) { --paper-tone: #e9bd84; }
+.paper:nth-child(4n + 3) { --paper-tone: #efc896; }
+.paper:nth-child(4n) { --paper-tone: #e4b77d; }
+.paper:nth-child(3n + 2) {
+    --paper-light: linear-gradient(to left, rgba(255, 250, 235, .12), rgba(255, 250, 235, 0) 38%, rgba(70, 35, 8, 0) 64%, rgba(70, 35, 8, .12));
+    --paper-bulge: radial-gradient(ellipse 55% 42% at 72% 22%, rgba(255, 248, 228, .18), rgba(255, 248, 228, 0) 72%);
+}
+.paper:nth-child(5n + 2) {
+    --paper-fold-v: linear-gradient(to right, transparent 0 calc(58% - 10px), rgba(80, 42, 12, .13) calc(58% - 1px), rgba(255, 250, 235, .26) 58%, rgba(255, 250, 235, 0) calc(58% + 9px));
+}
+.paper:nth-child(7n + 4) {
+    --paper-fold-h: linear-gradient(to bottom, transparent 0 calc(34% - 9px), rgba(80, 42, 12, .12) calc(34% - 1px), rgba(255, 250, 235, .24) 34%, rgba(255, 250, 235, 0) calc(34% + 8px));
+}
+/* Esquina levantada: la sombra se abre hacia un lado como si la hoja no apoyara plana */
+.paper:nth-child(3n + 1) { box-shadow: 0 12px 20px -4px rgba(0, 0, 0, .55), -6px 4px 12px -6px rgba(0, 0, 0, .45), 0 2px 0 rgba(0, 0, 0, .55); }
+.paper:nth-child(3n) { box-shadow: 0 12px 20px -4px rgba(0, 0, 0, .55), 7px 6px 14px -6px rgba(0, 0, 0, .5), 0 2px 0 rgba(0, 0, 0, .55); }
+/* Cerco de taza o de lata en algunas hojas */
+.paper:nth-child(7n + 2) {
+    --paper-stain: radial-gradient(circle at 84% 24%, rgba(110, 55, 15, 0) 0 25px, rgba(110, 55, 15, .2) 27px, rgba(110, 55, 15, .07) 30px, rgba(110, 55, 15, 0) 33px);
+}
+.paper:nth-child(7n + 6) {
+    --paper-stain: radial-gradient(circle at 12% 70%, rgba(110, 55, 15, 0) 0 30px, rgba(110, 55, 15, .16) 32px, rgba(110, 55, 15, .05) 36px, rgba(110, 55, 15, 0) 38px);
+}
+/* Esquina doblada (oreja) arriba a la derecha en algunas hojas */
+.card-grid > .paper:nth-child(5n + 4) {
+    --paper-corner: linear-gradient(225deg, var(--punk-bg) 0 13px, rgba(255, 250, 235, .55) 13px 14px, #c99c62 14px 27px, rgba(40, 20, 5, .35) 27px, rgba(40, 20, 5, 0) 33px);
+}
+/* Las hojas sueltas más vistas tienen su propio aspecto fijo */
+.band-hero {
+    --px: -470px; --py: -300px;
+    --paper-fold-v: linear-gradient(to right, transparent 0 calc(66% - 10px), rgba(80, 42, 12, .12) calc(66% - 1px), rgba(255, 250, 235, .24) 66%, rgba(255, 250, 235, 0) calc(66% + 9px));
+}
+.sheet.paper { --px: -120px; --py: -760px; --tear-x: 70%; }
 .paper .muted, .paper .field__label { color: var(--punk-ink-muted); }
 a.paper { transition: transform .12s ease; }
 a.paper:hover { transform: rotate(0deg) translateY(-3px) !important; }
@@ -473,9 +578,10 @@ a.paper:hover { transform: rotate(0deg) translateY(-3px) !important; }
 }
 
 /* Las tarjetas de una rejilla quedan un poco torcidas, como pegadas a mano */
-.card-grid > .paper:nth-child(3n + 1) { transform: rotate(-.8deg); }
-.card-grid > .paper:nth-child(3n + 2) { transform: rotate(.6deg); }
-.card-grid > .paper:nth-child(3n) { transform: rotate(-.3deg); }
+.card-grid > .paper:nth-child(4n + 1) { transform: rotate(-1deg); }
+.card-grid > .paper:nth-child(4n + 2) { transform: rotate(.8deg) translateY(4px); }
+.card-grid > .paper:nth-child(4n + 3) { transform: rotate(-.35deg) translateY(-2px); }
+.card-grid > .paper:nth-child(4n) { transform: rotate(1.1deg); }
 
 .card--add {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
@@ -960,11 +1066,25 @@ textarea.field__input { resize: vertical; }
     display: flex; flex-direction: column; gap: 12px;
     margin-top: -2px;
     padding: 22px 16px 18px;
-    background-color: var(--punk-accent);
-    background-image: var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-color: var(--paper-tone, var(--punk-accent));
+    background-image:
+        linear-gradient(to bottom, rgba(40, 20, 5, .22), rgba(40, 20, 5, 0) 14px),
+        var(--paper-light-card), var(--punk-tex-paper), var(--punk-tex-fibre);
+    background-position: 0 0, 0 0, left var(--px, 0px) top var(--py, 0px), left var(--px, 0px) top var(--py, 0px);
     color: var(--punk-ink);
     clip-path: polygon(0 0, 100% 0, 100% 97%, 96% 100%, 74% 98.6%, 52% 100%, 27% 98.8%, 6% 100%, 0 98%);
 }
+/* Cada ficha enseña otro trozo de papel, con otro tono y la luz por otro lado */
+.datacard {
+    --paper-light-card: linear-gradient(to right, rgba(255, 250, 235, .1), rgba(255, 250, 235, 0) 40%, rgba(70, 35, 8, 0) 65%, rgba(70, 35, 8, .1));
+}
+.datacard:nth-child(2n) {
+    --px: -380px; --paper-tone: #e8bc83;
+    --paper-light-card: linear-gradient(to left, rgba(255, 250, 235, .1), rgba(255, 250, 235, 0) 40%, rgba(70, 35, 8, 0) 65%, rgba(70, 35, 8, .1));
+}
+.datacard:nth-child(3n + 2) { --py: -520px; }
+.datacard:nth-child(3n) { --py: -260px; --paper-tone: #efc794; }
+.datacard:nth-child(5n + 4) { --px: -760px; }
 .datacard__body::before {
     content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px;
     background-color: var(--punk-bar);

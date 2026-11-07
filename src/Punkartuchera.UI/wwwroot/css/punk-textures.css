@@ -17,6 +17,8 @@
     --punk-tex-speckle: url("../img/tex/speckle.webp");
     /* Manchas de óxido con transparencia, para poner encima de la chapa */
     --punk-tex-rust: url("../img/tex/rust.webp");
+    /* Aspa de pintura roja a brochazos, para tachar a los caídos */
+    --punk-paint-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 46' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%23a2140a' stroke-linecap='round' stroke-opacity='.88'%3E%3Cpath d='M6 6 C40 14 90 30 144 41' stroke-width='7'/%3E%3Cpath d='M9 40 C50 30 98 15 143 5' stroke-width='6'/%3E%3Cpath d='M30 13 L36 16 M118 33 L124 37' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E");
     /* Remache abombado con un cerco de óxido alrededor */
     --punk-tex-rivet-rust: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cdefs%3E%3CradialGradient id='h'%3E%3Cstop offset='.35' stop-color='%236e2f12' stop-opacity='.9'/%3E%3Cstop offset='1' stop-color='%234a1d0a' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='d' cx='.38' cy='.34' r='.7'%3E%3Cstop offset='0' stop-color='%23928a80'/%3E%3Cstop offset='.45' stop-color='%234a4643'/%3E%3Cstop offset='1' stop-color='%23161412'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='11' cy='11' r='11' fill='url(%23h)'/%3E%3Ccircle cx='11.6' cy='12.2' r='5' fill='%23000' opacity='.55'/%3E%3Ccircle cx='11' cy='11' r='5' fill='url(%23d)'/%3E%3C/svg%3E");
     --punk-tex-rivet: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Ccircle cx='7' cy='7' r='4' fill='%233a3a3a'/%3E%3Ccircle cx='6' cy='6' r='1.6' fill='%235a5a5a'/%3E%3C/svg%3E");

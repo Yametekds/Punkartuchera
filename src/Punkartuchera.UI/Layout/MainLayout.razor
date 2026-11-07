@@ -64,6 +64,17 @@
         @Body
     </main>
 
+    @* En móvil y tablet, las secciones de siempre a mano del pulgar (las demás siguen en el menú) *@
+    <nav class="tabbar" aria-label="Accesos rápidos">
+        @foreach (var item in AppNavigation.Items.Where(i => i.Available).Take(4))
+        {
+            <NavLink class="tabbar__item" href="@item.Href" Match="@(item.MatchAll ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                <Icon Path="@item.Icon" />
+                <span>@item.Label</span>
+            </NavLink>
+        }
+    </nav>
+
     <StampToast />
 </div>
 
