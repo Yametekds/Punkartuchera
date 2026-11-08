@@ -409,7 +409,18 @@ public class OfficialMiniTests
         Assert.NotEmpty(_builder.PhotosFor("pandilleros", "Crazy Mel"));
 
         var members = _builder.FromList(Book.FindList("craabianos")!);
-        Assert.True(members.Count(m => m.Photo is { Source: PhotoSource.Official }) >= 5);
+        Assert.All(members, m => Assert.Equal(PhotoSource.Official, m.Photo?.Source));
+    }
+
+    [Fact]
+    public void Craabian_captain_and_blunderbuss_sailor_use_the_starter_pack_photos()
+    {
+        var members = _builder.FromList(Book.FindList("craabianos")!);
+
+        Assert.EndsWith("BR1CR05A.webp", members.Single(m => m.Role == "Capitán").Photo!.Key);
+        var sailors = members.Where(m => m.Role == "Marinero").ToList();
+        Assert.EndsWith("BR1CR06A.webp", sailors.Single(m => m.Gear.Any(g => g.Name == "Trabuco")).Photo!.Key);
+        Assert.EndsWith("BR1CR04A.webp", sailors.Single(m => m.Gear.Any(g => g.Name == "Pistola de mecha")).Photo!.Key);
     }
 }
 
