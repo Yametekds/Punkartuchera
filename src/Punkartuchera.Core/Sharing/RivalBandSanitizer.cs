@@ -24,39 +24,68 @@ public static class RivalBandSanitizer
 
     public const int MaxCost = 100_000;
 
+    public const int MaxAmmo = 999;
+
     /// <summary>Una foto encuadrada pesa unos 100 KB; esto deja margen para fotos antiguas sin recortar.</summary>
     public const int MaxPhotoBytes = 5 * 1024 * 1024;
 
     /// <summary>Deja la banda lista para guardarla como rival: sin nulos, dentro de los límites y sin referencias externas.</summary>
     public static void Sanitize(Band band, IRulesCatalog rules)
     {
+        LimitContent(band, rules);
+        band.Notes = null;
+        band.Ownership = BandOwnership.Rival;
+
+        foreach (var member in band.Members)
+        {
+            // Identificadores nuevos: el archivo podría repetirlos o reutilizar los de otra banda.
+            member.Id = Guid.NewGuid();
+            member.Ammo = 0;
+        }
+
+        // Del rival solo se guarda el coste total: el de cada miniatura dejaría adivinar sus balas.
+        // Archivos antiguos traían el coste por miniatura; se suma antes de borrarlo.
+        band.KeepOnlyTotalCost();
+        band.TotalCost = band.TotalCost is { } total ? Math.Clamp(total, 0, MaxCost) : null;
+
+        band.Name = band.Name.Length == 0 ? "Rival sin nombre" : band.Name;
+    }
+
+    /// <summary>
+    /// Quita nulos y recorta una banda que viene de un archivo (rival o copia de seguridad):
+    /// textos y listas con tope, atributos dentro del rango del reglamento, costes y balas no negativos,
+    /// identificadores de miembro sin repetir y fotos que la app sepa enseñar. No cambia de quién es la banda.
+    /// </summary>
+    public static void LimitContent(Band band, IRulesCatalog rules)
+    {
         band.Name = Clean(band.Name, BandService.MaxNameLength);
         band.FactionId = Clean(band.FactionId, MaxTextLength);
         band.SubfactionId = NullIfEmpty(Clean(band.SubfactionId, MaxTextLength));
-        band.Notes = null;
-        band.Ownership = BandOwnership.Rival;
+        band.Notes = NullIfEmpty(Clean(band.Notes, MaxNotesLength));
         band.PlayerName = UserProfile.CleanNickname(band.PlayerName);
+        band.TotalCost = band.TotalCost is { } bandCost ? Math.Clamp(bandCost, 0, MaxCost) : null;
 
         band.Members = (band.Members ?? [])
             .OfType<Miniature>()
             .Take(MaxMembers)
             .ToList();
 
+        var ids = new HashSet<Guid>();
         foreach (var member in band.Members)
         {
-            // Identificadores nuevos: el archivo podría repetirlos o reutilizar los de otra banda.
-            member.Id = Guid.NewGuid();
+            if (!ids.Add(member.Id))
+            {
+                member.Id = Guid.NewGuid();
+                ids.Add(member.Id);
+            }
+
             member.Name = Clean(member.Name, BandService.MaxNameLength);
             member.Role = Clean(member.Role, MaxTextLength);
             member.Notes = NullIfEmpty(Clean(member.Notes, MaxNotesLength));
-            member.Ammo = 0;
+            member.Ammo = Math.Clamp(member.Ammo, 0, MaxAmmo);
             member.Cost = member.Cost is { } cost ? Math.Clamp(cost, 0, MaxCost) : null;
-
-            member.Skills = (member.Skills ?? [])
-                .Select(s => Clean(s, MaxTextLength))
-                .Where(s => s.Length > 0)
-                .Take(MaxListItems)
-                .ToList();
+            member.Skills = CleanList(member.Skills);
+            member.Included = CleanList(member.Included);
 
             member.Gear = (member.Gear ?? [])
                 .OfType<Equipment>()
@@ -79,14 +108,17 @@ public static class RivalBandSanitizer
                 _ => null,
             };
         }
-
-        // Del rival solo se guarda el coste total: el de cada miniatura dejaría adivinar sus balas.
-        // Archivos antiguos traían el coste por miniatura; se suma antes de borrarlo.
-        band.KeepOnlyTotalCost();
-        band.TotalCost = band.TotalCost is { } total ? Math.Clamp(total, 0, MaxCost) : null;
-
-        band.Name = band.Name.Length == 0 ? "Rival sin nombre" : band.Name;
     }
+
+    /// <summary>Recorta un texto suelto que viene de fuera, con las mismas reglas que los de la banda.</summary>
+    public static string CleanText(string? text, int maxLength) => Clean(text, maxLength);
+
+    private static List<string> CleanList(List<string>? items) =>
+        (items ?? [])
+            .Select(s => Clean(s, MaxTextLength))
+            .Where(s => s.Length > 0)
+            .Take(MaxListItems)
+            .ToList();
 
     /// <summary>
     /// Comprueba que los bytes son de verdad la imagen que dicen ser, mirando su firma.

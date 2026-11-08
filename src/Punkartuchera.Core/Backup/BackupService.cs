@@ -2,6 +2,7 @@ using System.Text.Json;
 using Punkartuchera.Core.Matches;
 using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Rules;
+using Punkartuchera.Core.Services;
 using Punkartuchera.Core.Sharing;
 using Punkartuchera.Core.Storage;
 using Punkartuchera.Core.Users;
@@ -28,6 +29,11 @@ public sealed class BackupService(
 
     public const int MaxBands = 500;
     public const int MaxMatches = 500;
+
+    /// <summary>Máximo de contadores por bando en una partida.</summary>
+    public const int MaxCounters = 50;
+
+    private const int MaxCounterKeyLength = 60;
 
     public async Task<BackupResult> CreateAsync(CancellationToken cancellationToken = default)
     {
@@ -226,26 +232,7 @@ public sealed class BackupService(
     /// </summary>
     private void Tidy(Band band)
     {
-        band.Name ??= string.Empty;
-        band.FactionId ??= string.Empty;
-        band.Members = (band.Members ?? []).OfType<Miniature>().ToList();
-        foreach (var member in band.Members)
-        {
-            member.Name ??= string.Empty;
-            member.Role ??= string.Empty;
-            member.Stats ??= [];
-            member.Skills = (member.Skills ?? []).OfType<string>().ToList();
-            member.Gear = (member.Gear ?? []).OfType<Equipment>().ToList();
-            member.Included = (member.Included ?? []).OfType<string>().ToList();
-            member.Ammo = Math.Max(0, member.Ammo);
-            member.Photo = member.Photo switch
-            {
-                { Source: PhotoSource.Stored } stored when !string.IsNullOrEmpty(stored.Key) => stored,
-                { Source: PhotoSource.Stock } stock when StockPortraits.Exists(stock.Key) => stock,
-                { Source: PhotoSource.Official } official when rules.IsOfficialPhoto(official.Key) => official,
-                _ => null,
-            };
-        }
+        RivalBandSanitizer.LimitContent(band, rules);
 
         if (band.IsReadOnly)
         {
@@ -262,11 +249,18 @@ public sealed class BackupService(
     private static void Tidy(ActiveMatch match)
     {
         match.Round = Math.Clamp(match.Round, 1, ActiveMatch.MaxRound);
-        match.OwnBandName ??= string.Empty;
-        match.Own = (match.Own ?? []).OfType<MatchMember>().ToList();
-        match.Rival = (match.Rival ?? []).OfType<MatchMember>().ToList();
-        match.OwnCounters ??= [];
-        match.RivalCounters ??= [];
+        match.OwnScore = Math.Clamp(match.OwnScore, 0, ActiveMatch.MaxCount);
+        match.RivalScore = Math.Clamp(match.RivalScore, 0, ActiveMatch.MaxCount);
+        match.OwnBandName = RivalBandSanitizer.CleanText(match.OwnBandName, BandService.MaxNameLength);
+        match.RivalBandName = match.RivalBandName is null ? null : RivalBandSanitizer.CleanText(match.RivalBandName, BandService.MaxNameLength);
+        match.Own = TidyMembers(match.Own);
+        match.Rival = TidyMembers(match.Rival);
+        match.OwnCounters = TidyCounters(match.OwnCounters);
+        match.RivalCounters = TidyCounters(match.RivalCounters);
+
+        // El enlace del mapa se vuelve a construir con lo que entiende el generador.
+        match.Map = match.Map is null ? null : MatchMap.FromQuery(match.Map.Query);
+
         match.Photos = (match.Photos ?? [])
             .OfType<MatchPhoto>()
             .Where(p => !string.IsNullOrEmpty(p.Key))
@@ -277,6 +271,24 @@ public sealed class BackupService(
             match.Notes = notes[..ActiveMatch.MaxNotes];
         }
     }
+
+    private static List<MatchMember> TidyMembers(List<MatchMember>? members) =>
+        (members ?? [])
+            .OfType<MatchMember>()
+            .Take(RivalBandSanitizer.MaxMembers)
+            .Select(m =>
+            {
+                m.Name = RivalBandSanitizer.CleanText(m.Name, BandService.MaxNameLength);
+                m.Role = RivalBandSanitizer.CleanText(m.Role, RivalBandSanitizer.MaxTextLength);
+                return m;
+            })
+            .ToList();
+
+    private static Dictionary<string, int> TidyCounters(Dictionary<string, int>? counters) =>
+        (counters ?? [])
+            .Where(c => c.Key.Length is > 0 and <= MaxCounterKeyLength)
+            .Take(MaxCounters)
+            .ToDictionary(c => c.Key, c => Math.Clamp(c.Value, 0, ActiveMatch.MaxCount));
 
     private async Task DeletePhotosAsync(IEnumerable<PhotoRef?> refs, CancellationToken cancellationToken)
     {
