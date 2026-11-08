@@ -112,11 +112,6 @@ public sealed class MatchService(
     {
         var own = await GetBandAsync(ownBandId, cancellationToken);
         var rival = await GetBandAsync(rivalBandId, cancellationToken);
-        if (own.Id == rival.Id)
-        {
-            throw new MatchException("Una banda no puede pegarse consigo misma.");
-        }
-
         await ParkCurrentAsync(cancellationToken);
         Current = new ActiveMatch
         {
