@@ -112,3 +112,7 @@
 }
 .user-facts dt { font-weight: 700; }
 .user-facts dd { margin: 0; overflow-wrap: anywhere; }
+
+.user-credit { grid-column: 1 / -1; }
+.user-credit p { margin: 0; }
+.user-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
