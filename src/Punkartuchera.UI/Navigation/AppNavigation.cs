@@ -15,5 +15,6 @@ public static class AppNavigation
         new("mapa", "Mapa", Icons.Map, Available: true),
         new("partida", "Partida", Icons.Dice, Available: true),
         new("tutoriales", "Tutoriales", Icons.Signpost, Available: true),
+        new("usuario", "Usuario", Icons.User, Available: true),
     ];
 }
