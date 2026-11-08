@@ -18,9 +18,22 @@ public interface IMatchService
     /// <summary>Se lanza cuando cambia la partida o la conexión, también por mensajes del rival.</summary>
     event Action? Changed;
 
-    /// <summary>Recupera la partida guardada en el dispositivo y, si es en línea, vuelve a conectar.</summary>
+    /// <summary>Recupera la partida que estaba en pantalla y, si es en línea, vuelve a conectar.</summary>
     Task<ActiveMatch?> RestoreAsync(CancellationToken cancellationToken = default);
 
+    /// <summary>Todas las partidas guardadas en el dispositivo, de la más reciente a la más antigua.</summary>
+    Task<IReadOnlyList<ActiveMatch>> GetSavedAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Retoma una partida guardada. La que hubiera en pantalla queda guardada para luego.</summary>
+    Task<ActiveMatch> ResumeAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>Deja la partida de pantalla guardada para seguirla otro día.</summary>
+    Task PauseAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Borra una partida guardada con sus fotos. En línea, la cierra también para el rival.</summary>
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>Empieza una partida en un móvil. La que hubiera en pantalla queda guardada para luego.</summary>
     Task<ActiveMatch> StartLocalAsync(Guid ownBandId, Guid rivalBandId, CancellationToken cancellationToken = default);
 
     /// <summary>Crea una partida en línea. El código para el rival queda en <see cref="ActiveMatch.Code"/>.</summary>
@@ -49,8 +62,18 @@ public interface IMatchService
     /// </summary>
     Task SetMemberAsync(MatchSide side, int index, bool? activated = null, bool? down = null, CancellationToken cancellationToken = default);
 
-    /// <summary>Termina la partida. En línea, la cierra también para el rival.</summary>
+    /// <summary>Termina la partida de pantalla y la borra con sus fotos. En línea, la cierra también para el rival.</summary>
     Task EndAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Apunta el mapa de la partida (o lo quita con null). Solo en este dispositivo.</summary>
+    Task SetMapAsync(MatchMap? map, CancellationToken cancellationToken = default);
+
+    Task SetNotesAsync(string? notes, CancellationToken cancellationToken = default);
+
+    /// <summary>Guarda una foto de la mesa (JPEG ya reducido) y devuelve su clave en el almacén de fotos.</summary>
+    Task<string> AddPhotoAsync(byte[] jpeg, CancellationToken cancellationToken = default);
+
+    Task RemovePhotoAsync(string key, CancellationToken cancellationToken = default);
 }
 
 public sealed class MatchException(string message) : Exception(message);

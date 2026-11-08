@@ -10,6 +10,12 @@ public sealed class ActiveMatch
     /// <summary>Tope de los puntos del marcador y de cualquier contador.</summary>
     public const int MaxCount = 999;
 
+    /// <summary>Fotos de la mesa que se pueden guardar en cada partida.</summary>
+    public const int MaxPhotos = 12;
+
+    /// <summary>Largo máximo de las notas.</summary>
+    public const int MaxNotes = 4000;
+
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public MatchMode Mode { get; set; }
@@ -50,6 +56,18 @@ public sealed class ActiveMatch
 
     public DateTimeOffset StartedAt { get; set; } = DateTimeOffset.UtcNow;
 
+    /// <summary>Último cambio, para ordenar la lista de partidas guardadas.</summary>
+    public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    /// <summary>Mapa en el que se juega, para poder volver a generarlo igual. Solo en este dispositivo.</summary>
+    public MatchMap? Map { get; set; }
+
+    /// <summary>Fotos de la mesa para recordar dónde estaba cada miniatura. Solo en este dispositivo.</summary>
+    public List<MatchPhoto> Photos { get; set; } = [];
+
+    /// <summary>Notas libres de la partida. Solo en este dispositivo.</summary>
+    public string? Notes { get; set; }
+
     /// <summary>
     /// Miembros propios en el orden en que se mandaron al rival. Se congela al empezar,
     /// así los índices de los mensajes siguen valiendo aunque se edite la banda durante la partida.
@@ -84,6 +102,75 @@ public sealed class ActiveMatch
     public Dictionary<string, int> CountersOf(MatchSide side) => side == MatchSide.Own ? OwnCounters : RivalCounters;
 
     public int ScoreOf(MatchSide side) => side == MatchSide.Own ? OwnScore : RivalScore;
+}
+
+/// <summary>
+/// Mapa de la partida: el código que se ve y el resto de la consulta del generador
+/// (mesa, despliegue y chatarra), que con el mismo código dan el mismo mapa.
+/// </summary>
+public sealed class MatchMap
+{
+    public string Code { get; set; } = string.Empty;
+
+    /// <summary>Consulta de la página del mapa, sin el "?" (codigo=…&amp;mesa=…&amp;despliegue=…&amp;terreno=…).</summary>
+    public string Query { get; set; } = string.Empty;
+
+    /// <summary>Enlace relativo a la página del mapa.</summary>
+    public string Link => $"mapa?{Query}";
+
+    /// <summary>
+    /// Mapa a partir de la consulta del generador. Devuelve null si no lleva un código válido.
+    /// Solo se quedan los parámetros que entiende el generador.
+    /// </summary>
+    public static MatchMap? FromQuery(string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return null;
+        }
+
+        var parts = new List<string>();
+        string? code = null;
+        foreach (var pair in query.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var separator = pair.IndexOf('=');
+            if (separator <= 0)
+            {
+                continue;
+            }
+
+            var name = pair[..separator];
+            var value = Uri.UnescapeDataString(pair[(separator + 1)..].Replace('+', ' '));
+            if (name == "codigo")
+            {
+                code = Maps.MapSeed.Normalize(value);
+                value = code ?? string.Empty;
+            }
+            else if (name is not ("mesa" or "despliegue" or "terreno") || value.Length > 300)
+            {
+                continue;
+            }
+
+            parts.Add($"{name}={Uri.EscapeDataString(value)}");
+        }
+
+        return code is null ? null : new MatchMap { Code = code, Query = string.Join('&', parts) };
+    }
+
+    /// <summary>Mapa con solo el código (por ejemplo, el que dicta el rival): el resto, lo de por defecto.</summary>
+    public static MatchMap? FromCode(string? code) =>
+        Maps.MapSeed.Normalize(code) is { } clean ? new MatchMap { Code = clean, Query = $"codigo={clean}" } : null;
+}
+
+/// <summary>Foto de la mesa guardada en el almacén de fotos.</summary>
+public sealed class MatchPhoto
+{
+    public string Key { get; set; } = string.Empty;
+
+    /// <summary>Ronda en la que se hizo.</summary>
+    public int Round { get; set; }
+
+    public DateTimeOffset TakenAt { get; set; } = DateTimeOffset.UtcNow;
 }
 
 public sealed class MatchMember
