@@ -273,9 +273,24 @@
         }
     }
 
-    /// <summary>El enlace es el estado de la pantalla: compartirlo o recargar da el mismo mapa.</summary>
-    protected override void OnParametersSet()
+    private const string LastMapKey = "punk.mapa";
+
+    /// <summary>Último mapa visto en esta sesión, para no tener que leer localStorage cada vez.</summary>
+    private static string? _lastQuery;
+
+    /// <summary>
+    /// El enlace es el estado de la pantalla: compartirlo o recargar da el mismo mapa.
+    /// Si se entra sin enlace (desde el menú), vuelve el último mapa; solo sale otro con "Otro mapa".
+    /// </summary>
+    protected override async Task OnParametersSetAsync()
     {
+        if (CodeQuery is null && BoardQuery is null && TerrainQuery is null && OrientationQuery is null
+            && Punkartuchera.Core.Matches.MatchMap.FromQuery(await LoadLastQueryAsync()) is { } last)
+        {
+            Navigation.NavigateTo(last.Link, replace: true);
+            return;
+        }
+
         var code = MapSeed.Normalize(CodeQuery);
         var board = Terrain.FindBoard(BoardQuery);
         if (code is null || TerrainQuery is null || board is null)
@@ -294,6 +309,41 @@
         _bySize = TerrainSelection.CountBySize(_picks, Terrain);
         _layout = MapGenerator.Generate(_board, TerrainSelection.ToCounts(_picks, Terrain), code, _orientation);
         _shared = false;
+        await SaveLastQueryAsync();
+    }
+
+    private async Task<string?> LoadLastQueryAsync()
+    {
+        if (_lastQuery is null)
+        {
+            try
+            {
+                _lastQuery = await JS.InvokeAsync<string?>("localStorage.getItem", LastMapKey);
+            }
+            catch (JSException)
+            {
+                // Sin localStorage (modo privado estricto): sale un mapa nuevo.
+            }
+        }
+
+        return _lastQuery;
+    }
+
+    private async Task SaveLastQueryAsync()
+    {
+        if (Punkartuchera.Core.Matches.MatchMap.FromQuery(CurrentQuery) is not { } map || map.Query == _lastQuery)
+        {
+            return;
+        }
+
+        _lastQuery = map.Query;
+        try
+        {
+            await JS.InvokeVoidAsync("localStorage.setItem", LastMapKey, map.Query);
+        }
+        catch (JSException)
+        {
+        }
     }
 
     private void Go(string code, BoardPreset board, DeploymentOrientation orientation, IReadOnlyDictionary<string, TerrainPick> picks)
