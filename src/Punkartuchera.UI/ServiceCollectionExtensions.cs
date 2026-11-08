@@ -1,11 +1,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Punkartuchera.Core.Backup;
 using Punkartuchera.Core.Maps;
 using Punkartuchera.Core.Matches;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Services;
 using Punkartuchera.Core.Sharing;
 using Punkartuchera.Core.Storage;
+using Punkartuchera.Core.Users;
 using Punkartuchera.UI.Services;
 using Punkartuchera.UI.Storage;
 
@@ -46,6 +48,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<FileSharer>();
         services.AddScoped<PhotoCropper>();
         services.AddScoped<StampNotifier>();
+        services.AddScoped<LocalUserProfileStore>();
+        services.AddScoped<IUserProfileStore>(sp => sp.GetRequiredService<LocalUserProfileStore>());
+        services.AddScoped<BackupService>();
         return services;
     }
 

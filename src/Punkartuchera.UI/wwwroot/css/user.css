@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Sección Usuario y tipografías para leer mejor.
+   Las letras alternativas van en la propia app (fonts/) para que funcionen sin conexión;
+   el navegador solo las descarga si se eligen.
+   ========================================================================== */
+
+@font-face {
+    font-family: "OpenDyslexic";
+    font-style: normal; font-weight: 400; font-display: swap;
+    src: url("../fonts/opendyslexic-400.woff2") format("woff2");
+}
+@font-face {
+    font-family: "OpenDyslexic";
+    font-style: normal; font-weight: 700; font-display: swap;
+    src: url("../fonts/opendyslexic-700.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    font-style: normal; font-weight: 400; font-display: swap;
+    src: url("../fonts/atkinson-hyperlegible-400.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    font-style: normal; font-weight: 700; font-display: swap;
+    src: url("../fonts/atkinson-hyperlegible-700.woff2") format("woff2");
+}
+
+/* Con una letra para leer mejor, todo el texto la usa (también títulos y garabatos).
+   Solo el nombre de la app conserva su rótulo. */
+:root[data-font="opendyslexic"] {
+    --punk-font-display: "OpenDyslexic", "Comic Sans MS", sans-serif;
+    --punk-font-heading: "OpenDyslexic", "Comic Sans MS", sans-serif;
+    --punk-font-body: "OpenDyslexic", "Comic Sans MS", sans-serif;
+    --punk-font-scribble: "OpenDyslexic", "Comic Sans MS", sans-serif;
+}
+:root[data-font="hyperlegible"] {
+    --punk-font-display: "Atkinson Hyperlegible", Verdana, sans-serif;
+    --punk-font-heading: "Atkinson Hyperlegible", Verdana, sans-serif;
+    --punk-font-body: "Atkinson Hyperlegible", Verdana, sans-serif;
+    --punk-font-scribble: "Atkinson Hyperlegible", Verdana, sans-serif;
+}
+:root[data-font] body { line-height: 1.6; }
+/* Estas letras ya vienen espaciadas: el espaciado extra de los rótulos las desparrama. */
+:root[data-font] body * { letter-spacing: 0 !important; }
+:root[data-font] .punk-brand__name,
+:root[data-font] .drawer__title,
+:root[data-font] .boot__title { font-family: "Black Ops One", "Impact", sans-serif; }
+/* Los garabatos van torcidos para dar ambiente; leyendo con otra letra, mejor rectos. */
+:root[data-font] .page-kicker,
+:root[data-font] .scribble { transform: none; }
+
+/* ---------- Página ---------- */
+
+.user-grid {
+    display: grid; gap: 18px; align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 900px) {
+    .user-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .user-backup { grid-column: 1 / -1; }
+}
+
+.user-hint { margin: 0; }
+.user-reading .stepper { flex-wrap: wrap; }
+.user-scale { min-width: 4.2em; text-align: center; font-variant-numeric: tabular-nums; }
+
+.font-grid {
+    display: grid; gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+}
+.font-tile {
+    display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
+    padding: 10px 12px; min-width: 0; text-align: left;
+    background-color: var(--punk-surface); background-image: var(--punk-tex-metal);
+    color: var(--punk-text);
+    border: 2px solid var(--punk-black);
+    clip-path: var(--punk-rough);
+    cursor: pointer;
+}
+.font-tile.is-selected {
+    background-color: var(--punk-rust); background-image: var(--punk-tex-fibre);
+    transform: rotate(-1deg);
+}
+.font-tile:focus-visible { outline: 3px solid var(--punk-accent); outline-offset: 2px; }
+.font-tile__name { font-size: 1.15rem; font-weight: 700; }
+.font-tile__about { font-size: .85rem; color: var(--punk-text-muted); }
+.font-tile.is-selected .font-tile__about { color: var(--punk-text); }
+
+/* Cada botón se ve con su propia letra, para elegir viendo cómo queda. */
+.font-tile[data-font-preview="punk"] .font-tile__name { font-family: "Wellfleet", Georgia, serif; font-weight: 400; }
+.font-tile[data-font-preview="punk"] .font-tile__about { font-family: "Sora", "Segoe UI", sans-serif; }
+.font-tile[data-font-preview="opendyslexic"] { font-family: "OpenDyslexic", "Comic Sans MS", sans-serif; }
+.font-tile[data-font-preview="hyperlegible"] { font-family: "Atkinson Hyperlegible", Verdana, sans-serif; }
+
+.user-sample {
+    margin: 0; padding: 10px 12px;
+    background: rgba(29, 23, 18, .08);
+    font-size: 1.05rem;
+}
+
+.user-backup p { margin: 0; }
+.user-backup label.is-disabled { opacity: .5; pointer-events: none; }
+.user-summary { margin: 4px 0 0; }
+
+.user-restore {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px; background: rgba(29, 23, 18, .08);
+}
+.user-restore__title { margin: 0; font-family: var(--punk-font-display); font-size: 1.1rem; letter-spacing: .04em; }
+.user-facts {
+    display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 0;
+}
+.user-facts dt { font-weight: 700; }
+.user-facts dd { margin: 0; overflow-wrap: anywhere; }
+
+.user-credit { grid-column: 1 / -1; }
+.user-credit p { margin: 0; }
+.user-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }

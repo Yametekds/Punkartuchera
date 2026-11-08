@@ -1,0 +1,321 @@
+@page "/usuario"
+@using Punkartuchera.Core.Backup
+@using Punkartuchera.Core.Users
+@using Punkartuchera.UI.Storage
+@inject LocalUserProfileStore Profiles
+@inject BackupService Backups
+@inject FileSharer Sharer
+@inject StampNotifier Stamps
+@inject NavigationManager Navigation
+
+<PageTitle>Usuario · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Tu chabola</span>
+        <h1 class="page-title distress">Usuario</h1>
+    </div>
+</header>
+
+@if (_restored)
+{
+    <p class="notice notice--warning" role="status">Copia restaurada. Tus bandas y partidas ya están de vuelta.</p>
+}
+
+<div class="user-grid">
+    <section class="paper tape stack" aria-labelledby="nick-title">
+        <h2 id="nick-title" class="section-title">Quién eres</h2>
+        <form class="stack" @onsubmit="SaveNickname" novalidate>
+            <label class="field">
+                <span class="field__label">Nickname</span>
+                <input class="field__input" @bind="_nickname" @bind:event="oninput"
+                       maxlength="@UserProfile.MaxNicknameLength" placeholder="@UserProfile.DefaultNickname" autocomplete="nickname" />
+            </label>
+            <p class="muted user-hint">
+                Así firmas tus copias de seguridad.
+                @if (string.IsNullOrWhiteSpace(_profile.Nickname))
+                {
+                    <text>Mientras no pongas nada, eres <strong>@UserProfile.DefaultNickname</strong>.</text>
+                }
+            </p>
+            <div class="actions">
+                <button type="submit" class="btn btn--primary" disabled="@(!NicknameChanged)">Apuntar nickname</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="paper stack user-reading" aria-labelledby="read-title">
+        <h2 id="read-title" class="section-title">Cómo lo lees</h2>
+
+        <div class="stepper">
+            <span class="stepper__label" id="font-size-label">Tamaño de letra</span>
+            <div class="stepper__controls" role="group" aria-labelledby="font-size-label">
+                <button type="button" class="stepper__btn" aria-label="Letra más pequeña"
+                        disabled="@(_profile.FontScale <= UserProfile.MinFontScale)" @onclick="() => ChangeScale(-1)">−</button>
+                <span class="stepper__value user-scale" aria-live="polite">@_profile.FontScale&nbsp;%</span>
+                <button type="button" class="stepper__btn" aria-label="Letra más grande"
+                        disabled="@(_profile.FontScale >= UserProfile.MaxFontScale)" @onclick="() => ChangeScale(1)">+</button>
+            </div>
+        </div>
+
+        <fieldset class="field">
+            <legend class="field__label">Tipografía</legend>
+            <div class="font-grid">
+                @foreach (var option in FontOptions)
+                {
+                    <button type="button" class="font-tile @(_profile.Font == option.Font ? "is-selected" : null)"
+                            data-font-preview="@LocalUserProfileStore.FontAttribute(option.Font)"
+                            aria-pressed="@(_profile.Font == option.Font)" @onclick="() => ChangeFont(option.Font)">
+                        <span class="font-tile__name">@option.Name</span>
+                        <span class="font-tile__about">@option.About</span>
+                    </button>
+                }
+            </div>
+        </fieldset>
+
+        <p class="user-sample">El Forzudo carga con una tubería, dos dosis de Ambrosía y 3 balas apañadas.</p>
+
+        @if (_profile.FontScale != UserProfile.DefaultFontScale || _profile.Font != ReadingFont.Punk)
+        {
+            <div class="actions">
+                <button type="button" class="btn btn--ghost" @onclick="ResetReading">Dejarlo como venía</button>
+            </div>
+        }
+    </section>
+
+    <section class="paper stack user-backup" aria-labelledby="backup-title">
+        <h2 id="backup-title" class="section-title">Copia de seguridad</h2>
+        <p>
+            Mete en un solo archivo .json todas tus bandas (con sus balas), las rivales que tengas cargadas,
+            las partidas guardadas con sus fotos y notas, tu nickname y cómo lees la app.
+            Guárdalo donde quieras: si cambias de móvil o se borra el navegador, lo restauras y como si nada.
+        </p>
+
+        <div class="actions">
+            <button type="button" class="btn btn--primary" disabled="@_busy" @onclick="CreateBackup">
+                <Icon Path="@Icons.Share" /> Hacer copia
+            </button>
+            <label class="btn btn--ghost @(_busy ? "is-disabled" : null)">
+                <Icon Path="@Icons.Inbox" /> Restaurar copia
+                <InputFile class="visually-hidden" OnChange="ReadBackup" accept=".json,application/json,text/plain" disabled="@_busy" />
+            </label>
+        </div>
+
+        @if (_busy)
+        {
+            <p class="muted" role="status">Rebuscando en la chatarra…</p>
+        }
+
+        @if (_error is not null)
+        {
+            <p class="notice notice--danger" role="alert">@_error</p>
+        }
+
+        @if (_made is { } made)
+        {
+            <div class="notice" role="status">
+                <div>
+                    <strong>@made.FileName</strong>
+                    <p class="user-summary">@Describe(made.Summary)</p>
+                </div>
+            </div>
+        }
+
+        @if (_pending is { } pending)
+        {
+            var summary = BackupSummary.Of(pending);
+            <div class="user-restore" role="group" aria-labelledby="restore-title">
+                <h3 id="restore-title" class="user-restore__title">¿Restauro esta copia?</h3>
+                <dl class="user-facts">
+                    <dt>De</dt>
+                    <dd>@summary.Nickname</dd>
+                    <dt>Hecha el</dt>
+                    <dd>@summary.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy 'a las' HH:mm")</dd>
+                    <dt>Trae</dt>
+                    <dd>@Describe(summary)</dd>
+                </dl>
+                <p class="muted">
+                    Las bandas y partidas que ya tengas y vengan en la copia se cambian por las de la copia.
+                    Lo que no venga en ella no se toca.
+                </p>
+                <div class="actions">
+                    <button type="button" class="btn btn--primary" disabled="@_busy" @onclick="RestoreBackup">Restaurar</button>
+                    <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="() => _pending = null">Mejor no</button>
+                </div>
+            </div>
+        }
+    </section>
+
+    <section class="paper stack user-credit" aria-labelledby="credit-title">
+        <h2 id="credit-title" class="section-title">Quién la ha hecho</h2>
+        <p>
+            Esta app fue realizada por <strong>Fernando Hernández</strong>, alias <strong>FernandoYMT</strong>, sin fines de lucro.
+            Si puedes seguirlo, le ayudas mucho.
+        </p>
+        <ul class="user-links">
+            @foreach (var link in AuthorLinks)
+            {
+                <li><a class="btn btn--ghost" href="@link.Url" target="_blank" rel="noopener noreferrer">@link.Name</a></li>
+            }
+        </ul>
+    </section>
+</div>
+
+@code {
+    private sealed record AuthorLink(string Name, string Url);
+
+    private static readonly AuthorLink[] AuthorLinks =
+    [
+        new("GitHub", "https://github.com/Yametekds"),
+        new("LinkedIn", "https://www.linkedin.com/in/fernando-antonio-hernandez-853903367/"),
+        new("Instagram", "https://www.instagram.com/yamete.dev/"),
+    ];
+
+    private sealed record FontOption(ReadingFont Font, string Name, string About);
+
+    private static readonly FontOption[] FontOptions =
+    [
+        new(ReadingFont.Punk, "La de siempre", "Las letras de la web oficial."),
+        new(ReadingFont.OpenDyslexic, "OpenDyslexic", "Pensada para dislexia: cada letra pesa abajo y no baila."),
+        new(ReadingFont.Hyperlegible, "Atkinson Hyperlegible", "Muy clara: no confundes la l, la I y el 1."),
+    ];
+
+    [SupplyParameterFromQuery(Name = "restaurada")]
+    public bool Restored { get; set; }
+
+    private UserProfile _profile = new();
+    private string? _nickname;
+    private bool _restored;
+    private bool _busy;
+    private string? _error;
+    private BackupResult? _made;
+    private BackupFile? _pending;
+
+    private bool NicknameChanged => UserProfile.CleanNickname(_nickname) != _profile.Nickname;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _restored = Restored;
+        _profile = await Profiles.GetAsync();
+        _nickname = _profile.Nickname;
+    }
+
+    private async Task SaveNickname()
+    {
+        _profile.Nickname = UserProfile.CleanNickname(_nickname);
+        await Profiles.SaveAsync(_profile);
+        _nickname = _profile.Nickname;
+        Stamps.Stamp(_profile.Nickname is null ? "Pringao" : "Apuntado");
+    }
+
+    private Task ChangeScale(int steps)
+    {
+        _profile.FontScale += steps * UserProfile.FontScaleStep;
+        return Profiles.SaveAsync(_profile);
+    }
+
+    private Task ChangeFont(ReadingFont font)
+    {
+        _profile.Font = font;
+        return Profiles.SaveAsync(_profile);
+    }
+
+    private Task ResetReading()
+    {
+        _profile.FontScale = UserProfile.DefaultFontScale;
+        _profile.Font = ReadingFont.Punk;
+        return Profiles.SaveAsync(_profile);
+    }
+
+    private async Task CreateBackup()
+    {
+        _busy = true;
+        _error = null;
+        _made = null;
+        _pending = null;
+        try
+        {
+            var backup = await Backups.CreateAsync();
+            var outcome = await Sharer.ShareAsync(backup.FileName, backup.Content, "Copia de Punkartuchera",
+                $"Copia de seguridad de {backup.Summary.Nickname}");
+            if (outcome != ShareOutcome.Cancelled)
+            {
+                _made = backup;
+                Stamps.Stamp("A salvo");
+            }
+        }
+        catch (JSException)
+        {
+            _error = "No se pudo sacar el archivo. Prueba otra vez.";
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task ReadBackup(InputFileChangeEventArgs e)
+    {
+        _busy = true;
+        _error = null;
+        _made = null;
+        _pending = null;
+        try
+        {
+            await using var stream = e.File.OpenReadStream(BackupService.MaxFileBytes);
+            _pending = await Backups.ReadAsync(stream);
+        }
+        catch (BackupException ex)
+        {
+            _error = ex.Message;
+        }
+        catch (IOException)
+        {
+            _error = "No se pudo leer el archivo. ¿Seguro que es una copia y no pesa una barbaridad?";
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task RestoreBackup()
+    {
+        if (_pending is null)
+        {
+            return;
+        }
+
+        _busy = true;
+        _error = null;
+        try
+        {
+            await Backups.RestoreAsync(_pending);
+            // Se recarga la app entera para que partidas, bandas y letra salgan de lo restaurado.
+            Navigation.NavigateTo("usuario?restaurada=true", forceLoad: true, replace: true);
+        }
+        catch (JSException)
+        {
+            _error = "Algo ha petado a medio restaurar. Vuelve a probar con el mismo archivo.";
+            _busy = false;
+        }
+    }
+
+    private static string Describe(BackupSummary s)
+    {
+        var parts = new List<string>
+        {
+            Count(s.OwnBands, "banda propia", "bandas propias") + (s.OwnBands > 0 ? $" ({Count(s.Ammo, "bala", "balas")})" : ""),
+        };
+        if (s.RivalBands > 0)
+        {
+            parts.Add(Count(s.RivalBands, "rival", "rivales"));
+        }
+
+        parts.Add(Count(s.Matches, "partida", "partidas"));
+        parts.Add(Count(s.Photos, "foto", "fotos"));
+        return string.Join(", ", parts) + ".";
+    }
+
+    private static string Count(int n, string one, string many) => $"{n} {(n == 1 ? one : many)}";
+}

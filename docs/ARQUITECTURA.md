@@ -73,6 +73,12 @@ Puede haber varias partidas guardadas a la vez: empezar otra deja la de pantalla
 
 Protocolo, seguridad, coste y despliegue en [PARTIDAS-EN-LINEA.md](PARTIDAS-EN-LINEA.md).
 
+## Usuario y copia de seguridad
+
+- `UserProfile` (Core/Users): nickname (vacío = `PringaoSinNickname`), tamaño de letra (90–150 %, de 10 en 10) y tipografía (`Punk`, `OpenDyslexic`, `Hyperlegible`). `LocalUserProfileStore` lo guarda en localStorage (`punkartuchera.user`) para que el script en línea del `index.html` ponga la letra antes de pintar nada; lo aplica con `font-size` en `html` y el atributo `data-font`, que cambia las variables de tipografía en `css/user.css`. Las letras alternativas van en `wwwroot/fonts/` (licencia OFL junto a ellas) para que funcionen sin conexión.
+- `BackupService` (Core/Backup) genera un `BackupFile` en JSON: `format` (`punkartuchera-backup`), `version`, `createdAt`, `nickname`, `settings`, todas las bandas (las propias con balas y notas), las partidas guardadas y las fotos de miniaturas y de la mesa en base64 (`photos`, por clave). El archivo se llama `punkartuchera-<nickname>-<fecha>.json`.
+- Restaurar añade lo de la copia: bandas y partidas con el mismo `Id` se sustituyen (y se borran sus fotos viejas), lo demás se queda. Las fotos solo se aceptan si son JPEG, PNG o WebP de verdad, los retratos y fotos oficiales tienen que existir, y las rivales nunca guardan balas. Después la app se recarga entera.
+
 ## Navegación y disposición
 
 La disposición sigue el modelo de una hoja de equipo:
