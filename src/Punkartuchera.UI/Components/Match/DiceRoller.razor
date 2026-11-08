@@ -1,0 +1,222 @@
+@using Punkartuchera.Core.Matches
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+@* Dado de la partida: botón flotante, tirada con animación y opción de sacudir el móvil. *@
+<button type="button" class="btn btn--blood fab dice-fab" aria-haspopup="dialog" @onclick="Open">
+    <Icon Path="@Icons.Dice" /> Dado
+</button>
+
+@if (_open)
+{
+    <div class="sheet-scrim" @onclick="Close"></div>
+    <section class="sheet paper dice-sheet" role="dialog" aria-modal="true" aria-labelledby="dice-sheet-title">
+        <header class="sheet__head">
+            <h2 id="dice-sheet-title" class="sheet__title">Tirar d10</h2>
+            <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+        </header>
+
+        <button type="button" class="dice-tray @(_rolling ? "is-rolling" : null)" aria-label="Tirar otra vez" disabled="@_rolling" @onclick="Roll">
+            @for (var i = 0; i < _faces.Count; i++)
+            {
+                var index = i;
+                <span class="die die--@(index % 6)" @key="(_rollId, index)" style="--i: @index">
+                    <svg viewBox="0 0 100 100" aria-hidden="true">
+                        <polygon class="die__body" points="50,3 97,40 97,62 50,97 3,62 3,40" />
+                        <polygon class="die__face" points="50,3 80,54 50,70 20,54" />
+                        <path class="die__edge" d="M20 54 3 62M80 54 97 62M50 70v27M20 54 3 40M80 54 97 40" />
+                    </svg>
+                    <span class="die__value">@_faces[index]</span>
+                </span>
+            }
+        </button>
+
+        <p class="dice-result" aria-live="polite">
+            @if (_rolling)
+            {
+                <span>Rodando…</span>
+            }
+            else if (_last is not null)
+            {
+                <span>Sale <strong>@string.Join(" · ", _last)</strong></span>
+            }
+            else
+            {
+                <span>Toca los dados o el botón para tirar.</span>
+            }
+        </p>
+
+        <Stepper Label="Dados" Value="_count" Min="DiceRoll.MinDice" Max="DiceRoll.MaxDice" ValueChanged="SetCount" Compact="true" />
+
+        <div class="actions">
+            <button type="button" class="btn btn--blood dice-roll" disabled="@_rolling" @onclick="Roll">
+                <Icon Path="@Icons.Dice" /> ¡Tirar!
+            </button>
+        </div>
+
+        @if (_shake != "unsupported")
+        {
+            <div class="dice-shake">
+                <button type="button" class="dice-shake__switch" role="switch" aria-checked="@(_shake == "on" ? "true" : "false")" @ref="_toggle">
+                    <span class="dice-shake__knob" aria-hidden="true"></span>
+                    <span>Sacudir el móvil para tirar</span>
+                </button>
+                @if (ShakeHint is { } hint)
+                {
+                    <p class="sheet__small">@hint</p>
+                }
+            </div>
+        }
+
+        @if (_history.Count > 0)
+        {
+            <p class="sheet__small dice-history">Antes: @string.Join(" / ", _history.Select(r => string.Join("·", r)))</p>
+        }
+    </section>
+}
+
+@code {
+    private const int HistorySize = 5;
+
+    private IJSObjectReference? _module;
+    private DotNetObjectReference<DiceRoller>? _ref;
+    private ElementReference _toggle;
+    private bool _open;
+    private bool _rolling;
+    private bool _bindToggle;
+    private int _count = 1;
+    private int _rollId;
+    private string _shake = "off";
+    private IReadOnlyList<int> _faces = [10];
+    private IReadOnlyList<int>? _last;
+    private readonly List<IReadOnlyList<int>> _history = [];
+
+    private string? ShakeHint => _shake switch
+    {
+        "on" => "Sacude el móvil durante la partida y el dado se tira solo, aunque esta ventana esté cerrada.",
+        "tap" => "En iPhone hay que volver a darle permiso cada vez que abres la app: toca el interruptor.",
+        "denied" => "Sin permiso para leer el movimiento. Actívalo en los ajustes del navegador o tira con el botón.",
+        _ => null,
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                _module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/Punkartuchera.UI/js/diceShake.js");
+                _ref = DotNetObjectReference.Create(this);
+                _shake = await _module.InvokeAsync<string>("init", _ref);
+                StateHasChanged();
+            }
+            catch (JSException)
+            {
+                _shake = "unsupported";
+            }
+        }
+
+        if (_bindToggle && _module is not null && _open)
+        {
+            _bindToggle = false;
+            await _module.InvokeVoidAsync("bindToggle", _toggle);
+        }
+    }
+
+    private void Open()
+    {
+        _open = true;
+        _bindToggle = true;
+    }
+
+    private void Close() => _open = false;
+
+    private void SetCount(int count)
+    {
+        _count = count;
+        if (!_rolling)
+        {
+            _faces = _last is { } last && last.Count == count ? last : Enumerable.Repeat(10, count).ToArray();
+        }
+    }
+
+    private async Task Roll()
+    {
+        if (_rolling)
+        {
+            return;
+        }
+
+        if (_last is not null)
+        {
+            _history.Insert(0, _last);
+            if (_history.Count > HistorySize)
+            {
+                _history.RemoveAt(HistorySize);
+            }
+        }
+
+        _rolling = true;
+        _rollId++;
+        _last = null;
+
+        // Caras que van pasando mientras ruedan; la tirada buena sale al final.
+        for (var step = 0; step < 9; step++)
+        {
+            _faces = DiceRoll.Roll(_count);
+            StateHasChanged();
+            await Task.Delay(55 + step * 8);
+        }
+
+        _faces = _last = DiceRoll.Roll(_count);
+        _rolling = false;
+        StateHasChanged();
+
+        if (_module is not null)
+        {
+            try
+            {
+                await _module.InvokeVoidAsync("buzz");
+            }
+            catch (JSException)
+            {
+            }
+        }
+    }
+
+    [JSInvokable]
+    public Task OnShake() => InvokeAsync(async () =>
+    {
+        if (!_open)
+        {
+            Open();
+            StateHasChanged();
+        }
+
+        await Roll();
+    });
+
+    [JSInvokable]
+    public Task OnShakeState(string state) => InvokeAsync(() =>
+    {
+        _shake = state;
+        StateHasChanged();
+    });
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try
+            {
+                await _module.InvokeVoidAsync("leave");
+                await _module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+            }
+        }
+
+        _ref?.Dispose();
+    }
+}
