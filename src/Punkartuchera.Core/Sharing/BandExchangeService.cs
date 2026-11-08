@@ -3,6 +3,7 @@ using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Serialization;
 using Punkartuchera.Core.Storage;
+using Punkartuchera.Core.Users;
 
 namespace Punkartuchera.Core.Sharing;
 
@@ -10,8 +11,9 @@ namespace Punkartuchera.Core.Sharing;
 /// Exporta una banda propia para pasársela al rival, en un archivo <c>.punkband</c> (con fotos)
 /// o en el texto de un QR (sin fotos), e importa las que llegan como bandas rivales de solo lectura.
 /// Al exportar se quitan las balas y las notas de la banda: eso no lo ve el rival.
+/// La banda exportada lleva el nickname de quien la pasa (sección Usuario).
 /// </summary>
-public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photos, IRulesCatalog rules)
+public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photos, IRulesCatalog rules, IUserProfileStore? profiles = null)
 {
     public const string FileExtension = ".punkband";
     public const string ContentType = "application/json";
@@ -26,6 +28,7 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
         band.Notes = null;
         band.Ownership = BandOwnership.Rival;
         band.SourceId = null;
+        band.PlayerName = await SenderNameAsync(cancellationToken);
 
         band.TotalCost = null;
         band.KeepOnlyTotalCost();
@@ -63,8 +66,11 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
     public async Task<BandQrPayload> ExportQrAsync(Guid bandId, CancellationToken cancellationToken = default)
     {
         var source = await GetExportableAsync(bandId, cancellationToken);
-        return BandQrCodec.Encode(source, rules.Stats.Select(s => s.Key).ToList());
+        return BandQrCodec.Encode(source, rules.Stats.Select(s => s.Key).ToList(), await SenderNameAsync(cancellationToken));
     }
+
+    private async Task<string> SenderNameAsync(CancellationToken cancellationToken) =>
+        profiles is null ? UserProfile.DefaultNickname : (await profiles.GetAsync(cancellationToken)).DisplayName;
 
     /// <summary>
     /// Guarda la banda del archivo como rival. Si ya había una copia de esa misma banda, la sustituye.

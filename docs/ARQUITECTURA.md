@@ -49,6 +49,7 @@ Los servicios se registran en `ServiceCollectionExtensions.AddPunkartucheraUi()`
 - El QR lo genera `BandQrCodec`: `PKB1:` + Base45( CRC-32 + JSON compacto comprimido con Deflate ). Base45 usa justo el alfabeto del modo alfanumérico de los QR. El JSON lleva nombres de propiedad de una letra y los atributos como lista en el orden de `IRulesCatalog.Stats`; los retratos genéricos van por clave y las fotos propias no van. Si la suma de comprobación no cuadra, la lectura se rechaza. Una banda normal ocupa unos 400 caracteres; el máximo es `BandQrCodec.MaxLength` (2400): si se pasa, primero se quitan las notas y, si aún no cabe, se pide mandar el archivo.
 - Todo lo que llega del rival se trata como no fiable y pasa por `RivalBandSanitizer` antes de guardarse: se quitan nulos, se recortan textos y listas (`MaxMembers`, `MaxTextLength`, `MaxListItems`...), los atributos se limitan a los del reglamento y a su rango, los miembros reciben identificadores nuevos, y las fotos solo se aceptan si sus bytes son de verdad JPEG, PNG o WebP (`IsImage`) y no pasan de `MaxPhotoBytes`. Los retratos genéricos tienen que existir en `StockPortraits` y las fotos oficiales tienen que estar en el catálogo (`IRulesCatalog.IsOfficialPhoto`); si no, se descartan, para que una banda manipulada no pueda hacer que la app cargue imágenes de otra web.
 - El archivo se lee con tope (`MaxFileBytes`) aunque quien llame no lo limite. El QR se rechaza si es más largo de lo que cabe en un QR (`MaxReadLength`) o si descomprimido pasa de `MaxJsonBytes`.
+- La banda exportada lleva `PlayerName`, el nickname de quien la pasa (sección Usuario, o `PringaoSinNickname`); en el QR va en la propiedad `u`. En los torneos se propone como nombre del jugador.
 - Una banda que llega por QR sustituye a la copia que ya hubiera de esa banda y conserva las fotos de los miembros que siguen llamándose igual (por ejemplo, si antes llegó el archivo).
 
 En la interfaz:
@@ -58,7 +59,7 @@ En la interfaz:
 
 ### IndexedDB
 
-Base `punkartuchera`, versión 2, almacenes `bands`, `photos` y `matches` (una entrada por partida guardada, con su Id como clave, y `current` con el Id de la que está en pantalla) con registros `{ key, value }` donde `value` es texto (JSON de la banda o data URL de la foto). Acceso en `wwwroot/js/punkDb.js` a través de `KeyValueDb`.
+Base `punkartuchera`, versión 3, almacenes `bands`, `photos`, `tournaments` (un torneo por entrada, con su Id como clave) y `matches` (una entrada por partida guardada, con su Id como clave, y `current` con el Id de la que está en pantalla) con registros `{ key, value }` donde `value` es texto (JSON de la banda o data URL de la foto). Acceso en `wwwroot/js/punkDb.js` a través de `KeyValueDb`.
 
 Para añadir un almacén nuevo: añádelo a `STORES` y sube `DB_VERSION` en `punkDb.js`.
 
@@ -72,6 +73,15 @@ Puede haber varias partidas guardadas a la vez: empezar otra deja la de pantalla
 - **En línea**: uno crea la partida y el otro entra con el código. Cada móvil manda su banda en el formato del QR y solo marca a los suyos; el estado viaja por el relé (`Punkartuchera.Relay`, Azure Functions + Azure SignalR Service). La dirección del relé va en `wwwroot/appsettings.json` (`Relay:BaseUrl`); vacía, la app solo ofrece la partida en un móvil.
 
 Protocolo, seguridad, coste y despliegue en [PARTIDAS-EN-LINEA.md](PARTIDAS-EN-LINEA.md).
+
+## Torneos
+
+`TournamentService` (Core/Tournaments) lleva torneos por sistema suizo desde un solo móvil; cada mesa juega en el suyo.
+
+- Inscripción: bandas propias y cargadas, cada una con su jugador (`TournamentPlayer`). El nombre se propone desde `Band.PlayerName` (o el nickname del móvil en las propias) y se puede cambiar. Rondas previstas: log2 del número de jugadores, redondeado hacia arriba.
+- Primera ronda por sorteo (`SwissPairing.Shuffle`, Fisher-Yates con `SeededRandom` y semilla de `RandomNumberGenerator`, guardada en `Tournament.Seed`). Las siguientes, suizo: por puntos (barajando dentro de cada grupo), con vuelta atrás para no repetir rival ni cruzar dos bandas del mismo jugador; si no hay forma, se relajan primero lo del mismo jugador y luego las revanchas. Con jugadores impares descansa el peor clasificado que no haya descansado.
+- Clasificación (`TournamentStandings`): victoria 3, empate 1, derrota 0, descanso 3 (cuando la ronda se ha jugado entera). Desempates: Buchholz, puntos anotados y diferencia.
+- Resultados: el móvil de la mesa, con la partida acabada, enseña un QR (`MatchResultCode`): `PKR1:{banda propia}:{banda rival}:{puntos}:{puntos}:{G|P|E}:{crc32}`. Las bandas van por su identificador de origen (`TournamentService.OriginOf`: el `Id` en las propias y el `SourceId` en las cargadas), así el organizador encuentra la mesa (`Locate`) sin preparar nada en la mesa, y no viajan balas ni equipo. El organizador lo repasa antes de apuntarlo; si falla la cámara, lo apunta a mano.
 
 ## Usuario y copia de seguridad
 

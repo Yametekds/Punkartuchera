@@ -14,6 +14,7 @@ public static class AppNavigation
         new("reglas", "Reglas", Icons.Book, Available: true),
         new("mapa", "Mapa", Icons.Map, Available: true),
         new("partida", "Partida", Icons.Dice, Available: true),
+        new("torneo", "Torneo", Icons.Trophy, Available: true),
         new("tutoriales", "Tutoriales", Icons.Signpost, Available: true),
         new("usuario", "Usuario", Icons.User, Available: true),
     ];
