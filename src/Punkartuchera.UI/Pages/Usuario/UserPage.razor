@@ -145,9 +145,30 @@
             </div>
         }
     </section>
+
+    <section class="paper stack user-credit" aria-labelledby="credit-title">
+        <h2 id="credit-title" class="section-title">Quién la ha hecho</h2>
+        <p>
+            Esta app fue realizada por <strong>Fernando Hernández</strong>, alias <strong>FernandoYMT</strong>, sin fines de lucro.
+            Si puedes seguirlo, le ayudas mucho.
+        </p>
+        <ul class="user-links">
+            @foreach (var link in AuthorLinks)
+            {
+                <li><a class="btn btn--ghost" href="@link.Url" target="_blank" rel="noopener noreferrer">@link.Name</a></li>
+            }
+        </ul>
+    </section>
 </div>
 
 @code {
+    private sealed record AuthorLink(string Name, string Url);
+
+    private static readonly AuthorLink[] AuthorLinks =
+    [
+        new("GitHub", "https://github.com/Yametekds"),
+    ];
+
     private sealed record FontOption(ReadingFont Font, string Name, string About);
 
     private static readonly FontOption[] FontOptions =
