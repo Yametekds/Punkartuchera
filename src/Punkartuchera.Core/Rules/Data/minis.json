@@ -61,6 +61,20 @@
    "url": "https://www.badrollgames.com/producto/custodio-del-abismo-filo-pesado/"
   },
   {
+   "troop": "Capitán",
+   "factionId": "craabianos",
+   "name": "Capitana (maza y caracola, Starter Pack Craabianos)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/09/BR1CR05A.webp",
+   "url": "https://www.badrollgames.com/producto/starter-pack-de-punkapocalyptic-faccion-craabianos/"
+  },
+  {
+   "troop": "Marinero",
+   "factionId": "craabianos",
+   "name": "Marinera (trabuco, Starter Pack Craabianos)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/09/BR1CR06A.webp",
+   "url": "https://www.badrollgames.com/producto/starter-pack-de-punkapocalyptic-faccion-craabianos/"
+  },
+  {
    "troop": "Lord Homoeroticus",
    "factionId": "pandilleros",
    "name": "Lord Homoeroticus V2",
