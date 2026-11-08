@@ -487,7 +487,13 @@ h1:focus { outline: none; }
     display: block;
     padding: 16px;
     background-color: var(--punk-surface);
-    background-image: var(--punk-tex-grain), var(--punk-tex-metal);
+    /* metal cepillado con óxido y un remache en cada esquina */
+    background-image:
+        var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
+        var(--punk-tex-grain), var(--punk-tex-metal-rust);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
+    background-size: 16px, 16px, 16px, 16px, auto, auto;
+    background-position: left 2px top 2px, right 2px top 2px, left 2px bottom 2px, right 2px bottom 2px, 0 0, 0 0;
     border: 2px solid var(--punk-black);
     box-shadow: var(--punk-shadow), inset 0 0 0 1px rgba(255, 255, 255, .05);
     color: inherit; text-decoration: none;
