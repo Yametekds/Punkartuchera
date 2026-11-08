@@ -28,6 +28,10 @@
                 <button type="button" class="btn btn--ghost" @onclick="Share">
                     <Icon Path="@Icons.Copy" /> @(_shared ? "¡Pillado!" : "Pasar al rival")
                 </button>
+                @* Aquí y no flotando, que tapaba el fondo de la mesa *@
+                <button type="button" class="btn btn--blood" @onclick="Reroll">
+                    <Icon Path="@Icons.Dice" /> Otro mapa
+                </button>
                 @if (Matches.Current is { } match)
                 {
                     @if (IsMatchMap(match))
@@ -211,7 +215,7 @@
     </div>
 }
 
-<button type="button" class="btn btn--blood fab" @onclick="Reroll"><Icon Path="@Icons.Dice" /> Otro mapa</button>
+<button type="button" class="btn btn--blood fab map-fab @(_tab == TabMap ? "fab--map-tab" : null)" @onclick="Reroll"><Icon Path="@Icons.Dice" /> Otro mapa</button>
 
 @code {
     private const string TabMap = "Mapa";

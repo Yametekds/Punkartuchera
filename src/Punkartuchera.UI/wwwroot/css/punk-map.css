@@ -12,6 +12,17 @@
 .map-code__value { display: flex; flex-direction: column; gap: 4px; }
 .map-code .datacard__label { color: var(--punk-text-muted); }
 .map-code__seed { font-size: 1.6rem; letter-spacing: .18em; }
+/* "Otro mapa" va en la tarjeta del código; el flotante solo sale en la pestaña de terreno del móvil */
+.fab.fab--map-tab { display: none; }
+@media (max-width: 899px) {
+    /* .card (cargada después) pone display: block, de ahí el selector doble */
+    .map-code.card { display: flex; gap: 10px; }
+    .map-code__value { flex-basis: 100%; }
+    .map-code .btn { flex: 1 1 auto; padding-left: 10px; padding-right: 10px; font-size: .9rem; white-space: nowrap; }
+}
+@media (min-width: 900px) {
+    .fab.map-fab { display: none; }
+}
 
 /* Plano */
 .map-frame {
@@ -28,9 +39,12 @@
 .map-deploy--north { fill: var(--punk-ink); }
 .map-deploy--south { fill: var(--punk-rust); }
 .map-deploy__label {
-    font-family: var(--punk-font-display); font-size: 4.2px; letter-spacing: .1em; text-transform: uppercase;
-    fill: var(--punk-ink); fill-opacity: .75;
+    font-family: var(--punk-font-display); font-size: 3.4px; letter-spacing: .1em; text-transform: uppercase;
+    fill: var(--punk-ink);
+    /* halo color mesa: se lee igual sobre la mesa que sobre una pieza que llegue al borde */
+    stroke: var(--punk-accent); stroke-width: .9; stroke-linejoin: round; paint-order: stroke;
     text-anchor: middle; dominant-baseline: central;
+    pointer-events: none;
 }
 .map-midline { stroke: var(--punk-rust); stroke-width: .6; stroke-dasharray: 3 2; }
 
