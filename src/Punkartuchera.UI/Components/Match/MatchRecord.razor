@@ -1,0 +1,267 @@
+@* Lo que se apunta de la partida en este móvil: el mapa, fotos de la mesa y notas. No se manda al rival. *@
+@using Punkartuchera.Core.Matches
+@using Punkartuchera.Core.Storage
+@implements IAsyncDisposable
+@inject IMatchService Matches
+@inject IPhotoStore PhotoStore
+@inject PhotoUrlProvider PhotoUrls
+@inject PhotoCropper Cropper
+
+<section class="match-record" aria-label="Mapa, fotos y notas">
+    <h2 class="section-title">Mapa</h2>
+    <div class="card match-map">
+        @if (Match.Map is { } map)
+        {
+            <div class="match-code__value">
+                <span class="datacard__label">Código del mapa</span>
+                <span class="stamp stamp--light match-code__seed">@map.Code</span>
+            </div>
+            <a class="btn btn--ghost" href="@map.Link"><Icon Path="@Icons.Map" /> Ver el mapa</a>
+            <button type="button" class="btn btn--ghost btn--danger-text" disabled="@_busy" @onclick="() => RunAsync(() => Matches.SetMapAsync(null))">Quitar</button>
+        }
+        else
+        {
+            <p class="match-map__hint">
+                Genera el mapa y pulsa <strong>Jugar este mapa</strong>, así podréis volver a montarlo igual.
+                Si os lo ha pasado otro, mete aquí el código.
+            </p>
+            <a class="btn btn--ghost" href="mapa"><Icon Path="@Icons.Map" /> Ir al generador</a>
+            <form class="map-seed-form match-map__form" @onsubmit="SetCode" @onsubmit:preventDefault>
+                <label class="visually-hidden" for="match-map-code">Código del mapa</label>
+                <input id="match-map-code" class="field__input" @bind="_mapCode" placeholder="Ej. K7Q2XM" autocomplete="off" maxlength="12" />
+                <button type="submit" class="btn btn--primary" disabled="@(_busy || string.IsNullOrWhiteSpace(_mapCode))">Apuntar</button>
+            </form>
+            <p class="muted match-map__note">Con solo el código sale con la mesa y la chatarra del reglamento. Si cambiasteis algo, mejor desde el generador.</p>
+        }
+    </div>
+
+    <h2 class="section-title">Fotos de la mesa</h2>
+    <div class="paper match-photos">
+        <p class="match-photos__hint">
+            <strong>Hazla cenital:</strong> desde arriba, con el móvil paralelo a la mesa y la mesa entera en la foto.
+            Así se ve dónde estaba cada miniatura para dejarlo todo igual cuando sigáis.
+        </p>
+        <div class="photo-picker__actions">
+            <label class="btn btn--primary @(Full ? "is-disabled" : null)">
+                <Icon Path="@Icons.Camera" /> Hacer foto
+                <input type="file" class="visually-hidden" accept="image/*" capture="environment" disabled="@(_savingPhoto || Full)"
+                       @ref="_cameraInput" @onchange="() => AddAsync(_cameraInput)" />
+            </label>
+            <label class="btn btn--ghost @(Full ? "is-disabled" : null)">
+                <Icon Path="@Icons.Image" /> Galería
+                <input type="file" class="visually-hidden" accept="image/*" disabled="@(_savingPhoto || Full)"
+                       @ref="_galleryInput" @onchange="() => AddAsync(_galleryInput)" />
+            </label>
+        </div>
+        @if (_savingPhoto)
+        {
+            <p class="muted">Guardando foto…</p>
+        }
+        @if (Full)
+        {
+            <p class="muted">Ya hay @ActiveMatch.MaxPhotos fotos. Borra alguna para hacer otra.</p>
+        }
+        @if (_error is not null)
+        {
+            <p class="notice notice--danger" role="alert"><span>@_error</span></p>
+        }
+        @if (Match.Photos.Count > 0)
+        {
+            <ul class="match-photos__grid">
+                @foreach (var photo in Match.Photos.AsEnumerable().Reverse())
+                {
+                    <li>
+                        <button type="button" class="match-photos__thumb" aria-label="Ver la foto de la ronda @photo.Round" @onclick="() => _open = photo">
+                            @if (_urls.GetValueOrDefault(photo.Key) is { } url)
+                            {
+                                <img src="@url" alt="" loading="lazy" />
+                            }
+                            <span>Ronda @photo.Round · @Time(photo.TakenAt)</span>
+                        </button>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <h2 class="section-title">Notas</h2>
+    <div class="paper match-notes">
+        <label class="visually-hidden" for="match-notes">Notas de la partida</label>
+        <textarea id="match-notes" class="field__input" rows="5" maxlength="@ActiveMatch.MaxNotes"
+                  placeholder="Quién tiene el objetivo, qué quedaba por hacer, quién iba ganando…"
+                  value="@_notes" @oninput="OnNotesInput" @onchange="SaveNotesAsync"></textarea>
+        <p class="muted match-notes__state" aria-live="polite">@(_notesDirty ? "Apuntando…" : Match.Notes is null ? "Se guarda sola mientras escribes." : "Guardado.")</p>
+    </div>
+    <p class="muted match-record__private">El mapa, las fotos y las notas se quedan en este móvil: no se mandan al rival.</p>
+</section>
+
+@if (_open is { } open)
+{
+    <div class="photo-viewer" role="dialog" aria-modal="true" aria-label="Foto de la mesa, ronda @open.Round">
+        <div class="photo-viewer__stage" @onclick="() => _open = null">
+            @if (_urls.GetValueOrDefault(open.Key) is { } url)
+            {
+                <img src="@url" alt="Foto de la mesa en la ronda @open.Round" />
+            }
+        </div>
+        <div class="photo-viewer__bar">
+            <span>Ronda @open.Round · @Time(open.TakenAt)</span>
+            <ConfirmButton Text="Borrar" OnConfirm="() => RemoveAsync(open)" />
+            <button type="button" class="btn btn--ghost" @onclick="() => _open = null"><Icon Path="@Icons.Close" /> Cerrar</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired] public ActiveMatch Match { get; set; } = default!;
+
+    private readonly Dictionary<string, string?> _urls = [];
+    private ElementReference _cameraInput;
+    private ElementReference _galleryInput;
+    private MatchPhoto? _open;
+    private string? _mapCode;
+    private string? _notes;
+    private bool _notesDirty;
+    private Guid _matchId;
+    private CancellationTokenSource? _notesDelay;
+    private bool _busy;
+    private bool _savingPhoto;
+    private string? _error;
+
+    private bool Full => Match.Photos.Count >= ActiveMatch.MaxPhotos;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_matchId != Match.Id)
+        {
+            await FlushNotesAsync();
+            _matchId = Match.Id;
+            _notes = Match.Notes;
+            _open = null;
+            _error = null;
+        }
+
+        foreach (var photo in Match.Photos.Where(p => !_urls.ContainsKey(p.Key)).ToList())
+        {
+            _urls[photo.Key] = (await PhotoStore.GetAsync(photo.Key))?.ToDataUrl();
+        }
+    }
+
+    private async Task AddAsync(ElementReference input)
+    {
+        _error = null;
+        _savingPhoto = true;
+        try
+        {
+            var result = await Cropper.LoadAsync(input);
+            if (result.IsOk)
+            {
+                var data = await Cropper.ExportWholeJpegAsync();
+                var key = await Matches.AddPhotoAsync(data);
+                var url = new StoredPhoto(key, "image/jpeg", data).ToDataUrl();
+                _urls[key] = url;
+                PhotoUrls.Remember(key, url);
+            }
+            else if (!result.IsEmpty)
+            {
+                _error = result.IsHeic
+                    ? "Esa foto está en formato HEIC y el navegador no la entiende. Hazle una captura o pásala a JPG."
+                    : "El navegador no puede abrir esa imagen. Prueba con otra foto o hazle una captura.";
+            }
+        }
+        catch (MatchException ex)
+        {
+            _error = ex.Message;
+        }
+        catch (JSException ex)
+        {
+            Console.Error.WriteLine($"No se pudo guardar la foto: {ex.Message}");
+            _error = "No se pudo guardar la foto. Prueba otra vez.";
+        }
+        finally
+        {
+            _savingPhoto = false;
+        }
+    }
+
+    private async Task RemoveAsync(MatchPhoto photo)
+    {
+        _open = null;
+        await RunAsync(() => Matches.RemovePhotoAsync(photo.Key));
+        _urls.Remove(photo.Key);
+        PhotoUrls.Forget(photo.Key);
+    }
+
+    private async Task SetCode()
+    {
+        if (MatchMap.FromCode(_mapCode) is not { } map)
+        {
+            _error = "Ese código no vale. Son letras y números, como K7Q2XM.";
+            return;
+        }
+
+        await RunAsync(() => Matches.SetMapAsync(map));
+        _mapCode = null;
+    }
+
+    // Las notas se guardan solas al dejar de escribir un momento, y al salir del cuadro.
+    private void OnNotesInput(ChangeEventArgs e)
+    {
+        _notes = e.Value as string;
+        _notesDirty = true;
+        _notesDelay?.Cancel();
+        _notesDelay = new CancellationTokenSource();
+        var token = _notesDelay.Token;
+        _ = Task.Delay(800, token).ContinueWith(_ => InvokeAsync(async () =>
+        {
+            await FlushNotesAsync();
+            StateHasChanged();
+        }), token, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
+    }
+
+    private async Task SaveNotesAsync()
+    {
+        _notesDelay?.Cancel();
+        await FlushNotesAsync();
+    }
+
+    private async Task FlushNotesAsync()
+    {
+        if (!_notesDirty)
+        {
+            return;
+        }
+
+        _notesDirty = false;
+        if (Matches.Current?.Id == _matchId)
+        {
+            await RunAsync(() => Matches.SetNotesAsync(_notes));
+        }
+    }
+
+    private async Task RunAsync(Func<Task> action)
+    {
+        _busy = true;
+        _error = null;
+        try
+        {
+            await action();
+        }
+        catch (MatchException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private static string Time(DateTimeOffset at) => at.ToLocalTime().ToString("dd/MM HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+    public async ValueTask DisposeAsync()
+    {
+        _notesDelay?.Cancel();
+        await FlushNotesAsync();
+    }
+}

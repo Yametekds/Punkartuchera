@@ -36,26 +36,62 @@ public class RelayException(string message, Exception? inner = null) : Exception
 /// <summary>El relé no reconoce la llave: la partida se cerró o caducó.</summary>
 public sealed class RelayRejectedException() : RelayException("La partida ya no existe en el relé.");
 
-public interface IActiveMatchStore
+/// <summary>
+/// Partidas guardadas en el dispositivo. Puede haber varias a medias; una de ellas
+/// es la que está en pantalla (la actual) y se retoma al abrir la app.
+/// </summary>
+public interface ISavedMatchStore
 {
-    Task<ActiveMatch?> LoadAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<ActiveMatch>> GetAllAsync(CancellationToken cancellationToken = default);
 
-    /// <summary>Guarda la partida; con null la borra.</summary>
-    Task SaveAsync(ActiveMatch? match, CancellationToken cancellationToken = default);
+    Task<ActiveMatch?> GetAsync(Guid id, CancellationToken cancellationToken = default);
+
+    Task SaveAsync(ActiveMatch match, CancellationToken cancellationToken = default);
+
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>La partida que estaba en pantalla, si había alguna.</summary>
+    Task<Guid?> GetCurrentIdAsync(CancellationToken cancellationToken = default);
+
+    Task SetCurrentIdAsync(Guid? id, CancellationToken cancellationToken = default);
 }
 
-public sealed class InMemoryActiveMatchStore : IActiveMatchStore
+public sealed class InMemorySavedMatchStore : ISavedMatchStore
 {
-    private string? _json;
+    private readonly Dictionary<Guid, string> _matches = [];
+    private Guid? _current;
 
-    public Task<ActiveMatch?> LoadAsync(CancellationToken cancellationToken = default) =>
-        Task.FromResult(_json is null ? null : System.Text.Json.JsonSerializer.Deserialize(_json, MatchJsonContext.Default.ActiveMatch));
-
-    public Task SaveAsync(ActiveMatch? match, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<ActiveMatch>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        _json = match is null ? null : System.Text.Json.JsonSerializer.Serialize(match, MatchJsonContext.Default.ActiveMatch);
+        IReadOnlyList<ActiveMatch> all = _matches.Values.Select(Read).ToList();
+        return Task.FromResult(all);
+    }
+
+    public Task<ActiveMatch?> GetAsync(Guid id, CancellationToken cancellationToken = default) =>
+        Task.FromResult(_matches.TryGetValue(id, out var json) ? Read(json) : null);
+
+    public Task SaveAsync(ActiveMatch match, CancellationToken cancellationToken = default)
+    {
+        _matches[match.Id] = System.Text.Json.JsonSerializer.Serialize(match, MatchJsonContext.Default.ActiveMatch);
         return Task.CompletedTask;
     }
+
+    public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        _matches.Remove(id);
+        return Task.CompletedTask;
+    }
+
+    public Task<Guid?> GetCurrentIdAsync(CancellationToken cancellationToken = default) => Task.FromResult(_current);
+
+    public Task SetCurrentIdAsync(Guid? id, CancellationToken cancellationToken = default)
+    {
+        _current = id;
+        return Task.CompletedTask;
+    }
+
+    private static ActiveMatch Read(string json) =>
+        System.Text.Json.JsonSerializer.Deserialize(json, MatchJsonContext.Default.ActiveMatch)!;
 }
 
 /// <summary>Relé sin configurar: la app solo ofrece partidas en un móvil.</summary>

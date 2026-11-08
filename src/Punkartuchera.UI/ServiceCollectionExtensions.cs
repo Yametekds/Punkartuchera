@@ -35,7 +35,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<KeyValueDb>();
         services.AddScoped<IBandRepository, IndexedDbBandRepository>();
         services.AddScoped<IPhotoStore, IndexedDbPhotoStore>();
-        services.AddScoped<IActiveMatchStore, IndexedDbActiveMatchStore>();
+        services.AddScoped<ISavedMatchStore, IndexedDbSavedMatchStore>();
         services.AddScoped<IMatchRelay>(sp => RelayUrl(sp.GetService<IConfiguration>()) is { } url
             ? new SignalRMatchRelay(new HttpClient { BaseAddress = url, Timeout = TimeSpan.FromSeconds(20) })
             : new DisabledMatchRelay());

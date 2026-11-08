@@ -3,6 +3,7 @@
 @inject ITerrainCatalog Terrain
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
+@inject Punkartuchera.Core.Matches.IMatchService Matches
 
 <PageTitle>Mapa · Punkartuchera</PageTitle>
 
@@ -27,6 +28,19 @@
                 <button type="button" class="btn btn--ghost" @onclick="Share">
                     <Icon Path="@Icons.Copy" /> @(_shared ? "¡Pillado!" : "Pasar al rival")
                 </button>
+                @if (Matches.Current is { } match)
+                {
+                    @if (IsMatchMap(match))
+                    {
+                        <a class="btn btn--ghost" href="partida">Es el mapa de la partida</a>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn--blood" @onclick="UseInMatch">
+                            <Icon Path="@Icons.Dice" /> Jugar este mapa
+                        </button>
+                    }
+                }
             </div>
 
             <div class="map-frame">
@@ -232,6 +246,32 @@
     private string LeftoversText => string.Join(", ", _layout!.Leftovers
         .GroupBy(t => t.Name)
         .Select(g => $"{g.Count()}× {g.Key}"));
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await Matches.RestoreAsync();
+        }
+        catch (Exception ex) when (ex is Punkartuchera.Core.Matches.MatchException or Punkartuchera.Core.Matches.RelayException)
+        {
+            // Sin partida a mano el mapa funciona igual.
+        }
+    }
+
+    private string CurrentQuery => new Uri(Navigation.Uri).Query;
+
+    private bool IsMatchMap(Punkartuchera.Core.Matches.ActiveMatch match) =>
+        match.Map is { } map && Punkartuchera.Core.Matches.MatchMap.FromQuery(CurrentQuery) is { } here && here.Query == map.Query;
+
+    /// <summary>Apunta este mapa (código, mesa, despliegue y chatarra) en la partida en marcha.</summary>
+    private async Task UseInMatch()
+    {
+        if (Punkartuchera.Core.Matches.MatchMap.FromQuery(CurrentQuery) is { } map)
+        {
+            await Matches.SetMapAsync(map);
+        }
+    }
 
     /// <summary>El enlace es el estado de la pantalla: compartirlo o recargar da el mismo mapa.</summary>
     protected override void OnParametersSet()

@@ -15,7 +15,7 @@ Es una aplicación web progresiva (PWA) hecha con Blazor WebAssembly. Se instala
 
 - Generador de mapas: eliges cuánta escenografía de cada tipo hay y la app la reparte de forma simétrica y justa para los dos bandos, con un código para que el rival vea el mismo mapa.
 
-- Partidas: ronda, quién ha actuado y quién ha caído en cada banda. En un solo móvil o cada uno en el suyo, unidos con un código de seis caracteres (ver [docs/PARTIDAS-EN-LINEA.md](docs/PARTIDAS-EN-LINEA.md)).
+- Partidas: ronda, quién ha actuado y quién ha caído en cada banda. En un solo móvil o cada uno en el suyo, unidos con un código de seis caracteres (ver [docs/PARTIDAS-EN-LINEA.md](docs/PARTIDAS-EN-LINEA.md)). Varias partidas guardadas para seguirlas otro día, cada una con su mapa, fotos de la mesa y notas.
 
 ## Requisitos
 
