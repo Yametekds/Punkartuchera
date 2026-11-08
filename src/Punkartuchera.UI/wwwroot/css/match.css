@@ -2,6 +2,25 @@
 
 .match-setup { display: grid; gap: 14px; margin-bottom: 18px; }
 .match-setup p { margin: 0; }
+.match-pick__title {
+    margin: 0;
+    font-family: var(--punk-font-display); font-size: 1rem; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--punk-ink);
+}
+
+/* Bandas cargadas del rival: tinta y borde a trazos, con su sello, para no confundirlas con las tuyas. */
+.faction-tile--rival {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    background-color: var(--punk-ink); background-image: none;
+    color: var(--punk-accent);
+    border-style: dashed; border-color: var(--punk-accent);
+}
+.faction-tile--rival.is-selected { color: var(--punk-text); border-style: solid; border-color: var(--punk-black); }
+.faction-tile__tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--punk-font-body); font-size: .72rem; letter-spacing: .1em; opacity: .85;
+}
+.faction-tile__tag svg { width: 12px; height: 12px; }
 
 .match-join { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
 .match-join .field { flex: 1 1 180px; }
