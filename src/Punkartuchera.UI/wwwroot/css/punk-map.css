@@ -15,9 +15,14 @@
 
 /* Plano */
 .map-frame {
-    padding: 10px;
+    padding: 14px;
     background-color: var(--punk-bar);
-    background-image: var(--punk-tex-metal);
+    background-image:
+        var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
+        var(--punk-tex-metal-rust);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+    background-size: 14px, 14px, 14px, 14px, auto;
+    background-position: left 0 top 0, right 0 top 0, left 0 bottom 0, right 0 bottom 0, 0 0;
     border: 3px solid #000;
     filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .5));
 }
