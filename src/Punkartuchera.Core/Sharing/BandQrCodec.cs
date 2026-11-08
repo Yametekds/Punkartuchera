@@ -30,9 +30,10 @@ public static class BandQrCodec
     public const int MaxJsonBytes = 64 * 1024;
 
     /// <exception cref="BandExchangeException">Si la banda no cabe ni quitando las notas.</exception>
-    public static BandQrPayload Encode(Band band, IReadOnlyList<string> statOrder)
+    public static BandQrPayload Encode(Band band, IReadOnlyList<string> statOrder, string? playerName = null)
     {
         var compact = ToCompact(band, statOrder);
+        compact.Player = NullIfEmpty(playerName);
         var text = Pack(compact);
         if (text.Length <= MaxLength)
         {
@@ -161,6 +162,7 @@ public static class BandQrCodec
             FactionId = compact.Faction ?? string.Empty,
             Ownership = BandOwnership.Rival,
             TotalCost = compact.TotalCost,
+            PlayerName = compact.Player,
             // El JSON puede traer nulos donde no debería: se saltan en vez de romper.
             Members = (compact.Members ?? []).OfType<CompactMember>().Select(m =>
             {
@@ -214,6 +216,9 @@ internal sealed class CompactBand
     [JsonPropertyName("k")] public List<string>? StatKeys { get; set; }
 
     [JsonPropertyName("m")] public List<CompactMember> Members { get; set; } = [];
+
+    /// <summary>Nickname de quien pasa la banda.</summary>
+    [JsonPropertyName("u")] public string? Player { get; set; }
 }
 
 internal sealed class CompactMember

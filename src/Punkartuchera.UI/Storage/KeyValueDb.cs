@@ -11,6 +11,7 @@ public sealed class KeyValueDb(IJSRuntime js) : IAsyncDisposable
     public const string BandsStore = "bands";
     public const string PhotosStore = "photos";
     public const string MatchesStore = "matches";
+    public const string TournamentsStore = "tournaments";
 
     private Task<IJSObjectReference>? _module;
 
