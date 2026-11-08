@@ -51,6 +51,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<LocalUserProfileStore>();
         services.AddScoped<IUserProfileStore>(sp => sp.GetRequiredService<LocalUserProfileStore>());
         services.AddScoped<BackupService>();
+        services.AddScoped<Punkartuchera.Core.Tournaments.ITournamentStore, IndexedDbTournamentStore>();
+        services.AddScoped<Punkartuchera.Core.Tournaments.TournamentService>();
         return services;
     }
 

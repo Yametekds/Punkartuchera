@@ -1,0 +1,386 @@
+@page "/torneo/{Id:guid}"
+@using Punkartuchera.Core.Tournaments
+@inject TournamentService Tournaments
+@inject IRulesCatalog Rules
+@inject StampNotifier Stamp
+
+<PageTitle>@(_t?.Name ?? "Torneo") · Punkartuchera</PageTitle>
+
+@if (_t is null)
+{
+    <p class="muted">@(_loaded ? "Ese torneo ya no existe." : "Montando las mesas…")</p>
+    <a class="btn btn--ghost" href="torneo"><Icon Path="@Icons.Back" /> Torneos</a>
+}
+else
+{
+    var t = _t;
+    var round = t.CurrentRound!;
+    <header class="page-header">
+        <div class="page-header__title">
+            <span class="page-kicker">@(t.Finished ? "Torneo acabado" : $"Ronda {round.Number} de {t.PlannedRounds}")</span>
+            <h1 class="page-title distress">@t.Name</h1>
+        </div>
+        <a class="btn btn--ghost" href="torneo"><Icon Path="@Icons.Back" /> Torneos</a>
+    </header>
+
+    <PageTabs Tabs="Tabs" @bind-Active="_tab" />
+
+    @if (_error is not null)
+    {
+        <p class="notice notice--danger" role="alert"><span>@_error</span></p>
+    }
+
+    @if (_tab == TabTables)
+    {
+        @if (t.Finished)
+        {
+            var top = _standings.FirstOrDefault();
+            <p class="notice match-result" role="status">
+                <span><strong>Se acabó.</strong> @(top is null ? "" : $"Gana {top.Player.Name} con {top.Player.BandName}.")</span>
+            </p>
+        }
+        else
+        {
+            <div class="actions">
+                <button type="button" class="btn btn--blood" disabled="@(round.Complete)" @onclick="() => _scanning = true">
+                    <Icon Path="@Icons.Scan" /> Escanear resultado
+                </button>
+            </div>
+        }
+
+        <ul class="tourney-tables">
+            @foreach (var p in round.Pairings)
+            {
+                @PairingView((round.Number, p, !t.Finished))
+            }
+        </ul>
+
+        @if (!t.Finished)
+        {
+            <div class="paper tourney-next">
+                @if (!round.Complete)
+                {
+                    var missing = round.Pairings.Count(p => !p.IsBye && p.Result is null);
+                    <p>Faltan @missing @(missing == 1 ? "mesa" : "mesas") por acabar.</p>
+                }
+                else if (round.Number >= t.PlannedRounds)
+                {
+                    <p>Ronda @round.Number de @t.PlannedRounds hecha. Era la última prevista.</p>
+                }
+                else
+                {
+                    <p>Ronda hecha. La siguiente se empareja por puntos, sin repetir rival.</p>
+                }
+                <div class="actions">
+                    @if (round.Number >= t.PlannedRounds)
+                    {
+                        <button type="button" class="btn btn--primary" disabled="@(_busy || !round.Complete)" @onclick="Finish">Cerrar el torneo</button>
+                        <button type="button" class="btn btn--ghost" disabled="@(_busy || !round.Complete || t.Rounds.Count >= Tournament.MaxRounds)" @onclick="NextRound">Otra ronda más</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn--primary" disabled="@(_busy || !round.Complete)" @onclick="NextRound">Emparejar la ronda @(round.Number + 1)</button>
+                    }
+                    @if (t.Rounds.Count > 1 && round.Pairings.All(p => p.Result is null))
+                    {
+                        <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="UndoRound">Deshacer emparejamiento</button>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="actions">
+                <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="Reopen">Reabrir el torneo</button>
+            </div>
+        }
+
+        @if (t.Rounds.Count > 1)
+        {
+            <h2 class="section-title">Rondas anteriores</h2>
+            @foreach (var past in t.Rounds.Take(t.Rounds.Count - 1).Reverse())
+            {
+                <details class="tourney-past">
+                    <summary>Ronda @past.Number</summary>
+                    <ul class="tourney-tables">
+                        @foreach (var p in past.Pairings)
+                        {
+                            @PairingView((past.Number, p, true))
+                        }
+                    </ul>
+                </details>
+            }
+        }
+    }
+    else if (_tab == TabStandings)
+    {
+        <div class="tourney-standings-wrap">
+            <table class="tourney-standings">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Jugador</th>
+                        <th scope="col" title="Puntos de torneo: victoria 3, empate 1, derrota 0, descanso 3">Pts</th>
+                        <th scope="col" title="Ganadas, empatadas y perdidas">G-E-P</th>
+                        <th scope="col" title="Buchholz: puntos de los rivales a los que se ha enfrentado">Bu</th>
+                        <th scope="col" title="Puntos anotados (A) y recibidos (R) en las partidas">A:R</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in _standings)
+                    {
+                        <tr class="@(row.Player.Dropped ? "is-dropped" : null)">
+                            <td>@row.Position</td>
+                            <td>
+                                <strong>@row.Player.Name</strong>
+                                <span class="tourney-standings__band">@row.Player.BandName</span>
+                            </td>
+                            <td class="tourney-standings__pts">@row.Points</td>
+                            <td>
+                                @row.Wins-@row.Draws-@row.Losses
+                                @if (row.Byes > 0)
+                                {
+                                    <span class="tourney-standings__band">@row.Byes desc.</span>
+                                }
+                            </td>
+                            <td>@row.Buchholz</td>
+                            <td>@row.ScoreFor : @row.ScoreAgainst</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <p class="sheet__small">Pts: victoria 3, empate 1, derrota 0 y descanso 3. Bu (Buchholz): suma de los puntos de tus rivales, el primer desempate. A:R: puntos anotados y recibidos en las partidas, el segundo y tercer desempate.</p>
+    }
+    else
+    {
+        <ul class="tourney-entries">
+            @foreach (var player in t.Players)
+            {
+                <li class="card tourney-player @(player.Dropped ? "is-dropped" : null)">
+                    <label class="field tourney-entry__field">
+                        <span class="field__label">@player.BandName · @(Rules.FindFaction(player.FactionId)?.Name ?? player.FactionId)@(player.BandCost is { } cost ? $" · {cost} pts" : "")</span>
+                        <input class="field__input" value="@player.Name" maxlength="@Tournament.MaxNameLength"
+                               aria-label="@($"Jugador de {player.BandName}")"
+                               @onchange="e => Rename(player.Id, e.Value?.ToString())" />
+                    </label>
+                    @if (!t.Finished)
+                    {
+                        <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="() => SetDropped(player.Id, !player.Dropped)">
+                            @(player.Dropped ? "Volver a meter" : "Retirar")
+                        </button>
+                    }
+                </li>
+            }
+        </ul>
+        <p class="sheet__small">Quien se retira deja de emparejarse desde la siguiente ronda; sus partidas jugadas siguen contando. Sorteo de la primera ronda: semilla @t.Seed.</p>
+    }
+
+    @if (_scanning)
+    {
+        <TournamentScanSheet Tournament="t" OnScanned="OnScanned" OnClose="() => _scanning = false" />
+    }
+
+    @if (_editing is { } edit)
+    {
+        var a = t.FindPlayer(edit.Pairing.PlayerA)!;
+        var b = t.FindPlayer(edit.Pairing.PlayerB!.Value)!;
+        <div class="sheet-scrim" @onclick="() => _editing = null"></div>
+        <section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="result-title">
+            <header class="sheet__head">
+                <h2 id="result-title" class="sheet__title">Mesa @edit.Pairing.Table · ronda @edit.Round</h2>
+                <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="() => _editing = null"><Icon Path="@Icons.Close" /></button>
+            </header>
+            @if (edit.FromQr)
+            {
+                <p>Leído del QR de la mesa. Repásalo y apúntalo.</p>
+            }
+            <div class="tourney-score">
+                <Stepper Label="@a.Name" Value="edit.ScoreA" Min="0" Max="Tournament.MaxScore" ValueChanged="v => { edit.ScoreA = v; edit.SyncOutcome(); }" />
+                <Stepper Label="@b.Name" Value="edit.ScoreB" Min="0" Max="Tournament.MaxScore" ValueChanged="v => { edit.ScoreB = v; edit.SyncOutcome(); }" />
+            </div>
+            <fieldset class="field">
+                <legend class="field__label">¿Quién gana?</legend>
+                <div class="faction-grid tourney-outcome">
+                    @foreach (var (outcome, label) in new[] { (MatchOutcome.WinA, a.Name), (MatchOutcome.Draw, "Empate"), (MatchOutcome.WinB, b.Name) })
+                    {
+                        <button type="button" class="faction-tile @(edit.Outcome == outcome ? "is-selected" : null)" aria-pressed="@(edit.Outcome == outcome)"
+                                @onclick="() => edit.Outcome = outcome">@label</button>
+                    }
+                </div>
+            </fieldset>
+            <div class="actions">
+                <button type="button" class="btn btn--primary" disabled="@_busy" @onclick="SaveResult">Apuntar resultado</button>
+                @if (edit.Pairing.Result is not null && !edit.FromQr)
+                {
+                    <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="ClearResult">Quitar resultado</button>
+                }
+            </div>
+        </section>
+    }
+}
+
+@code {
+    private const string TabTables = "Mesas";
+    private const string TabStandings = "Clasificación";
+    private const string TabPlayers = "Jugadores";
+    private static readonly IReadOnlyList<string> Tabs = [TabTables, TabStandings, TabPlayers];
+
+    [Parameter] public Guid Id { get; set; }
+
+    private sealed class ResultEdit
+    {
+        public required int Round { get; init; }
+        public required TournamentPairing Pairing { get; init; }
+        public bool FromQr { get; init; }
+        public int ScoreA { get; set; }
+        public int ScoreB { get; set; }
+        public MatchOutcome Outcome { get; set; }
+
+        /// <summary>Al tocar el marcador, el ganador sigue al marcador; luego se puede cambiar a mano.</summary>
+        public void SyncOutcome() =>
+            Outcome = ScoreA > ScoreB ? MatchOutcome.WinA : ScoreA < ScoreB ? MatchOutcome.WinB : MatchOutcome.Draw;
+    }
+
+    private Tournament? _t;
+    private bool _loaded;
+    private bool _busy;
+    private bool _scanning;
+    private string? _error;
+    private string _tab = TabTables;
+    private ResultEdit? _editing;
+    private IReadOnlyList<StandingRow> _standings = [];
+
+    private RenderFragment PairingView((int Round, TournamentPairing Pairing, bool Editable) item) => __builder =>
+    {
+        var p = item.Pairing;
+        var a = _t!.FindPlayer(p.PlayerA);
+        var b = p.PlayerB is { } bId ? _t.FindPlayer(bId) : null;
+        <li class="card tourney-table @(p.Result is not null || p.IsBye ? "is-done" : null)">
+            <span class="tourney-table__num">@(p.IsBye ? "Descansa" : $"Mesa {p.Table}")</span>
+            <div class="tourney-table__players">
+                @PlayerLine((a, p.Result?.ScoreA, p.Result?.Outcome == MatchOutcome.WinA))
+                @if (b is not null)
+                {
+                    <span class="tourney-table__vs" aria-hidden="true">vs</span>
+                    @PlayerLine((b, p.Result?.ScoreB, p.Result?.Outcome == MatchOutcome.WinB))
+                }
+            </div>
+            @if (p.IsBye)
+            {
+                <span class="tourney-table__status">Victoria por descanso</span>
+            }
+            else
+            {
+                <span class="tourney-table__status">
+                    @(p.Result is null ? "Jugando" : p.Result.Outcome == MatchOutcome.Draw ? "Empate" : "Acabada")
+                    @if (p.Result?.Source == ResultSource.Qr)
+                    {
+                        <text> · por QR</text>
+                    }
+                </span>
+                @if (item.Editable)
+                {
+                    <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="() => EditManual(item.Round, p)">
+                        <Icon Path="@Icons.Edit" /> @(p.Result is null ? "Apuntar a mano" : "Corregir")
+                    </button>
+                }
+            }
+        </li>
+    };
+
+    private static RenderFragment PlayerLine((TournamentPlayer? Player, int? Score, bool Winner) line) => __builder =>
+    {
+        <span class="tourney-table__player @(line.Winner ? "is-winner" : null)">
+            <strong>@(line.Player?.Name ?? "¿?")</strong>
+            <span class="tourney-table__band">@line.Player?.BandName</span>
+            @if (line.Score is { } score)
+            {
+                <span class="tourney-table__score">@score</span>
+            }
+        </span>
+    };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _t = await Tournaments.GetAsync(Id);
+        _loaded = true;
+        Refresh();
+    }
+
+    private void Refresh() => _standings = _t is null ? [] : TournamentStandings.Compute(_t);
+
+    private void EditManual(int round, TournamentPairing p) =>
+        _editing = new ResultEdit
+        {
+            Round = round,
+            Pairing = p,
+            ScoreA = p.Result?.ScoreA ?? 0,
+            ScoreB = p.Result?.ScoreB ?? 0,
+            Outcome = p.Result?.Outcome ?? MatchOutcome.Draw,
+        };
+
+    private void OnScanned(ScannedResult scanned)
+    {
+        _scanning = false;
+        _editing = new ResultEdit
+        {
+            Round = scanned.Round,
+            Pairing = scanned.Pairing,
+            FromQr = true,
+            ScoreA = scanned.ScoreA,
+            ScoreB = scanned.ScoreB,
+            Outcome = scanned.Outcome,
+        };
+    }
+
+    private Task SaveResult() => Run(async () =>
+    {
+        var edit = _editing!;
+        _t = await Tournaments.RecordResultAsync(_t!.Id, edit.Round, edit.Pairing.Table, edit.Outcome, edit.ScoreA, edit.ScoreB,
+            edit.FromQr ? ResultSource.Qr : ResultSource.Manual);
+        _editing = null;
+        Stamp.Stamp("Apuntado");
+    });
+
+    private Task ClearResult() => Run(async () =>
+    {
+        _t = await Tournaments.ClearResultAsync(_t!.Id, _editing!.Round, _editing.Pairing.Table);
+        _editing = null;
+    });
+
+    private Task NextRound() => Run(async () => _t = await Tournaments.NextRoundAsync(_t!.Id));
+
+    private Task UndoRound() => Run(async () => _t = await Tournaments.UndoRoundAsync(_t!.Id));
+
+    private Task Finish() => Run(async () =>
+    {
+        _t = await Tournaments.FinishAsync(_t!.Id);
+        _tab = TabStandings;
+    });
+
+    private Task Reopen() => Run(async () => _t = await Tournaments.FinishAsync(_t!.Id, finished: false));
+
+    private Task Rename(Guid playerId, string? name) => Run(async () => _t = await Tournaments.RenamePlayerAsync(_t!.Id, playerId, name ?? string.Empty));
+
+    private Task SetDropped(Guid playerId, bool dropped) => Run(async () => _t = await Tournaments.SetDroppedAsync(_t!.Id, playerId, dropped));
+
+    private async Task Run(Func<Task> action)
+    {
+        _busy = true;
+        _error = null;
+        try
+        {
+            await action();
+            Refresh();
+        }
+        catch (TournamentException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+}

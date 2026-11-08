@@ -28,6 +28,12 @@ public sealed class Band
     /// </summary>
     public Guid? SourceId { get; set; }
 
+    /// <summary>
+    /// Nickname de quien pasó la banda (solo en las rivales). En los torneos se propone como nombre
+    /// del jugador, y el organizador lo puede cambiar allí.
+    /// </summary>
+    public string? PlayerName { get; set; }
+
     public List<Miniature> Members { get; set; } = [];
 
     /// <summary>

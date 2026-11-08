@@ -1,0 +1,53 @@
+/* Torneo suizo: inscripción, mesas, clasificación */
+.tourney-setup { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+.tourney-setup p { margin: 0; }
+.tourney-setup__subtitle {
+    margin: 6px 0 0; font-family: var(--punk-font-display); font-weight: normal;
+    font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; color: var(--punk-ink-muted);
+}
+
+.tourney-band { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; }
+.tourney-band__name { overflow-wrap: anywhere; }
+.tourney-band__meta { font-family: var(--punk-font-body); font-size: .75rem; letter-spacing: 0; text-transform: none; color: var(--punk-text-muted); }
+.tourney-band.is-selected .tourney-band__meta { color: var(--punk-text); }
+
+.tourney-entries { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.tourney-entry { display: flex; align-items: flex-end; gap: 8px; }
+.tourney-entry__field { flex: 1 1 auto; }
+.tourney-player { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; padding: 12px 14px; }
+.tourney-player.is-dropped { opacity: .6; }
+
+.tourney-tables { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 10px; }
+@media (min-width: 760px) { .tourney-tables { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tourney-table { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; }
+.tourney-table.is-done { opacity: .82; }
+.tourney-table__num { font-family: var(--punk-font-display); font-size: 1.1rem; letter-spacing: .06em; text-transform: uppercase; color: var(--punk-accent); }
+.tourney-table__players { display: flex; flex-direction: column; gap: 4px; }
+.tourney-table__player { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.tourney-table__player strong { overflow-wrap: anywhere; }
+.tourney-table__player.is-winner strong { color: var(--punk-accent); }
+.tourney-table__band { font-size: .85rem; color: var(--punk-text-muted); }
+.tourney-table__score { margin-left: auto; font-family: var(--punk-font-display); font-size: 1.3rem; }
+.tourney-table__vs { font-family: var(--punk-font-display); font-size: .8rem; color: var(--punk-text-muted); text-transform: uppercase; }
+.tourney-table__status { font-size: .85rem; color: var(--punk-text-muted); }
+.tourney-table .btn { align-self: flex-start; }
+
+.tourney-next { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+.tourney-next p { margin: 0; }
+.tourney-past { margin: 8px 0; }
+.tourney-past summary { cursor: pointer; font-family: var(--punk-font-display); text-transform: uppercase; letter-spacing: .06em; }
+
+.tourney-score { display: grid; gap: 10px; }
+.tourney-outcome .faction-tile { min-height: 48px; overflow-wrap: anywhere; }
+
+.tourney-standings-wrap { overflow-x: auto; margin: 12px 0; }
+.tourney-standings { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.tourney-standings td:nth-child(n+3), .tourney-standings th:nth-child(n+3) { white-space: nowrap; }
+.tourney-standings th, .tourney-standings td { padding: 8px 6px; text-align: left; border-bottom: 1px solid var(--punk-border); vertical-align: top; }
+.tourney-standings th { font-family: var(--punk-font-display); font-weight: normal; text-transform: uppercase; letter-spacing: .05em; color: var(--punk-text-muted); font-size: .8rem; }
+.tourney-standings__band { display: block; font-size: .8rem; color: var(--punk-text-muted); }
+.tourney-standings__pts { font-family: var(--punk-font-display); font-size: 1.15rem; color: var(--punk-accent); }
+.tourney-standings tr.is-dropped { opacity: .55; }
+
+.tourney-qr-open { margin: -6px 0 14px; }
+.tourney-outcome { grid-template-columns: repeat(3, minmax(0, 1fr)); }
