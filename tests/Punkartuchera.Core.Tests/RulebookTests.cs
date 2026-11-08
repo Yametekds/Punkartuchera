@@ -422,6 +422,26 @@ public class OfficialMiniTests
         Assert.EndsWith("BR1CR06A.webp", sailors.Single(m => m.Gear.Any(g => g.Name == "Trabuco")).Photo!.Key);
         Assert.EndsWith("BR1CR04A.webp", sailors.Single(m => m.Gear.Any(g => g.Name == "Pistola de mecha")).Photo!.Key);
     }
+
+    [Theory]
+    [InlineData("mutardos", "Mamá Guedé")]
+    [InlineData("mutardos", "Espíritu del pantano")]
+    [InlineData("mutardos", "Pocho")]
+    [InlineData("unami", "Yee naaldlooshii")]
+    [InlineData("idos", "Abominación")]
+    [InlineData("irradiados", "Escudero")]
+    public void Troops_without_their_own_mini_use_the_compatible_ones(string factionId, string troop)
+    {
+        Assert.NotEmpty(_builder.PhotosFor(factionId, troop));
+    }
+
+    [Fact]
+    public void Compatible_photo_follows_the_gear_too()
+    {
+        var photo = _builder.BestPhoto("irradiados", "Escudero", ["Arco"]);
+
+        Assert.EndsWith("BR4CC12.jpg", photo!.Key);
+    }
 }
 
 public class RuleMentionTests
