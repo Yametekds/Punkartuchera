@@ -1,0 +1,70 @@
+@using Punkartuchera.Core.Matches
+@using Punkartuchera.Core.Storage
+@using Punkartuchera.Core.Tournaments
+@inject IBandRepository BandStore
+
+@* Al acabar una partida de torneo, QR con el resultado para que lo escanee quien lleva el torneo. *@
+<div class="actions tourney-qr-open">
+    <button type="button" class="btn btn--ghost" @onclick="Open">
+        <Icon Path="@Icons.Trophy" /> QR del resultado para el torneo
+    </button>
+</div>
+
+@if (_open)
+{
+    <div class="sheet-scrim" @onclick="() => _open = false"></div>
+    <section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="result-qr-title">
+        <header class="sheet__head">
+            <h2 id="result-qr-title" class="sheet__title">Resultado para el torneo</h2>
+            <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="() => _open = false"><Icon Path="@Icons.Close" /></button>
+        </header>
+
+        @if (_code is not null)
+        {
+            <p>
+                <strong>@Match.OwnBandName @Match.OwnScore</strong> — <strong>@Match.RivalScore @(Match.RivalBandName ?? "Rival")</strong>.
+                @WinnerText
+            </p>
+            <p>Que lo escanee quien lleva el torneo desde <strong>Torneo › Escanear resultado</strong>.</p>
+            <QrCode Text="@_code" Label="QR del resultado de la partida" Class="sheet__qr" />
+        }
+        else
+        {
+            <p class="notice">Falta la banda rival: sin ella no hay resultado que pasar.</p>
+        }
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired] public ActiveMatch Match { get; set; } = default!;
+
+    private bool _open;
+    private string? _code;
+
+    private string WinnerText => MatchResultCode.WinnerFromScore(Match.OwnScore, Match.RivalScore) switch
+    {
+        MatchResultWinner.Own => $"Gana {Match.OwnBandName}.",
+        MatchResultWinner.Rival => $"Gana {Match.RivalBandName ?? "el rival"}.",
+        _ => "Empate.",
+    };
+
+    private async Task Open()
+    {
+        _code = null;
+        var own = await BandStore.GetAsync(Match.OwnBandId);
+        var rival = Match.RivalBandId is { } rivalId ? await BandStore.GetAsync(rivalId) : null;
+        var rivalOrigin = rival is not null ? TournamentService.OriginOf(rival) : Match.RivalSourceId;
+        if (rivalOrigin is { } origin)
+        {
+            var ownOrigin = own is not null ? TournamentService.OriginOf(own) : Match.OwnBandId;
+            _code = new MatchResultCode(
+                ownOrigin,
+                origin,
+                Match.OwnScore,
+                Match.RivalScore,
+                MatchResultCode.WinnerFromScore(Match.OwnScore, Match.RivalScore)).Encode();
+        }
+
+        _open = true;
+    }
+}

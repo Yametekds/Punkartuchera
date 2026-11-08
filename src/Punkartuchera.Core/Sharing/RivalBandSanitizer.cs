@@ -2,6 +2,7 @@ using System.Text;
 using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Rules;
 using Punkartuchera.Core.Services;
+using Punkartuchera.Core.Users;
 
 namespace Punkartuchera.Core.Sharing;
 
@@ -34,6 +35,7 @@ public static class RivalBandSanitizer
         band.SubfactionId = NullIfEmpty(Clean(band.SubfactionId, MaxTextLength));
         band.Notes = null;
         band.Ownership = BandOwnership.Rival;
+        band.PlayerName = UserProfile.CleanNickname(band.PlayerName);
 
         band.Members = (band.Members ?? [])
             .OfType<Miniature>()

@@ -24,5 +24,7 @@ public static class Icons
     public const string Share = "M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7l7-4.1c.5.5 1.3.8 2.1.8a3 3 0 1 0-3-3c0 .2 0 .5.1.7l-7 4.1A3 3 0 0 0 6 9a3 3 0 1 0 2 5.2l7.1 4.2c-.1.2-.1.4-.1.7a3 3 0 1 0 3-3z";
     public const string Inbox = "M11 3h2v8.2l3.3-3.3 1.4 1.4L12 15 6.3 9.3l1.4-1.4 3.3 3.3V3zM3 14h5l1.5 3h5l1.5-3h5v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z";
     public const string User = "M12 3a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM3.5 21c0-4.1 3.8-7 8.5-7s8.5 2.9 8.5 7h-17z";
+    public const string Trophy = "M7 3h10v2h4v3a4 4 0 0 1-4 4h-.4A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1A5 5 0 0 1 7.4 12H7a4 4 0 0 1-4-4V5h4V3zm0 4H5v1a2 2 0 0 0 2 2V7zm10 0v3a2 2 0 0 0 2-2V7h-2z";
+    public const string Scan = "M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 0h2v6h-6v-2h4v-4zM7 11h10v2H7z";
     public const string Close = "M6.4 5L12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5z";
 }

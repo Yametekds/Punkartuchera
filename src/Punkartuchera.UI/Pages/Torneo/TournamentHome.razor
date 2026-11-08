@@ -1,0 +1,202 @@
+@page "/torneo"
+@using Punkartuchera.Core.Tournaments
+@inject TournamentService Tournaments
+@inject BandService Bands
+@inject IRulesCatalog Rules
+@inject NavigationManager Navigation
+
+<PageTitle>Torneo · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Suizo y a cara de perro</span>
+        <h1 class="page-title distress">Torneo</h1>
+    </div>
+</header>
+
+@if (_loading)
+{
+    <p class="muted">Montando las mesas…</p>
+}
+else
+{
+    @if (_tournaments.Count > 0)
+    {
+        <h2 class="section-title">Tus torneos</h2>
+        <ul class="match-saved">
+            @foreach (var t in _tournaments)
+            {
+                <li class="card match-saved__item">
+                    <div class="match-saved__info">
+                        <strong class="match-saved__title">@t.Name</strong>
+                        <span class="match-saved__meta">
+                            @(t.Finished ? "Acabado" : $"Ronda {t.Rounds.Count} de {t.PlannedRounds}") · @t.Players.Count bandas
+                        </span>
+                    </div>
+                    <div class="match-saved__actions">
+                        <a class="btn btn--blood" href="torneo/@t.Id">@(t.Finished ? "Ver" : "Seguir")</a>
+                        <ConfirmButton Text="Borrar" ConfirmText="Sí, borrar" OnConfirm="() => Delete(t.Id)" />
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    <h2 class="section-title">Torneo nuevo</h2>
+    <div class="paper tourney-setup">
+        <p>Este móvil lleva el torneo. Cada mesa juega en su propio móvil y, al acabar, te enseña un QR con el resultado.</p>
+
+        <label class="field">
+            <span class="field__label">Nombre del torneo</span>
+            <input class="field__input" @bind="_name" @bind:event="oninput" maxlength="@Tournament.MaxNameLength" placeholder="Torneo del garaje" />
+        </label>
+
+        @if (_bands.Count == 0)
+        {
+            <p class="notice"><span>No hay bandas en el móvil. Monta la tuya y carga las de los demás desde <a href="">Bandas</a>.</span></p>
+        }
+        else
+        {
+            @BandGroup(("Mis bandas", _bands.Where(b => !b.IsReadOnly).ToList()))
+            @BandGroup(("Bandas cargadas de otros", _bands.Where(b => b.IsReadOnly).ToList()))
+            <p class="sheet__small">¿Falta alguien? Carga su banda desde <a href="">Bandas › Cargar rival</a> y vuelve. Llega con su nickname.</p>
+        }
+
+        @if (_entries.Count > 0)
+        {
+            <h3 class="tourney-setup__subtitle">Jugadores (@_entries.Count)</h3>
+            <ul class="tourney-entries">
+                @foreach (var entry in _entries)
+                {
+                    var band = _bands.First(b => b.Id == entry.BandId);
+                    <li class="tourney-entry">
+                        <label class="field tourney-entry__field">
+                            <span class="field__label">@band.Name</span>
+                            <input class="field__input" @bind="entry.PlayerName" @bind:event="oninput" maxlength="@Tournament.MaxNameLength"
+                                   aria-label="@($"Jugador de {band.Name}")" />
+                        </label>
+                        <button type="button" class="btn btn--icon" aria-label="@($"Quitar {band.Name}")" @onclick="() => Toggle(band)"><Icon Path="@Icons.Close" /></button>
+                    </li>
+                }
+            </ul>
+
+            @if (_entries.Count >= Tournament.MinPlayers)
+            {
+                <Stepper Label="@($"Rondas (recomendadas: {Tournament.RecommendedRounds(_entries.Count)})")" Value="Rounds" Min="1" Max="MaxRounds" ValueChanged="v => _rounds = v" />
+            }
+        }
+
+        @if (_error is not null)
+        {
+            <p class="notice notice--danger" role="alert"><span>@_error</span></p>
+        }
+
+        <div class="actions">
+            <button type="button" class="btn btn--primary" disabled="@(_busy || _entries.Count < Tournament.MinPlayers)" @onclick="Create">
+                <Icon Path="@Icons.Dice" /> Sortear la primera ronda
+            </button>
+        </div>
+        @if (_entries.Count < Tournament.MinPlayers)
+        {
+            <p class="sheet__small">Elige al menos dos bandas.</p>
+        }
+    </div>
+}
+
+@code {
+    private sealed class Entry
+    {
+        public Guid BandId { get; init; }
+        public string PlayerName { get; set; } = string.Empty;
+    }
+
+    private bool _loading = true;
+    private bool _busy;
+    private string? _error;
+    private string _name = string.Empty;
+    private int? _rounds;
+    private List<Tournament> _tournaments = [];
+    private List<Band> _bands = [];
+    private readonly List<Entry> _entries = [];
+
+    private int MaxRounds => Math.Max(1, Math.Min(Tournament.MaxRounds, _entries.Count - 1));
+
+    private int Rounds => Math.Clamp(_rounds ?? Tournament.RecommendedRounds(_entries.Count), 1, MaxRounds);
+
+    private RenderFragment BandGroup((string Title, List<Band> Bands) group) => __builder =>
+    {
+        if (group.Bands.Count == 0)
+        {
+            return;
+        }
+
+        <h3 class="tourney-setup__subtitle">@group.Title</h3>
+        <div class="faction-grid">
+            @foreach (var band in group.Bands)
+            {
+                var selected = _entries.Any(e => e.BandId == band.Id);
+                <button type="button" class="faction-tile tourney-band @(selected ? "is-selected" : null) @(band.IsReadOnly ? "tourney-band--rival" : null)"
+                        aria-pressed="@selected" @onclick="() => Toggle(band)">
+                    <span class="tourney-band__name">@band.Name</span>
+                    <span class="tourney-band__meta">
+                        @(Rules.FindFaction(band.FactionId)?.Name ?? band.FactionId)
+                        @if (band.IsReadOnly && band.PlayerName is { } player)
+                        {
+                            <text> · de @player</text>
+                        }
+                    </span>
+                </button>
+            }
+        </div>
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        _tournaments = (await Tournaments.GetAllAsync()).ToList();
+        _bands = (await Bands.GetAllAsync()).OrderBy(b => b.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+        _loading = false;
+    }
+
+    private async Task Toggle(Band band)
+    {
+        var existing = _entries.FirstOrDefault(e => e.BandId == band.Id);
+        if (existing is not null)
+        {
+            _entries.Remove(existing);
+            return;
+        }
+
+        if (_entries.Count >= Tournament.MaxPlayers)
+        {
+            _error = $"Como mucho caben {Tournament.MaxPlayers} bandas.";
+            return;
+        }
+
+        _entries.Add(new Entry { BandId = band.Id, PlayerName = await Tournaments.SuggestPlayerNameAsync(band) });
+    }
+
+    private async Task Create()
+    {
+        _busy = true;
+        _error = null;
+        try
+        {
+            var t = await Tournaments.CreateAsync(_name, _entries.Select(e => new TournamentEntry(e.BandId, e.PlayerName)).ToList(), Rounds);
+            Navigation.NavigateTo($"torneo/{t.Id}");
+        }
+        catch (TournamentException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task Delete(Guid id)
+    {
+        await Tournaments.DeleteAsync(id);
+        _tournaments.RemoveAll(t => t.Id == id);
+    }
+}
