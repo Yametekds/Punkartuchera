@@ -13,6 +13,8 @@
     --punk-tex-paper: image-set(url("../img/tex/paper.webp") 0.5x);
     --punk-tex-fibre: url("../img/tex/fibre.webp");
     --punk-tex-metal: url("../img/tex/metal.webp");
+    /* Metal cepillado con brillos desiguales, arañazos y manchas de óxido, con transparencia (512 px sin costuras) */
+    --punk-tex-metal-rust: url("../img/tex/metal-rust.webp");
     --punk-tex-plate: image-set(url("../img/tex/plate.webp") 2x);
     /* Balazos con su abolladura, hollín y chorreón de óxido, con transparencia: va encima de la chapa */
     --punk-tex-shots: image-set(url("../img/tex/shots.webp") 1.4x);

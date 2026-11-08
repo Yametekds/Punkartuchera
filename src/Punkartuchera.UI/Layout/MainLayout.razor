@@ -66,6 +66,7 @@
 
     @* En móvil y tablet, las secciones de siempre a mano del pulgar (las demás siguen en el menú) *@
     <nav class="tabbar" aria-label="Accesos rápidos">
+        <span class="tabbar__lip" aria-hidden="true"></span>
         @foreach (var item in AppNavigation.Items.Where(i => i.Available).Take(4))
         {
             <a class="tabbar__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">
