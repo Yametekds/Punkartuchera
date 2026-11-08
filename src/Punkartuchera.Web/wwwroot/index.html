@@ -16,6 +16,14 @@
                 var segment = location.pathname.split('/')[1];
                 if (segment) document.querySelector('base').setAttribute('href', '/' + segment + '/');
             }
+            // Tamaño de letra y tipografía elegidos en Usuario, antes de pintar nada.
+            try {
+                var user = JSON.parse(localStorage.getItem('punkartuchera.user') || '{}');
+                var scale = Number(user.fontScale);
+                if (scale >= 90 && scale <= 150 && scale !== 100) document.documentElement.style.fontSize = scale + '%';
+                var font = String(user.font || '').toLowerCase();
+                if (font === 'opendyslexic' || font === 'hyperlegible') document.documentElement.dataset.font = font;
+            } catch (e) { }
         })();
     </script>
     <link rel="preload" id="webassembly" />
@@ -27,6 +35,7 @@
     <link rel="stylesheet" href="_content/Punkartuchera.UI/css/roster.css" />
     <link rel="stylesheet" href="_content/Punkartuchera.UI/css/match.css" />
     <link rel="stylesheet" href="_content/Punkartuchera.UI/css/tutorials.css" />
+    <link rel="stylesheet" href="_content/Punkartuchera.UI/css/user.css" />
     <link href="manifest.webmanifest" rel="manifest" />
     <link rel="icon" type="image/png" href="icon-192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
