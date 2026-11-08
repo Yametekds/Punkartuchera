@@ -196,12 +196,6 @@ h1:focus { outline: none; }
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .28), rgba(0, 0, 0, .2) 45%, #000);
 }
 .punk-topbar > :not(.punk-topbar__rust) { position: relative; z-index: 1; }
-/* Sombra bajo el desgarro: lo que pasa por debajo al hacer scroll se pierde en la
-   oscuridad y no asoma a trozos entre los dientes de la chapa. */
-.punk-topbar > .punk-topbar__fade {
-    position: absolute; z-index: -1; left: 0; right: 0; top: 100%; height: 30px; pointer-events: none;
-    background: linear-gradient(to bottom, var(--punk-bg) 0, rgba(17, 17, 17, .92) 14px, rgba(17, 17, 17, 0));
-}
 /* Borde rasgado: la misma chapa recortada (::after), comida por el óxido hacia la punta,
    y debajo su canto (::before), unos píxeles más abajo, que da el grosor del metal doblado. */
 .punk-topbar::before, .punk-topbar::after {
@@ -242,7 +236,7 @@ h1:focus { outline: none; }
     flex: 1;
     width: 100%; max-width: 1100px;
     margin: 0 auto;
-    padding: 30px max(16px, env(safe-area-inset-right)) calc(104px + var(--punk-tabbar-height) + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    padding: 30px max(16px, env(safe-area-inset-right)) calc(96px + var(--punk-tabbar-height) + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
 }
 
 /* Barra de pestañas inferior (móvil y tablet): la misma chapa, con el desgarro hacia arriba */
@@ -281,11 +275,6 @@ h1:focus { outline: none; }
         background-position: 0 0, left 90px top 13px, left 0 top 13px, left 0 top 13px;
         -webkit-mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
         mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
-    }
-    /* Igual que arriba: lo que baja por detrás no se ve a trozos entre los dientes */
-    .tabbar__fade {
-        position: absolute; z-index: -1; left: 0; right: 0; bottom: 100%; height: 20px; pointer-events: none;
-        background: linear-gradient(to top, var(--punk-bg) 0, rgba(17, 17, 17, .9) 9px, rgba(17, 17, 17, 0));
     }
     .tabbar__item {
         position: relative; z-index: 0;
@@ -462,7 +451,7 @@ h1:focus { outline: none; }
 .fab {
     position: fixed; z-index: 9;
     right: max(16px, env(safe-area-inset-right));
-    bottom: calc(var(--punk-tabbar-height) + 24px + env(safe-area-inset-bottom));
+    bottom: calc(var(--punk-tabbar-height) + 16px + env(safe-area-inset-bottom));
     min-height: 58px; padding: 10px 22px;
     font-size: 1.15rem;
     filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .6));
@@ -471,7 +460,7 @@ h1:focus { outline: none; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .actions--sticky {
-    position: sticky; bottom: calc(var(--punk-tabbar-height) + env(safe-area-inset-bottom) + 22px); z-index: 5;
+    position: sticky; bottom: calc(var(--punk-tabbar-height) + env(safe-area-inset-bottom) + 10px); z-index: 5;
     padding: 12px;
     background-color: var(--punk-bar);
     background-image: var(--punk-tex-metal);
