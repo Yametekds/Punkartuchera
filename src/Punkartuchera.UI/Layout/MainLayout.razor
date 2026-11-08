@@ -5,7 +5,6 @@
 <div class="punk-shell">
     <header class="punk-topbar">
         <span class="punk-topbar__rust" aria-hidden="true"></span>
-        <span class="punk-topbar__fade" aria-hidden="true"></span>
         <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@_drawerOpen" @onclick="() => _drawerOpen = true">
             <Icon Path="@Icons.Menu" />
         </button>
@@ -67,7 +66,6 @@
 
     @* En móvil y tablet, las secciones de siempre a mano del pulgar (las demás siguen en el menú) *@
     <nav class="tabbar" aria-label="Accesos rápidos">
-        <span class="tabbar__fade" aria-hidden="true"></span>
         @foreach (var item in AppNavigation.Items.Where(i => i.Available).Take(4))
         {
             <a class="tabbar__item @(IsActive(item) ? "active" : null)" href="@item.Href" aria-current="@(IsActive(item) ? "page" : null)">

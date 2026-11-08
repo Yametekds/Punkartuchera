@@ -21,6 +21,8 @@
         <g>
             <rect class="map-deploy map-deploy--north" x="0" y="0" width="@D" height="@H" />
             <rect class="map-deploy map-deploy--south" x="@(W - D)" y="0" width="@D" height="@H" />
+            <text class="map-deploy__label" transform="translate(@Num(D / 2.0) @Num(H / 2.0)) rotate(-90)">Despliegue B</text>
+            <text class="map-deploy__label" transform="translate(@Num(W - D / 2.0) @Num(H / 2.0)) rotate(90)">Despliegue A</text>
             <line class="map-midline" x1="@Num(W / 2.0)" y1="0" x2="@Num(W / 2.0)" y2="@H" />
         </g>
     }
@@ -29,6 +31,8 @@
         <g>
             <rect class="map-deploy map-deploy--north" x="0" y="0" width="@W" height="@D" />
             <rect class="map-deploy map-deploy--south" x="0" y="@(H - D)" width="@W" height="@D" />
+            <text class="map-deploy__label" x="@(W / 2)" y="@Num(D / 2.0)">Despliegue B</text>
+            <text class="map-deploy__label" x="@(W / 2)" y="@Num(H - D / 2.0)">Despliegue A</text>
             <line class="map-midline" x1="0" y1="@Num(H / 2.0)" x2="@W" y2="@Num(H / 2.0)" />
         </g>
     }
@@ -55,31 +59,10 @@
             }
         </g>
     }
-
-    @* Los rótulos van encima de las piezas, pegados al borde de su zona, para que nunca queden tapados *@
-    <g class="map-deploy__labels" aria-hidden="true">
-        @if (Vertical)
-        {
-            <g>
-                <text class="map-deploy__label" transform="translate(@Num(LabelInset) @Num(H / 2.0)) rotate(-90)">Despliegue B</text>
-                <text class="map-deploy__label" transform="translate(@Num(W - LabelInset) @Num(H / 2.0)) rotate(90)">Despliegue A</text>
-            </g>
-        }
-        else
-        {
-            <g>
-                <text class="map-deploy__label" x="@Num(W / 2.0)" y="@Num(LabelInset)">Despliegue B</text>
-                <text class="map-deploy__label" x="@Num(W / 2.0)" y="@Num(H - LabelInset)">Despliegue A</text>
-            </g>
-        }
-    </g>
 </svg>
 
 @code {
     private const int GridStep = 10;
-
-    /// <summary>Distancia en cm del rótulo de despliegue al borde de la mesa.</summary>
-    private const double LabelInset = 3.2;
 
     [Parameter, EditorRequired] public MapLayout Layout { get; set; } = default!;
 
