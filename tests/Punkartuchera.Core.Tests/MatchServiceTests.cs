@@ -280,6 +280,20 @@ public class MatchServiceTests
     }
 
     [Fact]
+    public async Task The_same_band_can_play_on_both_sides_and_each_side_is_tracked_apart()
+    {
+        var band = await _host.AddBandAsync("Los Oxidados", "Morro", "Chispas");
+
+        var match = await _host.Matches.StartLocalAsync(band.Id, band.Id);
+        await _host.Matches.SetMemberAsync(MatchSide.Rival, 0, down: true);
+
+        Assert.Equal(band.Id, match.OwnBandId);
+        Assert.Equal(band.Id, match.RivalBandId);
+        Assert.False(match.Own[0].Down);
+        Assert.True(match.Rival[0].Down);
+    }
+
+    [Fact]
     public async Task Starting_another_match_keeps_the_first_one_saved_to_resume_later()
     {
         var own = await _host.AddBandAsync("Los Oxidados", "Morro", "Chispas");

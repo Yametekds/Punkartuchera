@@ -88,7 +88,7 @@ else if (Matches.Current is not { } match)
     }
     else
     {
-        <h2 class="section-title">Tu banda</h2>
+        <h2 class="section-title">Mi banda</h2>
         <div class="faction-grid">
             @foreach (var band in _bands.Where(b => !b.IsReadOnly))
             {
@@ -126,18 +126,30 @@ else if (Matches.Current is not { } match)
             </p>
         }
 
-        <h2 class="section-title">En este móvil</h2>
+        <h2 class="section-title">La del rival</h2>
         <div class="paper match-setup">
-            <p>Las dos bandas en el mismo móvil. Vale cualquiera, también las rivales que hayas cargado.</p>
+            <p>Las dos bandas en el mismo móvil. Vale cualquiera: una de las tuyas o una que te haya pasado el rival.</p>
+            <h3 class="match-pick__title">Mías</h3>
             <div class="faction-grid">
-                @foreach (var band in _bands.Where(b => b.Id != _ownId))
+                @foreach (var band in _bands.Where(b => !b.IsReadOnly))
                 {
-                    <button type="button" class="faction-tile @(band.Id == _rivalId ? "is-selected" : null)"
-                            aria-pressed="@(band.Id == _rivalId)" @onclick="() => _rivalId = band.Id">
-                        @band.Name
-                    </button>
+                    @RivalTile(band)
                 }
             </div>
+            @if (_bands.Any(b => b.IsReadOnly))
+            {
+                <h3 class="match-pick__title">Cargadas del rival</h3>
+                <div class="faction-grid">
+                    @foreach (var band in _bands.Where(b => b.IsReadOnly))
+                    {
+                        @RivalTile(band)
+                    }
+                </div>
+            }
+            @if (IsMirrorMatch)
+            {
+                <p class="shout" role="alert">¡eh! ¡que te vas a partir la cara contigo mismo, colega! Tú verás, pero luego no llores.</p>
+            }
             <div class="actions">
                 <button type="button" class="btn btn--primary" disabled="@(_busy || _ownId is null || _rivalId is null)" @onclick="StartLocal">
                     A pelear
@@ -469,14 +481,24 @@ else
                 : $"Gana {rival}, {match.RivalScore} a {match.OwnScore}.";
     }
 
-    private void SelectOwn(Guid id)
+    private void SelectOwn(Guid id) => _ownId = id;
+
+    // Misma banda a los dos lados, o la tuya que te has vuelto a cargar como rival.
+    private bool IsMirrorMatch =>
+        _ownId is { } own && _rivalId is { } rival
+        && (own == rival || _bands.FirstOrDefault(b => b.Id == rival)?.SourceId == own);
+
+    private RenderFragment RivalTile(Band band) => __builder =>
     {
-        _ownId = id;
-        if (_rivalId == id)
-        {
-            _rivalId = null;
-        }
-    }
+        <button type="button" class="faction-tile @(band.IsReadOnly ? "faction-tile--rival" : null) @(band.Id == _rivalId ? "is-selected" : null)"
+                aria-pressed="@(band.Id == _rivalId)" @onclick="() => _rivalId = band.Id">
+            @if (band.IsReadOnly)
+            {
+                <span class="faction-tile__tag"><Icon Path="@Icons.Lock" /> Rival</span>
+            }
+            @band.Name
+        </button>
+    };
 
     private Task CreateOnline() => RunAsync(() => Matches.CreateOnlineAsync(_ownId!.Value));
 
