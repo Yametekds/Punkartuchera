@@ -61,6 +61,20 @@
    "url": "https://www.badrollgames.com/producto/custodio-del-abismo-filo-pesado/"
   },
   {
+   "troop": "Capitán",
+   "factionId": "craabianos",
+   "name": "Capitana (maza y caracola, Starter Pack Craabianos)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/09/BR1CR05A.webp",
+   "url": "https://www.badrollgames.com/producto/starter-pack-de-punkapocalyptic-faccion-craabianos/"
+  },
+  {
+   "troop": "Marinero",
+   "factionId": "craabianos",
+   "name": "Marinera (trabuco, Starter Pack Craabianos)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/09/BR1CR06A.webp",
+   "url": "https://www.badrollgames.com/producto/starter-pack-de-punkapocalyptic-faccion-craabianos/"
+  },
+  {
    "troop": "Lord Homoeroticus",
    "factionId": "pandilleros",
    "name": "Lord Homoeroticus V2",
@@ -1263,6 +1277,98 @@
    "name": "Amacizona con lanza/filo medio y escudo",
    "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR1GA14A.webp",
    "url": "https://www.badrollgames.com/producto/amacizona-con-filo-medio-y-lanza-filo-medio-y-escudo/"
+  },
+  {
+   "troop": "Mamá Guedé",
+   "factionId": "mutardos",
+   "subfactionId": "macumba",
+   "name": "Mamá Guedé (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC17.jpg",
+   "url": "https://www.badrollgames.com/producto/mama-guede-compatible/"
+  },
+  {
+   "troop": "Espíritu del pantano",
+   "factionId": "mutardos",
+   "subfactionId": "macumba",
+   "name": "Espíritu del Pantano (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC46A.webp",
+   "url": "https://www.badrollgames.com/producto/espiritu-del-pantano/"
+  },
+  {
+   "troop": "Pocho",
+   "factionId": "mutardos",
+   "name": "Pocho (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC04.jpg",
+   "url": "https://www.badrollgames.com/producto/pocho-compatible/"
+  },
+  {
+   "troop": "Pocho",
+   "factionId": "mutardos",
+   "name": "Pocho (compatible) 2",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC10.jpg",
+   "url": "https://www.badrollgames.com/producto/pocho-compatible-2/"
+  },
+  {
+   "troop": "Pocho",
+   "factionId": "mutardos",
+   "name": "Pocho (compatible) 3",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC92.jpg",
+   "url": "https://www.badrollgames.com/producto/pocho-compatible-3/"
+  },
+  {
+   "troop": "Pocho",
+   "factionId": "mutardos",
+   "name": "Pochos (pack de 5) (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC75.jpg",
+   "url": "https://www.badrollgames.com/producto/pochos-pack-de-5-compatible/"
+  },
+  {
+   "troop": "Yee naaldlooshii",
+   "factionId": "unami",
+   "subfactionId": "cambiapieles",
+   "name": "Yee naaldlooshii (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC98.jpg",
+   "url": "https://www.badrollgames.com/producto/yee-naaldlooshii-compatible/"
+  },
+  {
+   "troop": "Abominación",
+   "factionId": "idos",
+   "subfactionId": "hermandad-de-la-bestia",
+   "name": "Abominación (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2025/12/BR4CC45-800x800-1.jpg",
+   "url": "https://www.badrollgames.com/producto/abominacion-compatible/"
+  },
+  {
+   "troop": "Abominación",
+   "factionId": "idos",
+   "subfactionId": "hermandad-de-la-bestia",
+   "name": "Abominación (compatible) 2",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC97.jpg",
+   "url": "https://www.badrollgames.com/producto/abominacion-compatible-2/"
+  },
+  {
+   "troop": "Escudero",
+   "factionId": "irradiados",
+   "subfactionId": "inquisicion-atomica",
+   "name": "Escudera con maza ligera (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC44.jpg",
+   "url": "https://www.badrollgames.com/producto/escudera-con-maza-ligera-compatible/"
+  },
+  {
+   "troop": "Escudero",
+   "factionId": "irradiados",
+   "subfactionId": "inquisicion-atomica",
+   "name": "Escudera con maza ligera (compatible) 2",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC82.jpg",
+   "url": "https://www.badrollgames.com/producto/escudera-con-maza-ligera-compatible-2/"
+  },
+  {
+   "troop": "Escudero",
+   "factionId": "irradiados",
+   "subfactionId": "inquisicion-atomica",
+   "name": "Escudero con arco (compatible)",
+   "image": "https://www.badrollgames.com/wp-content/uploads/2026/01/BR4CC12.jpg",
+   "url": "https://www.badrollgames.com/producto/escudero-con-arco-compatible/"
   }
  ]
 }
