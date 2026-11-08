@@ -276,6 +276,14 @@ h1:focus { outline: none; }
         -webkit-mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
         mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
     }
+    /* Canto del desgarro, como el de la chapa de arriba: el mismo borde unos píxeles más
+       arriba y en metal oscuro, que da el grosor de la chapa doblada */
+    .tabbar__lip {
+        position: absolute; z-index: -1; left: 0; right: 0; top: -16px; height: 14px; pointer-events: none;
+        background: linear-gradient(to top, #2e170c, #0d0705 75%);
+        -webkit-mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
+        mask: var(--punk-edge-torn-bar-up) center / 100% 100% no-repeat;
+    }
     .tabbar__item {
         position: relative; z-index: 0;
         display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
