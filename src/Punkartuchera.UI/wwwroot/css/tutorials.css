@@ -34,9 +34,8 @@
     display: flex; flex-direction: column; gap: 30px;
     max-width: 46rem;
 }
-.tutorial-step { display: flex; flex-direction: column; gap: 10px; }
-.tutorial-step:nth-child(odd) { transform: rotate(-.4deg); }
-.tutorial-step:nth-child(even) { transform: rotate(.3deg); }
+/* Texto recto (sin girar la hoja) para que se lea nítido; las fotos siguen torcidas */
+.tutorial-step { display: flex; flex-direction: column; gap: 14px; font-size: 1.05rem; line-height: 1.6; }
 .tutorial-step__title {
     display: flex; align-items: center; gap: 12px; margin: 0;
     font-family: var(--punk-font-display); font-size: 1.3rem; line-height: 1.15;
@@ -46,10 +45,23 @@
     flex: none; min-width: 2.2rem; justify-content: center;
     color: var(--punk-rust); font-size: 1.1rem;
 }
-.tutorial-step__text { margin: 0; }
-.tutorial-step__list { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
-.tutorial-step__list li::marker { color: var(--punk-rust); }
-.tutorial-step__app { margin: 4px 0 0; }
+.tutorial-step__text { margin: 0; max-width: 62ch; }
+.tutorial-step__list {
+    margin: -4px 0 0; padding-left: 1.4rem; max-width: 62ch;
+    display: flex; flex-direction: column; gap: 8px;
+}
+.tutorial-step__list li { padding-left: 2px; }
+.tutorial-step__list li::marker { content: "✖  "; color: var(--punk-rust); font-size: .8em; }
+.tutorial-step__app { margin: 4px 0 0; line-height: 1.55; }
+
+/* Palabra clave: tinta gruesa con un brochazo de rotulador rojo debajo */
+.tutorial-key {
+    font-weight: 700; color: var(--punk-ink);
+    background-image: linear-gradient(transparent 58%, rgba(162, 20, 10, .22) 58%, rgba(162, 20, 10, .22) 90%, transparent 90%);
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    padding: 0 .12em; margin: 0 -.06em;
+}
+.tutorial-key .rule-ref { color: inherit; }
 .tutorial-step__refs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
 .tutorial-step__link { margin-left: auto; }
 .tutorial-step .rules-table-wrap { margin: 2px 0; }
@@ -74,10 +86,6 @@
 .tutorial-pager__link span { font-family: var(--punk-font-display); font-size: 1.1rem; color: var(--punk-accent); }
 .tutorial-pager__link--next { text-align: right; }
 
-@media (prefers-reduced-motion: reduce) {
-    .tutorial-step:nth-child(odd), .tutorial-step:nth-child(even) { transform: none; }
-}
-
 /* ---------- Fotos de ejemplo del reglamento ---------- */
 
 .tutorial-figure {
@@ -101,4 +109,25 @@
 
 @media (prefers-reduced-motion: reduce) {
     .tutorial-figure img { transform: none !important; }
+}
+
+/* ---------- Capturas de la app en el móvil ---------- */
+
+.tutorial-shots {
+    display: flex; flex-wrap: wrap; gap: 18px 22px; justify-content: center;
+    margin: 4px 0;
+}
+.tutorial-shot {
+    flex: 0 1 240px; margin: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+/* Móvil de chatarra: carcasa oscura, esquinas romas y su sombra sobre el papel */
+.tutorial-shot img {
+    display: block; width: 100%; height: auto;
+    border: 7px solid var(--punk-black); border-radius: 22px;
+    box-shadow: 0 0 0 2px rgba(29, 23, 18, .55), 0 8px 18px rgba(13, 11, 9, .4);
+    background: var(--punk-black);
+}
+.tutorial-shot figcaption {
+    font-size: .9rem; line-height: 1.4; text-align: center; color: var(--punk-ink-muted);
 }

@@ -4,7 +4,8 @@ namespace Punkartuchera.Core.Tutorials;
 public sealed record Tutorial(string Id, string Title, string Kicker, string Summary, IReadOnlyList<TutorialStep> Steps);
 
 /// <summary>
-/// Un paso de un tutorial. Los párrafos que empiezan por «• » se pintan como lista.
+/// Un paso de un tutorial. Los párrafos que empiezan por «• » se pintan como lista y lo que
+/// va entre <c>**</c> se resalta (ver <see cref="TutorialText"/>).
 /// </summary>
 public sealed record TutorialStep(string Title, IReadOnlyList<string> Text)
 {
@@ -22,6 +23,9 @@ public sealed record TutorialStep(string Title, IReadOnlyList<string> Text)
 
     /// <summary>Ilustraciones de ejemplo sacadas del reglamento.</summary>
     public IReadOnlyList<TutorialImage> Images { get; init; } = [];
+
+    /// <summary>Capturas de la propia app en el móvil.</summary>
+    public IReadOnlyList<TutorialShot> Shots { get; init; } = [];
 }
 
 /// <summary>
@@ -29,6 +33,12 @@ public sealed record TutorialStep(string Title, IReadOnlyList<string> Text)
 /// <c>img/tutoriales/</c> y <paramref name="Page"/> la página del PDF de reglas de la que sale.
 /// </summary>
 public sealed record TutorialImage(string File, string Alt, string Caption, int Page);
+
+/// <summary>
+/// Captura de pantalla de la app en el móvil: <paramref name="File"/> es el nombre en
+/// <c>img/tutoriales/app/</c>.
+/// </summary>
+public sealed record TutorialShot(string File, string Alt, string Caption);
 
 /// <summary>Enlace relativo a la base de la app (sin barra inicial).</summary>
 public sealed record TutorialLink(string Href, string Label);
