@@ -82,6 +82,24 @@
 .match-toggle[aria-pressed="true"] { background: var(--punk-steel); color: var(--punk-ink); }
 .match-toggle--down[aria-pressed="true"] { background: var(--punk-rust); color: var(--punk-text); }
 .match-toggle:disabled { cursor: default; }
+/* Por actuar: pegatina de arena con rombo estarcido, salta a la vista frente a las que ya han ido */
+.match-toggle--pending {
+    position: relative; gap: 8px; justify-content: center;
+    background: var(--punk-accent) var(--punk-tex-paper, none) center / cover;
+    background-blend-mode: multiply;
+    color: var(--punk-ink);
+    font-family: var(--punk-font-display); font-size: .95rem; letter-spacing: .1em;
+    clip-path: var(--punk-rough);
+    transform: rotate(-1.2deg);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .28);
+}
+.match-toggle--pending::before {
+    content: ""; flex: none; width: 10px; height: 10px;
+    background: var(--punk-blood); transform: rotate(45deg);
+    animation: pending-blink 1.6s ease-in-out infinite;
+}
+@keyframes pending-blink { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .match-toggle--pending::before { animation: none; } }
 
 @media (max-width: 420px) {
     .match-member { grid-template-columns: 1fr 1fr; }
