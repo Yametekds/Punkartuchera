@@ -306,3 +306,90 @@
 .table-mode .match-toggle { min-height: 56px; padding: 6px 14px; font-size: .95rem; }
 .table-mode .match-member__aids .stepper__btn { width: 46px; height: 46px; font-size: 1.4rem; }
 .table-mode .match-member__aids .stepper__value { font-size: 1.4rem; min-width: 36px; }
+
+/* ---------- Dado: botón flotante, bandeja con d10 que ruedan e interruptor de sacudir ---------- */
+
+.dice-fab .icon { width: 1.4em; height: 1.4em; }
+.dice-sheet { gap: 12px; }
+
+.dice-tray {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;
+    min-height: 132px; padding: 16px 10px;
+    border: 0; cursor: pointer;
+    background-color: #3b2f22;
+    background-image: radial-gradient(ellipse at 50% 40%, rgba(236, 194, 140, .14), rgba(13, 11, 9, .55) 75%), var(--punk-tex-metal, none);
+    box-shadow: inset 0 0 0 2px var(--punk-black), inset 0 8px 18px rgba(0, 0, 0, .65);
+    -webkit-tap-highlight-color: transparent;
+}
+.dice-tray:disabled { cursor: progress; }
+
+.die {
+    --die-body: var(--punk-blood); --die-face: #c2261a; --die-ink: var(--punk-text);
+    position: relative; display: inline-grid; place-items: center;
+    width: clamp(64px, 22vw, 92px); aspect-ratio: 1;
+    animation: die-land .62s cubic-bezier(.2, .9, .3, 1.25) both;
+    animation-delay: calc(var(--i) * 45ms);
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, .55));
+}
+.die svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.die__body { fill: var(--die-body); stroke: var(--punk-black); stroke-width: 3; stroke-linejoin: round; }
+.die__face { fill: var(--die-face); stroke: var(--punk-black); stroke-width: 2.5; stroke-linejoin: round; }
+.die__edge { fill: none; stroke: var(--punk-black); stroke-width: 2.5; stroke-linecap: round; }
+.die__value {
+    position: relative; margin-bottom: 10%;
+    font-family: var(--punk-font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1;
+    color: var(--die-ink); text-shadow: 0 2px 0 rgba(13, 11, 9, .6);
+}
+.die--1 { --die-body: #c99a5e; --die-face: var(--punk-accent); --die-ink: var(--punk-ink); }
+.die--2 { --die-body: #4f4f4f; --die-face: var(--punk-steel); }
+.die--3 { --die-body: #5d7f22; --die-face: var(--punk-toxic); --die-ink: var(--punk-ink); }
+.die--4 { --die-body: #2a2a2a; --die-face: #3d3d3d; --die-ink: var(--punk-accent); }
+.die--5 { --die-body: #cfc6b8; --die-face: var(--punk-text); --die-ink: var(--punk-blood); }
+
+.dice-tray.is-rolling .die { animation: die-tumble .34s linear infinite; animation-delay: calc(var(--i) * -70ms); }
+.dice-tray.is-rolling .die__value { opacity: .75; }
+
+@keyframes die-tumble {
+    0% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(6px, -14px) rotate(95deg) scale(.92); }
+    50% { transform: translate(-4px, -4px) rotate(180deg) scale(1.04); }
+    75% { transform: translate(-7px, -12px) rotate(275deg) scale(.94); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+@keyframes die-land {
+    0% { transform: translate(-18px, -26px) rotate(-200deg) scale(.7); }
+    60% { transform: translate(3px, 2px) rotate(12deg) scale(1.08); }
+    100% { transform: none; }
+}
+
+.dice-result { font-size: 1.05rem; text-align: center; min-height: 1.5em; }
+.dice-result strong { font-family: var(--punk-font-display); font-size: 1.5rem; letter-spacing: .04em; color: var(--punk-blood); }
+.dice-roll { flex: 1 1 auto; justify-content: center; }
+
+.dice-shake { display: grid; gap: 4px; }
+.dice-shake__switch {
+    display: flex; align-items: center; gap: 12px;
+    min-height: 44px; padding: 4px 0;
+    border: 0; background: none; color: var(--punk-ink);
+    font: inherit; font-weight: 500; text-align: left; cursor: pointer;
+}
+.dice-shake__knob {
+    position: relative; flex: none; width: 48px; height: 26px;
+    background: rgba(29, 23, 18, .2); box-shadow: inset 0 0 0 2px var(--punk-ink);
+    transition: background-color .15s;
+}
+.dice-shake__knob::after {
+    content: ""; position: absolute; top: 4px; left: 4px; width: 18px; height: 18px;
+    background: var(--punk-ink); transition: transform .15s;
+}
+.dice-shake__switch[aria-checked="true"] .dice-shake__knob { background: var(--punk-blood); }
+.dice-shake__switch[aria-checked="true"] .dice-shake__knob::after { transform: translateX(22px); background: var(--punk-text); }
+.dice-shake__switch:focus-visible { outline: 2px solid var(--punk-blood); outline-offset: 2px; }
+.dice-history { text-align: center; }
+
+.table-mode .die { width: clamp(76px, 26vw, 110px); }
+.table-mode .dice-result strong { font-size: 2rem; }
+
+@media (prefers-reduced-motion: reduce) {
+    .die, .dice-tray.is-rolling .die { animation: none; }
+}
