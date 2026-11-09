@@ -31,4 +31,27 @@ public class DiceRollTests
     {
         Assert.Equal(expected, DiceRoll.Roll(asked, new Random(7)).Count);
     }
+
+    [Fact]
+    public void Roll_D6_GivesValuesFrom1To6_AndEveryFaceAppears()
+    {
+        var random = new Random(99);
+        var seen = new HashSet<int>();
+        for (var i = 0; i < 1000; i++)
+        {
+            foreach (var value in DiceRoll.Roll(2, DiceRoll.D6, random))
+            {
+                Assert.InRange(value, 1, DiceRoll.D6);
+                seen.Add(value);
+            }
+        }
+
+        Assert.Equal(Enumerable.Range(1, 6), seen.Order());
+    }
+
+    [Fact]
+    public void Roll_RejectsOtherDice()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => DiceRoll.Roll(1, 8));
+    }
 }

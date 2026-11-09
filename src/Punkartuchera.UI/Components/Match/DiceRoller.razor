@@ -12,22 +12,48 @@
     <div class="sheet-scrim" @onclick="Close"></div>
     <section class="sheet paper dice-sheet" role="dialog" aria-modal="true" aria-labelledby="dice-sheet-title">
         <header class="sheet__head">
-            <h2 id="dice-sheet-title" class="sheet__title">Tirar d10</h2>
+            <h2 id="dice-sheet-title" class="sheet__title">Tirar d@(_kind)</h2>
             <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
         </header>
+
+        <div class="dice-kinds" role="group" aria-label="Tipo de dado">
+            @foreach (var kind in DiceRoll.Kinds)
+            {
+                <button type="button" class="dice-kind" aria-pressed="@(kind == _kind ? "true" : "false")" disabled="@_rolling" @onclick="() => SetKind(kind)">
+                    d@(kind)
+                </button>
+            }
+        </div>
 
         <button type="button" class="dice-tray @(_rolling ? "is-rolling" : null)" aria-label="Tirar otra vez" disabled="@_rolling" @onclick="Roll">
             @for (var i = 0; i < _faces.Count; i++)
             {
                 var index = i;
-                <span class="die die--@(index % 6)" @key="(_rollId, index)" style="--i: @index">
-                    <svg viewBox="0 0 100 100" aria-hidden="true">
-                        <polygon class="die__body" points="50,3 97,40 97,62 50,97 3,62 3,40" />
-                        <polygon class="die__face" points="50,3 80,54 50,70 20,54" />
-                        <path class="die__edge" d="M20 54 3 62M80 54 97 62M50 70v27M20 54 3 40M80 54 97 40" />
-                    </svg>
-                    <span class="die__value">@_faces[index]</span>
-                </span>
+                @if (_kind == DiceRoll.D6)
+                {
+                    <span class="die die--d6 die--@(index % 6)" @key="(_rollId, index)" style="--i: @index">
+                        <svg viewBox="0 0 100 100" aria-hidden="true">
+                            <rect class="die__body" x="10" y="12" width="84" height="84" rx="14" />
+                            <rect class="die__face" x="5" y="5" width="84" height="84" rx="14" />
+                            @foreach (var (x, y) in Pips(_faces[index]))
+                            {
+                                <circle class="die__pip" cx="@x" cy="@y" r="8.5" />
+                            }
+                        </svg>
+                        <span class="visually-hidden">@_faces[index]</span>
+                    </span>
+                }
+                else
+                {
+                    <span class="die die--@(index % 6)" @key="(_rollId, index)" style="--i: @index">
+                        <svg viewBox="0 0 100 100" aria-hidden="true">
+                            <polygon class="die__body" points="50,3 97,40 97,62 50,97 3,62 3,40" />
+                            <polygon class="die__face" points="50,3 80,54 50,70 20,54" />
+                            <path class="die__edge" d="M20 54 3 62M80 54 97 62M50 70v27M20 54 3 40M80 54 97 40" />
+                        </svg>
+                        <span class="die__value">@_faces[index]</span>
+                    </span>
+                }
             }
         </button>
 
@@ -70,7 +96,7 @@
 
         @if (_history.Count > 0)
         {
-            <p class="sheet__small dice-history">Antes: @string.Join(" / ", _history.Select(r => string.Join("·", r)))</p>
+            <p class="sheet__small dice-history">Antes: @string.Join(" / ", _history.Select(r => $"d{r.Kind} {string.Join("·", r.Values)}"))</p>
         }
     </section>
 }
@@ -85,11 +111,27 @@
     private bool _rolling;
     private bool _bindToggle;
     private int _count = 1;
+    private int _kind = DiceRoll.Faces;
     private int _rollId;
     private string _shake = "off";
     private IReadOnlyList<int> _faces = [10];
     private IReadOnlyList<int>? _last;
-    private readonly List<IReadOnlyList<int>> _history = [];
+    private readonly List<(int Kind, IReadOnlyList<int> Values)> _history = [];
+    private int _lastKind = DiceRoll.Faces;
+
+    // Puntos del d6 en una cara de 84×84 que empieza en (5, 5).
+    private static readonly (int X, int Y)[][] PipLayout =
+    [
+        [],
+        [(47, 47)],
+        [(26, 26), (68, 68)],
+        [(26, 26), (47, 47), (68, 68)],
+        [(26, 26), (68, 26), (26, 68), (68, 68)],
+        [(26, 26), (68, 26), (47, 47), (26, 68), (68, 68)],
+        [(26, 26), (68, 26), (26, 47), (68, 47), (26, 68), (68, 68)],
+    ];
+
+    private static (int X, int Y)[] Pips(int value) => PipLayout[Math.Clamp(value, 0, DiceRoll.D6)];
 
     private string? ShakeHint => _shake switch
     {
@@ -136,8 +178,31 @@
         _count = count;
         if (!_rolling)
         {
-            _faces = _last is { } last && last.Count == count ? last : Enumerable.Repeat(10, count).ToArray();
+            _faces = _last is { } last && last.Count == count && _lastKind == _kind ? last : Enumerable.Repeat(_kind, count).ToArray();
         }
+    }
+
+    private void SetKind(int kind)
+    {
+        if (_rolling || kind == _kind)
+        {
+            return;
+        }
+
+        // La última tirada era del otro dado: pasa al historial para no confundirla.
+        if (_last is not null)
+        {
+            _history.Insert(0, (_lastKind, _last));
+            if (_history.Count > HistorySize)
+            {
+                _history.RemoveAt(HistorySize);
+            }
+
+            _last = null;
+        }
+
+        _kind = kind;
+        _faces = Enumerable.Repeat(kind, _count).ToArray();
     }
 
     private async Task Roll()
@@ -149,7 +214,7 @@
 
         if (_last is not null)
         {
-            _history.Insert(0, _last);
+            _history.Insert(0, (_lastKind, _last));
             if (_history.Count > HistorySize)
             {
                 _history.RemoveAt(HistorySize);
@@ -163,12 +228,13 @@
         // Caras que van pasando mientras ruedan; la tirada buena sale al final.
         for (var step = 0; step < 9; step++)
         {
-            _faces = DiceRoll.Roll(_count);
+            _faces = DiceRoll.Roll(_count, _kind);
             StateHasChanged();
             await Task.Delay(55 + step * 8);
         }
 
-        _faces = _last = DiceRoll.Roll(_count);
+        _faces = _last = DiceRoll.Roll(_count, _kind);
+        _lastKind = _kind;
         _rolling = false;
         StateHasChanged();
 
