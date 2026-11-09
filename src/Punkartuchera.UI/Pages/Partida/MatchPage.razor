@@ -358,7 +358,7 @@ else
                                 <small>@member.Role</small>
                             </span>
                         </button>
-                        <button type="button" class="chip match-toggle" aria-pressed="@member.Activated"
+                        <button type="button" class="chip match-toggle @(member.Activated || member.Down ? null : "match-toggle--pending")" aria-pressed="@member.Activated"
                                 disabled="@(!editable || member.Down)"
                                 @onclick="() => Toggle(side.Side, index, activated: !member.Activated)">
                             @(member.Activated ? "Ya ha ido" : "Por actuar")
