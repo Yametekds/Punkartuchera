@@ -40,14 +40,27 @@ else
                         <ul class="tutorial-step__list">
                             @foreach (var item in block.Lines)
                             {
-                                <li><RuleProse Text="@item" Explain="false" Inline="true" /></li>
+                                <li><TutorialProse Text="@item" Inline="true" /></li>
                             }
                         </ul>
                     }
                     else
                     {
-                        <RuleProse Text="@block.Lines[0]" Explain="false" Class="tutorial-step__text" />
+                        <TutorialProse Text="@block.Lines[0]" Class="tutorial-step__text" />
                     }
+                }
+
+                @if (step.Shots.Count > 0)
+                {
+                    <div class="tutorial-shots">
+                        @foreach (var shot in step.Shots)
+                        {
+                            <figure class="tutorial-shot">
+                                <img src="@($"_content/Punkartuchera.UI/img/tutoriales/app/{shot.File}")" alt="@shot.Alt" width="390" height="844" loading="lazy" decoding="async" />
+                                <figcaption>@shot.Caption</figcaption>
+                            </figure>
+                        }
+                    </div>
                 }
 
                 @foreach (var image in step.Images)
@@ -68,7 +81,7 @@ else
 
                 @if (step.InApp is not null)
                 {
-                    <p class="notice tutorial-step__app"><span><strong>En la app:</strong> @step.InApp</span></p>
+                    <p class="notice tutorial-step__app"><span><strong>En la app:</strong> <TutorialProse Text="@step.InApp" Inline="true" /></span></p>
                 }
 
                 @if (step.RuleIds.Count > 0 || step.Link is not null)

@@ -1,0 +1,45 @@
+@using Punkartuchera.Core.Tutorials
+
+@* Texto de un tutorial: resalta lo marcado con ** y enlaza las reglas especiales que nombra. *@
+@if (Inline)
+{
+    <span class="@Class">@Body</span>
+}
+else
+{
+    <p class="@Class">@Body</p>
+}
+
+@code {
+    [Parameter] public string? Text { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+    /// <summary>Dentro de una línea (span) en vez de párrafo.</summary>
+    [Parameter] public bool Inline { get; set; }
+
+    private RenderFragment Body => builder =>
+    {
+        var seq = 0;
+        foreach (var run in TutorialText.Split(Text))
+        {
+            if (run.Key)
+            {
+                builder.OpenElement(seq++, "strong");
+                builder.AddAttribute(seq++, "class", "tutorial-key");
+            }
+
+            builder.OpenComponent<RuleProse>(seq++);
+            builder.AddAttribute(seq++, nameof(RuleProse.Text), run.Text);
+            builder.AddAttribute(seq++, nameof(RuleProse.Explain), false);
+            builder.AddAttribute(seq++, nameof(RuleProse.Inline), true);
+            builder.AddAttribute(seq++, nameof(RuleProse.Class), string.Empty);
+            builder.CloseComponent();
+
+            if (run.Key)
+            {
+                builder.CloseElement();
+            }
+        }
+    };
+}
