@@ -37,34 +37,6 @@ else
 
     @* Sin <form>: Enter en los campos de etiquetas no debe guardar el miembro. *@
     <div class="stack">
-        @if (IsNew)
-        {
-            <section class="paper recruit-picker">
-                <label class="field">
-                    <span class="field__label">Sacar del reglamento</span>
-                    <select class="field__input" value="@_choiceKey" @onchange="PickTroop">
-                        <option value="">A mano (ficha en blanco)</option>
-                        @foreach (var group in _choices.GroupBy(c => c.Group))
-                        {
-                            <optgroup label="@group.Key">
-                                @foreach (var choice in group)
-                                {
-                                    <option value="@choice.Key">@ChoiceLabel(choice)</option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
-                </label>
-                @if (_picked is not null)
-                {
-                    <p class="recruit-picker__summary">
-                        Perfil, coste base, equipo fijo y reglas cargados. Lo que compres aparte se suma solo al coste.
-                        <a href="@RulesHref(_picked)">Ver su ficha en las reglas</a>
-                    </p>
-                }
-            </section>
-        }
-
         <section class="card member-editor__photo">
             <MiniPortrait Photo="_member.Photo" Alt="@_member.Name" Size="lg" />
             <PhotoPicker @bind-Value="_member.Photo" OnPhotoStored="key => _newPhotos.Add(key)" OfficialPhotos="OfficialPhotos" />
@@ -79,16 +51,53 @@ else
                 <span class="field__label">Nombre</span>
                 <input class="field__input" @bind="_member.Name" @bind:event="oninput" maxlength="60" placeholder="Morro Chungo" required />
             </label>
-            <label class="field">
-                <span class="field__label">Tipo</span>
-                <input class="field__input" list="member-roles" @bind="_member.Role" @bind:after="Recalculate" maxlength="40" placeholder="Elige o escribe" />
-                <datalist id="member-roles">
-                    @foreach (var role in Rules.Roles)
+            @if (_choices.Count > 0)
+            {
+                <div class="recruit-picker">
+                    <label class="field">
+                        <span class="field__label">Tipo</span>
+                        <select class="field__input" value="@_choiceKey" @onchange="PickTroop">
+                            @if (_customRole is not null)
+                            {
+                                <option value="@CustomKey">@_customRole (a mano)</option>
+                            }
+                            else
+                            {
+                                <option value="">Elige tipo</option>
+                            }
+                            @foreach (var group in _choices.GroupBy(c => c.Group))
+                            {
+                                <optgroup label="@group.Key">
+                                    @foreach (var choice in group)
+                                    {
+                                        <option value="@choice.Key">@ChoiceLabel(choice)</option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </label>
+                    @if (_picked is not null)
                     {
-                        <option value="@role"></option>
+                        <p class="recruit-picker__summary">
+                            Perfil, coste base, equipo fijo y reglas cargados. Lo que compres aparte se suma solo al coste.
+                            <a href="@RulesHref(_picked)">Ver su ficha en las reglas</a>
+                        </p>
                     }
-                </datalist>
-            </label>
+                </div>
+            }
+            else
+            {
+                <label class="field">
+                    <span class="field__label">Tipo</span>
+                    <input class="field__input" list="member-roles" @bind="_member.Role" @bind:after="Recalculate" maxlength="40" placeholder="Elige o escribe" />
+                    <datalist id="member-roles">
+                        @foreach (var role in Rules.Roles)
+                        {
+                            <option value="@role"></option>
+                        }
+                    </datalist>
+                </label>
+            }
             <label class="field field--narrow">
                 <span class="field__label">Coste base</span>
                 <input class="field__input" type="number" min="0" value="@_member.BaseCost" @onchange="SetBaseCost" />
@@ -208,6 +217,11 @@ else
     private TroopChoice? _picked;
     private string _choiceKey = string.Empty;
 
+    /// <summary>Tipo escrito a mano en una ficha antigua que no sale en la lista de su banda.</summary>
+    private string? _customRole;
+
+    private const string CustomKey = "__custom";
+
     private bool IsNew => MemberId is null;
 
     private IReadOnlyList<OfficialMini> OfficialPhotos =>
@@ -227,6 +241,7 @@ else
                 : existing is null ? null : Clone(existing);
             _gearNames = _member?.Gear.Select(g => g.Name).ToList() ?? [];
             _choices = Roster.ChoicesFor(_band.FactionId, _band.SubfactionId);
+            SelectCurrentChoice();
         }
 
         Recalculate();
@@ -234,7 +249,43 @@ else
         _loading = false;
     }
 
-    /// <summary>Rellena la ficha con una tropa, personalidad o mercenario del reglamento, conservando la foto.</summary>
+    /// <summary>Marca en el desplegable el tipo que ya tiene la ficha.</summary>
+    private void SelectCurrentChoice()
+    {
+        _picked = null;
+        _choiceKey = string.Empty;
+        _customRole = null;
+        if (_member is null || _choices.Count == 0)
+        {
+            return;
+        }
+
+        if (IsNew)
+        {
+            _member.Role = string.Empty;
+            return;
+        }
+
+        var role = RulesText.Fold(_member.Role);
+        if (role.Length == 0)
+        {
+            return;
+        }
+
+        var current = _choices.FirstOrDefault(c => RulesText.Fold(c.Troop.Name) == role)
+            ?? _choices.FirstOrDefault(c => RulesText.Fold(c.Name) == role);
+        if (current is null)
+        {
+            _customRole = _member.Role;
+            _choiceKey = CustomKey;
+        }
+        else
+        {
+            _choiceKey = current.Key;
+        }
+    }
+
+    /// <summary>Rellena la ficha con una tropa, personalidad o mercenario del reglamento, conservando la foto y el nombre puesto.</summary>
     private void PickTroop(ChangeEventArgs e)
     {
         if (_member is null)
@@ -242,16 +293,34 @@ else
             return;
         }
 
-        _choiceKey = e.Value?.ToString() ?? string.Empty;
+        var key = e.Value?.ToString() ?? string.Empty;
+        if (key == CustomKey || key == _choiceKey)
+        {
+            return;
+        }
+
+        var previous = _choices.FirstOrDefault(c => c.Key == _choiceKey);
+        _choiceKey = key;
+        _customRole = null;
         _picked = _choices.FirstOrDefault(c => c.Key == _choiceKey) ?? Roster.FindChoice(_choiceKey);
         var filled = _picked is null
-            ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
+            ? Bands.NewMember(string.Empty)
             : Roster.FromTroop(_picked.Troop, _picked.Owner.ParentId ?? _picked.Owner.Id);
         filled.Id = _member.Id;
         if (_picked?.Label is { } label)
         {
             // La subfacción la llama de otra forma; el papel sigue siendo la tropa del reglamento.
             filled.Name = label;
+        }
+
+        // Un nombre puesto a mano se queda; el automático del tipo anterior se cambia por el nuevo.
+        var typed = _member.Name?.Trim() ?? string.Empty;
+        var automatic = typed.Length == 0
+            || string.Equals(typed, _member.Role, StringComparison.OrdinalIgnoreCase)
+            || (previous is not null && string.Equals(typed, previous.Name, StringComparison.OrdinalIgnoreCase));
+        if (!automatic)
+        {
+            filled.Name = _member.Name!;
         }
 
         // La foto oficial acompaña a la tropa elegida, pero una foto propia no se pisa.
