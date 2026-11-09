@@ -1174,6 +1174,9 @@ textarea.field__input { resize: vertical; }
     display: flex; flex-direction: column; gap: 10px;
 }
 .sheet p { margin: 0; }
+/* La hoja hace scroll y pega con el borde de la pantalla: el desgarro inferior
+   quedaba recortado dentro del scroll y pisaba el pie del papel */
+.sheet.paper::after { content: none; }
 .sheet__head { display: flex; align-items: center; gap: 10px; }
 .sheet__title { flex: 1; margin: 0; font-family: var(--punk-font-display); font-size: 1.6rem; line-height: 1; }
 .sheet__close { color: var(--punk-ink); }
