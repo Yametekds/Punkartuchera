@@ -1,6 +1,6 @@
 @using Punkartuchera.Core.Matches
 
-@* Una ayuda de partida: contador, regla de un solo uso o recordatorio. *@
+@* Una ayuda de partida: contador, regla de un solo uso, interruptor (cargada/disparada) o recordatorio. *@
 <div class="aid aid--@Aid.Kind.ToString().ToLowerInvariant() @(Detailed ? "aid--detailed" : null)">
     @switch (Aid.Kind)
     {
@@ -49,6 +49,13 @@
                     </div>
                 }
             }
+            break;
+
+        case AidKind.Toggle:
+            <button type="button" class="chip aid__toggle @(Value > 0 ? "aid__toggle--on" : null)" aria-pressed="@(Value > 0 ? "true" : "false")" disabled="@(!Editable)"
+                    aria-label="@Aid.Name: @(Value > 0 ? Aid.OnLabel : Aid.OffLabel)" @onclick="() => OnChange.InvokeAsync(Value > 0 ? 0 : 1)">
+                @Aid.Name · <span class="aid__toggle-state">@(Value > 0 ? Aid.OnLabel : Aid.OffLabel)</span>
+            </button>
             break;
 
         default:

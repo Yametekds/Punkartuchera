@@ -25,9 +25,15 @@
             @foreach (var stat in Rules.Stats)
             {
                 var change = StatChanges?.GetValueOrDefault(stat.Key) ?? 0;
-                <div class="statbox @(change != 0 ? "statbox--changed" : null)" title="@(change != 0 ? $"{stat.Name}: {Signed(change)} en esta partida" : stat.Name)">
+                var gear = Modifiers?.GetValueOrDefault(stat.Key);
+                var mark = change + (gear?.Delta ?? 0);
+                <div class="statbox @(change != 0 ? "statbox--changed" : null)" title="@StatTitle(stat, change, gear)">
                     <dt>@stat.Abbreviation</dt>
-                    <dd>@Math.Max(0, Member.GetStat(stat.Key, stat.Default) + change)</dd>
+                    <dd>@Math.Max(0, Member.GetStat(stat.Key, stat.Default) + change + (gear?.Pending ?? 0))</dd>
+                    @if (mark != 0)
+                    {
+                        <span class="statbox__mod statbox__mod--@(mark > 0 ? "up" : "down")" aria-hidden="true">@Signed(mark)</span>
+                    }
                 </div>
             }
             @if (ShowAmmo)
@@ -193,7 +199,27 @@
     /// <summary>Lo que suben o bajan los Atributos durante la partida (El mar siempre reclama), por clave.</summary>
     [Parameter] public IReadOnlyDictionary<string, int>? StatChanges { get; set; }
 
+    /// <summary>Cambios fijos por el equipo que lleva (Armatoste, mutaciones…), por clave. Solo en la hoja de partida.</summary>
+    [Parameter] public IReadOnlyDictionary<string, StatAdjustment>? Modifiers { get; set; }
+
     private static string Signed(int value) => value > 0 ? $"+{value}" : $"−{-value}";
+
+    /// <summary>"Agilidad: −1 por Pura chapa (Armatoste)".</summary>
+    private static string StatTitle(StatDefinition stat, int change, StatAdjustment? gear)
+    {
+        var parts = new List<string>();
+        if (gear is { Delta: not 0 })
+        {
+            parts.Add($"{Signed(gear.Delta)} por {string.Join(", ", gear.Sources)}");
+        }
+
+        if (change != 0)
+        {
+            parts.Add($"{Signed(change)} en esta partida");
+        }
+
+        return parts.Count == 0 ? stat.Name : $"{stat.Name}: {string.Join("; ", parts)}";
+    }
 
     /// <summary>Facción de la banda, para elegir bien el equipo cuando dos facciones usan el mismo nombre.</summary>
     [Parameter] public string? FactionId { get; set; }

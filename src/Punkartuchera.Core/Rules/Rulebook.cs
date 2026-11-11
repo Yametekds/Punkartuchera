@@ -581,6 +581,9 @@ public sealed class PresetMember
 
     /// <summary>Mutaciones, reglas o mejoras compradas.</summary>
     public List<string> Skills { get; set; } = [];
+
+    /// <summary>Balas marcadas en la ficha de control. Ya van dentro de <see cref="Cost"/>.</summary>
+    public int Ammo { get; set; }
 }
 
 public sealed class PresetListFile

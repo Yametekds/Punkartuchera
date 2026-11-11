@@ -1,6 +1,7 @@
 @using Punkartuchera.Core.Matches
 @inject UnitCostCalculator Costs
 @inject IRulesCatalog Rules
+@inject LoadoutModifiers LoadoutModifiers
 
 @* Todo lo de un miembro durante la partida: atributos, equipo, habilidades y reglas de su tropa. Nunca las balas. *@
 <div class="sheet-scrim" @onclick="Close"></div>
@@ -20,7 +21,7 @@
 
     @if (Member is not null)
     {
-        <MemberCard Member="Member" FactionId="@FactionId" ShowAmmo="false" StatChanges="StatChanges" />
+        <MemberCard Member="Member" FactionId="@FactionId" SubfactionId="@SubfactionId" ShowAmmo="false" StatChanges="StatChanges" Modifiers="_modifiers" />
     }
 
     @if (_troop is not null)
@@ -104,9 +105,13 @@
     [Parameter] public EventCallback OnClose { get; set; }
 
     private Troop? _troop;
+    private IReadOnlyDictionary<string, StatAdjustment>? _modifiers;
 
-    protected override void OnParametersSet() =>
+    protected override void OnParametersSet()
+    {
         _troop = Costs.FindTroop(Member?.Role ?? Role, FactionId, SubfactionId);
+        _modifiers = Member is null ? null : LoadoutModifiers.For(Member, FactionId, SubfactionId);
+    }
 
     private Task Close() => OnClose.InvokeAsync();
 }
