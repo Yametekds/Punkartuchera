@@ -17,6 +17,9 @@ public enum AidKind
 
     /// <summary>Regla de una vez por partida en la que hay que apuntar qué se eligió (el Atributo que se repitió).</summary>
     Pick,
+
+    /// <summary>Un estado que va y viene: arma cargada o disparada. 0 es <see cref="MatchAid.OffLabel"/>, 1 es <see cref="MatchAid.OnLabel"/>.</summary>
+    Toggle,
 }
 
 /// <summary>Una opción de una ayuda de elegir. Si toca un Atributo, cuánto le suma o le resta el resto de la partida.</summary>
@@ -63,6 +66,12 @@ public sealed class MatchAid
 
     /// <summary>La opción elegida para un valor guardado, si hay alguna.</summary>
     public AidChoice? ChoiceFor(int value) => value > 0 && value <= Choices.Count ? Choices[value - 1] : null;
+
+    /// <summary>En un interruptor: cómo se llama el estado del principio ("Cargada").</summary>
+    public string? OffLabel { get; init; }
+
+    /// <summary>En un interruptor: cómo se llama el estado marcado ("Disparada").</summary>
+    public string? OnLabel { get; init; }
 
     /// <summary>Línea que cambia con el valor: "La próxima tira 1d10 −2".</summary>
     public Func<AidState, string?>? Note { get; init; }
@@ -166,8 +175,11 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
         ("mercenarios", null, "Lizzy DeVille"),
     ];
 
-    /// <summary>Ayudas para una banda. <paramref name="roles"/> son los tipos de tropa de los miembros en el orden de la partida.</summary>
-    public BandAids For(Band? band, IReadOnlyList<string> roles)
+    /// <summary>
+    /// Ayudas para una banda. <paramref name="roles"/> son los tipos de tropa de los miembros en el orden de la partida;
+    /// <paramref name="minis"/>, sus fichas en ese mismo orden (si no se dan, se usan las de la banda por posición).
+    /// </summary>
+    public BandAids For(Band? band, IReadOnlyList<string> roles, IReadOnlyList<Miniature?>? minis = null)
     {
         if (band is null)
         {
@@ -178,7 +190,8 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
         var subfactionId = band.SubfactionId;
         var infos = roles.Select(r => costs.FindTroop(r, factionId, subfactionId)).ToList();
         var troops = roles.Select((r, i) => infos[i]?.Name ?? r.Trim()).ToList();
-        var gearByIndex = roles.Select((_, i) => GearOf(band, i)).ToList();
+        var members = roles.Select((_, i) => minis is null ? band.Members.ElementAtOrDefault(i) : minis.ElementAtOrDefault(i)).ToList();
+        var gearByIndex = members.Select(GearOf).ToList();
         var has = new HashSet<string>(troops, StringComparer.OrdinalIgnoreCase);
 
         var bandAids = new List<MatchAid>();
@@ -395,6 +408,7 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
         ForTroop("Lizzy DeVille", Once("charlatana", "Charlatana", "Charlatana", "Una vez por enemigo: se separa como si fuera Escurridiza."));
 
         AddFuel(factionId, troops, gearByIndex, memberAids);
+        AddShots(band, factionId, members, memberAids);
 
         return new BandAids(bandAids, memberAids.Select(m => (IReadOnlyList<MatchAid>)m).ToList(), downFeeds);
     }
@@ -551,6 +565,82 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
         }
     }
 
+    /// <summary>
+    /// Disparos de cada miembro: un contador de balas gastadas si lleva Arma de fuego, y si no usa balas,
+    /// un interruptor cargada/disparada para las armas con Lentorra y otro (o un contador) para las de usar y tirar.
+    /// Lo que le queda solo se dice en la banda propia: las balas del rival son secreto.
+    /// </summary>
+    private void AddShots(Band band, string factionId, List<Miniature?> members, List<List<MatchAid>> memberAids)
+    {
+        var weapons = new MemberWeapons(gear);
+        for (var i = 0; i < members.Count; i++)
+        {
+            if (members[i] is not { } member)
+            {
+                continue;
+            }
+
+            var ranged = weapons.Of(member, factionId);
+            if (ranged.Any(w => w.Kind == ShotKind.Bullets))
+            {
+                var ammo = member.Ammo + MemberWeapons.SpecialBullets(member);
+                var secret = band.IsReadOnly;
+                memberAids[i].Add(new MatchAid
+                {
+                    Key = "disparos", Name = "Balas disparadas", Rule = "Arma de fuego",
+                    Hint = "Cada disparo con Arma de fuego gasta una bala; en modo Automático, hasta tres.",
+                    Note = s => secret ? null : BulletsNote(ammo, s.Value),
+                });
+            }
+
+            foreach (var weapon in ranged.Where(w => w.Kind == ShotKind.Reload))
+            {
+                for (var copy = 1; copy <= weapon.Quantity; copy++)
+                {
+                    var suffix = weapon.Quantity > 1 ? $" {copy}" : null;
+                    var actions = weapon.ReloadActions;
+                    memberAids[i].Add(new MatchAid
+                    {
+                        Key = $"recarga-{RulesText.Slug(weapon.Name)}{(suffix is null ? null : $"-{copy}")}",
+                        Name = weapon.Name + suffix, Kind = AidKind.Toggle, Max = 1, Rule = "Lentorra (X)",
+                        OffLabel = "Cargada", OnLabel = "Disparada",
+                        Hint = "Empieza cargada. Después de disparar hay que gastar Acciones en recargarla.",
+                        Note = s => s.Value > 0
+                            ? actions > 0 ? $"Recargarla cuesta {actions} {(actions == 1 ? "Acción" : "Acciones")}." : "Hay que recargarla."
+                            : null,
+                    });
+                }
+            }
+
+            foreach (var weapon in ranged.Where(w => w.Kind == ShotKind.SingleUse))
+            {
+                var key = $"lanzado-{RulesText.Slug(weapon.Name)}";
+                var count = weapon.Quantity;
+                memberAids[i].Add(count > 1
+                    ? new MatchAid
+                    {
+                        Key = key, Name = $"{weapon.Name}: usados", Max = count, Rule = "Usar y tirar",
+                        Note = s => s.Value >= count ? "Ya no le queda ninguno." : $"Le quedan {count - s.Value}.",
+                    }
+                    : new MatchAid
+                    {
+                        Key = key, Name = weapon.Name, Kind = AidKind.Toggle, Max = 1, Rule = "Usar y tirar",
+                        OffLabel = "Sin usar", OnLabel = "Usada",
+                        Hint = "Solo se puede usar una vez por partida.",
+                    });
+            }
+        }
+    }
+
+    /// <summary>"Le quedan 2 de 3." Las que pasan de las suyas son rapiñadas o prestadas por un aliado.</summary>
+    public static string BulletsNote(int ammo, int fired) => fired switch
+    {
+        _ when ammo == 0 && fired == 0 => "No lleva balas.",
+        _ when fired < ammo => $"Le quedan {ammo - fired} de {ammo}.",
+        _ when fired == ammo => "Ya no le quedan balas.",
+        _ => $"Ha gastado {fired - ammo} más de las suyas (rapiñadas o prestadas).",
+    };
+
     /// <summary>Artículos de coña de la Troupe: un solo uso cada uno.</summary>
     private void AddJokes(List<IReadOnlyList<string>> gearByIndex, Action<Func<string, int, bool>, MatchAid> forMembers)
     {
@@ -566,10 +656,8 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
     private string? TroopRule(string factionId, string troop, string rule) =>
         book.FindFaction(factionId)?.Troops.FirstOrDefault(t => Is(t.Name, troop))?.Rules.FirstOrDefault(r => r.Name == rule)?.Text;
 
-    private static IReadOnlyList<string> GearOf(Band band, int index) =>
-        band.Members.ElementAtOrDefault(index) is { } member
-            ? member.Gear.Select(g => g.Name).Concat(member.Skills).ToList()
-            : [];
+    private static IReadOnlyList<string> GearOf(Miniature? member) =>
+        member is null ? [] : member.Gear.Select(g => g.Name).Concat(member.Skills).ToList();
 
     private static IEnumerable<string> Bullets(string? text) =>
         text is null ? [] : BulletName().Matches(text).Select(m => m.Groups[1].Value.Trim());

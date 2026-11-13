@@ -438,7 +438,8 @@ else
             return cached.Aids;
         }
 
-        var aids = AidCatalog.For(band, members.Select(m => Mini(band, m, members.IndexOf(m))?.Role ?? m.Role).ToList());
+        var minis = members.Select((m, i) => Mini(band, m, i)).ToList();
+        var aids = AidCatalog.For(band, members.Select((m, i) => minis[i]?.Role ?? m.Role).ToList(), minis);
         _aidCache[side] = (key.band, key.Count, aids);
         return aids;
     }

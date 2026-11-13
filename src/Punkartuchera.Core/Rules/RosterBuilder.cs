@@ -131,12 +131,17 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             AddGear(member, name);
         }
 
-        // La ficha de control ya da el coste con todo su equipo.
-        member.BaseCost = preset.Cost;
+        // La ficha de control ya da el coste con todo su equipo y sus balas: las balas se apartan del coste base
+        // para que, si se quitan o se añaden, el total cambie como con cualquier otra miniatura.
+        member.Ammo = preset.Ammo;
+        member.BaseCost = preset.Cost - (preset.Ammo * BulletPrice);
         member.Included = [.. member.Gear.Select(g => g.Name), .. member.Skills];
         member.Photo = BestPhoto(list.FactionId, preset.Troop, member.Gear.Select(g => g.Name));
         return member;
     }
+
+    private int BulletPrice =>
+        book.Gear.FirstOrDefault(g => g.FactionId is null && RulesText.Fold(g.Name) == "balas")?.Cost ?? UnitCostCalculator.DefaultBulletPrice;
 
     /// <summary>Fotos oficiales de una tropa; los mercenarios valen para cualquier facción.</summary>
     public IReadOnlyList<OfficialMini> PhotosFor(string? factionId, string? troopName) =>

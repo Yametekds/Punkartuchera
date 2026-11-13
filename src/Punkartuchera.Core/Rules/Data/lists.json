@@ -9,6 +9,7 @@
         {
           "troop": "Jefe",
           "cost": 123,
+          "ammo": 2,
           "weapons": [
             "Filo medio",
             "Rifle"
@@ -104,6 +105,7 @@
         {
           "troop": "Jefe",
           "cost": 130,
+          "ammo": 2,
           "weapons": [
             "Filo medio",
             "Pistola"
@@ -327,11 +329,15 @@
         {
           "troop": "Pistón",
           "cost": 68,
+          "ammo": 1,
           "weapons": [
             "Filo pesado",
             "Pistola"
           ],
-          "armor": "Cuero endurecido"
+          "armor": "Cuero endurecido",
+          "gear": [
+            "Bala apañada"
+          ]
         },
         {
           "troop": "Pistón",
@@ -355,8 +361,12 @@
         {
           "troop": "Engranaje",
           "cost": 89,
+          "ammo": 3,
           "weapons": [
             "Rifle con mira telescópica"
+          ],
+          "gear": [
+            "Bala apañada"
           ]
         },
         {
@@ -412,8 +422,12 @@
         {
           "troop": "Engranaje",
           "cost": 99,
+          "ammo": 3,
           "weapons": [
             "Rifle con mira telescópica"
+          ],
+          "gear": [
+            "Bala apañada x2"
           ]
         },
         {
@@ -445,6 +459,7 @@
         {
           "troop": "Chispa",
           "cost": 90,
+          "ammo": 2,
           "weapons": [
             "Pistola"
           ],
@@ -456,6 +471,7 @@
         {
           "troop": "Ascua",
           "cost": 91,
+          "ammo": 2,
           "weapons": [
             "Escopeta"
           ],
@@ -482,6 +498,7 @@
         {
           "troop": "Ceniza",
           "cost": 35,
+          "ammo": 1,
           "weapons": [
             "Pistola",
             "Maza ligera"
@@ -520,6 +537,7 @@
         {
           "troop": "Ascua",
           "cost": 97,
+          "ammo": 1,
           "weapons": [
             "Pistola",
             "Cóctel molotov",
@@ -572,6 +590,7 @@
         {
           "troop": "Mariscal",
           "cost": 95,
+          "ammo": 1,
           "weapons": [
             "Pistola"
           ],
@@ -594,6 +613,7 @@
         {
           "troop": "Soldat",
           "cost": 68,
+          "ammo": 1,
           "weapons": [
             "Rifle"
           ],
@@ -605,6 +625,7 @@
         {
           "troop": "Soldat",
           "cost": 63,
+          "ammo": 1,
           "weapons": [
             "Rifle"
           ]
@@ -699,6 +720,7 @@
         {
           "troop": "Cardenal Nuclear",
           "cost": 105,
+          "ammo": 2,
           "weapons": [
             "Maza",
             "Pistola"
@@ -728,6 +750,7 @@
         {
           "troop": "Discípulo",
           "cost": 44,
+          "ammo": 1,
           "weapons": [
             "Filo pequeño",
             "Pistola"
@@ -736,6 +759,7 @@
         {
           "troop": "Discípulo",
           "cost": 56,
+          "ammo": 2,
           "weapons": [
             "Escopeta"
           ]
@@ -758,6 +782,7 @@
         {
           "troop": "Jefe de pista",
           "cost": 110,
+          "ammo": 3,
           "weapons": [
             "Filo medio",
             "Pistola"
@@ -804,6 +829,7 @@
         {
           "troop": "Pachacho",
           "cost": 68,
+          "ammo": 2,
           "weapons": [
             "Pistola"
           ],

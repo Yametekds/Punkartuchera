@@ -8,6 +8,7 @@
 @inject RosterBuilder Roster
 @inject UnitCostCalculator Costs
 @inject LoadoutAdvisor Advisor
+@inject MemberWeapons Weapons
 @inject IPhotoStore Photos
 @inject StampNotifier Stamps
 @inject NavigationManager Navigation
@@ -115,10 +116,21 @@ else
                              ValueChanged="value => _member.Stats[stat.Key] = value" />
                 }
             </div>
-            <div class="ammo-stepper">
-                <Stepper Label="Balas" Min="0" Max="99" @bind-Value="_member.Ammo" @bind-Value:after="Recalculate" />
-                <span class="ammo-stepper__price">@_cost.BulletPrice ptos por bala</span>
-            </div>
+            @if (_canBuyAmmo || _member.Ammo > 0)
+            {
+                <div class="ammo-stepper">
+                    <Stepper Label="Balas" Min="0" Max="@(_canBuyAmmo ? 99 : _member.Ammo)" @bind-Value="_member.Ammo" @bind-Value:after="Recalculate" />
+                    <span class="ammo-stepper__price">@_cost.BulletPrice ptos por bala</span>
+                </div>
+            }
+            @if (!_canBuyAmmo)
+            {
+                <p class="muted">Sin balas: ninguna de sus armas es Arma de fuego.</p>
+                @if (_member.Ammo > 0)
+                {
+                    <p class="notice notice--warning"><span>Lleva balas pero ninguna de sus armas es Arma de fuego. Quítaselas: no le sirven y cuestan puntos.</span></p>
+                }
+            }
         </section>
 
         <section class="paper stack loadout">
@@ -212,6 +224,7 @@ else
 
     private IReadOnlyList<TroopChoice> _choices = [];
     private Loadout _loadout = new([], [], null, 0, false, false, []);
+    private bool _canBuyAmmo = true;
     private LoadoutSlot? _picker;
     private UnitCost _cost = new([], UnitCostCalculator.DefaultBulletPrice);
     private TroopChoice? _picked;
@@ -346,6 +359,7 @@ else
         SyncGear();
         _cost = Costs.Calculate(_member, _band.FactionId, _band.SubfactionId);
         _loadout = Advisor.Advise(_member, _band.FactionId, _band.SubfactionId, _band.Members);
+        _canBuyAmmo = Weapons.CanBuyAmmo(_member, _band.FactionId);
     }
 
     private void SetBaseCost(ChangeEventArgs e)

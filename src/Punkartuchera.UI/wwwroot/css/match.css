@@ -201,6 +201,10 @@
 .aid__once { border: 0; cursor: pointer; min-height: 36px; background: var(--punk-surface); color: var(--punk-text); font: inherit; font-size: .85rem; }
 .aid__once[aria-pressed="true"] { background: var(--punk-steel); color: var(--punk-ink); text-decoration: line-through; }
 .aid__once:disabled { cursor: default; }
+.aid__toggle { border: 0; cursor: pointer; min-height: 36px; background: var(--punk-surface); color: var(--punk-text); font: inherit; font-size: .85rem; }
+.aid__toggle--on { background: var(--punk-steel); color: var(--punk-ink); }
+.aid__toggle:disabled { cursor: default; }
+.aid__toggle-state { font-weight: 700; }
 .aid__picked { display: inline-flex; align-items: center; text-decoration: none; }
 .aid__once.aid__picked[aria-pressed="true"] { text-decoration: none; }
 .aid__undo { font-size: .85rem; }
@@ -210,6 +214,17 @@
 .aid__choice { border: 1px solid var(--punk-blood); cursor: pointer; min-height: 36px; background: transparent; color: inherit; font: inherit; font-size: .85rem; }
 .statbox--changed { background: var(--punk-blood); }
 .statbox--changed dd { color: #fff; }
+
+/* Número pequeño encima del Atributo: cuánto le suma o le resta lo que lleva o lo apuntado en la partida. */
+.match-sheet .statbox { position: relative; }
+.statbox__mod {
+    position: absolute; top: -8px; right: -6px; z-index: 1;
+    min-width: 1.5em; padding: 1px 4px;
+    font: 700 .72rem/1.15 var(--punk-font-body); text-align: center; color: #fff;
+    background: var(--punk-blood); border: 1px solid var(--punk-black); border-radius: var(--punk-radius);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .6); pointer-events: none;
+}
+.statbox__mod--up { background: var(--punk-toxic); color: var(--punk-ink); }
 .stat--changed { color: var(--punk-blood); font-weight: 700; }
 .aid__readonly strong { font-family: var(--punk-font-display); }
 
