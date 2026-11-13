@@ -103,7 +103,9 @@ else if (Matches.Current is not { } match)
         {
             <h2 class="section-title">Cada uno en su móvil</h2>
             <div class="paper match-setup">
+                <span class="stamp match-experimental">Experimental · en proceso</span>
                 <p>Crea la partida y pásale el código al rival, o mete el que te haya dado él. Su banda te llega sola, sin balas ni fotos.</p>
+                <p class="match-experimental__note">Esto aún está a medio soldar y puede fallar. Si queréis ir a lo seguro, jugad las dos bandas en un móvil.</p>
                 <div class="actions">
                     <button type="button" class="btn btn--blood" disabled="@(_busy || _ownId is null)" @onclick="CreateOnline">
                         <Icon Path="@Icons.Dice" /> Crear partida
@@ -122,7 +124,7 @@ else if (Matches.Current is not { } match)
         else
         {
             <p class="notice notice--warning">
-                <span>Las partidas con código no están montadas en esta versión. Podéis jugar en un solo móvil.</span>
+                <span>Las partidas con código son experimentales y están en proceso: aún no están montadas en esta versión. Podéis jugar en un solo móvil.</span>
             </p>
         }
 
@@ -168,6 +170,7 @@ else
                 <span class="stamp stamp--light match-code__seed">@match.Code</span>
             </div>
             <span class="chip match-status match-status--@Matches.Connection.ToString().ToLowerInvariant()">@ConnectionText</span>
+            <span class="stamp stamp--light match-experimental">Experimental · en proceso</span>
             @if (!match.HasRival)
             {
                 <button type="button" class="btn btn--ghost" @onclick="() => ShareCode(match.Code!)">

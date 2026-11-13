@@ -37,6 +37,11 @@
 .match-status--online { background: var(--punk-toxic); color: var(--punk-ink); }
 .match-status--offline { background: var(--punk-rust); color: var(--punk-text); }
 
+/* Partidas en línea por código: aún experimentales. */
+.match-experimental { justify-self: start; font-size: .75rem; padding: 2px 8px 1px; border-width: 2px; }
+.match-code .match-experimental { flex: none; align-self: center; }
+.match-experimental__note { font-size: .9rem; font-style: italic; }
+
 .match-round {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
     margin-bottom: 18px;
