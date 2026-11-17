@@ -12,8 +12,22 @@
     display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-content: start;
 }
 .mission-card > :not(.mission-card__number) { grid-column: 2; }
+/* Foto de cabecera del PDF oficial: a sangre arriba de la hoja, como una foto pegada */
+.mission-card__photo, .mission-picker__photo {
+    display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+    filter: contrast(1.08) sepia(.18);
+    box-shadow: 0 2px 0 rgba(13, 11, 9, .25);
+}
+.mission-card > .mission-card__photo { grid-column: 1 / -1; margin-bottom: 6px; }
+.mission-picker__photo { max-width: 34rem; margin-bottom: 6px; }
+.mission-card__map summary {
+    cursor: pointer; width: fit-content;
+    font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1px;
+    font-size: .8rem; color: var(--punk-rust);
+}
+.mission-card__map img { display: block; width: min(100%, 320px); height: auto; margin-top: 8px; }
 .mission-card__number {
-    grid-row: span 5;
+    grid-row: span 6;
     font-family: var(--punk-font-display); font-size: 2.6rem; line-height: 1;
     color: var(--punk-rust);
 }

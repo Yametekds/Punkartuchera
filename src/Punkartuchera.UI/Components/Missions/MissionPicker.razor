@@ -4,10 +4,15 @@
     @if (MissionCatalog.Find(Value) is { } chosen)
     {
         <div class="mission-picker__chosen">
+            <img class="mission-picker__photo" src="@MissionImages.Photo(chosen)" alt="" width="800" height="450" decoding="async" />
             <span class="datacard__label">Misión</span>
             <strong class="mission-picker__name">@chosen.Name</strong>
             <span class="mission-picker__summary">@chosen.Summary</span>
             <span class="mission-picker__scoring"><strong>Puntos:</strong> @chosen.Scoring</span>
+            <details class="mission-card__map">
+                <summary>Ver el plano</summary>
+                <img src="@MissionImages.Map(chosen)" alt="Plano de @chosen.Name: zonas de despliegue y dónde va cada objetivo" width="420" height="428" loading="lazy" decoding="async" />
+            </details>
             <a class="mission-picker__pdf" href="@MissionCatalog.PdfLink(chosen)" target="_blank" rel="noopener">Reglas completas: PDF, p. @chosen.Page</a>
         </div>
     }

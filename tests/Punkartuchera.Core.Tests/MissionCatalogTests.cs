@@ -45,4 +45,22 @@ public class MissionCatalogTests
     {
         Assert.EndsWith("Escenarios_.pdf#page=17", MissionCatalog.PdfLink(MissionCatalog.Find("sondas-del-espacio-exterior")!));
     }
+
+    [Fact]
+    public void Every_mission_has_its_photo_and_map_from_the_pdf()
+    {
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "Punkartuchera.slnx")))
+        {
+            dir = dir.Parent;
+        }
+
+        Assert.NotNull(dir);
+        var folder = Path.Combine(dir!.FullName, "src", "Punkartuchera.UI", "wwwroot", "img", "misiones");
+        Assert.All(MissionCatalog.All, m =>
+        {
+            Assert.True(File.Exists(Path.Combine(folder, $"{m.Id}.webp")), m.Id);
+            Assert.True(File.Exists(Path.Combine(folder, $"{m.Id}-mapa.webp")), m.Id);
+        });
+    }
 }
