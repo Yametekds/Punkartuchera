@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<CloseCombat>();
         services.AddSingleton<MemberWeapons>();
         services.AddSingleton<LoadoutModifiers>();
+        services.AddSingleton<MemberArmor>();
         services.AddSingleton(sp => new RosterBuilder(sp.GetRequiredService<Rulebook>(), sp.GetRequiredService<IRulesCatalog>()));
         services.AddScoped<FragmentScroller>();
         services.AddSingleton<Punkartuchera.Core.Matches.MatchAidCatalog>();

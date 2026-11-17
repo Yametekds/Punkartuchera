@@ -215,8 +215,8 @@
 .statbox--changed { background: var(--punk-blood); }
 .statbox--changed dd { color: #fff; }
 
-/* Número pequeño encima del Atributo: cuánto le suma o le resta lo que lleva o lo apuntado en la partida. */
-.match-sheet .statbox { position: relative; }
+/* Número pequeño encima del Atributo: cuánto le suma o le resta lo que lleva o lo apuntado en la partida (también en la banda). */
+.datacard__stats .statbox { position: relative; }
 .statbox__mod {
     position: absolute; top: -8px; right: -6px; z-index: 1;
     min-width: 1.5em; padding: 1px 4px;
