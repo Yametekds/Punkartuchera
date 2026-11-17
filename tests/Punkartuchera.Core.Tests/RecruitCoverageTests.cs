@@ -106,4 +106,24 @@ public class RecruitCoverageTests
             }
         }
     }
+
+    [Fact]
+    public void Anyone_with_a_firearm_can_fit_one_bayonet()
+    {
+        var piltrafa = Builder.FromTroop(Book.FindFaction("pandilleros")!.Troops.Single(t => t.Name == "Piltrafa"), "pandilleros");
+        Assert.StartsWith("Necesita llevar", Option().Blocked);
+
+        piltrafa.Gear.Add(new Equipment { Name = "Filo pequeño" });
+        Assert.NotNull(Option().Blocked);
+
+        piltrafa.Gear.Add(new Equipment { Name = "Pistola" });
+        Assert.Null(Option().Blocked);
+        Assert.Equal(3, Option().Cost);
+
+        piltrafa.Gear.Add(new Equipment { Name = "Bayoneta" });
+        Assert.Equal("Ya lo lleva", Option().Blocked);
+        Assert.Equal(20 + 4 + 5 + 3, Costs.Calculate(piltrafa, "pandilleros").Total);
+
+        LoadoutOption Option() => Assert.Single(Advisor.Advise(piltrafa, "pandilleros").Gear, o => o.Name == "Bayoneta");
+    }
 }

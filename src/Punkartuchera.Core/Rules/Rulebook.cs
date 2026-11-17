@@ -255,10 +255,16 @@ public sealed class GearItem
     /// </summary>
     public bool Band { get; set; }
 
+    /// <summary>Equipo del reglamento básico que puede comprar cualquier tropa (si cumple <see cref="Requires"/>).</summary>
+    public bool AnyTroop { get; set; }
+
     /// <summary>Cuántos puede haber como máximo en toda la banda (Gato parameño, Tótem…).</summary>
     public int? PerBand { get; set; }
 
-    /// <summary>Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio).</summary>
+    /// <summary>
+    /// Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio)
+    /// o un arma con esa regla (Bayoneta: "Arma de fuego").
+    /// </summary>
     public List<string> Requires { get; set; } = [];
 
     /// <summary>Palabras que, en el nombre de lo que lleva, cuentan como este objeto ("incrustado").</summary>
