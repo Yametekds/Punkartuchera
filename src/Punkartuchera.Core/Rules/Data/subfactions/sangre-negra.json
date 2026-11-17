@@ -52,6 +52,9 @@
   {
     "id": "nuevos-hijos",
     "baseTroops": ["Ceniza", "Guardián de la Llama", "Ascua", "Chispa"],
+    "troopOptions": {
+      "Ascua": [{ "name": "Desbrozadora", "cost": 4 }, { "name": "Sierra de mano", "cost": 8 }]
+    },
     "troopNames": {"Ceniza": "E95", "Ascua": "E98", "Chispa": "Diésel", "Guardián de la Llama": "Surtidor"},
     "name": "Nuevos Hijos",
     "summary": "Los seguidores de Rogelio en la Fortaleza del Cielo: melenudos, ricos de vender combustible y con balas de sobra para motivar a la tropa.",

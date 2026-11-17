@@ -70,6 +70,13 @@ public static class RivalBandSanitizer
             .Take(MaxMembers)
             .ToList();
 
+        band.Extras = (band.Extras ?? [])
+            .OfType<BandExtra>()
+            .Select(e => new BandExtra { Name = Clean(e.Name, MaxTextLength), Cost = e.Cost is { } extraCost ? Math.Clamp(extraCost, 0, MaxCost) : null })
+            .Where(e => e.Name.Length > 0)
+            .Take(MaxListItems)
+            .ToList();
+
         var ids = new HashSet<Guid>();
         foreach (var member in band.Members)
         {

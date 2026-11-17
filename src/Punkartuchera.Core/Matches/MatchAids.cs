@@ -213,6 +213,12 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
 
         var cost = band.Cost ?? 0;
 
+        if (band.HasExtra(BandExtras.Cat))
+        {
+            bandAids.Add(Once("gato", BandExtras.Cat, BandExtras.Cat,
+                "Una vez por partida: repites una tirada tuya u obligas al rival a repetir una suya. Con su miniatura a la vista."));
+        }
+
         switch (factionId)
         {
             case "idos":

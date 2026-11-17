@@ -37,6 +37,12 @@ public sealed class Band
     public List<Miniature> Members { get; set; } = [];
 
     /// <summary>
+    /// Lo que se compra para la banda entera y no para una miniatura (el Gato parameño).
+    /// Su coste cuenta en el total de la banda.
+    /// </summary>
+    public List<BandExtra> Extras { get; set; } = [];
+
+    /// <summary>
     /// En las bandas rivales, el coste total de la banda. El de cada miniatura no se comparte:
     /// con él y el equipo a la vista se podrían deducir sus balas.
     /// </summary>
@@ -54,7 +60,12 @@ public sealed class Band
     /// <summary>Coste de la banda: la suma de sus miniaturas, o el total recibido si es rival.</summary>
     public int? Cost => IsReadOnly
         ? TotalCost
-        : Members.Any(m => m.Cost is not null) ? Members.Sum(m => m.Cost ?? 0) : null;
+        : Members.Any(m => m.Cost is not null) || Extras.Any(e => e.Cost is not null)
+            ? Members.Sum(m => m.Cost ?? 0) + Extras.Sum(e => e.Cost ?? 0)
+            : null;
+
+    public bool HasExtra(string name) =>
+        Extras.Any(e => string.Equals(e.Name, name, StringComparison.OrdinalIgnoreCase));
 
     /// <summary>
     /// Deja solo el coste total de la banda y quita el de cada miniatura (y lo que permite rehacerlo),
@@ -62,9 +73,9 @@ public sealed class Band
     /// </summary>
     public void KeepOnlyTotalCost()
     {
-        if (TotalCost is null && Members.Any(m => m.Cost is not null))
+        if (TotalCost is null && (Members.Any(m => m.Cost is not null) || Extras.Any(e => e.Cost is not null)))
         {
-            TotalCost = Members.Sum(m => m.Cost ?? 0);
+            TotalCost = Members.Sum(m => m.Cost ?? 0) + Extras.Sum(e => e.Cost ?? 0);
         }
 
         foreach (var member in Members)
@@ -83,4 +94,12 @@ public enum BandOwnership
 {
     Own,
     Rival
+}
+
+/// <summary>Compra de la banda entera (no de una miniatura).</summary>
+public sealed class BandExtra
+{
+    public string Name { get; set; } = string.Empty;
+
+    public int? Cost { get; set; }
 }
