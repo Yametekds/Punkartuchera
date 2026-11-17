@@ -246,7 +246,15 @@
     filter: saturate(.85);
 }
 
+.print-profile__line {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+}
+
 .print-stats {
+    flex: 1;
+    min-width: 0;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
@@ -281,6 +289,25 @@
     font-size: 6.5pt;
     font-weight: 700;
 }
+
+/* Fichas de Blindaje (chapa remachada) y Balas (bala) */
+.print-token { flex: none; height: 15mm; width: auto; overflow: visible; }
+.print-token--ammo { height: 19mm; }
+
+.print-token__label {
+    fill: #e9e0d0;
+    font-family: var(--punk-font-heading);
+    font-size: 9px;
+    letter-spacing: .08em;
+}
+
+.print-token__value {
+    font-family: var(--punk-font-display);
+    font-size: 26px;
+}
+
+.print-token__value--armor { fill: var(--print-sand); paint-order: stroke; stroke: #0d0b09; stroke-width: 2px; }
+.print-token__value--ammo { fill: var(--print-black); font-size: 19px; }
 
 .print-profile__mods {
     margin: 0;
@@ -333,6 +360,15 @@
 
 .print-rules { margin: 0; font-size: 8.5pt; }
 .print-rules__item { break-inside: avoid; }
+
+/* Si un perfil no cabe ni en una hoja entera, se parte, pero nunca deja el título,
+   una fila de equipo o una regla a medias. */
+.print-profile__head,
+.print-profile__main,
+.print-doc .print-profile__label,
+.print-doc .print-section__title { break-after: avoid; break-inside: avoid; }
+.print-table tr { break-inside: avoid; }
+.print-profile { box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .print-rules__item + .print-rules__item { margin-top: 1.5mm; }
 .print-rules dt { font-weight: 700; }
 .print-rules dd { margin: 0; }
