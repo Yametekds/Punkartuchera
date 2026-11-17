@@ -62,6 +62,9 @@ public sealed class ActiveMatch
     /// <summary>Mapa en el que se juega, para poder volver a generarlo igual. Solo en este dispositivo.</summary>
     public MatchMap? Map { get; set; }
 
+    /// <summary>Misión (escenario) a la que se juega, de <see cref="Missions.MissionCatalog"/>. Solo en este dispositivo.</summary>
+    public string? MissionId { get; set; }
+
     /// <summary>Fotos de la mesa para recordar dónde estaba cada miniatura. Solo en este dispositivo.</summary>
     public List<MatchPhoto> Photos { get; set; } = [];
 

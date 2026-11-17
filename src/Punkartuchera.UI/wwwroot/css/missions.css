@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Misiones: lista de escenarios y selector de misión de la partida.
+   Solo usa las variables y texturas de punk-theme.css.
+   ========================================================================== */
+
+.mission-lead { max-width: 44rem; margin: 0 0 18px; color: var(--punk-text-muted); }
+.mission-match { margin-bottom: 18px; }
+
+/* ---------- Ficha de misión ---------- */
+
+.mission-card {
+    display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-content: start;
+}
+.mission-card > :not(.mission-card__number) { grid-column: 2; }
+/* Foto de cabecera del PDF oficial: a sangre arriba de la hoja, como una foto pegada */
+.mission-card__photo, .mission-picker__photo {
+    display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+    filter: contrast(1.08) sepia(.18);
+    box-shadow: 0 2px 0 rgba(13, 11, 9, .25);
+}
+.mission-card > .mission-card__photo { grid-column: 1 / -1; margin-bottom: 6px; }
+.mission-picker__photo { max-width: 34rem; margin-bottom: 6px; }
+.mission-card__map summary {
+    cursor: pointer; width: fit-content;
+    font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1px;
+    font-size: .8rem; color: var(--punk-rust);
+}
+.mission-card__map img { display: block; width: min(100%, 320px); height: auto; margin-top: 8px; }
+.mission-card__number {
+    grid-row: span 6;
+    font-family: var(--punk-font-display); font-size: 2.6rem; line-height: 1;
+    color: var(--punk-rust);
+}
+.mission-card__title {
+    margin: 0;
+    font-family: var(--punk-font-display); font-size: 1.35rem; line-height: 1.1;
+    text-transform: uppercase; letter-spacing: .02em; color: var(--punk-ink);
+}
+.mission-card__summary, .mission-card__scoring { margin: 0; font-size: .95rem; line-height: 1.5; }
+.mission-card__meta {
+    margin: 0;
+    font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1px;
+    font-size: .78rem; color: var(--punk-ink-muted);
+}
+.mission-card__meta a { color: inherit; }
+.mission-card__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.mission-card.is-highlighted .mission-card__title {
+    background-image: linear-gradient(transparent 58%, rgba(162, 20, 10, .25) 58%, rgba(162, 20, 10, .25) 92%, transparent 92%);
+    justify-self: start;
+}
+.mission-lucky { max-width: 34rem; margin-bottom: 26px; }
+
+/* ---------- Selector ---------- */
+
+.mission-picker { display: flex; flex-direction: column; gap: 12px; }
+.mission-picker__chosen { display: flex; flex-direction: column; gap: 4px; }
+.mission-picker__name {
+    font-family: var(--punk-font-display); font-size: 1.3rem; line-height: 1.1;
+    text-transform: uppercase; color: var(--punk-ink);
+}
+.mission-picker__summary, .mission-picker__scoring, .mission-picker__none { margin: 0; font-size: .95rem; line-height: 1.5; }
+.mission-picker__pdf { font-size: .85rem; color: var(--punk-ink-muted); }
+.mission-picker__actions { margin: 0; }
+
+.mission-picker__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+.mission-option {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; gap: 4px; text-align: left;
+    padding: 10px 12px;
+    background: rgba(13, 11, 9, .04); color: var(--punk-ink);
+    border: 1px dashed var(--punk-ink-muted);
+    font: inherit; cursor: pointer;
+}
+.mission-option:hover { background: rgba(13, 11, 9, .09); }
+.mission-option:focus-visible { outline: 3px solid var(--punk-accent); outline-offset: 2px; }
+.mission-option[aria-pressed="true"] {
+    background-color: var(--punk-rust); color: var(--punk-text);
+    background-image: var(--punk-tex-fibre);
+    border-style: solid; border-color: var(--punk-black);
+}
+.mission-option__name {
+    font-family: var(--punk-font-display); font-size: 1rem; text-transform: uppercase; letter-spacing: .04em;
+}
+.mission-option__summary { font-size: .85rem; line-height: 1.4; }
+
+/* ---------- En la partida ---------- */
+
+.match-mission { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.match-mission__all { align-self: flex-start; font-size: .85rem; color: var(--punk-ink-muted); }

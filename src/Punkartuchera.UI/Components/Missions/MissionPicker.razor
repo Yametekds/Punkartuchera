@@ -1,0 +1,71 @@
+@* Elegir la misión de una partida: de la lista (con su resumen), al azar o ninguna. *@
+
+<div class="mission-picker">
+    @if (MissionCatalog.Find(Value) is { } chosen)
+    {
+        <div class="mission-picker__chosen">
+            <img class="mission-picker__photo" src="@MissionImages.Photo(chosen)" alt="" width="800" height="450" decoding="async" />
+            <span class="datacard__label">Misión</span>
+            <strong class="mission-picker__name">@chosen.Name</strong>
+            <span class="mission-picker__summary">@chosen.Summary</span>
+            <span class="mission-picker__scoring"><strong>Puntos:</strong> @chosen.Scoring</span>
+            <details class="mission-card__map">
+                <summary>Ver el plano</summary>
+                <img src="@MissionImages.Map(chosen)" alt="Plano de @chosen.Name: zonas de despliegue y dónde va cada objetivo" width="420" height="428" loading="lazy" decoding="async" />
+            </details>
+            <a class="mission-picker__pdf" href="@MissionCatalog.PdfLink(chosen)" target="_blank" rel="noopener">Reglas completas: PDF, p. @chosen.Page</a>
+        </div>
+    }
+    else
+    {
+        <p class="mission-picker__none">Sin misión: a hostias porque sí. Pilla una de la lista o que decida la suerte.</p>
+    }
+
+    <div class="actions mission-picker__actions">
+        <button type="button" class="btn btn--ghost" aria-expanded="@(_open ? "true" : "false")" disabled="@Disabled" @onclick="() => _open = !_open">
+            <Icon Path="@Icons.Flag" /> @(_open ? "Cerrar la lista" : Value is null ? "Elegir misión" : "Cambiar")
+        </button>
+        <button type="button" class="btn btn--blood" disabled="@Disabled" @onclick="PickRandom">
+            <Icon Path="@Icons.Dice" /> Al azar
+        </button>
+        @if (Value is not null)
+        {
+            <button type="button" class="btn btn--ghost btn--danger-text" disabled="@Disabled" @onclick="() => Choose(null)">Quitar</button>
+        }
+    </div>
+
+    @if (_open)
+    {
+        <ul class="mission-picker__list" aria-label="Misiones">
+            @foreach (var mission in MissionCatalog.All)
+            {
+                <li>
+                    <button type="button" class="mission-option @(mission.Id == Value ? "is-selected" : null)"
+                            aria-pressed="@(mission.Id == Value ? "true" : "false")" disabled="@Disabled" @onclick="() => Choose(mission.Id)">
+                        <span class="mission-option__name">@mission.Name</span>
+                        <span class="mission-option__summary">@mission.Summary</span>
+                    </button>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    [Parameter] public string? Value { get; set; }
+
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    private bool _open;
+
+    private Task PickRandom() => Choose(MissionCatalog.Random(Random.Shared, Value).Id);
+
+    private async Task Choose(string? id)
+    {
+        _open = false;
+        Value = id;
+        await ValueChanged.InvokeAsync(id);
+    }
+}

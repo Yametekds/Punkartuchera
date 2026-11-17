@@ -131,7 +131,7 @@ public class BackupAttackTests
              "bands":[{"name":"Espía","factionId":"pandilleros","members":[
                {"name":"A","photo":{"source":"Official","key":"https://espia.example/p.gif"}},
                {"name":"B","photo":{"source":"Stored","key":"f"}}]}],
-             "matches":[{"map":{"code":"ABC","query":"codigo=ABC&x=\"><script>alert(1)</script>"},"photos":[{"key":"f"}]}],
+             "matches":[{"map":{"code":"ABC","query":"codigo=ABC&x=\"><script>alert(1)</script>"},"missionId":"<img src=x>","photos":[{"key":"f"}]}],
              "photos":[{"key":"f","contentType":"image/png","data":"{{{svg}}}"}]}
             """);
         await Backup.RestoreAsync(backup);
@@ -141,6 +141,7 @@ public class BackupAttackTests
         var match = (await _matches.GetAllAsync())[0];
         Assert.Empty(match.Photos);
         Assert.DoesNotContain("<", match.Map?.Query ?? string.Empty);
+        Assert.Null(match.MissionId);
     }
 
     // ---------- QR de resultado del torneo ----------
