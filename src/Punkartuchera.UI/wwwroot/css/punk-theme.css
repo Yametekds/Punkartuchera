@@ -981,6 +981,7 @@ textarea.field__input { resize: vertical; }
     font-family: var(--punk-font-display); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase;
     cursor: pointer;
 }
+a.menu-pop__item { text-decoration: none; }
 .menu-pop__item:hover { background: rgba(236, 194, 140, .12); }
 .menu-pop__item .icon { color: var(--punk-accent); }
 .menu-pop__item--danger, .menu-pop__item--danger .icon { color: #ff8a80; }
