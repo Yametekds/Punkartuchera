@@ -10,11 +10,12 @@
 @inject MemberArmor MemberArmor
 @inject PhotoUrlProvider PhotoUrls
 @inject IJSRuntime JS
+@inject NavigationManager Navigation
 
 @* Hojas de la banda para imprimir o guardar en PDF desde el diálogo de impresión del navegador. *@
 <PageTitle>@(_band?.Name ?? "Banda")</PageTitle>
 
-<div class="band-print">
+<div class="band-print" style="@LogoStyle">
     <div class="print-toolbar">
         <a class="btn btn--ghost" href="@(_band is null ? "" : $"bandas/{_band.Id}")"><Icon Path="@Icons.Back" /> Volver</a>
         @if (_band is not null)
@@ -39,8 +40,16 @@
         <thead><tr><td><div class="print-frame__top"></div></td></tr></thead>
         <tfoot><tr><td><div class="print-frame__bottom"></div></td></tr></tfoot>
         <tbody><tr><td>
-        <article class="print-doc">
+        <article class="print-doc @(LogoUrl is null ? null : "print-doc--logo")">
+            @if (LogoUrl is not null)
+            {
+                <div class="print-watermark" aria-hidden="true"></div>
+            }
             <header class="print-cover">
+                @if (LogoUrl is not null)
+                {
+                    <div class="print-cover__emblem" aria-hidden="true"></div>
+                }
                 <p class="print-cover__kicker">Banda de @FactionName@(SubfactionName is null ? "" : $" · {SubfactionName}")</p>
                 <h1 class="print-cover__name">@_band.Name</h1>
                 <dl class="print-cover__facts">
@@ -168,15 +177,19 @@
                     <div class="print-profile__main">
                         @if (sheet.PhotoUrl is not null && !_brokenPhotos.Contains(member.Id))
                         {
-                            <img class="print-profile__photo" src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" />
+                            <span class="print-profile__photo"><img src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" /></span>
                         }
-                        <div class="print-profile__line">
                         <table class="print-stats">
                             <thead>
                                 <tr>
                                     @foreach (var stat in Rules.Stats)
                                     {
                                         <th scope="col" title="@stat.Name">@stat.Abbreviation</th>
+                                    }
+                                    <th scope="col" class="print-stats__token-col">Bl</th>
+                                    @if (!_band.IsReadOnly)
+                                    {
+                                        <th scope="col" class="print-stats__token-col print-stats__token-col--ammo">Balas</th>
                                     }
                                 </tr>
                             </thead>
@@ -193,55 +206,19 @@
                                             }
                                         </td>
                                     }
+                                    @* Blindaje en una chapa remachada y balas dentro de una bala. *@
+                                    <td class="print-stats__token">
+                                        <span class="print-plate" aria-label="Blindaje @sheet.Armor.Value"><span>@sheet.Armor.Value</span></span>
+                                    </td>
+                                    @if (!_band.IsReadOnly)
+                                    {
+                                        <td class="print-stats__token">
+                                            <span class="print-bullet" aria-label="@member.Ammo balas"><span>@member.Ammo</span></span>
+                                        </td>
+                                    }
                                 </tr>
                             </tbody>
                         </table>
-                        @* Blindaje en una chapa remachada y balas dentro de una bala, como fichas sobre la hoja. *@
-                        <svg class="print-token print-token--armor" viewBox="0 0 60 60" role="img" aria-label="Blindaje @sheet.Armor.Value">
-                            <defs>
-                                <linearGradient id="plate-@member.Id" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0" stop-color="#6d6a64" />
-                                    <stop offset=".45" stop-color="#3b3935" />
-                                    <stop offset="1" stop-color="#1f1d1a" />
-                                </linearGradient>
-                                <radialGradient id="rivet-@member.Id" cx=".35" cy=".35" r=".7">
-                                    <stop offset="0" stop-color="#d9d3c7" />
-                                    <stop offset=".5" stop-color="#7d776c" />
-                                    <stop offset="1" stop-color="#2a2723" />
-                                </radialGradient>
-                            </defs>
-                            <path d="M6 2h48l4 4v48l-4 4H6l-4-4V6z" fill="url(#plate-@member.Id)" stroke="#0d0b09" stroke-width="2" />
-                            <path d="M7 5h46l2 2v46l-2 2H7l-2-2V7z" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1" />
-                            @foreach (var (x, y) in Rivets)
-                            {
-                                <circle cx="@x" cy="@y" r="3.2" fill="url(#rivet-@member.Id)" stroke="#0d0b09" stroke-width=".8" />
-                            }
-                            <text x="30" y="17.5" text-anchor="middle" class="print-token__label">BL</text>
-                            <text x="30" y="46" text-anchor="middle" class="print-token__value print-token__value--armor">@sheet.Armor.Value</text>
-                        </svg>
-                        @if (!_band.IsReadOnly)
-                        {
-                            <svg class="print-token print-token--ammo" viewBox="0 0 34 72" role="img" aria-label="@member.Ammo balas">
-                                <defs>
-                                    <linearGradient id="brass-@member.Id" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0" stop-color="#8a5a12" />
-                                        <stop offset=".35" stop-color="#e8b85a" />
-                                        <stop offset=".6" stop-color="#c58b2a" />
-                                        <stop offset="1" stop-color="#6e4610" />
-                                    </linearGradient>
-                                    <linearGradient id="lead-@member.Id" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0" stop-color="#7a3a1c" />
-                                        <stop offset=".35" stop-color="#d07a4a" />
-                                        <stop offset="1" stop-color="#5a2410" />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M5 26C5 13 11 4 17 1c6 3 12 12 12 25z" fill="url(#lead-@member.Id)" stroke="#0d0b09" stroke-width="1.6" />
-                                <path d="M3 26h28v40H3z" fill="url(#brass-@member.Id)" stroke="#0d0b09" stroke-width="1.6" />
-                                <path d="M2 66h30v5H2z" fill="url(#brass-@member.Id)" stroke="#0d0b09" stroke-width="1.6" />
-                                <text x="17" y="54" text-anchor="middle" class="print-token__value print-token__value--ammo">@member.Ammo</text>
-                            </svg>
-                        }
-                        </div>
                         @if (ProfileNotes(sheet) is { Count: > 0 } notes)
                         {
                             <p class="print-profile__mods">@string.Join(" · ", notes)</p>
@@ -380,7 +357,16 @@
         IReadOnlyDictionary<string, StatAdjustment> Modifiers,
         ArmorRating Armor);
 
-    private static readonly (int X, int Y)[] Rivets = [(9, 9), (51, 9), (9, 51), (51, 51)];
+    /// <summary>Facciones con emblema en img/facciones (sacados del PDF oficial de bandas).</summary>
+    private static readonly HashSet<string> FactionLogos =
+        ["chatarreros", "idos", "irradiados", "mercenarios", "mutardos", "pandilleros", "sangre-negra", "troupe", "v-reich"];
+
+    private string? LogoUrl => _band is not null && FactionLogos.Contains(_band.FactionId)
+        ? $"{Navigation.BaseUri}_content/Punkartuchera.UI/img/facciones/{_band.FactionId}.svg"
+        : null;
+
+    // Dirección absoluta: dentro de una variable CSS, una relativa se resolvería contra la hoja de estilos.
+    private string? LogoStyle => LogoUrl is null ? null : $"--faction-logo: url('{LogoUrl}')";
 
     /// <summary>"Agilidad −1 por Cañón de mano (Armatoste)", "Blindaje 5 por Armadura quitinosa", lo situacional.</summary>
     private List<string> ProfileNotes(MemberSheet sheet)

@@ -36,14 +36,16 @@
 /* ---------- Documento ---------- */
 
 .print-doc {
+    position: relative;
+    isolation: isolate;
     max-width: 210mm;
     margin: 0 auto;
     padding: 14mm 13mm;
     box-sizing: border-box;
     background-color: var(--print-paper);
-    background-image: var(--punk-tex-paper);
-    background-size: 600px auto;
-    background-blend-mode: multiply;
+    background-image: linear-gradient(rgba(239, 228, 205, .62), rgba(239, 228, 205, .62)), var(--punk-tex-grime), var(--punk-tex-paper);
+    background-size: auto, 900px auto, 600px auto;
+    background-blend-mode: normal, multiply, multiply;
     color: var(--print-ink);
     font-family: var(--punk-font-body);
     font-size: 10pt;
@@ -61,14 +63,62 @@
 
 .print-muted { color: var(--print-ink-muted); }
 
+/* Marca de agua con el emblema de la facción. En pantalla, una vez bajo la portada;
+   al imprimir es fija y sale en cada hoja. */
+.print-watermark {
+    position: absolute;
+    z-index: -1;
+    top: 70mm;
+    left: 50%;
+    width: 150mm;
+    height: 150mm;
+    transform: translateX(-50%) rotate(-12deg);
+    background: var(--print-ink);
+    -webkit-mask: var(--faction-logo) center / contain no-repeat;
+    mask: var(--faction-logo) center / contain no-repeat;
+    opacity: .085;
+    pointer-events: none;
+}
+
+/* Chapa: la textura de las cabeceras de la app, con remaches oxidados en las esquinas */
+.print-cover,
+.print-profile__head {
+    --plate-rust: var(--punk-tex-rust);
+    background-color: #1f1e1c;
+    background-image:
+        var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
+        linear-gradient(to bottom, rgba(255, 255, 255, .08), rgba(255, 255, 255, 0) 45%),
+        var(--plate-rust),
+        var(--punk-tex-plate);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
+    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, 120mm, 60mm;
+    background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, right -20mm bottom -30mm, 0 0;
+    box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .14), inset 0 -.4mm 0 rgba(0, 0, 0, .6);
+    text-shadow: 0 .3mm 0 rgba(0, 0, 0, .9), 0 .5mm 1.5mm rgba(0, 0, 0, .8);
+}
+
 /* Portada: franja negra con el nombre en arena */
 .print-cover {
     position: relative;
-    margin-bottom: 7mm;
-    padding: 6mm 7mm 5mm;
-    background: var(--print-black);
+    margin-bottom: 8mm;
+    padding: 7mm 9mm 8mm;
     color: var(--print-sand);
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 97% 100%, 62% 96%, 30% 100%, 0 95%);
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 96% 97%, 88% 93%, 70% 100%, 52% 95%, 33% 99%, 15% 94%, 0 98%);
+}
+
+.print-cover > :not(.print-cover__emblem) { position: relative; max-width: 74%; }
+
+.print-cover__emblem {
+    position: absolute;
+    top: 50%;
+    right: 8mm;
+    width: 34mm;
+    height: 34mm;
+    transform: translateY(-50%) rotate(6deg);
+    background: var(--print-sand);
+    -webkit-mask: var(--faction-logo) center / contain no-repeat;
+    mask: var(--faction-logo) center / contain no-repeat;
+    opacity: .9;
 }
 
 .print-cover__kicker {
@@ -91,11 +141,10 @@
 .print-cover__name::after {
     content: "";
     display: block;
-    width: 38%;
-    height: 2.2mm;
-    margin-top: 2.5mm;
-    background: var(--print-red);
-    clip-path: polygon(0 30%, 8% 0, 60% 20%, 100% 10%, 97% 90%, 40% 100%, 2% 85%);
+    width: 55%;
+    height: 3.2mm;
+    margin-top: 2mm;
+    background: var(--punk-brush-red) left center / 100% 100% no-repeat;
 }
 
 .print-cover__facts {
@@ -130,13 +179,36 @@
 .print-section { margin-bottom: 7mm; }
 
 .print-doc .print-section__title {
-    margin-bottom: 2.5mm;
-    padding-bottom: 1mm;
-    border-bottom: .6mm solid var(--print-black);
-    font-family: var(--punk-font-heading);
+    position: relative;
+    margin-bottom: 3mm;
+    padding: 0 0 2mm 6mm;
+    font-family: var(--punk-font-display);
     font-size: 15pt;
     font-weight: 400;
+    letter-spacing: .03em;
     text-transform: uppercase;
+}
+
+.print-doc .print-section__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .45em;
+    width: 3mm;
+    height: 3mm;
+    background: var(--print-red);
+    transform: rotate(45deg);
+}
+
+.print-doc .print-section__title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1.6mm;
+    background: var(--punk-brush-red) left center / 100% 100% no-repeat;
+    filter: grayscale(1) brightness(.25);
 }
 
 .print-section--rules { break-inside: auto; }
@@ -155,6 +227,8 @@
     text-align: left;
     vertical-align: top;
 }
+
+.print-table tbody tr:nth-child(even) { background: rgba(29, 23, 18, .045); }
 
 .print-table thead th {
     background: var(--print-black);
@@ -181,9 +255,11 @@
 
 /* Perfil de cada miembro */
 .print-profile {
+    position: relative;
     margin-bottom: 6mm;
     border: .5mm solid var(--print-black);
-    background: rgba(255, 250, 240, .35);
+    background: rgba(255, 250, 240, .42);
+    box-shadow: .8mm .8mm 0 rgba(29, 23, 18, .18);
     break-inside: avoid;
 }
 
@@ -192,10 +268,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 4mm;
-    padding: 2mm 3.5mm;
-    background: var(--print-black);
+    padding: 2.4mm 7mm 2.4mm 6.5mm;
     color: var(--print-sand);
 }
+
+/* En las cabeceras de perfil solo un poco de óxido en la esquina del coste */
+.print-profile__head { --plate-rust: linear-gradient(transparent, transparent); }
 
 .print-profile__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1mm 3mm; min-width: 0; }
 
@@ -216,11 +294,15 @@
 
 .print-profile__cost {
     flex: none;
-    padding: .6mm 2.5mm;
+    padding: .7mm 3mm;
     background: var(--print-red);
     color: #f4ede2;
     font-family: var(--punk-font-display);
     font-size: 12pt;
+    text-shadow: none;
+    transform: rotate(-3deg);
+    clip-path: polygon(2% 6%, 98% 0, 100% 52%, 97% 100%, 3% 94%, 0 48%);
+    box-shadow: inset 0 0 0 .4mm rgba(0, 0, 0, .25);
 }
 
 .print-profile__cost small { font-family: var(--punk-font-body); font-size: 7pt; }
@@ -238,23 +320,40 @@
 .print-profile__main:not(:has(.print-profile__photo)) > * { grid-column: 1; }
 
 .print-profile__photo {
+    position: relative;
     grid-row: span 2;
     width: 24mm;
     height: 24mm;
-    object-fit: cover;
-    border: .5mm solid var(--print-black);
-    filter: saturate(.85);
+    padding: 1mm;
+    background: #f7f0e1;
+    box-shadow: .4mm .6mm 1mm rgba(0, 0, 0, .35);
+    transform: rotate(-2.5deg);
 }
 
-.print-profile__line {
-    display: flex;
-    align-items: center;
-    gap: 3mm;
+.print-profile__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(.85) contrast(1.05);
+}
+
+/* Celo arriba de la foto */
+.print-profile__photo::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: -1.8mm;
+    left: 50%;
+    width: 13mm;
+    height: 4mm;
+    transform: translateX(-50%) rotate(-5deg);
+    background: var(--punk-tape);
+    background-image: var(--punk-tex-fibre);
+    clip-path: polygon(3% 8%, 97% 0, 100% 22%, 96% 46%, 100% 74%, 97% 100%, 2% 94%, 5% 70%, 0 45%, 4% 22%);
 }
 
 .print-stats {
-    flex: 1;
-    min-width: 0;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
@@ -290,24 +389,72 @@
     font-weight: 700;
 }
 
-/* Fichas de Blindaje (chapa remachada) y Balas (bala) */
-.print-token { flex: none; height: 15mm; width: auto; overflow: visible; }
-.print-token--ammo { height: 19mm; }
+/* Blindaje en una chapa remachada y Balas en una bala, en sus propias columnas */
+.print-stats th.print-stats__token-col { width: 15mm; background: #3a1410; color: #f4ede2; }
+.print-stats th.print-stats__token-col--ammo { width: 22mm; }
 
-.print-token__label {
-    fill: #e9e0d0;
-    font-family: var(--punk-font-heading);
-    font-size: 9px;
-    letter-spacing: .08em;
+.print-stats td.print-stats__token { padding: .8mm 0; vertical-align: middle; }
+
+.print-plate,
+.print-bullet {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 8.4mm;
+    vertical-align: middle;
+    line-height: 1;
 }
 
-.print-token__value {
+.print-plate {
+    width: 11.5mm;
+    background-color: #4a4641;
+    background-image:
+        var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
+        linear-gradient(135deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, .35)),
+        var(--punk-tex-metal-rust),
+        var(--punk-tex-metal);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
+    background-size: 2.6mm, 2.6mm, 2.6mm, 2.6mm, auto, 40mm, 30mm auto;
+    background-position: left .2mm top .2mm, right .2mm top .2mm, left .2mm bottom .2mm, right .2mm bottom .2mm, 0 0, 3mm 7mm, 0 0;
+    border: .35mm solid var(--print-black);
+    border-radius: .6mm;
+    box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .3), inset 0 -.4mm 0 rgba(0, 0, 0, .5);
+}
+
+.print-plate span {
+    color: var(--print-sand);
     font-family: var(--punk-font-display);
-    font-size: 26px;
+    font-size: 14pt;
+    text-shadow: 0 .3mm 0 #000, 0 0 1mm rgba(0, 0, 0, .9);
 }
 
-.print-token__value--armor { fill: var(--print-sand); paint-order: stroke; stroke: #0d0b09; stroke-width: 2px; }
-.print-token__value--ammo { fill: var(--print-black); font-size: 19px; }
+/* Bala tumbada: casquillo de latón con el número y punta de cobre */
+.print-bullet {
+    width: 19mm;
+    justify-content: flex-start;
+    padding-left: 1.4mm;
+    box-sizing: border-box;
+    background-color: #b9842c;
+    background-image:
+        linear-gradient(to right, transparent 64%, rgba(0, 0, 0, .55) 64%, rgba(0, 0, 0, .55) 65.5%, transparent 65.5%),
+        linear-gradient(to bottom, rgba(255, 240, 200, .55), rgba(255, 240, 200, 0) 38%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .4)),
+        linear-gradient(to right, #6e4610 0, #6e4610 7%, rgba(0, 0, 0, .5) 7%, rgba(0, 0, 0, .5) 8.5%, transparent 8.5%, transparent 64%, #a85a2c 64%, #c97a46 80%, #8a3f1c),
+        var(--punk-tex-metal);
+    background-size: auto, auto, auto, 30mm auto;
+    background-blend-mode: normal, normal, normal, multiply;
+    clip-path: polygon(0 12%, 7% 12%, 7% 0, 64% 0, 76% 4%, 86% 13%, 94% 26%, 98.5% 40%, 100% 50%, 98.5% 60%, 94% 74%, 86% 87%, 76% 96%, 64% 100%, 7% 100%, 7% 88%, 0 88%);
+}
+
+.print-bullet span {
+    width: 57%;
+    margin-left: 7%;
+    color: var(--print-black);
+    font-family: var(--punk-font-display);
+    font-size: 13pt;
+    text-align: center;
+    text-shadow: 0 .25mm 0 rgba(255, 236, 190, .6);
+}
 
 .print-profile__mods {
     margin: 0;
@@ -370,7 +517,7 @@
 .print-table tr { break-inside: avoid; }
 .print-profile { box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .print-rules__item + .print-rules__item { margin-top: 1.5mm; }
-.print-rules dt { font-weight: 700; }
+.print-rules dt { font-weight: 700; color: #6b1a10; }
 .print-rules dd { margin: 0; }
 .print-rules__table { margin-top: 1mm; font-size: 8pt; }
 
@@ -409,8 +556,10 @@
 @media print {
     html,
     body:has(.band-print) {
-        background: #efe4cd !important;
-        background-image: none !important;
+        background-color: #efe4cd !important;
+        background-image: linear-gradient(rgba(239, 228, 205, .62), rgba(239, 228, 205, .62)), var(--punk-tex-grime), var(--punk-tex-paper) !important;
+        background-size: auto, 900px auto, 600px auto !important;
+        background-blend-mode: normal, multiply, multiply;
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
@@ -446,6 +595,12 @@
         padding: 0;
         background: none;
         box-shadow: none;
+    }
+
+    .print-watermark {
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(-12deg);
     }
 
     .print-footer {
