@@ -43,7 +43,7 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
             foreach (var troop in fromParent.Where(t => !t.Personality))
             {
                 var label = subfaction.TroopNames.GetValueOrDefault(troop.Name);
-                choices.Add(new TroopChoice(faction, troop, label, $"De {faction.Name}"));
+                choices.Add(new TroopChoice(faction, book.InSubfaction(troop, subfaction), label, $"De {faction.Name}"));
             }
 
             choices.AddRange(subfaction.Troops.Where(t => t.Personality).Select(t => new TroopChoice(subfaction, t)));

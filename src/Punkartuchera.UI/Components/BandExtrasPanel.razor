@@ -1,0 +1,79 @@
+@* Compras de la banda entera (el Gato parameño): no las lleva ningún miembro, pero cuentan en el coste. *@
+@inject BandExtras Extras
+@inject BandService Bands
+
+@if (Items.Count > 0 && (!Band.IsReadOnly || Band.Extras.Count > 0))
+{
+    <section class="paper band-extras" aria-labelledby="band-extras-title">
+        <h2 class="band-extras__title" id="band-extras-title">Para toda la banda</h2>
+        @foreach (var item in Items)
+        {
+            var count = BandExtras.Count(Band, item.Name);
+            if (Band.IsReadOnly && count == 0)
+            {
+                continue;
+            }
+
+            <div class="gear-item">
+                <div class="gear-item__head">
+                    <span class="gear-item__name">@item.Name</span>
+                    <span class="gear-item__kind">@(count > 0 ? "En la banda" : $"{item.Cost} ptos")</span>
+                </div>
+                <RuleProse Text="@item.Text" Class="gear-item__data" />
+                @if (!Band.IsReadOnly)
+                {
+                    <div class="actions">
+                        @if (count > 0)
+                        {
+                            <button type="button" class="btn btn--ghost" disabled="@_saving" @onclick="() => Remove(item)">Quitar (−@(item.Cost))</button>
+                        }
+                        @if (BandExtras.Blocked(Band, item) is null)
+                        {
+                            <button type="button" class="btn btn--primary" disabled="@_saving" @onclick="() => Add(item)">Añadir (+@(item.Cost))</button>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Band Band { get; set; } = default!;
+
+    /// <summary>Se llama tras guardar, para que la página repinte el coste.</summary>
+    [Parameter] public EventCallback OnChanged { get; set; }
+
+    private bool _saving;
+
+    private IReadOnlyList<GearItem> Items => Extras.For(Band.FactionId, Band.SubfactionId);
+
+    private Task Add(GearItem item) => Save(() => BandExtras.Add(Band, item));
+
+    private Task Remove(GearItem item) => Save(() => BandExtras.Remove(Band, item.Name));
+
+    private async Task Save(Func<bool> change)
+    {
+        var before = Band.Extras.ToList();
+        if (_saving || !change())
+        {
+            return;
+        }
+
+        _saving = true;
+        try
+        {
+            await Bands.SaveAsync(Band);
+            await OnChanged.InvokeAsync();
+        }
+        catch (BandValidationException)
+        {
+            Band.Extras = before;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+}

@@ -25,6 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRulesCatalog, RulebookCatalog>();
         services.AddSingleton<RulesSearch>();
         services.AddSingleton<GearLookup>();
+        services.AddSingleton<BandExtras>();
         services.AddSingleton<RuleMentions>();
         services.AddSingleton<UnitCostCalculator>();
         services.AddSingleton<LoadoutAdvisor>();

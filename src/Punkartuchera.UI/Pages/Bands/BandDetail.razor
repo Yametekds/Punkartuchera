@@ -98,6 +98,7 @@ else
                     </section>
                 }
                 <BandLimitsNotice Band="_band" />
+                <BandExtrasPanel Band="_band" OnChanged="StateHasChanged" />
                 <div class="datacard-list">
                     @foreach (var member in _band.Members)
                     {
