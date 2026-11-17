@@ -207,6 +207,23 @@ public class BandExchangeTests
         Assert.Equal("ietf!"u8.ToArray(), Base45.Decode("QED8WEX0"));
     }
 
+    [Fact]
+    public async Task The_cat_travels_with_the_band_by_file_and_by_qr()
+    {
+        var band = await CreateBandAsync();
+        band.Extras.Add(new BandExtra { Name = BandExtras.Cat, Cost = 10 });
+        await _myBands.SaveAsync(band);
+
+        var byFile = await _host.ImportAsync(new MemoryStream((await _mine.ExportAsync(band.Id)).Content));
+        var byQr = await _host.ImportQrAsync((await _mine.ExportQrAsync(band.Id)).Text);
+
+        foreach (var rival in new[] { byFile, byQr })
+        {
+            Assert.True(rival.HasExtra(BandExtras.Cat));
+            Assert.Equal(12 + 10, rival.Cost);
+        }
+    }
+
     private async Task<Band> CreateBandAsync()
     {
         var photoKey = await _myPhotos.SaveAsync(Jpeg, "image/jpeg");

@@ -240,6 +240,11 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
                 }
             }
 
+            foreach (var g in book.Gear.Where(g => g.AnyTroop && g.FactionId is null && g.Cost is not null))
+            {
+                yield return new Candidate(g.Name, g.Cost!.Value, false, null, null, g.PerBand);
+            }
+
             var noGeneric = troop is not null && new[] { faction, subfaction }.OfType<FactionRules>()
                 .Any(f => f.NoGenericGear.Any(t => SameTroop(t, troop.Name)));
             foreach (var owner in new[] { faction, subfaction }.OfType<FactionRules>())
@@ -319,7 +324,8 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
             }
 
             if (owned == 0 && FindGear(candidate.Name, factionId, subfactionId) is { Requires.Count: > 0 } needs
-                && !member.Gear.Any(g => needs.Requires.Any(r => StartsWithItem(UnitCostCalculator.Parse(g.Name).Name, r))))
+                && !member.Gear.Any(g => needs.Requires.Any(r => StartsWithItem(UnitCostCalculator.Parse(g.Name).Name, r)))
+                && !Wearing(member, factionId).Any(w => w.Slot != LoadoutSlot.Skill && needs.Requires.Any(r => Matches(r, w.Item, w.Slot, factionId, subfactionId))))
             {
                 return $"Necesita llevar {JoinOr(needs.Requires)}";
             }

@@ -214,10 +214,11 @@ public sealed partial class UnitCostCalculator(Rulebook book)
             .Concat(book.Factions.Where(f => f.IsMercenaries))
             .OfType<FactionRules>();
         var guests = (faction?.GuestTroops ?? []).Select(RulesText.Fold).ToHashSet();
-        return owners.SelectMany(o => o.Troops).FirstOrDefault(t => RulesText.Fold(t.Name) == key)
+        var troop = owners.SelectMany(o => o.Troops).FirstOrDefault(t => RulesText.Fold(t.Name) == key)
             ?? (guests.Contains(key)
                 ? book.Factions.Where(f => !f.IsMercenaries).SelectMany(f => f.Troops).FirstOrDefault(t => RulesText.Fold(t.Name) == key)
                 : null);
+        return troop is null ? null : book.InSubfaction(troop, faction?.Subfactions.FirstOrDefault(s => s.Id == subfactionId));
     }
 
     private static string BaseLabel(Miniature member, Troop? troop) =>

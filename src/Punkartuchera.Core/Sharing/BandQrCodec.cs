@@ -138,6 +138,7 @@ public static class BandQrCodec
             Name = band.Name,
             Faction = band.FactionId,
             TotalCost = band.Cost,
+            Extras = band.Extras.Count == 0 ? null : band.Extras.Select(e => e.Name).ToList(),
             StatKeys = keys,
             Members = band.Members.Select(m => new CompactMember
             {
@@ -163,6 +164,7 @@ public static class BandQrCodec
             Ownership = BandOwnership.Rival,
             TotalCost = compact.TotalCost,
             PlayerName = compact.Player,
+            Extras = (compact.Extras ?? []).OfType<string>().Select(name => new BandExtra { Name = name }).ToList(),
             // El JSON puede traer nulos donde no debería: se saltan en vez de romper.
             Members = (compact.Members ?? []).OfType<CompactMember>().Select(m =>
             {
@@ -214,6 +216,9 @@ internal sealed class CompactBand
     [JsonPropertyName("t")] public int? TotalCost { get; set; }
 
     [JsonPropertyName("k")] public List<string>? StatKeys { get; set; }
+
+    /// <summary>Compras de la banda entera (Gato parameño), solo el nombre: su coste va en el total.</summary>
+    [JsonPropertyName("x")] public List<string>? Extras { get; set; }
 
     [JsonPropertyName("m")] public List<CompactMember> Members { get; set; } = [];
 

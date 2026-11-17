@@ -40,6 +40,32 @@ public sealed class Rulebook
         string.IsNullOrEmpty(id) ? null : Factions.FirstOrDefault(f => f.Id == id);
 
     /// <summary>Busca una subfacción por su id dentro de cualquier facción.</summary>
+    private readonly Dictionary<(string Subfaction, string Troop), Troop> _subfactionTroops = [];
+
+    /// <summary>
+    /// La tropa tal como se recluta en una subfacción: si es de la facción madre y la subfacción le deja
+    /// comprar armas o equipo propios (<see cref="FactionRules.TroopOptions"/>), una copia con esas opciones.
+    /// </summary>
+    public Troop InSubfaction(Troop troop, FactionRules? subfaction)
+    {
+        if (subfaction is null || subfaction.Troops.Contains(troop)
+            || subfaction.TroopOptions.FirstOrDefault(p => RulesText.Fold(p.Key) == RulesText.Fold(troop.Name)).Value is not { Count: > 0 } extra)
+        {
+            return troop;
+        }
+
+        lock (_subfactionTroops)
+        {
+            if (!_subfactionTroops.TryGetValue((subfaction.Id, troop.Name), out var merged))
+            {
+                merged = troop.WithOptions(extra, subfaction.Weapons);
+                _subfactionTroops[(subfaction.Id, troop.Name)] = merged;
+            }
+
+            return merged;
+        }
+    }
+
     public FactionRules? FindSubfaction(string? id) =>
         string.IsNullOrEmpty(id) ? null : Factions.SelectMany(f => f.Subfactions).FirstOrDefault(s => s.Id == id);
 
@@ -223,10 +249,22 @@ public sealed class GearItem
 
     public int? Cost { get; set; }
 
+    /// <summary>
+    /// Se compra para la banda entera y no lo lleva ninguna miniatura (Gato parameño):
+    /// se elige en la banda, no en la ficha de un miembro.
+    /// </summary>
+    public bool Band { get; set; }
+
+    /// <summary>Equipo del reglamento básico que puede comprar cualquier tropa (si cumple <see cref="Requires"/>).</summary>
+    public bool AnyTroop { get; set; }
+
     /// <summary>Cuántos puede haber como máximo en toda la banda (Gato parameño, Tótem…).</summary>
     public int? PerBand { get; set; }
 
-    /// <summary>Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio).</summary>
+    /// <summary>
+    /// Solo se puede comprar si ya lleva una de estas armas (Arma incrustada: hoz, filo pequeño o filo medio)
+    /// o un arma con esa regla (Bayoneta: "Arma de fuego").
+    /// </summary>
     public List<string> Requires { get; set; } = [];
 
     /// <summary>Palabras que, en el nombre de lo que lleva, cuentan como este objeto ("incrustado").</summary>
@@ -314,6 +352,12 @@ public sealed class FactionRules
     /// <summary>Subfacciones: nombre que reciben aquí las tropas de la facción madre ("Piltrafa" → "Ninja negro").</summary>
     public Dictionary<string, string> TroopNames { get; set; } = [];
 
+    /// <summary>
+    /// Subfacciones: armas o equipo propios que pueden comprar tropas de la facción madre
+    /// ("Pueden usarlo los Pistones"), por nombre de tropa.
+    /// </summary>
+    public Dictionary<string, List<PriceOption>> TroopOptions { get; set; } = [];
+
     /// <summary>No admite Mercenarios.</summary>
     public bool NoMercenaries { get; set; }
 
@@ -344,6 +388,12 @@ public sealed class PriceOption
     public List<string> ExcludeTroops { get; set; } = [];
 
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// En <see cref="FactionRules.TroopOptions"/>: la opción de la tropa a la que sustituye
+    /// ("La honda sustituye a los cuchillos arrojadizos").
+    /// </summary>
+    public string? Replaces { get; set; }
 }
 
 public sealed class NamedText
@@ -423,6 +473,23 @@ public sealed class Troop
     public string Slug => RulesText.Slug(Name);
 
     public string Stat(string key) => Stats.TryGetValue(key, out var value) ? value : "-";
+
+    /// <summary>
+    /// Copia con opciones añadidas: las que nombran un arma de <paramref name="weapons"/> van a las armas
+    /// y el resto al equipo. Si una sustituye a otra (<see cref="PriceOption.Replaces"/>), la otra se quita.
+    /// </summary>
+    public Troop WithOptions(IReadOnlyList<PriceOption> extra, IEnumerable<Weapon> weapons)
+    {
+        var weaponNames = weapons.Select(w => RulesText.Fold(w.Name)).ToHashSet();
+        var replaced = extra.Where(o => o.Replaces is not null).Select(o => RulesText.Fold(o.Replaces)).ToHashSet();
+        bool Kept(PriceOption o) => !replaced.Contains(RulesText.Fold(o.Name));
+
+        var copy = (Troop)MemberwiseClone();
+        copy.WeaponOptions = [.. WeaponOptions.Where(Kept), .. extra.Where(o => weaponNames.Contains(RulesText.Fold(o.Name)))];
+        copy.ArmorOptions = [.. ArmorOptions.Where(Kept)];
+        copy.EquipmentOptions = [.. EquipmentOptions.Where(Kept), .. extra.Where(o => !weaponNames.Contains(RulesText.Fold(o.Name)))];
+        return copy;
+    }
 }
 
 public sealed class SubProfile

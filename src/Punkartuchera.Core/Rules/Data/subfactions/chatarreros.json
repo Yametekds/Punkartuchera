@@ -80,6 +80,10 @@
   {
     "id": "innovadores",
     "baseTroops": ["Pistón", "Dinamo"],
+    "troopOptions": {
+      "Pistón": [{ "name": "Guante de energía", "cost": 3 }],
+      "Dinamo": [{ "name": "Cañón sónico", "cost": 10 }]
+    },
     "name": "Innovadores",
     "summary": "Los inventores secretos de Samantha, por fin a la vista tras la caída de Liberty City: exoarmaduras de vapor que asustan… y a veces revientan.",
     "playstyle": "Pocas miniaturas y muy caras: los Ingenios son exoarmaduras de vapor que hacen de núcleo de la banda, con Pistones y Dinamos de apoyo. Su equipo es exclusivo de los Innovadores y no tienen Engranajes ni Sondas.",

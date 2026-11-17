@@ -50,6 +50,10 @@
   {
     "id": "fraus",
     "baseTroops": ["Piltrafa", "Machaca", "Bruto", "Jefe"],
+    "troopOptions": {
+      "Piltrafa": [{ "name": "Honda", "cost": 6, "replaces": "Cuchillos arrojadizos" }],
+      "Machaca": [{ "name": "Honda", "cost": 6, "replaces": "Cuchillos arrojadizos" }]
+    },
     "troopNames": {"Jefe": "Jefa", "Bruto": "Bruta"},
     "name": "Fraus",
     "summary": "Amazonas de Ovariazos, cerca del Bosque Vivo. Van ligeras de ropa, montan bestias y se cabrean más cuantas más caen.",
