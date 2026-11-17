@@ -203,3 +203,8 @@ button.gear-item__link {
 .subfaction-card__line { margin: 0; font-size: .85rem; color: var(--punk-text-muted); }
 .subfaction-card__tags { margin-top: 4px; }
 .subfaction-card__tags .tag { font-size: .78rem; padding: 2px 8px; }
+
+/* Blindaje: va con los Atributos, en acero para que no se confunda con ellos. */
+.datacard__stats .statbox--armor { background: rgba(120, 128, 134, .38); }
+.datacard__armor { margin: 0; font-size: .9rem; }
+.datacard__armor .datacard__label { margin-right: 6px; }

@@ -2,6 +2,8 @@
 @inject GearLookup Lookup
 @inject UnitRules UnitRules
 @inject CloseCombat CloseCombat
+@inject LoadoutModifiers LoadoutModifiers
+@inject MemberArmor MemberArmor
 
 @* Ficha de miembro estilo datacard: cabecera de chapa con atributos y cuerpo de papel. *@
 <article class="datacard">
@@ -21,11 +23,11 @@
                 <span class="datacard__role">@Member.Role</span>
             }
         </div>
-        <dl class="datacard__stats" style="--stat-count: @(Rules.Stats.Count + (ShowAmmo ? 1 : 0))">
+        <dl class="datacard__stats" style="--stat-count: @(Rules.Stats.Count + 1 + (ShowAmmo ? 1 : 0))">
             @foreach (var stat in Rules.Stats)
             {
                 var change = StatChanges?.GetValueOrDefault(stat.Key) ?? 0;
-                var gear = Modifiers?.GetValueOrDefault(stat.Key);
+                var gear = _modifiers?.GetValueOrDefault(stat.Key);
                 var mark = change + (gear?.Delta ?? 0);
                 <div class="statbox @(change != 0 ? "statbox--changed" : null)" title="@StatTitle(stat, change, gear)">
                     <dt>@stat.Abbreviation</dt>
@@ -36,6 +38,10 @@
                     }
                 </div>
             }
+            <div class="statbox statbox--armor" title="@ArmorTitle()">
+                <dt>Bl</dt>
+                <dd>@_armor.Value</dd>
+            </div>
             @if (ShowAmmo)
             {
                 <div class="statbox statbox--ammo" title="@(HideAmmo ? "Las balas del rival son secreto" : "Balas")">
@@ -47,6 +53,14 @@
     </header>
 
     <div class="datacard__body">
+        @if (_armor.Situational.Count > 0)
+        {
+            <p class="datacard__armor">
+                <span class="datacard__label">Blindaje</span>
+                @string.Join(" · ", _armor.Situational)
+            </p>
+        }
+
         @if (Member.Gear.Count > 0)
         {
             <ul class="gear-list">
@@ -199,7 +213,7 @@
     /// <summary>Lo que suben o bajan los Atributos durante la partida (El mar siempre reclama), por clave.</summary>
     [Parameter] public IReadOnlyDictionary<string, int>? StatChanges { get; set; }
 
-    /// <summary>Cambios fijos por el equipo que lleva (Armatoste, mutaciones…), por clave. Solo en la hoja de partida.</summary>
+    /// <summary>Cambios fijos por el equipo que lleva (Armatoste, mutaciones…), por clave. Si no se pasan, se calculan.</summary>
     [Parameter] public IReadOnlyDictionary<string, StatAdjustment>? Modifiers { get; set; }
 
     private static string Signed(int value) => value > 0 ? $"+{value}" : $"−{-value}";
@@ -229,12 +243,20 @@
 
     private IReadOnlyList<UnitRule> _rules = [];
     private IReadOnlyList<MeleeFallback> _melee = [];
+    private IReadOnlyDictionary<string, StatAdjustment>? _modifiers;
+    private ArmorRating _armor = ArmorRating.None;
 
     protected override void OnParametersSet()
     {
         _rules = UnitRules.For(Member, FactionId, SubfactionId);
         _melee = CloseCombat.For(Member, FactionId);
+        _modifiers = Modifiers ?? LoadoutModifiers.For(Member, FactionId, SubfactionId);
+        _armor = MemberArmor.For(Member, FactionId, SubfactionId);
     }
+
+    /// <summary>"Blindaje 5 por Pura chapa".</summary>
+    private string ArmorTitle() =>
+        _armor.Sources.Count == 0 ? "Blindaje" : $"Blindaje {_armor.Value} por {string.Join(", ", _armor.Sources)}";
 
     private GearInfo? _open;
     private string? _openTitle;
