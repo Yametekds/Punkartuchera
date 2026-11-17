@@ -368,9 +368,9 @@
         IReadOnlyDictionary<string, StatAdjustment> Modifiers,
         ArmorRating Armor);
 
-    /// <summary>Facciones con emblema en img/facciones (sacados del PDF oficial de bandas).</summary>
+    /// <summary>Facciones con emblema en img/facciones (sacados de los PDF oficiales de cada facción).</summary>
     private static readonly HashSet<string> FactionLogos =
-        ["chatarreros", "idos", "irradiados", "mercenarios", "mutardos", "pandilleros", "sangre-negra", "troupe", "v-reich"];
+        ["banda-del-comic", "chatarreros", "craabianos", "idos", "irradiados", "mercenarios", "mutardos", "pandilleros", "sangre-negra", "troupe", "unami", "v-reich"];
 
     private string? LogoUrl => _band is not null && FactionLogos.Contains(_band.FactionId)
         ? $"{Navigation.BaseUri}_content/Punkartuchera.UI/img/facciones/{_band.FactionId}.svg"
