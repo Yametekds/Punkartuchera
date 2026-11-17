@@ -45,11 +45,11 @@ public class MemberArmorTests
     }
 
     [Fact]
-    public void Only_the_best_own_armor_counts()
+    public void A_new_armor_replaces_the_previous_one()
     {
-        var member = Member("pandilleros", "Bruto", "Ropas resistentes", "Armadura metálica");
-
-        Assert.Equal(4, _armor.For(member, "pandilleros").Value);
+        Assert.Equal(4, _armor.For(Member("pandilleros", "Bruto", "Ropas resistentes", "Armadura metálica"), "pandilleros").Value);
+        Assert.Equal(1, _armor.For(Member("pandilleros", "Bruto", "Armadura metálica", "Ropas resistentes"), "pandilleros").Value);
+        Assert.Equal(3, _armor.For(Member("mutardos", "Mutardo", "Ropas resistentes", "Piel dura 3"), "mutardos").Value);
     }
 
     [Fact]

@@ -15,8 +15,8 @@ public sealed record ArmorRating(int Value, IReadOnlyList<string> Sources, IRead
 /// <summary>
 /// Calcula el Blindaje a partir de lo que lleva el miembro: el blindaje que viste (Equipo pág. 3 o el
 /// de su facción), las compras que dan un Blindaje propio ("Piel dura 3: Blindaje 3"), las que lo cambian
-/// ("Pasa a Blindaje 5") y las que suman siempre ("+2 Blindaje"). Si lleva más de un Blindaje propio
-/// vale el más alto: no se suman.
+/// ("Pasa a Blindaje 5") y las que suman siempre ("+2 Blindaje"). Solo se lleva un Blindaje a la vez:
+/// el último que se le pone reemplaza al anterior, y cualquiera del equipo reemplaza al que da una regla de la tropa.
 /// </summary>
 public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCostCalculator costs)
 {
@@ -39,7 +39,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
             // Lo lleva en el nombre: "Cuerpo mecánico (Blindaje 3)".
             if (InName().Match(name) is { Success: true } inName)
             {
-                Keep(ref worn, int.Parse(inName.Groups[1].Value), name);
+                worn = (int.Parse(inName.Groups[1].Value), name);
                 continue;
             }
 
@@ -56,7 +56,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
                 var item = FindArmor(info.Name, factionId);
                 if (item is not null && LeadingNumber().Match(item.Armor) is { Success: true } number)
                 {
-                    Keep(ref worn, int.Parse(number.Groups[1].Value), name);
+                    worn = (int.Parse(number.Groups[1].Value), name);
                     var rest = item.Armor[number.Length..].Trim(' ', '·', ',');
                     if (rest.Length > 0)
                     {
@@ -75,7 +75,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
             var text = info.Summary.Trim();
             if (OwnArmor().Match(text) is { Success: true } own)
             {
-                Keep(ref worn, int.Parse(own.Groups[1].Value), name);
+                worn = (int.Parse(own.Groups[1].Value), name);
                 if (own.Groups[2].Success)
                 {
                     situational.Add($"{name}: {Shorten(text)}");
@@ -114,7 +114,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
 
             if (OwnArmor().Match(text) is { Success: true, Groups: var own } && !own[2].Success)
             {
-                Keep(ref worn, int.Parse(own[1].Value), rule.Name);
+                worn ??= (int.Parse(own[1].Value), rule.Name);
             }
             else if (FlatBonus().Match(text) is { Success: true } flat)
             {
