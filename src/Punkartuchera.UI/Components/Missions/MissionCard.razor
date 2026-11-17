@@ -1,0 +1,29 @@
+@* Ficha de una misión: resumen propio, cómo se puntúa y la página del PDF oficial. *@
+
+<article class="paper mission-card @(Highlighted ? "is-highlighted" : null)" id="@($"mision-{Mission.Id}")">
+    @if (Number is { } number)
+    {
+        <span class="mission-card__number" aria-hidden="true">@number</span>
+    }
+    <h3 class="mission-card__title">@Mission.Name</h3>
+    <p class="mission-card__summary">@Mission.Summary</p>
+    <p class="mission-card__scoring"><strong>Puntos:</strong> @Mission.Scoring</p>
+    <p class="mission-card__meta">
+        @Mission.ContaminatedZones @(Mission.ContaminatedZones == 1 ? "zona contaminada" : "zonas contaminadas")
+        · <a href="@MissionCatalog.PdfLink(Mission)" target="_blank" rel="noopener">PDF, p. @Mission.Page</a>
+    </p>
+    @if (ChildContent is not null)
+    {
+        <div class="mission-card__actions">@ChildContent</div>
+    }
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Mission Mission { get; set; } = default!;
+
+    [Parameter] public int? Number { get; set; }
+
+    [Parameter] public bool Highlighted { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

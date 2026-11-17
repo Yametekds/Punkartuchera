@@ -54,6 +54,10 @@ else if (Matches.Current is not { } match)
                         </span>
                         <span class="match-saved__meta">
                             @SavedWhen(saved.UpdatedAt)
+                            @if (MissionCatalog.Find(saved.MissionId) is { } savedMission)
+                            {
+                                <text> · @savedMission.Name</text>
+                            }
                             @if (saved.Map is { } map)
                             {
                                 <text> · Mapa @map.Code</text>
@@ -97,6 +101,11 @@ else if (Matches.Current is not { } match)
                     @band.Name
                 </button>
             }
+        </div>
+
+        <h2 class="section-title">Misión</h2>
+        <div class="paper match-setup">
+            <MissionPicker @bind-Value="_missionId" Disabled="_busy" />
         </div>
 
         @if (Matches.SupportsOnlineMatches)
@@ -276,6 +285,11 @@ else
 }
 
 @code {
+    /// <summary>Misión con la que se llega desde la página de misiones.</summary>
+    [SupplyParameterFromQuery(Name = "mision")]
+    public string? MissionQuery { get; set; }
+
+    private string? _missionId;
     private IReadOnlyList<Band> _bands = [];
     private IReadOnlyList<ActiveMatch> _saved = [];
     private Dictionary<Guid, Band> _bandsById = [];
@@ -314,6 +328,7 @@ else
         await LoadBandsAsync();
         await LoadSavedAsync();
         _ownId = _bands.FirstOrDefault(b => !b.IsReadOnly)?.Id;
+        _missionId = MissionCatalog.Find(MissionQuery)?.Id;
         _loading = false;
     }
 
@@ -504,11 +519,32 @@ else
         </button>
     };
 
-    private Task CreateOnline() => RunAsync(() => Matches.CreateOnlineAsync(_ownId!.Value));
+    private Task CreateOnline() => RunAsync(async () =>
+    {
+        await Matches.CreateOnlineAsync(_ownId!.Value);
+        await ApplyMissionAsync();
+    });
 
-    private Task JoinOnline() => RunAsync(() => Matches.JoinOnlineAsync(_code ?? string.Empty, _ownId!.Value));
+    private Task JoinOnline() => RunAsync(async () =>
+    {
+        await Matches.JoinOnlineAsync(_code ?? string.Empty, _ownId!.Value);
+        await ApplyMissionAsync();
+    });
 
-    private Task StartLocal() => RunAsync(() => Matches.StartLocalAsync(_ownId!.Value, _rivalId!.Value));
+    private Task StartLocal() => RunAsync(async () =>
+    {
+        await Matches.StartLocalAsync(_ownId!.Value, _rivalId!.Value);
+        await ApplyMissionAsync();
+    });
+
+    /// <summary>Ancla la partida recién empezada a la misión elegida al crearla.</summary>
+    private async Task ApplyMissionAsync()
+    {
+        if (_missionId is not null)
+        {
+            await Matches.SetMissionAsync(_missionId);
+        }
+    }
 
     private Task Reconnect() => RunAsync(() => Matches.ReconnectAsync());
 
@@ -558,6 +594,7 @@ else
         _sheet = null;
         _code = null;
         _rivalId = null;
+        _missionId = null;
         await LoadSavedAsync();
         await LoadBandsAsync();
     }

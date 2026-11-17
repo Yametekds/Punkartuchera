@@ -68,6 +68,9 @@ public interface IMatchService
     /// <summary>Apunta el mapa de la partida (o lo quita con null). Solo en este dispositivo.</summary>
     Task SetMapAsync(MatchMap? map, CancellationToken cancellationToken = default);
 
+    /// <summary>Ancla la partida a una misión (o la suelta con null). Solo en este dispositivo.</summary>
+    Task SetMissionAsync(string? missionId, CancellationToken cancellationToken = default);
+
     Task SetNotesAsync(string? notes, CancellationToken cancellationToken = default);
 
     /// <summary>Guarda una foto de la mesa (JPEG ya reducido) y devuelve su clave en el almacén de fotos.</summary>

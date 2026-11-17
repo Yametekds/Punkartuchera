@@ -325,6 +325,16 @@ public sealed class MatchService(
     public Task SetMapAsync(MatchMap? map, CancellationToken cancellationToken = default) =>
         ChangeLocalAsync(match => match.Map = map, cancellationToken);
 
+    public Task SetMissionAsync(string? missionId, CancellationToken cancellationToken = default)
+    {
+        if (missionId is not null && Missions.MissionCatalog.Find(missionId) is null)
+        {
+            throw new MatchException("Esa misión no existe.");
+        }
+
+        return ChangeLocalAsync(match => match.MissionId = missionId, cancellationToken);
+    }
+
     public Task SetNotesAsync(string? notes, CancellationToken cancellationToken = default) =>
         ChangeLocalAsync(match =>
         {

@@ -333,6 +333,23 @@ public class MatchServiceTests
     }
 
     [Fact]
+    public async Task Mission_is_anchored_to_the_match_and_can_be_dropped()
+    {
+        var own = await _host.AddBandAsync("Los Oxidados", "Morro");
+        var rival = await _host.AddBandAsync("Las Ratas", "Roedora");
+        var match = await _host.Matches.StartLocalAsync(own.Id, rival.Id);
+
+        await _host.Matches.SetMissionAsync("gasofa-barata");
+        Assert.Equal("gasofa-barata", (await _host.Store.GetAsync(match.Id))!.MissionId);
+
+        await Assert.ThrowsAsync<MatchException>(() => _host.Matches.SetMissionAsync("inventada"));
+        Assert.Equal("gasofa-barata", _host.Matches.Current!.MissionId);
+
+        await _host.Matches.SetMissionAsync(null);
+        Assert.Null((await _host.Store.GetAsync(match.Id))!.MissionId);
+    }
+
+    [Fact]
     public async Task Map_photos_and_notes_are_saved_with_the_match_and_deleted_with_it()
     {
         var own = await _host.AddBandAsync("Los Oxidados", "Morro");
