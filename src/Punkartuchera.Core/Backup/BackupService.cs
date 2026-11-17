@@ -260,6 +260,7 @@ public sealed class BackupService(
 
         // El enlace del mapa se vuelve a construir con lo que entiende el generador.
         match.Map = match.Map is null ? null : MatchMap.FromQuery(match.Map.Query);
+        match.MissionId = Missions.MissionCatalog.Find(match.MissionId)?.Id;
 
         match.Photos = (match.Photos ?? [])
             .OfType<MatchPhoto>()

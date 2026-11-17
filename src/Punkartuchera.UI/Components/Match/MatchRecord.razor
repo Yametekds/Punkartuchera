@@ -1,4 +1,4 @@
-@* Lo que se apunta de la partida en este móvil: el mapa, fotos de la mesa y notas. No se manda al rival. *@
+@* Lo que se apunta de la partida en este móvil: la misión, el mapa, fotos de la mesa y notas. No se manda al rival. *@
 @using Punkartuchera.Core.Matches
 @using Punkartuchera.Core.Storage
 @implements IAsyncDisposable
@@ -7,7 +7,13 @@
 @inject PhotoUrlProvider PhotoUrls
 @inject PhotoCropper Cropper
 
-<section class="match-record" aria-label="Mapa, fotos y notas">
+<section class="match-record" aria-label="Misión, mapa, fotos y notas">
+    <h2 class="section-title">Misión</h2>
+    <div class="paper match-mission">
+        <MissionPicker Value="@Match.MissionId" ValueChanged="SetMission" Disabled="_busy" />
+        <a class="match-mission__all" href="misiones">Ver todas las misiones</a>
+    </div>
+
     <h2 class="section-title">Mapa</h2>
     <div class="card match-map">
         @if (Match.Map is { } map)
@@ -92,7 +98,7 @@
                   value="@_notes" @oninput="OnNotesInput" @onchange="SaveNotesAsync"></textarea>
         <p class="muted match-notes__state" aria-live="polite">@(_notesDirty ? "Apuntando…" : Match.Notes is null ? "Se guarda sola mientras escribes." : "Guardado.")</p>
     </div>
-    <p class="muted match-record__private">El mapa, las fotos y las notas se quedan en este móvil: no se mandan al rival.</p>
+    <p class="muted match-record__private">La misión, el mapa, las fotos y las notas se quedan en este móvil: no se mandan al rival.</p>
 </section>
 
 @if (_open is { } open)
@@ -238,6 +244,8 @@
             await RunAsync(() => Matches.SetNotesAsync(_notes));
         }
     }
+
+    private Task SetMission(string? id) => RunAsync(() => Matches.SetMissionAsync(id));
 
     private async Task RunAsync(Func<Task> action)
     {

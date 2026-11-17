@@ -1,0 +1,122 @@
+@page "/misiones"
+@using Punkartuchera.Core.Matches
+@implements IDisposable
+@inject IMatchService Matches
+
+<PageTitle>Misiones · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">Hoy toca currar</span>
+        <h1 class="page-title distress">Misiones</h1>
+    </div>
+    <button type="button" class="btn btn--blood" @onclick="PickRandom">
+        <Icon Path="@Icons.Dice" /> Una al azar
+    </button>
+</header>
+
+<p class="mission-lead">
+    Los @MissionCatalog.All.Count escenarios del PDF oficial, mascados para que no te líes. Todos duran 6 Turnos, se despliega como siempre
+    y se lleva la gloria el que más puntos rasque. La letra pequeña, en su página del PDF.
+</p>
+
+@if (_error is not null)
+{
+    <p class="notice notice--danger" role="alert"><span>@_error</span></p>
+}
+
+@if (Matches.Current is { } match)
+{
+    <p class="notice mission-match" role="status">
+        <span>
+            <strong>Partida en marcha:</strong> @match.OwnBandName vs @(match.RivalBandName ?? "Rival").
+            @if (MissionCatalog.Find(match.MissionId) is { } current)
+            {
+                <text> Se juega a <strong>@current.Name</strong>.</text>
+            }
+            else
+            {
+                <text> Todavía sin misión: ¿a qué esperáis? Anclad una de estas.</text>
+            }
+        </span>
+    </p>
+}
+
+@if (MissionCatalog.Find(_random) is { } lucky)
+{
+    <h2 class="section-title">Te ha tocado</h2>
+    <div class="mission-lucky">
+        <MissionCard Mission="lucky" Highlighted="true">@Actions(lucky)</MissionCard>
+    </div>
+}
+
+<div class="card-grid mission-grid">
+    @foreach (var (mission, index) in MissionCatalog.All.Select((m, i) => (m, i)))
+    {
+        <MissionCard Mission="mission" Number="index + 1" Highlighted="@(mission.Id == Matches.Current?.MissionId)">@Actions(mission)</MissionCard>
+    }
+</div>
+
+@code {
+    private string? _random;
+    private string? _error;
+    private bool _busy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Matches.Changed += OnMatchChanged;
+        try
+        {
+            await Matches.RestoreAsync();
+        }
+        catch (Exception ex) when (ex is MatchException or RelayException)
+        {
+            // Sin partida a mano la lista funciona igual.
+        }
+    }
+
+    private RenderFragment Actions(Mission mission) => __builder =>
+    {
+        if (Matches.Current is { } match)
+        {
+            if (match.MissionId == mission.Id)
+            {
+                <a class="btn btn--ghost" href="partida"><Icon Path="@Icons.Dice" /> Es la misión de la partida</a>
+            }
+            else
+            {
+                <button type="button" class="btn btn--primary" disabled="@_busy" @onclick="() => Anchor(mission.Id)">
+                    <Icon Path="@Icons.Flag" /> Anclar a la partida
+                </button>
+            }
+        }
+        else
+        {
+            <a class="btn btn--primary" href="@($"partida?mision={mission.Id}")"><Icon Path="@Icons.Dice" /> Jugar esta misión</a>
+        }
+    };
+
+    private void PickRandom() => _random = MissionCatalog.Random(Random.Shared, _random).Id;
+
+    private async Task Anchor(string id)
+    {
+        _busy = true;
+        _error = null;
+        try
+        {
+            await Matches.SetMissionAsync(id);
+        }
+        catch (MatchException ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private void OnMatchChanged() => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Matches.Changed -= OnMatchChanged;
+}
