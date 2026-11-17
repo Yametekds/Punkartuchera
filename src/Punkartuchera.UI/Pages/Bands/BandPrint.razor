@@ -1,0 +1,356 @@
+@page "/bandas/{Id:guid}/pdf"
+@layout PrintLayout
+@inject BandService Bands
+@inject IRulesCatalog Rules
+@inject Rulebook Book
+@inject GearLookup Lookup
+@inject UnitRules UnitRules
+@inject CloseCombat CloseCombat
+@inject LoadoutModifiers LoadoutModifiers
+@inject PhotoUrlProvider PhotoUrls
+@inject IJSRuntime JS
+
+@* Hojas de la banda para imprimir o guardar en PDF desde el diálogo de impresión del navegador. *@
+<PageTitle>@(_band?.Name ?? "Banda")</PageTitle>
+
+<div class="band-print">
+    <div class="print-toolbar">
+        <a class="btn btn--ghost" href="@(_band is null ? "" : $"bandas/{_band.Id}")"><Icon Path="@Icons.Back" /> Volver</a>
+        @if (_band is not null)
+        {
+            <button type="button" class="btn btn--blood" @onclick="Print"><Icon Path="@Icons.Document" /> Guardar en PDF</button>
+            <p class="print-toolbar__hint">En el diálogo de impresión elige «Guardar como PDF» como impresora.</p>
+        }
+    </div>
+
+    @if (_loading)
+    {
+        <p class="print-toolbar__hint">Cargando banda…</p>
+    }
+    else if (_band is null)
+    {
+        <p class="print-toolbar__hint">Esta banda ya no existe.</p>
+    }
+    else
+    {
+        @* La tabla repite su cabecera y su pie vacíos en cada hoja: dejan el margen y el hueco del pie de página. *@
+        <table class="print-frame" role="presentation">
+        <thead><tr><td><div class="print-frame__top"></div></td></tr></thead>
+        <tfoot><tr><td><div class="print-frame__bottom"></div></td></tr></tfoot>
+        <tbody><tr><td>
+        <article class="print-doc">
+            <header class="print-cover">
+                <p class="print-cover__kicker">Banda de @FactionName@(SubfactionName is null ? "" : $" · {SubfactionName}")</p>
+                <h1 class="print-cover__name">@_band.Name</h1>
+                <dl class="print-cover__facts">
+                    <div><dt>Miembros</dt><dd>@_band.Members.Count</dd></div>
+                    @if (_band.Cost is { } cost)
+                    {
+                        <div><dt>Coste</dt><dd>@cost</dd></div>
+                    }
+                    @if (!_band.IsReadOnly)
+                    {
+                        <div><dt>Balas</dt><dd>@_band.Members.Sum(m => m.Ammo)</dd></div>
+                    }
+                </dl>
+                @if (_band.IsReadOnly)
+                {
+                    <p class="print-cover__note">Banda rival: sus balas y el coste de cada miembro no se conocen.</p>
+                }
+            </header>
+
+            @if (_band.Members.Count > 0)
+            {
+                <section class="print-section">
+                    <h2 class="print-section__title">Lista de la banda</h2>
+                    <table class="print-table print-roster">
+                        <thead>
+                            <tr>
+                                <th scope="col">Miembro</th>
+                                <th scope="col">Tipo</th>
+                                @if (!_band.IsReadOnly)
+                                {
+                                    <th scope="col" class="num">Balas</th>
+                                    <th scope="col" class="num">Coste</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in _band.Members)
+                            {
+                                <tr>
+                                    <td><strong>@member.Name</strong></td>
+                                    <td>@member.Role</td>
+                                    @if (!_band.IsReadOnly)
+                                    {
+                                        <td class="num">@member.Ammo</td>
+                                        <td class="num">@(member.Cost?.ToString() ?? "–")</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                        @if (!_band.IsReadOnly && _band.Cost is { } total)
+                        {
+                            <tfoot>
+                                <tr>
+                                    <th scope="row" colspan="2">Total</th>
+                                    <td class="num">@_band.Members.Sum(m => m.Ammo)</td>
+                                    <td class="num">@total</td>
+                                </tr>
+                            </tfoot>
+                        }
+                    </table>
+                </section>
+            }
+
+            @foreach (var sheet in _sheets)
+            {
+                var member = sheet.Member;
+                <section class="print-profile">
+                    <header class="print-profile__head">
+                        <div class="print-profile__title">
+                            <h2 class="print-profile__name">@member.Name</h2>
+                            @if (!string.IsNullOrEmpty(member.Role) && !string.Equals(member.Role, member.Name, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                <span class="print-profile__role">@member.Role</span>
+                            }
+                        </div>
+                        @if (!_band.IsReadOnly && member.Cost is { } memberCost)
+                        {
+                            <span class="print-profile__cost">@memberCost <small>ptos</small></span>
+                        }
+                    </header>
+
+                    <div class="print-profile__main">
+                        @if (sheet.PhotoUrl is not null && !_brokenPhotos.Contains(member.Id))
+                        {
+                            <img class="print-profile__photo" src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" />
+                        }
+                        <table class="print-stats">
+                            <thead>
+                                <tr>
+                                    @foreach (var stat in Rules.Stats)
+                                    {
+                                        <th scope="col" title="@stat.Name">@stat.Abbreviation</th>
+                                    }
+                                    @if (!_band.IsReadOnly)
+                                    {
+                                        <th scope="col">Balas</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach (var stat in Rules.Stats)
+                                    {
+                                        var gear = sheet.Modifiers.GetValueOrDefault(stat.Key);
+                                        <td>
+                                            @Math.Max(0, member.GetStat(stat.Key, stat.Default) + (gear?.Pending ?? 0))
+                                            @if (gear is { Delta: not 0 })
+                                            {
+                                                <span class="print-stats__mod">@Signed(gear.Delta)</span>
+                                            }
+                                        </td>
+                                    }
+                                    @if (!_band.IsReadOnly)
+                                    {
+                                        <td>@member.Ammo</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        @if (sheet.Modifiers.Count > 0)
+                        {
+                            <p class="print-profile__mods">
+                                @string.Join(" · ", sheet.Modifiers.Select(m => $"{StatName(m.Key)} {Signed(m.Value.Delta)} por {string.Join(", ", m.Value.Sources)}"))
+                            </p>
+                        }
+                    </div>
+
+                    @if (member.Gear.Count > 0)
+                    {
+                        <h3 class="print-profile__label">Equipo</h3>
+                        <table class="print-table print-gear">
+                            <tbody>
+                                @foreach (var item in member.Gear)
+                                {
+                                    var info = Lookup.Find(item.Name, _band.FactionId);
+                                    <tr>
+                                        <th scope="row">
+                                            @item.Name
+                                            @if (info is not null)
+                                            {
+                                                <small>@RuleSheet.KindLabel(info.Kind)</small>
+                                            }
+                                        </th>
+                                        <td>
+                                            @(info?.Summary ?? "No está en el reglamento.")
+                                            @if (!string.IsNullOrWhiteSpace(item.Notes))
+                                            {
+                                                <em class="print-gear__notes">@item.Notes</em>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (sheet.Melee.Count > 0)
+                    {
+                        <h3 class="print-profile__label">En cuerpo a cuerpo</h3>
+                        <ul class="print-list">
+                            @foreach (var fallback in sheet.Melee)
+                            {
+                                <li>
+                                    <strong>@(fallback.From is null ? "" : $"{fallback.From} como ")@fallback.Profile.Name.ToLowerInvariant()</strong>:
+                                    C @(fallback.Profile.Combat ?? "+0") · F @fallback.Profile.Strength · Pen @fallback.Profile.Penetration.
+                                    <span class="print-muted">@fallback.Explanation</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                    @if (member.Skills.Count > 0)
+                    {
+                        <h3 class="print-profile__label">Habilidades</h3>
+                        <p class="print-tags">@string.Join(" · ", member.Skills)</p>
+                    }
+
+                    @if (sheet.Rules.Count > 0)
+                    {
+                        <h3 class="print-profile__label">Reglas especiales</h3>
+                        <dl class="print-rules">
+                            @foreach (var rule in sheet.Rules)
+                            {
+                                <div class="print-rules__item">
+                                    <dt>@rule.Name@(rule.From is null ? null : $" ({rule.From})")</dt>
+                                    <dd>
+                                        @rule.Text
+                                        @if (rule.Table is not null)
+                                        {
+                                            <table class="print-table print-rules__table">
+                                                <thead><tr>@foreach (var column in rule.Table.Columns) { <th scope="col">@column</th> }</tr></thead>
+                                                <tbody>
+                                                    @foreach (var row in rule.Table.Rows)
+                                                    {
+                                                        <tr>@foreach (var cell in row) { <td>@cell</td> }</tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                    </dd>
+                                </div>
+                            }
+                        </dl>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(member.Notes))
+                    {
+                        <h3 class="print-profile__label">Notas</h3>
+                        <p class="print-notes">@member.Notes</p>
+                    }
+                </section>
+            }
+
+            @if (_brief is not null && (_brief.KeyRules.Count > 0 || _brief.Restrictions.Count > 0))
+            {
+                <section class="print-section print-section--rules">
+                    <h2 class="print-section__title">Reglas de @_brief.Faction.Name</h2>
+                    @if (_brief.KeyRules.Count > 0)
+                    {
+                        <dl class="print-rules">
+                            @foreach (var rule in _brief.KeyRules)
+                            {
+                                <div class="print-rules__item">
+                                    <dt>@rule.Name</dt>
+                                    <dd>@rule.Summary</dd>
+                                </div>
+                            }
+                        </dl>
+                    }
+                    @if (_brief.Restrictions.Count > 0)
+                    {
+                        <h3 class="print-profile__label">Límites de la banda</h3>
+                        <ul class="print-list">
+                            @foreach (var restriction in _brief.Restrictions)
+                            {
+                                <li>@restriction</li>
+                            }
+                        </ul>
+                    }
+                </section>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(_band.Notes))
+            {
+                <section class="print-section">
+                    <h2 class="print-section__title">Notas de la banda</h2>
+                    <p class="print-notes">@_band.Notes</p>
+                </section>
+            }
+        </article>
+        </td></tr></tbody>
+        </table>
+    }
+
+    <footer class="print-footer">
+        Hecho en Punkartuchera. Proyecto sin fines de lucro de Fernando Hernández ·
+        <a href="@RepositoryUrl">github.com/Yametekds/Punkartuchera</a>
+    </footer>
+</div>
+
+@code {
+    private const string RepositoryUrl = "https://github.com/Yametekds/Punkartuchera";
+
+    [Parameter] public Guid Id { get; set; }
+
+    private Band? _band;
+    private bool _loading = true;
+    private FactionBrief? _brief;
+    private IReadOnlyList<MemberSheet> _sheets = [];
+
+    /// <summary>Fotos que no se han podido cargar (sin conexión con la tienda): mejor sin foto que un hueco roto.</summary>
+    private readonly HashSet<Guid> _brokenPhotos = [];
+
+    private string FactionName => Rules.FindFaction(_band?.FactionId)?.Name ?? "Sin facción";
+
+    private string? SubfactionName => Book.FindSubfaction(_band?.SubfactionId)?.Name;
+
+    private sealed record MemberSheet(
+        Miniature Member,
+        string? PhotoUrl,
+        IReadOnlyList<UnitRule> Rules,
+        IReadOnlyList<MeleeFallback> Melee,
+        IReadOnlyDictionary<string, StatAdjustment> Modifiers);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _band = await Bands.GetAsync(Id);
+        if (_band is not null)
+        {
+            var sheets = new List<MemberSheet>();
+            foreach (var member in _band.Members)
+            {
+                sheets.Add(new MemberSheet(
+                    member,
+                    await PhotoUrls.GetUrlAsync(member.Photo),
+                    UnitRules.For(member, _band.FactionId, _band.SubfactionId),
+                    CloseCombat.For(member, _band.FactionId),
+                    LoadoutModifiers.For(member, _band.FactionId, _band.SubfactionId)));
+            }
+
+            _sheets = sheets;
+            _brief = FactionBrief.For(Book, _band.FactionId, _band.SubfactionId);
+        }
+
+        _loading = false;
+    }
+
+    private string StatName(string key) => Rules.Stats.FirstOrDefault(s => string.Equals(s.Key, key, StringComparison.OrdinalIgnoreCase))?.Name ?? key;
+
+    private static string Signed(int value) => value > 0 ? $"+{value}" : $"−{-value}";
+
+    private async Task Print() => await JS.InvokeVoidAsync("print");
+}

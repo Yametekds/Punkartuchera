@@ -38,6 +38,7 @@ else
                     <button type="button" class="menu-pop__item" @onclick="StartEditing"><Icon Path="@Icons.Edit" /> Editar datos</button>
                     <button type="button" class="menu-pop__item" @onclick="() => _sharing = true"><Icon Path="@Icons.Share" /> Pasar al rival</button>
                 }
+                <a class="menu-pop__item" href="@($"bandas/{_band.Id}/pdf")"><Icon Path="@Icons.Document" /> Exportar a PDF</a>
                 <button type="button" class="menu-pop__item" @onclick="Duplicate"><Icon Path="@Icons.Copy" /> Clonar banda</button>
                 <button type="button" class="menu-pop__item menu-pop__item--danger" @onclick="() => _tab = TabDetails"><Icon Path="@Icons.Trash" /> Borrar…</button>
             </ActionsMenu>
