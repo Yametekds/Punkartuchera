@@ -63,15 +63,14 @@
 
 .print-muted { color: var(--print-ink-muted); }
 
-/* Marca de agua con el emblema de la facción. En pantalla, una vez bajo la portada;
-   al imprimir es fija y sale en cada hoja. */
+/* Marca de agua con el emblema de la facción: grande en la primera hoja y una en cada perfil. */
 .print-watermark {
     position: absolute;
     z-index: -1;
-    top: 70mm;
+    top: 85mm;
     left: 50%;
-    width: 150mm;
-    height: 150mm;
+    width: 160mm;
+    height: 160mm;
     transform: translateX(-50%) rotate(-12deg);
     background: var(--print-ink);
     -webkit-mask: var(--faction-logo) center / contain no-repeat;
@@ -89,10 +88,11 @@
         var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
         linear-gradient(to bottom, rgba(255, 255, 255, .08), rgba(255, 255, 255, 0) 45%),
         var(--plate-rust),
-        var(--punk-tex-plate);
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
-    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, 120mm, 60mm;
-    background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, right -20mm bottom -30mm, 0 0;
+        url("../img/tex/plate-wide.webp");
+    /* Sin repetir: la chapa es una sola imagen ancha, así no se ven cortes entre copias */
+    background-repeat: no-repeat;
+    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, 125mm, 186mm auto;
+    background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, right -25mm bottom -45mm, left top;
     box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .14), inset 0 -.4mm 0 rgba(0, 0, 0, .6);
     text-shadow: 0 .3mm 0 rgba(0, 0, 0, .9), 0 .5mm 1.5mm rgba(0, 0, 0, .8);
 }
@@ -256,11 +256,28 @@
 /* Perfil de cada miembro */
 .print-profile {
     position: relative;
+    isolation: isolate;
     margin-bottom: 6mm;
     border: .5mm solid var(--print-black);
     background: rgba(255, 250, 240, .42);
     box-shadow: .8mm .8mm 0 rgba(29, 23, 18, .18);
     break-inside: avoid;
+}
+
+.print-profile__watermark {
+    position: absolute;
+    z-index: -1;
+    right: 5mm;
+    bottom: 4mm;
+    width: 46mm;
+    height: 46mm;
+    max-height: 80%;
+    transform: rotate(-12deg);
+    background: var(--print-ink);
+    -webkit-mask: var(--faction-logo) center / contain no-repeat;
+    mask: var(--faction-logo) center / contain no-repeat;
+    opacity: .085;
+    pointer-events: none;
 }
 
 .print-profile__head {
@@ -316,8 +333,6 @@
 }
 
 .print-profile__main > :not(.print-profile__photo) { grid-column: 2; }
-.print-profile__main:not(:has(.print-profile__photo)) { grid-template-columns: 1fr; }
-.print-profile__main:not(:has(.print-profile__photo)) > * { grid-column: 1; }
 
 .print-profile__photo {
     position: relative;
@@ -328,6 +343,25 @@
     background: #f7f0e1;
     box-shadow: .4mm .6mm 1mm rgba(0, 0, 0, .35);
     transform: rotate(-2.5deg);
+}
+
+.print-profile__photo-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--print-ink);
+    -webkit-mask: var(--faction-logo) center / 78% no-repeat;
+    mask: var(--faction-logo) center / 78% no-repeat;
+    opacity: .4;
+}
+
+.print-profile__photo .print-profile__photo-skull {
+    display: block;
+    width: 70%;
+    height: 70%;
+    margin: 15%;
+    fill: rgba(29, 23, 18, .35);
+    color: rgba(29, 23, 18, .35);
 }
 
 .print-profile__photo img {
@@ -389,70 +423,91 @@
     font-weight: 700;
 }
 
-/* Blindaje en una chapa remachada y Balas en una bala, en sus propias columnas */
-.print-stats th.print-stats__token-col { width: 15mm; background: #3a1410; color: #f4ede2; }
-.print-stats th.print-stats__token-col--ammo { width: 22mm; }
-
-.print-stats td.print-stats__token { padding: .8mm 0; vertical-align: middle; }
-
-.print-plate,
-.print-bullet {
-    position: relative;
-    display: inline-flex;
+/* Atributos con el Blindaje (chapa remachada) y las Balas (bala) al lado, a la misma altura */
+.print-profile__line {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    height: 8.4mm;
-    vertical-align: middle;
-    line-height: 1;
+    gap: 2.5mm;
 }
 
+.print-profile__line .print-stats { flex: 1; min-width: 0; }
+
+.print-stats th { height: 5.2mm; box-sizing: border-box; }
+.print-stats td { height: 9.4mm; box-sizing: border-box; }
+
 .print-plate {
-    width: 11.5mm;
+    position: relative;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 14.6mm;
+    height: 14.6mm;
+    box-sizing: border-box;
+    padding-top: .6mm;
     background-color: #4a4641;
     background-image:
         var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
         linear-gradient(135deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, .35)),
-        var(--punk-tex-metal-rust),
-        var(--punk-tex-metal);
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
-    background-size: 2.6mm, 2.6mm, 2.6mm, 2.6mm, auto, 40mm, 30mm auto;
-    background-position: left .2mm top .2mm, right .2mm top .2mm, left .2mm bottom .2mm, right .2mm bottom .2mm, 0 0, 3mm 7mm, 0 0;
-    border: .35mm solid var(--print-black);
-    border-radius: .6mm;
-    box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .3), inset 0 -.4mm 0 rgba(0, 0, 0, .5);
+        url("../img/tex/metal-rust.webp"),
+        url("../img/tex/metal.webp");
+    background-repeat: no-repeat;
+    background-size: 3mm, 3mm, 3mm, 3mm, auto, 52mm, 40mm auto;
+    background-position: left .4mm top .4mm, right .4mm top .4mm, left .4mm bottom .4mm, right .4mm bottom .4mm, 0 0, -8mm -20mm, 0 0;
+    border: .4mm solid var(--print-black);
+    border-radius: .8mm;
+    box-shadow: inset 0 .35mm 0 rgba(255, 255, 255, .3), inset 0 -.5mm 0 rgba(0, 0, 0, .5), .5mm .6mm 0 rgba(29, 23, 18, .25);
+    line-height: 1;
+}
+
+.print-plate small {
+    color: #e9e0d0;
+    font-family: var(--punk-font-heading);
+    font-size: 6.5pt;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-shadow: 0 .2mm 0 #000;
 }
 
 .print-plate span {
     color: var(--print-sand);
     font-family: var(--punk-font-display);
-    font-size: 14pt;
+    font-size: 17pt;
     text-shadow: 0 .3mm 0 #000, 0 0 1mm rgba(0, 0, 0, .9);
 }
 
-/* Bala tumbada: casquillo de latón con el número y punta de cobre */
+/* Bala de pie: punta de cobre, casquillo de latón con el número y culote */
 .print-bullet {
-    width: 19mm;
-    justify-content: flex-start;
-    padding-left: 1.4mm;
-    box-sizing: border-box;
+    position: relative;
+    flex: none;
+    width: 9.6mm;
+    height: 14.6mm;
     background-color: #b9842c;
     background-image:
-        linear-gradient(to right, transparent 64%, rgba(0, 0, 0, .55) 64%, rgba(0, 0, 0, .55) 65.5%, transparent 65.5%),
-        linear-gradient(to bottom, rgba(255, 240, 200, .55), rgba(255, 240, 200, 0) 38%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .4)),
-        linear-gradient(to right, #6e4610 0, #6e4610 7%, rgba(0, 0, 0, .5) 7%, rgba(0, 0, 0, .5) 8.5%, transparent 8.5%, transparent 64%, #a85a2c 64%, #c97a46 80%, #8a3f1c),
-        var(--punk-tex-metal);
+        linear-gradient(to bottom, transparent 37%, rgba(0, 0, 0, .55) 37%, rgba(0, 0, 0, .55) 38.5%, transparent 38.5%, transparent 90%, rgba(0, 0, 0, .55) 90%, rgba(0, 0, 0, .55) 91.5%, transparent 91.5%),
+        linear-gradient(to right, rgba(0, 0, 0, .4), rgba(255, 240, 200, .55) 30%, rgba(255, 240, 200, 0) 55%, rgba(0, 0, 0, .45)),
+        linear-gradient(to bottom, #b8643a, #d08850 37%, #c08a30 37%, #b9842c 91.5%, #8a5a12 91.5%),
+        url("../img/tex/metal.webp");
+    background-repeat: no-repeat;
     background-size: auto, auto, auto, 30mm auto;
     background-blend-mode: normal, normal, normal, multiply;
-    clip-path: polygon(0 12%, 7% 12%, 7% 0, 64% 0, 76% 4%, 86% 13%, 94% 26%, 98.5% 40%, 100% 50%, 98.5% 60%, 94% 74%, 86% 87%, 76% 96%, 64% 100%, 7% 100%, 7% 88%, 0 88%);
+    clip-path: polygon(50% 0, 61% 1.5%, 72% 6%, 82% 14%, 89% 24%, 93% 32%, 94% 37%, 94% 91.5%, 100% 91.5%, 100% 100%, 0 100%, 0 91.5%, 6% 91.5%, 6% 37%, 7% 32%, 11% 24%, 18% 14%, 28% 6%, 39% 1.5%);
 }
 
 .print-bullet span {
-    width: 57%;
-    margin-left: 7%;
+    position: absolute;
+    top: 38.5%;
+    bottom: 9.5%;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--print-black);
     font-family: var(--punk-font-display);
-    font-size: 13pt;
-    text-align: center;
+    font-size: 12.5pt;
+    line-height: 1;
     text-shadow: 0 .25mm 0 rgba(255, 236, 190, .6);
 }
 
@@ -595,12 +650,6 @@
         padding: 0;
         background: none;
         box-shadow: none;
-    }
-
-    .print-watermark {
-        position: fixed;
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(-12deg);
     }
 
     .print-footer {

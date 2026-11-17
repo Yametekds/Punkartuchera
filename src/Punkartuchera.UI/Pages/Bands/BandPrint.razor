@@ -160,6 +160,10 @@
             {
                 var member = sheet.Member;
                 <section class="print-profile">
+                    @if (LogoUrl is not null)
+                    {
+                        <div class="print-profile__watermark" aria-hidden="true"></div>
+                    }
                     <header class="print-profile__head">
                         <div class="print-profile__title">
                             <h2 class="print-profile__name">@member.Name</h2>
@@ -175,50 +179,57 @@
                     </header>
 
                     <div class="print-profile__main">
-                        @if (sheet.PhotoUrl is not null && !_brokenPhotos.Contains(member.Id))
-                        {
-                            <span class="print-profile__photo"><img src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" /></span>
-                        }
-                        <table class="print-stats">
-                            <thead>
-                                <tr>
-                                    @foreach (var stat in Rules.Stats)
-                                    {
-                                        <th scope="col" title="@stat.Name">@stat.Abbreviation</th>
-                                    }
-                                    <th scope="col" class="print-stats__token-col">Bl</th>
-                                    @if (!_band.IsReadOnly)
-                                    {
-                                        <th scope="col" class="print-stats__token-col print-stats__token-col--ammo">Balas</th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @foreach (var stat in Rules.Stats)
-                                    {
-                                        var gear = sheet.Modifiers.GetValueOrDefault(stat.Key);
-                                        <td>
-                                            @Math.Max(0, member.GetStat(stat.Key, stat.Default) + (gear?.Pending ?? 0))
-                                            @if (gear is { Delta: not 0 })
-                                            {
-                                                <span class="print-stats__mod">@Signed(gear.Delta)</span>
-                                            }
-                                        </td>
-                                    }
-                                    @* Blindaje en una chapa remachada y balas dentro de una bala. *@
-                                    <td class="print-stats__token">
-                                        <span class="print-plate" aria-label="Blindaje @sheet.Armor.Value"><span>@sheet.Armor.Value</span></span>
-                                    </td>
-                                    @if (!_band.IsReadOnly)
-                                    {
-                                        <td class="print-stats__token">
-                                            <span class="print-bullet" aria-label="@member.Ammo balas"><span>@member.Ammo</span></span>
-                                        </td>
-                                    }
-                                </tr>
-                            </tbody>
-                        </table>
+                        @* Hueco fijo para la foto: si no hay, el emblema de la facción (o una calavera). *@
+                        <span class="print-profile__photo">
+                            @if (sheet.PhotoUrl is not null && !_brokenPhotos.Contains(member.Id))
+                            {
+                                <img src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" />
+                            }
+                            else if (LogoUrl is not null)
+                            {
+                                <span class="print-profile__photo-logo" aria-hidden="true"></span>
+                            }
+                            else
+                            {
+                                <Icon Path="@Icons.Skull" Class="print-profile__photo-skull" />
+                            }
+                        </span>
+                        <div class="print-profile__line">
+                            <table class="print-stats">
+                                <thead>
+                                    <tr>
+                                        @foreach (var stat in Rules.Stats)
+                                        {
+                                            <th scope="col" title="@stat.Name">@stat.Abbreviation</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        @foreach (var stat in Rules.Stats)
+                                        {
+                                            var gear = sheet.Modifiers.GetValueOrDefault(stat.Key);
+                                            <td>
+                                                @Math.Max(0, member.GetStat(stat.Key, stat.Default) + (gear?.Pending ?? 0))
+                                                @if (gear is { Delta: not 0 })
+                                                {
+                                                    <span class="print-stats__mod">@Signed(gear.Delta)</span>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @* Blindaje en una chapa remachada y balas en una bala, a la altura de la tabla. *@
+                            <span class="print-plate" role="img" aria-label="Blindaje @sheet.Armor.Value">
+                                <small>Bl</small>
+                                <span>@sheet.Armor.Value</span>
+                            </span>
+                            @if (!_band.IsReadOnly)
+                            {
+                                <span class="print-bullet" role="img" aria-label="@member.Ammo balas"><span>@member.Ammo</span></span>
+                            }
+                        </div>
                         @if (ProfileNotes(sheet) is { Count: > 0 } notes)
                         {
                             <p class="print-profile__mods">@string.Join(" · ", notes)</p>
