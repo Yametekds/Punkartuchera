@@ -126,7 +126,9 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
 
         member.Skills.AddRange(troop?.SpecialRules.Where(r => r is not "Personalidad" and not "Mercenario") ?? []);
         member.Skills.AddRange(preset.Skills.Where(s => !member.Skills.Contains(s)));
-        foreach (var name in preset.Weapons.Append(IsNone(preset.Armor) ? null : preset.Armor).Concat(preset.Gear))
+        // Las fichas de control no siempre repiten el blindaje fijo de la tropa: si no trae otro, lleva el de la tropa.
+        var armor = preset.Armor ?? troop?.Armor;
+        foreach (var name in preset.Weapons.Append(IsNone(armor) ? null : armor).Concat(preset.Gear))
         {
             AddGear(member, name);
         }

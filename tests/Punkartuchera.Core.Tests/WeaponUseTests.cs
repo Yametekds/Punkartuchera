@@ -111,6 +111,16 @@ public class WeaponUseTests
     }
 
     [Fact]
+    public void Preset_members_without_armor_on_the_sheet_wear_the_fixed_armor_of_their_troop()
+    {
+        var list = Book.Lists.Single(l => l.Id == "craabianos");
+        var marinero = Roster.FromPreset(list, list.Members.Single(m => m.Troop == "Marinero" && m.Weapons.Contains("Trabuco")));
+
+        Assert.Contains(marinero.Gear, g => g.Name == "Cuero endurecido");
+        Assert.Contains("Cuero endurecido", marinero.Included);
+    }
+
+    [Fact]
     public void Only_one_armatoste_counts_and_bestia_parda_ignores_it()
     {
         var bruto = Member("pandilleros", "Bruto", "Filo pesado", "Pura chapa");
