@@ -82,17 +82,16 @@
 /* Chapa: la textura de las cabeceras de la app, con remaches oxidados en las esquinas */
 .print-cover,
 .print-profile__head {
-    --plate-rust: var(--punk-tex-rust);
+    --plate: url("../img/tex/plate-wide.webp");
     background-color: #1f1e1c;
     background-image:
         var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
         linear-gradient(to bottom, rgba(255, 255, 255, .08), rgba(255, 255, 255, 0) 45%),
-        var(--plate-rust),
-        url("../img/tex/plate-wide.webp");
+        var(--plate);
     /* Sin repetir: la chapa es una sola imagen ancha, así no se ven cortes entre copias */
     background-repeat: no-repeat;
-    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, 125mm, 186mm auto;
-    background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, right -25mm bottom -45mm, left top;
+    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, cover;
+    background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, left top;
     box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .14), inset 0 -.4mm 0 rgba(0, 0, 0, .6);
     text-shadow: 0 .3mm 0 rgba(0, 0, 0, .9), 0 .5mm 1.5mm rgba(0, 0, 0, .8);
 }
@@ -289,8 +288,9 @@
     color: var(--print-sand);
 }
 
-/* En las cabeceras de perfil solo un poco de óxido en la esquina del coste */
-.print-profile__head { --plate-rust: linear-gradient(transparent, transparent); }
+/* La portada lleva la misma chapa con el óxido ya integrado en el metal: en los bordes,
+   en las juntas entre lágrimas y en chorretones desde arriba (plate-wide-rust.webp). */
+.print-cover { --plate: url("../img/tex/plate-wide-rust.webp"); }
 
 .print-profile__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1mm 3mm; min-width: 0; }
 
