@@ -13,6 +13,7 @@
     --print-red: var(--punk-blood);
     --print-sand: var(--punk-accent);
     padding: 16px 16px 40px;
+    font-family: "Sora Print", var(--punk-font-body);
 }
 
 /* ---------- Barra de pantalla (no se imprime) ---------- */
@@ -35,6 +36,22 @@
 
 /* ---------- Documento ---------- */
 
+/* Sora estática para el documento: la de Google Fonts es variable y el PDF la guardaría como
+   fuente Type 3, que muchos visores pintan mal o muy despacio. */
+@font-face {
+    font-family: "Sora Print";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/sora-400.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Sora Print";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/sora-700.ttf") format("truetype");
+}
+
 .print-doc {
     position: relative;
     isolation: isolate;
@@ -47,7 +64,7 @@
     background-size: auto, 900px auto, 600px auto;
     background-blend-mode: normal, multiply, multiply;
     color: var(--print-ink);
-    font-family: var(--punk-font-body);
+    font-family: "Sora Print", var(--punk-font-body);
     font-size: 10pt;
     line-height: 1.4;
     box-shadow: var(--punk-shadow);
@@ -72,9 +89,6 @@
     width: 195mm;
     height: 195mm;
     transform: translateX(-50%) rotate(-12deg);
-    background: var(--print-ink);
-    -webkit-mask: var(--faction-logo) center / contain no-repeat;
-    mask: var(--faction-logo) center / contain no-repeat;
     opacity: .085;
     pointer-events: none;
 }
@@ -82,18 +96,20 @@
 /* Chapa: la textura de las cabeceras de la app, con remaches oxidados en las esquinas */
 .print-cover,
 .print-profile__head {
-    --plate: url("../img/tex/plate-wide.webp");
+    /* JPEG del tamaño de la caja, dibujado entero: el PDF lo guarda una vez tal cual, sin recortes ni
+       recompresión, y sin repetir (así tampoco se ven juntas entre copias). */
+    --plate: url("../img/tex/plate-head.jpg");
     background-color: #1f1e1c;
     background-image:
         var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust), var(--punk-tex-rivet-rust),
         linear-gradient(to bottom, rgba(255, 255, 255, .08), rgba(255, 255, 255, 0) 45%),
         var(--plate);
-    /* Sin repetir: la chapa es una sola imagen ancha, así no se ven cortes entre copias */
     background-repeat: no-repeat;
-    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, cover;
+    background-size: 4.2mm, 4.2mm, 4.2mm, 4.2mm, auto, 100% 100%;
     background-position: left .8mm top .8mm, right .8mm top .8mm, left .8mm bottom .8mm, right .8mm bottom .8mm, 0 0, left top;
     box-shadow: inset 0 .3mm 0 rgba(255, 255, 255, .14), inset 0 -.4mm 0 rgba(0, 0, 0, .6);
-    text-shadow: 0 .3mm 0 rgba(0, 0, 0, .9), 0 .5mm 1.5mm rgba(0, 0, 0, .8);
+    /* Sombra sin desenfoque: con desenfoque el PDF rasteriza cada texto */
+    text-shadow: 0 .3mm 0 rgba(0, 0, 0, .9);
 }
 
 /* Portada: franja negra con el nombre en arena */
@@ -114,11 +130,20 @@
     width: 34mm;
     height: 34mm;
     transform: translateY(-50%) rotate(6deg);
-    background: var(--print-sand);
-    -webkit-mask: var(--faction-logo) center / contain no-repeat;
-    mask: var(--faction-logo) center / contain no-repeat;
     opacity: .9;
 }
+
+/* Emblema en línea: ocupa su caja y toma el color de cada sitio */
+.print-watermark svg,
+.print-cover__emblem svg,
+.print-profile__watermark svg,
+.print-profile__photo-logo svg { display: block; width: 100%; height: 100%; }
+
+.print-watermark g,
+.print-profile__watermark g,
+.print-profile__photo-logo g { fill: var(--print-ink); }
+
+.print-cover__emblem g { fill: var(--print-sand); }
 
 .print-cover__kicker {
     margin: 0 0 1.5mm;
@@ -206,8 +231,7 @@
     right: 0;
     bottom: 0;
     height: 1.6mm;
-    background: var(--punk-brush-red) left center / 100% 100% no-repeat;
-    filter: grayscale(1) brightness(.25);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M0 8.4 L8 9.2 L16 4.8 L24 1.1 L32 2.6 L40 7.0 L48 6.0 L56 4.8 L64 4.8 L72 4.1 L80 5.0 L88 5.5 L96 2.8 L104 6.2 L112 5.3 L120 5.3 L128 3.4 L136 3.7 L144 6.3 L152 1.8 L160 6.8 L168 4.8 L176 4.0 L184 3.1 L192 10.5 L200 11.1 L200 16.6 L192 16.4 L184 20.5 L176 19.3 L168 18.8 L160 19.6 L152 18.3 L144 17.6 L136 22.6 L128 21.8 L120 22.5 L112 22.3 L104 19.8 L96 17.2 L88 20.5 L80 17.4 L72 21.4 L64 22.2 L56 17.9 L48 19.9 L40 19.8 L32 18.4 L24 22.0 L16 17.4 L8 14.6 L0 14.3Z' fill='%231d1712'/%3E%3C/svg%3E") left center / 100% 100% no-repeat;
 }
 
 .print-section--rules { break-inside: auto; }
@@ -272,9 +296,6 @@
     height: 78mm;
     max-height: 92%;
     transform: rotate(-12deg);
-    background: var(--print-ink);
-    -webkit-mask: var(--faction-logo) center / contain no-repeat;
-    mask: var(--faction-logo) center / contain no-repeat;
     opacity: .085;
     pointer-events: none;
 }
@@ -289,8 +310,8 @@
 }
 
 /* La portada lleva la misma chapa con el óxido ya integrado en el metal: en los bordes,
-   en las juntas entre lágrimas y en chorretones desde arriba (plate-wide-rust.webp). */
-.print-cover { --plate: url("../img/tex/plate-wide-rust.webp"); }
+   en las juntas entre lágrimas y en chorretones desde arriba (plate-wide-rust.jpg). */
+.print-cover { --plate: url("../img/tex/plate-wide-rust.jpg"); }
 
 .print-profile__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1mm 3mm; min-width: 0; }
 
@@ -322,7 +343,7 @@
     box-shadow: inset 0 0 0 .4mm rgba(0, 0, 0, .25);
 }
 
-.print-profile__cost small { font-family: var(--punk-font-body); font-size: 7pt; }
+.print-profile__cost small { font-family: "Sora Print", var(--punk-font-body); font-size: 7pt; }
 
 /* La foto ocupa la esquina de arriba a la izquierda, montada sobre la cabecera;
    el nombre y los atributos se apartan para dejarle sitio. */
@@ -350,7 +371,7 @@
     box-sizing: border-box;
     padding: 1.3mm;
     background: #f7f0e1;
-    box-shadow: .4mm .6mm 1mm rgba(0, 0, 0, .35);
+    box-shadow: .4mm .6mm 0 rgba(0, 0, 0, .3);
     transform: rotate(-2.5deg);
 }
 
@@ -358,9 +379,8 @@
     display: block;
     width: 100%;
     height: 100%;
-    background: var(--print-ink);
-    -webkit-mask: var(--faction-logo) center / 78% no-repeat;
-    mask: var(--faction-logo) center / 78% no-repeat;
+    box-sizing: border-box;
+    padding: 11%;
     opacity: .4;
 }
 
@@ -378,7 +398,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(.85) contrast(1.05);
 }
 
 /* Celo arriba de la foto */
@@ -427,7 +446,7 @@
     top: .3mm;
     right: .8mm;
     color: var(--print-red);
-    font-family: var(--punk-font-body);
+    font-family: "Sora Print", var(--punk-font-body);
     font-size: 6.5pt;
     font-weight: 700;
 }
@@ -483,7 +502,7 @@
     color: var(--print-sand);
     font-family: var(--punk-font-display);
     font-size: 17pt;
-    text-shadow: 0 .3mm 0 #000, 0 0 1mm rgba(0, 0, 0, .9);
+    text-shadow: 0 .3mm 0 #000;
 }
 
 /* Bala de pie: punta de cobre, casquillo de latón con el número y culote */
@@ -496,11 +515,8 @@
     background-image:
         linear-gradient(to bottom, transparent 37%, rgba(0, 0, 0, .55) 37%, rgba(0, 0, 0, .55) 38.5%, transparent 38.5%, transparent 90%, rgba(0, 0, 0, .55) 90%, rgba(0, 0, 0, .55) 91.5%, transparent 91.5%),
         linear-gradient(to right, rgba(0, 0, 0, .4), rgba(255, 240, 200, .55) 30%, rgba(255, 240, 200, 0) 55%, rgba(0, 0, 0, .45)),
-        linear-gradient(to bottom, #b8643a, #d08850 37%, #c08a30 37%, #b9842c 91.5%, #8a5a12 91.5%),
-        url("../img/tex/metal.webp");
+        linear-gradient(to bottom, #b8643a, #d08850 37%, #c08a30 37%, #b9842c 91.5%, #8a5a12 91.5%);
     background-repeat: no-repeat;
-    background-size: auto, auto, auto, 30mm auto;
-    background-blend-mode: normal, normal, normal, multiply;
     clip-path: polygon(50% 0, 61% 1.5%, 72% 6%, 82% 14%, 89% 24%, 93% 32%, 94% 37%, 94% 91.5%, 100% 91.5%, 100% 100%, 0 100%, 0 91.5%, 6% 91.5%, 6% 37%, 7% 32%, 11% 24%, 18% 14%, 28% 6%, 39% 1.5%);
 }
 
@@ -615,15 +631,19 @@
 }
 
 .print-frame__top,
-.print-frame__bottom { display: none; }
+.print-frame__bottom,
+.print-paper { display: none; }
 
 @media print {
-    html,
+    html:has(.band-print) {
+        background: #efe4cd !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Transparente para que se vea el papel fijo de debajo */
     body:has(.band-print) {
-        background-color: #efe4cd !important;
-        background-image: linear-gradient(rgba(239, 228, 205, .62), rgba(239, 228, 205, .62)), var(--punk-tex-grime), var(--punk-tex-paper) !important;
-        background-size: auto, 900px auto, 600px auto !important;
-        background-blend-mode: normal, multiply, multiply;
+        background: transparent !important;
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
@@ -659,6 +679,15 @@
         padding: 0;
         background: none;
         box-shadow: none;
+    }
+
+    /* Papel ya mezclado en una imagen del tamaño de la hoja (sin modos de fusión ni mosaico) */
+    .print-paper {
+        display: block;
+        position: fixed;
+        z-index: -2;
+        inset: 0;
+        background: url("../img/tex/paper-a4.jpg") center / 100% 100% no-repeat;
     }
 
     .print-footer {
