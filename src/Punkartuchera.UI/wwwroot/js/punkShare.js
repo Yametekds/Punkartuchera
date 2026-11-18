@@ -1,13 +1,13 @@
 // Comparte un archivo con el menú del sistema (Web Share API) o lo descarga si no se puede.
-// Algunos navegadores solo dejan compartir ciertos tipos de archivo, así que se prueban
-// variantes antes de rendirse.
+// Chrome solo deja compartir archivos con ciertas extensiones y tipos (.txt/text/plain sí;
+// .punkband o .json no) y rechaza el resto al llamar a share(), cuando ya ha gastado el gesto
+// del usuario. Por eso la variante en texto plano va primero: es la que abre WhatsApp, Gmail…
 
 function candidates(fileName, bytes) {
-    const plain = fileName.replace(/\.[^.]+$/, '');
     return [
-        new File([bytes], fileName, { type: 'application/json' }),
+        new File([bytes], fileName + '.txt', { type: 'text/plain' }),
         new File([bytes], fileName, { type: 'text/plain' }),
-        new File([bytes], plain + '.punkband.txt', { type: 'text/plain' }),
+        new File([bytes], fileName, { type: 'application/json' }),
     ];
 }
 

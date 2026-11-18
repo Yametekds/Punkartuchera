@@ -57,6 +57,7 @@
     private string? _info;
     private string? _error;
     private bool _sending;
+    private Task<ExportedBand>? _export;
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,6 +69,10 @@
         {
             _qrError = ex.Message;
         }
+
+        // El archivo se prepara al abrir la hoja: el menú de compartir solo se abre si se pide
+        // justo después del toque, y leer las fotos puede tardar.
+        _export ??= Exchange.ExportAsync(BandId);
     }
 
     private Task Close() => OnClose.InvokeAsync();
@@ -79,7 +84,7 @@
         _sending = true;
         try
         {
-            var export = await Exchange.ExportAsync(BandId);
+            var export = await (_export ??= Exchange.ExportAsync(BandId));
             var outcome = await Sharer.ShareAsync(export.FileName, export.Content, BandName,
                 "Mi banda para Punkartuchera. Ábrela en la app con «Cargar rival».");
             _info = outcome switch
@@ -91,6 +96,7 @@
         }
         catch (BandExchangeException ex)
         {
+            _export = null;
             _error = ex.Message;
         }
         catch (JSException)
