@@ -15,7 +15,9 @@
 @* Hojas de la banda para imprimir o guardar en PDF desde el diálogo de impresión del navegador. *@
 <PageTitle>@(_band?.Name ?? "Banda")</PageTitle>
 
-<div class="band-print" style="@LogoStyle">
+<div class="band-print">
+    @* Papel de cada hoja impresa: una sola imagen fija que el navegador repite por página. *@
+    <div class="print-paper" aria-hidden="true"></div>
     <div class="print-toolbar">
         <a class="btn btn--ghost" href="@(_band is null ? "" : $"bandas/{_band.Id}")"><Icon Path="@Icons.Back" /> Volver</a>
         @if (_band is not null)
@@ -40,15 +42,15 @@
         <thead><tr><td><div class="print-frame__top"></div></td></tr></thead>
         <tfoot><tr><td><div class="print-frame__bottom"></div></td></tr></tfoot>
         <tbody><tr><td>
-        <article class="print-doc @(LogoUrl is null ? null : "print-doc--logo")">
-            @if (LogoUrl is not null)
+        <article class="print-doc">
+            @if (_logoSvg is not null)
             {
-                <div class="print-watermark" aria-hidden="true"></div>
+                <div class="print-watermark" aria-hidden="true">@Logo</div>
             }
             <header class="print-cover">
-                @if (LogoUrl is not null)
+                @if (_logoSvg is not null)
                 {
-                    <div class="print-cover__emblem" aria-hidden="true"></div>
+                    <div class="print-cover__emblem" aria-hidden="true">@Logo</div>
                 }
                 <p class="print-cover__kicker">Banda de @FactionName@(SubfactionName is null ? "" : $" · {SubfactionName}")</p>
                 <h1 class="print-cover__name">@_band.Name</h1>
@@ -160,9 +162,9 @@
             {
                 var member = sheet.Member;
                 <section class="print-profile">
-                    @if (LogoUrl is not null)
+                    @if (_logoSvg is not null)
                     {
-                        <div class="print-profile__watermark" aria-hidden="true"></div>
+                        <div class="print-profile__watermark" aria-hidden="true">@Logo</div>
                     }
                     <header class="print-profile__head">
                         <div class="print-profile__title">
@@ -174,7 +176,7 @@
                         </div>
                         @if (!_band.IsReadOnly && member.Cost is { } memberCost)
                         {
-                            <span class="print-profile__cost">@memberCost <small>ptos</small></span>
+                            <span class="print-profile__cost">@CostTag<span>@memberCost <small>ptos</small></span></span>
                         }
                     </header>
 
@@ -185,9 +187,9 @@
                             {
                                 <img src="@sheet.PhotoUrl" alt="@member.Name" @onerror="() => _brokenPhotos.Add(member.Id)" />
                             }
-                            else if (LogoUrl is not null)
+                            else if (_logoSvg is not null)
                             {
-                                <span class="print-profile__photo-logo" aria-hidden="true"></span>
+                                <span class="print-profile__photo-logo" aria-hidden="true">@Logo</span>
                             }
                             else
                             {
@@ -227,7 +229,7 @@
                             </span>
                             @if (!_band.IsReadOnly)
                             {
-                                <span class="print-bullet" role="img" aria-label="@member.Ammo balas"><span>@member.Ammo</span></span>
+                                <span class="print-bullet" role="img" aria-label="@member.Ammo balas">@BulletShape<span>@member.Ammo</span></span>
                             }
                         </div>
                         @if (ProfileNotes(sheet) is { Count: > 0 } notes)
@@ -343,6 +345,24 @@
 @code {
     private const string RepositoryUrl = "https://github.com/Yametekds/Punkartuchera";
 
+    // Etiqueta de coste y bala dibujadas en vectores con colores opacos: con recortes y degradados
+    // translúcidos de CSS el PDF las convierte en imágenes con máscara que algunos visores pintan mal.
+    private static readonly MarkupString CostTag = new(
+        "<svg class=\"print-profile__cost-bg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" aria-hidden=\"true\">" +
+        "<polygon points=\"2,6 98,0 100,52 97,100 3,94 0,48\" fill=\"#a2140a\" stroke=\"#7a0f08\" stroke-width=\"1.6\" vector-effect=\"non-scaling-stroke\"/></svg>");
+
+    private static readonly MarkupString BulletShape = new(
+        "<svg class=\"print-bullet__shape\" viewBox=\"0 0 96 146\" aria-hidden=\"true\"><defs>" +
+        "<linearGradient id=\"bala-punta\"><stop offset=\"0\" stop-color=\"#76432a\"/><stop offset=\".3\" stop-color=\"#eab88e\"/><stop offset=\".55\" stop-color=\"#c47645\"/><stop offset=\"1\" stop-color=\"#6c4026\"/></linearGradient>" +
+        "<linearGradient id=\"bala-casquillo\"><stop offset=\"0\" stop-color=\"#6f4f1a\"/><stop offset=\".3\" stop-color=\"#e4c68c\"/><stop offset=\".55\" stop-color=\"#b9842c\"/><stop offset=\"1\" stop-color=\"#66481a\"/></linearGradient>" +
+        "<linearGradient id=\"bala-culote\"><stop offset=\"0\" stop-color=\"#533608\"/><stop offset=\".3\" stop-color=\"#c4a274\"/><stop offset=\".55\" stop-color=\"#8a5a12\"/><stop offset=\"1\" stop-color=\"#4c3110\"/></linearGradient>" +
+        "</defs>" +
+        "<path d=\"M48 0C70 2 89 28 90.2 54H5.8C7 28 26 2 48 0Z\" fill=\"url(#bala-punta)\"/>" +
+        "<rect x=\"5.8\" y=\"54\" width=\"84.4\" height=\"79.6\" fill=\"url(#bala-casquillo)\"/>" +
+        "<rect x=\"0\" y=\"133.6\" width=\"96\" height=\"12.4\" fill=\"url(#bala-culote)\"/>" +
+        "<rect x=\"5.8\" y=\"54\" width=\"84.4\" height=\"2.2\" fill=\"#4a3214\"/>" +
+        "<rect x=\"5.8\" y=\"131.4\" width=\"84.4\" height=\"2.2\" fill=\"#4a3214\"/></svg>");
+
     [Parameter] public Guid Id { get; set; }
 
     private Band? _band;
@@ -376,8 +396,13 @@
         ? $"{Navigation.BaseUri}_content/Punkartuchera.UI/img/facciones/{_band.FactionId}.svg"
         : null;
 
-    // Dirección absoluta: dentro de una variable CSS, una relativa se resolvería contra la hoja de estilos.
-    private string? LogoStyle => LogoUrl is null ? null : $"--faction-logo: url('{LogoUrl}')";
+    /// <summary>
+    /// El emblema va como SVG en línea (no como máscara CSS): así el PDF lo guarda como trazos, una vez por
+    /// uso, en vez de rasterizar cada copia, y el color se pone con CSS (fill) en cada sitio.
+    /// </summary>
+    private MarkupString Logo => new(_logoSvg ?? string.Empty);
+
+    private string? _logoSvg;
 
     /// <summary>"Agilidad −1 por Cañón de mano (Armatoste)", "Blindaje 5 por Armadura quitinosa", lo situacional.</summary>
     private List<string> ProfileNotes(MemberSheet sheet)
@@ -418,6 +443,21 @@
                 .OfType<FactionRules>()
                 .Where(f => f.Rules.Count > 0)
                 .ToList();
+        }
+
+        _logoSvg = null;
+        if (LogoUrl is { } logoUrl)
+        {
+            try
+            {
+                using var http = new HttpClient();
+                var svg = await http.GetStringAsync(logoUrl);
+                _logoSvg = svg.TrimStart().StartsWith("<svg", StringComparison.Ordinal) ? svg : null;
+            }
+            catch (HttpRequestException)
+            {
+                // Sin emblema se sigue pudiendo imprimir.
+            }
         }
 
         _loading = false;
