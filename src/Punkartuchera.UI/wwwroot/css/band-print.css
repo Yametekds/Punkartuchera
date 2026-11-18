@@ -618,8 +618,21 @@
 }
 
 .print-frame__top,
-.print-frame__bottom,
-.print-paper { display: none; }
+.print-frame__bottom { display: none; }
+
+/* El papel también existe en pantalla (invisible y de 1 px) para que el navegador descargue la imagen
+   antes de imprimir: si solo apareciera en @media print, el diálogo de impresión podría
+   capturar la hoja antes de que llegue y saldría sin textura. */
+.print-paper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    visibility: hidden;
+    pointer-events: none;
+    background: url("../img/tex/paper-a4.jpg") no-repeat;
+}
 
 @media print {
     html:has(.band-print) {
@@ -670,10 +683,11 @@
 
     /* Papel ya mezclado en una imagen del tamaño de la hoja (sin modos de fusión ni mosaico) */
     .print-paper {
-        display: block;
-        position: fixed;
         z-index: -2;
         inset: 0;
+        width: auto;
+        height: auto;
+        visibility: visible;
         background: url("../img/tex/paper-a4.jpg") center / 100% 100% no-repeat;
     }
 
