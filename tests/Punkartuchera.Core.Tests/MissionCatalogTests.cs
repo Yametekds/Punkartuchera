@@ -5,14 +5,17 @@ namespace Punkartuchera.Core.Tests;
 public class MissionCatalogTests
 {
     [Fact]
-    public void Has_the_eighteen_scenarios_of_the_pdf_in_order()
+    public void Has_the_eighteen_scenarios_of_the_pdf_in_order_and_then_the_loose_ones()
     {
-        Assert.Equal(18, MissionCatalog.All.Count);
+        var book = MissionCatalog.All.Where(m => m.Pdf is null).ToList();
+        Assert.Equal(18, book.Count);
+        Assert.Equal(book.OrderBy(m => m.Page).Select(m => m.Id), book.Select(m => m.Id));
+        Assert.Equal(book, MissionCatalog.All.Take(book.Count));
         Assert.Equal(MissionCatalog.All.Count, MissionCatalog.All.Select(m => m.Id).Distinct().Count());
-        Assert.Equal(MissionCatalog.All.OrderBy(m => m.Page).Select(m => m.Id), MissionCatalog.All.Select(m => m.Id));
+        Assert.All(book, m => Assert.InRange(m.Page, 5, 23));
         Assert.All(MissionCatalog.All, m =>
         {
-            Assert.InRange(m.Page, 5, 23);
+            Assert.InRange(m.Page, 1, 23);
             Assert.InRange(m.ContaminatedZones, 1, 2);
             Assert.False(string.IsNullOrWhiteSpace(m.Summary));
             Assert.False(string.IsNullOrWhiteSpace(m.Scoring));
@@ -44,6 +47,7 @@ public class MissionCatalogTests
     public void Pdf_link_opens_the_page_of_the_mission()
     {
         Assert.EndsWith("Escenarios_.pdf#page=17", MissionCatalog.PdfLink(MissionCatalog.Find("sondas-del-espacio-exterior")!));
+        Assert.EndsWith("Punkalabazas.pdf#page=1", MissionCatalog.PdfLink(MissionCatalog.Find("punkalabazas")!));
     }
 
     [Fact]
@@ -57,7 +61,7 @@ public class MissionCatalogTests
 
         Assert.NotNull(dir);
         var folder = Path.Combine(dir!.FullName, "src", "Punkartuchera.UI", "wwwroot", "img", "misiones");
-        Assert.All(MissionCatalog.All, m =>
+        Assert.All(MissionCatalog.All.Where(m => m.HasArt), m =>
         {
             Assert.True(File.Exists(Path.Combine(folder, $"{m.Id}.webp")), m.Id);
             Assert.True(File.Exists(Path.Combine(folder, $"{m.Id}-mapa.webp")), m.Id);

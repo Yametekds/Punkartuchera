@@ -8,6 +8,12 @@ namespace Punkartuchera.Core.Tournaments;
 /// <summary>Una banda que entra al torneo con el nombre de su jugador.</summary>
 public sealed record TournamentEntry(Guid BandId, string PlayerName);
 
+/// <summary>Lo que se apunta de una mesa además de los Puntos de victoria: Puntos de Escenario y quién arrasó.</summary>
+public sealed record ResultExtras(int ScenarioA = 0, int ScenarioB = 0, bool WipeoutA = false, bool WipeoutB = false)
+{
+    public static ResultExtras None { get; } = new();
+}
+
 /// <summary>Lo que dice un QR de resultado una vez colocado en su mesa: ya en el orden de la mesa (A y B).</summary>
 public sealed record ScannedResult(int Round, TournamentPairing Pairing, MatchOutcome Outcome, int ScoreA, int ScoreB);
 
@@ -46,6 +52,7 @@ public sealed class TournamentService(ITournamentStore store, IBandRepository ba
         string name,
         IReadOnlyList<TournamentEntry> entries,
         int? plannedRounds = null,
+        int? scoreCap = Tournament.DefaultScoreCap,
         CancellationToken cancellationToken = default)
     {
         if (entries.Count < Tournament.MinPlayers)
@@ -63,7 +70,11 @@ public sealed class TournamentService(ITournamentStore store, IBandRepository ba
             throw new TournamentException("La misma banda no puede entrar dos veces.");
         }
 
-        var tournament = new Tournament { Name = CleanName(name) ?? $"Torneo {DateTime.Now:dd/MM}" };
+        var tournament = new Tournament
+        {
+            Name = CleanName(name) ?? $"Torneo {DateTime.Now:dd/MM}",
+            ScoreCap = scoreCap is { } cap ? Math.Clamp(cap, Tournament.MinScoreCap, Tournament.MaxScoreCap) : null,
+        };
         foreach (var entry in entries)
         {
             var band = await bands.GetAsync(entry.BandId, cancellationToken)
@@ -121,15 +132,20 @@ public sealed class TournamentService(ITournamentStore store, IBandRepository ba
         int scoreA,
         int scoreB,
         ResultSource source = ResultSource.Manual,
+        ResultExtras? extras = null,
         CancellationToken cancellationToken = default)
     {
         var tournament = await LoadAsync(tournamentId, cancellationToken);
-        RecordResult(tournament, round, table, outcome, scoreA, scoreB, source);
+        RecordResult(tournament, round, table, outcome, scoreA, scoreB, source, extras);
         await SaveAsync(tournament, cancellationToken);
         return tournament;
     }
 
-    public static void RecordResult(Tournament tournament, int round, int table, MatchOutcome outcome, int scoreA, int scoreB, ResultSource source)
+    /// <summary>
+    /// Apunta el resultado de una mesa. <paramref name="scoreA"/> y <paramref name="scoreB"/> son los Puntos de victoria
+    /// de la partida sin el Arrasamiento: si alguien arrasó, aquí se le suman los puntos extra.
+    /// </summary>
+    public static void RecordResult(Tournament tournament, int round, int table, MatchOutcome outcome, int scoreA, int scoreB, ResultSource source, ResultExtras? extras = null)
     {
         var pairing = tournament.Rounds.FirstOrDefault(r => r.Number == round)?.Pairings.FirstOrDefault(p => p.Table == table)
             ?? throw new TournamentException("Esa mesa no existe.");
@@ -143,11 +159,21 @@ public sealed class TournamentService(ITournamentStore store, IBandRepository ba
             throw new TournamentException("Resultado no válido.");
         }
 
+        var x = extras ?? ResultExtras.None;
+        if (x.WipeoutA && x.WipeoutB)
+        {
+            throw new TournamentException("Solo puede arrasar uno de los dos.");
+        }
+
         pairing.Result = new TournamentResult
         {
             Outcome = outcome,
-            ScoreA = Math.Clamp(scoreA, 0, Tournament.MaxScore),
-            ScoreB = Math.Clamp(scoreB, 0, Tournament.MaxScore),
+            ScoreA = Math.Clamp(scoreA + (x.WipeoutA ? Tournament.WipeoutBonus : 0), 0, Tournament.MaxScore),
+            ScoreB = Math.Clamp(scoreB + (x.WipeoutB ? Tournament.WipeoutBonus : 0), 0, Tournament.MaxScore),
+            ScenarioA = Math.Clamp(x.ScenarioA, 0, Tournament.MaxScenarioPoints),
+            ScenarioB = Math.Clamp(x.ScenarioB, 0, Tournament.MaxScenarioPoints),
+            WipeoutA = x.WipeoutA,
+            WipeoutB = x.WipeoutB,
             Source = source,
         };
     }

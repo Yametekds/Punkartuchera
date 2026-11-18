@@ -112,6 +112,9 @@ public sealed class SourceDocument
     public string Title { get; set; } = string.Empty;
 
     public string Url { get; set; } = string.Empty;
+
+    /// <summary>Material para imprimir o de apoyo (fichas, marcadores, listas de ejemplo) en vez de reglas.</summary>
+    public bool Extra { get; set; }
 }
 
 public sealed class AttributeInfo

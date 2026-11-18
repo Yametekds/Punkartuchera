@@ -29,6 +29,11 @@
         <span class="rules-index__meta">Perfiles, costes y reglas de cada trasto</span>
         <span class="rules-index__count">@(Book.Weapons.Count + Book.Armors.Count + Book.Gear.Count) <small>trastos</small></span>
     </a>
+    <a class="rules-index__row" href="torneo/reglas">
+        <span class="rules-index__name">Reglas de torneo</span>
+        <span class="rules-index__meta">POTS: TQM, Arrasamiento, tope de PV y clasificación</span>
+        <span class="rules-index__count">12 <small>apartados</small></span>
+    </a>
 </nav>
 
 <h2 class="section-title">Facciones</h2>
@@ -56,7 +61,16 @@
     Resumen del reglamento gratuito de punkapocalyptic.com (@Book.Edition). Si hay dudas, vale lo que diga el PDF oficial.
 </p>
 <ul class="tags rules-sources">
-    @foreach (var source in Book.Sources)
+    @foreach (var source in Book.Sources.Where(s => !s.Extra))
+    {
+        <li><a class="tag" href="@source.Url" target="_blank" rel="noopener">@source.Title</a></li>
+    }
+</ul>
+
+<h2 class="section-title">Para imprimir y trastear</h2>
+<p class="muted rules-legal">Fichas, marcadores, cartas y listas de ejemplo de la zona de descargas oficial. Bájalas, imprímelas y a la mesa.</p>
+<ul class="tags rules-sources">
+    @foreach (var source in Book.Sources.Where(s => s.Extra))
     {
         <li><a class="tag" href="@source.Url" target="_blank" rel="noopener">@source.Title</a></li>
     }

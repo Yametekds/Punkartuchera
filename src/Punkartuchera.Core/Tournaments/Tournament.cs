@@ -21,6 +21,17 @@ public sealed class Tournament
     public const int DrawPoints = 1;
     public const int LossPoints = 0;
 
+    /// <summary>Tope de Puntos de victoria por partida que recomienda el POTS (entre 15 y 20).</summary>
+    public const int DefaultScoreCap = 20;
+    public const int MinScoreCap = 10;
+    public const int MaxScoreCap = 50;
+
+    /// <summary>Puntos de victoria extra para quien Abate a toda la banda rival (Arrasamiento del POTS).</summary>
+    public const int WipeoutBonus = 5;
+
+    /// <summary>Tope de los Puntos de Escenario de una partida.</summary>
+    public const int MaxScenarioPoints = 99;
+
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Name { get; set; } = string.Empty;
@@ -37,6 +48,12 @@ public sealed class Tournament
 
     public bool Finished { get; set; }
 
+    /// <summary>
+    /// Tope de Puntos de victoria por partida para la clasificación. Sin valor no hay tope
+    /// (torneos guardados antes de que existiera).
+    /// </summary>
+    public int? ScoreCap { get; set; }
+
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
@@ -52,6 +69,30 @@ public sealed class Tournament
     /// <summary>Rondas recomendadas para que salga un ganador claro: log2 del número de jugadores, redondeado hacia arriba.</summary>
     public static int RecommendedRounds(int players) =>
         players < 2 ? 1 : Math.Min(MaxRounds, (int)Math.Ceiling(Math.Log2(players)));
+
+    /// <summary>
+    /// Puntos de victoria de una partida tal como cuentan para la clasificación. Cada bando se queda
+    /// como mucho con el tope; si los dos lo pasan, el ganador se lleva el tope más uno y el perdedor el tope.
+    /// </summary>
+    public static (int A, int B) CappedScores(TournamentResult result, int? cap)
+    {
+        if (cap is not { } max)
+        {
+            return (result.ScoreA, result.ScoreB);
+        }
+
+        if (result.ScoreA > max && result.ScoreB > max)
+        {
+            return result.Outcome switch
+            {
+                MatchOutcome.WinA => (max + 1, max),
+                MatchOutcome.WinB => (max, max + 1),
+                _ => (max, max),
+            };
+        }
+
+        return (Math.Min(result.ScoreA, max), Math.Min(result.ScoreB, max));
+    }
 }
 
 /// <summary>Un jugador del torneo con la banda que lleva.</summary>
@@ -118,6 +159,17 @@ public sealed class TournamentResult
     public int ScoreA { get; set; }
 
     public int ScoreB { get; set; }
+
+    /// <summary>Puntos de Escenario (cartas de Escenario y extras del organizador). Son el primer desempate.</summary>
+    public int ScenarioA { get; set; }
+
+    public int ScenarioB { get; set; }
+
+    /// <summary>A arrasó a B: ScoreA ya lleva sumados los <see cref="Tournament.WipeoutBonus"/> puntos.</summary>
+    public bool WipeoutA { get; set; }
+
+    /// <summary>B arrasó a A: ScoreB ya lleva sumados los <see cref="Tournament.WipeoutBonus"/> puntos.</summary>
+    public bool WipeoutB { get; set; }
 
     /// <summary>Cómo llegó: escaneado de la mesa o apuntado a mano.</summary>
     public ResultSource Source { get; set; }

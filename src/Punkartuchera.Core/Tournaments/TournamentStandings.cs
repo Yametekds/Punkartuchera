@@ -9,9 +9,9 @@ public sealed record StandingRow(
     int Draws,
     int Losses,
     int Byes,
+    int ScenarioPoints,
     int ScoreFor,
-    int ScoreAgainst,
-    int Buchholz)
+    int ScoreAgainst)
 {
     public int Played => Wins + Draws + Losses;
 
@@ -19,9 +19,9 @@ public sealed record StandingRow(
 }
 
 /// <summary>
-/// Clasificación del torneo. Orden: puntos de torneo (victoria 3, empate 1, derrota 0, descanso 3),
-/// luego Buchholz (suma de los puntos de los rivales a los que se ha enfrentado), luego puntos anotados
-/// en las partidas y, al final, la diferencia entre anotados y recibidos.
+/// Clasificación del torneo según el POTS. Orden: Puntos de torneo (victoria 3, empate 1, derrota 0,
+/// descanso 3), luego Puntos de Escenario, luego diferencia de Puntos de victoria (a favor menos en contra)
+/// y, al final, Puntos de victoria a favor. Los Puntos de victoria cuentan con el tope del torneo.
 /// </summary>
 public static class TournamentStandings
 {
@@ -49,12 +49,13 @@ public static class TournamentStandings
                 continue;
             }
 
-            a.Opponents.Add(bId);
-            b.Opponents.Add(pairing.PlayerA);
-            a.ScoreFor += result.ScoreA;
-            a.ScoreAgainst += result.ScoreB;
-            b.ScoreFor += result.ScoreB;
-            b.ScoreAgainst += result.ScoreA;
+            var (scoreA, scoreB) = Tournament.CappedScores(result, tournament.ScoreCap);
+            a.ScoreFor += scoreA;
+            a.ScoreAgainst += scoreB;
+            b.ScoreFor += scoreB;
+            b.ScoreAgainst += scoreA;
+            a.Scenario += result.ScenarioA;
+            b.Scenario += result.ScenarioB;
 
             switch (result.Outcome)
             {
@@ -80,30 +81,25 @@ public static class TournamentStandings
         }
 
         var ordered = tournament.Players
-            .Select(p =>
-            {
-                var t = stats[p.Id];
-                var buchholz = t.Opponents.Sum(o => stats[o].Points);
-                return (Player: p, Tally: t, Buchholz: buchholz);
-            })
+            .Select(p => (Player: p, Tally: stats[p.Id]))
             .OrderByDescending(x => x.Tally.Points)
-            .ThenByDescending(x => x.Buchholz)
-            .ThenByDescending(x => x.Tally.ScoreFor)
+            .ThenByDescending(x => x.Tally.Scenario)
             .ThenByDescending(x => x.Tally.ScoreFor - x.Tally.ScoreAgainst)
+            .ThenByDescending(x => x.Tally.ScoreFor)
             .ThenBy(x => x.Player.Name, StringComparer.CurrentCultureIgnoreCase)
             .ToList();
 
         var rows = new List<StandingRow>(ordered.Count);
         for (var i = 0; i < ordered.Count; i++)
         {
-            var (player, t, buchholz) = ordered[i];
+            var (player, t) = ordered[i];
             var tiedWithPrevious = i > 0
                 && rows[i - 1].Points == t.Points
-                && rows[i - 1].Buchholz == buchholz
-                && rows[i - 1].ScoreFor == t.ScoreFor
-                && rows[i - 1].ScoreDifference == t.ScoreFor - t.ScoreAgainst;
+                && rows[i - 1].ScenarioPoints == t.Scenario
+                && rows[i - 1].ScoreDifference == t.ScoreFor - t.ScoreAgainst
+                && rows[i - 1].ScoreFor == t.ScoreFor;
             var position = tiedWithPrevious ? rows[i - 1].Position : i + 1;
-            rows.Add(new StandingRow(position, player, t.Points, t.Wins, t.Draws, t.Losses, t.Byes, t.ScoreFor, t.ScoreAgainst, buchholz));
+            rows.Add(new StandingRow(position, player, t.Points, t.Wins, t.Draws, t.Losses, t.Byes, t.Scenario, t.ScoreFor, t.ScoreAgainst));
         }
 
         return rows;
@@ -118,6 +114,6 @@ public static class TournamentStandings
         public int Byes;
         public int ScoreFor;
         public int ScoreAgainst;
-        public readonly List<Guid> Opponents = [];
+        public int Scenario;
     }
 }

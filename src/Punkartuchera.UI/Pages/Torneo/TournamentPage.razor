@@ -122,8 +122,8 @@ else
                         <th scope="col">Jugador</th>
                         <th scope="col" title="Puntos de torneo: victoria 3, empate 1, derrota 0, descanso 3">Pts</th>
                         <th scope="col" title="Ganadas, empatadas y perdidas">G-E-P</th>
-                        <th scope="col" title="Buchholz: puntos de los rivales a los que se ha enfrentado">Bu</th>
-                        <th scope="col" title="Puntos anotados (A) y recibidos (R) en las partidas">A:R</th>
+                        <th scope="col" title="Puntos de Escenario: cartas de Escenario y extras del organizador">PE</th>
+                        <th scope="col" title="Puntos de victoria a favor (F) y en contra (C)">F:C</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,14 +143,19 @@ else
                                     <span class="tourney-standings__band">@row.Byes desc.</span>
                                 }
                             </td>
-                            <td>@row.Buchholz</td>
+                            <td>@row.ScenarioPoints</td>
                             <td>@row.ScoreFor : @row.ScoreAgainst</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        <p class="sheet__small">Pts: victoria 3, empate 1, derrota 0 y descanso 3. Bu (Buchholz): suma de los puntos de tus rivales, el primer desempate. A:R: puntos anotados y recibidos en las partidas, el segundo y tercer desempate.</p>
+        <p class="sheet__small">
+            Clasificación del POTS. Pts: victoria 3, empate 1, derrota 0 y descanso 3. Si hay empate, manda quien tenga más PE
+            (Puntos de Escenario), luego la mejor diferencia de Puntos de victoria (F:C) y al final quien tenga más a favor.
+            @(t.ScoreCap is { } cap ? $"Los Puntos de victoria cuentan con un tope de {cap} por partida." : "Este torneo no tiene tope de Puntos de victoria.")
+            <a href="torneo/reglas">Reglas de torneo</a>.
+        </p>
     }
     else
     {
@@ -193,12 +198,29 @@ else
             </header>
             @if (edit.FromQr)
             {
-                <p>Leído del QR de la mesa. Repásalo y apúntalo.</p>
+                <p>Leído del QR de la mesa. Repásalo, mete los Puntos de Escenario y apúntalo.</p>
             }
+            <h3 class="tourney-score__title">Puntos de victoria</h3>
             <div class="tourney-score">
                 <Stepper Label="@a.Name" Value="edit.ScoreA" Min="0" Max="Tournament.MaxScore" ValueChanged="v => { edit.ScoreA = v; edit.SyncOutcome(); }" />
                 <Stepper Label="@b.Name" Value="edit.ScoreB" Min="0" Max="Tournament.MaxScore" ValueChanged="v => { edit.ScoreB = v; edit.SyncOutcome(); }" />
             </div>
+            <fieldset class="field">
+                <legend class="field__label">¿Alguien arrasó? (+@Tournament.WipeoutBonus PV por abusón)</legend>
+                <div class="faction-grid tourney-outcome">
+                    @foreach (var (side, label) in new[] { (1, a.Name), (0, "Nadie"), (2, b.Name) })
+                    {
+                        <button type="button" class="faction-tile @(edit.Wipeout == side ? "is-selected" : null)" aria-pressed="@(edit.Wipeout == side ? "true" : "false")"
+                                @onclick="() => { edit.Wipeout = side; edit.SyncOutcome(); }">@label</button>
+                    }
+                </div>
+            </fieldset>
+            <h3 class="tourney-score__title">Puntos de Escenario</h3>
+            <div class="tourney-score">
+                <Stepper Label="@a.Name" Value="edit.ScenarioA" Min="0" Max="Tournament.MaxScenarioPoints" ValueChanged="v => edit.ScenarioA = v" />
+                <Stepper Label="@b.Name" Value="edit.ScenarioB" Min="0" Max="Tournament.MaxScenarioPoints" ValueChanged="v => edit.ScenarioB = v" />
+            </div>
+            <p class="sheet__small">Los de las cartas de Escenario más los extras que regale la organización. Desempatan antes que los PV.</p>
             <fieldset class="field">
                 <legend class="field__label">¿Quién gana?</legend>
                 <div class="faction-grid tourney-outcome">
@@ -235,11 +257,23 @@ else
         public bool FromQr { get; init; }
         public int ScoreA { get; set; }
         public int ScoreB { get; set; }
+        public int ScenarioA { get; set; }
+        public int ScenarioB { get; set; }
+
+        /// <summary>Quién arrasó: 0 nadie, 1 el jugador A, 2 el jugador B.</summary>
+        public int Wipeout { get; set; }
+
         public MatchOutcome Outcome { get; set; }
 
-        /// <summary>Al tocar el marcador, el ganador sigue al marcador; luego se puede cambiar a mano.</summary>
-        public void SyncOutcome() =>
-            Outcome = ScoreA > ScoreB ? MatchOutcome.WinA : ScoreA < ScoreB ? MatchOutcome.WinB : MatchOutcome.Draw;
+        public ResultExtras Extras => new(ScenarioA, ScenarioB, Wipeout == 1, Wipeout == 2);
+
+        /// <summary>Al tocar el marcador, el ganador sigue al marcador (con el Arrasamiento sumado); luego se puede cambiar a mano.</summary>
+        public void SyncOutcome()
+        {
+            var a = ScoreA + (Wipeout == 1 ? Tournament.WipeoutBonus : 0);
+            var b = ScoreB + (Wipeout == 2 ? Tournament.WipeoutBonus : 0);
+            Outcome = a > b ? MatchOutcome.WinA : a < b ? MatchOutcome.WinB : MatchOutcome.Draw;
+        }
     }
 
     private Tournament? _t;
@@ -315,8 +349,11 @@ else
         {
             Round = round,
             Pairing = p,
-            ScoreA = p.Result?.ScoreA ?? 0,
-            ScoreB = p.Result?.ScoreB ?? 0,
+            ScoreA = (p.Result?.ScoreA ?? 0) - (p.Result?.WipeoutA == true ? Tournament.WipeoutBonus : 0),
+            ScoreB = (p.Result?.ScoreB ?? 0) - (p.Result?.WipeoutB == true ? Tournament.WipeoutBonus : 0),
+            ScenarioA = p.Result?.ScenarioA ?? 0,
+            ScenarioB = p.Result?.ScenarioB ?? 0,
+            Wipeout = p.Result?.WipeoutA == true ? 1 : p.Result?.WipeoutB == true ? 2 : 0,
             Outcome = p.Result?.Outcome ?? MatchOutcome.Draw,
         };
 
@@ -330,6 +367,8 @@ else
             FromQr = true,
             ScoreA = scanned.ScoreA,
             ScoreB = scanned.ScoreB,
+            ScenarioA = scanned.Pairing.Result?.ScenarioA ?? 0,
+            ScenarioB = scanned.Pairing.Result?.ScenarioB ?? 0,
             Outcome = scanned.Outcome,
         };
     }
@@ -338,7 +377,7 @@ else
     {
         var edit = _editing!;
         _t = await Tournaments.RecordResultAsync(_t!.Id, edit.Round, edit.Pairing.Table, edit.Outcome, edit.ScoreA, edit.ScoreB,
-            edit.FromQr ? ResultSource.Qr : ResultSource.Manual);
+            edit.FromQr ? ResultSource.Qr : ResultSource.Manual, edit.Extras);
         _editing = null;
         Stamp.Stamp("Apuntado");
     });

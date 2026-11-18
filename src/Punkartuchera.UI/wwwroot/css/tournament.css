@@ -38,6 +38,7 @@
 .tourney-past summary { cursor: pointer; font-family: var(--punk-font-display); text-transform: uppercase; letter-spacing: .06em; }
 
 .tourney-score { display: grid; gap: 10px; }
+.tourney-score__title { margin: 12px 0 6px; font-weight: normal; font-family: var(--punk-font-display); font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; }
 .tourney-outcome .faction-tile { min-height: 48px; overflow-wrap: anywhere; }
 
 .tourney-standings-wrap { overflow-x: auto; margin: 12px 0; }

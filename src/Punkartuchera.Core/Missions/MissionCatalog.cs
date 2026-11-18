@@ -10,11 +10,13 @@ namespace Punkartuchera.Core.Missions;
 /// <param name="Summary">De qué va, en una o dos frases.</param>
 /// <param name="Scoring">Cómo se consiguen los puntos, resumido.</param>
 /// <param name="ContaminatedZones">Zonas de Terreno contaminado que se colocan.</param>
-public sealed record Mission(string Id, string Name, int Page, string Summary, string Scoring, int ContaminatedZones);
+/// <param name="Pdf">PDF propio cuando el escenario no viene en el de Escenarios (los sueltos de la web).</param>
+/// <param name="HasArt">Si hay foto y plano en <c>img/misiones/</c>.</param>
+public sealed record Mission(string Id, string Name, int Page, string Summary, string Scoring, int ContaminatedZones, string? Pdf = null, bool HasArt = true);
 
 /// <summary>
-/// Las 18 misiones del PDF oficial de Escenarios, en el orden del PDF.
-/// Todas duran 6 Turnos, usan el despliegue normal y gana quien tenga más puntos.
+/// Las 18 misiones del PDF oficial de Escenarios, en el orden del PDF, y detrás los escenarios
+/// sueltos de la zona de descargas. Todas duran 6 Turnos, usan el despliegue normal y gana quien tenga más puntos.
 /// </summary>
 public static class MissionCatalog
 {
@@ -77,7 +79,14 @@ public static class MissionCatalog
         new("viendo-holobasura", "Viendo holobasura", 23,
             "Tres cristales verdes en la línea central que escupen la tele del mundo de antes. Enciéndelos con Técnica y no sueltes el mando.",
             "Cada Turno, por cristal encendido que controles: 1 en los Turnos 1 y 2, 2 en el 3 y 4 y 3 en el 5 y 6.", 1),
+        new("punkalabazas", "El retorno de las Punkalabazas asesinas", 1,
+            "Unos granjeros de Puentechatarra abonaron el huerto con un bidón de «complejo vitamínico» y ahora las calabazas muerden. Dos Punkalabazas se pasean a su bola, escupen pinchos y te atrapan con raíces: trinca una y que no se te escape, que la élite las paga a precio de oro.",
+            "4 por cada Punkalabaza que tenga tu peña al acabar; 6 si quien la lleva está en tu zona de despliegue.", 2,
+            PunkalabazasPdf, HasArt: false),
     ];
+
+    /// <summary>Escenario suelto Punkalabazas (el mismo que la fuente "punkalabazas" de core.json).</summary>
+    public const string PunkalabazasPdf = "https://punkapocalyptic.com/descargasweb/Punkalabazas.pdf";
 
     private static readonly Dictionary<string, Mission> ById = All.ToDictionary(m => m.Id, StringComparer.Ordinal);
 
@@ -91,5 +100,5 @@ public static class MissionCatalog
     }
 
     /// <summary>Enlace al PDF abierto por la página de la misión.</summary>
-    public static string PdfLink(Mission mission) => $"{PdfUrl}#page={mission.Page}";
+    public static string PdfLink(Mission mission) => $"{mission.Pdf ?? PdfUrl}#page={mission.Page}";
 }

@@ -197,7 +197,7 @@ public class TournamentTests
     }
 
     [Fact]
-    public void Standings_use_buchholz_then_scored_points()
+    public void Standings_follow_pots_tiebreaks()
     {
         var t = new Tournament();
         var a = new TournamentPlayer { Name = "A" };
@@ -210,28 +210,84 @@ public class TournamentTests
             Number = 1,
             Pairings =
             [
-                new() { Table = 1, PlayerA = a.Id, PlayerB = b.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 12, ScoreB = 4 } },
-                new() { Table = 2, PlayerA = c.Id, PlayerB = d.Id, Result = new() { Outcome = MatchOutcome.Draw, ScoreA = 6, ScoreB = 6 } },
-            ],
-        });
-        t.Rounds.Add(new TournamentRound
-        {
-            Number = 2,
-            Pairings =
-            [
-                new() { Table = 1, PlayerA = a.Id, PlayerB = c.Id, Result = new() { Outcome = MatchOutcome.WinB, ScoreA = 3, ScoreB = 9 } },
-                new() { Table = 2, PlayerA = b.Id, PlayerB = d.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 8, ScoreB = 2 } },
+                new() { Table = 1, PlayerA = a.Id, PlayerB = b.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 12, ScoreB = 4, ScenarioA = 1, ScenarioB = 3 } },
+                new() { Table = 2, PlayerA = c.Id, PlayerB = d.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 9, ScoreB = 8, ScenarioA = 1, ScenarioB = 0 } },
             ],
         });
 
         var rows = TournamentStandings.Compute(t);
 
-        Assert.Equal(["C", "A", "B", "D"], rows.Select(r => r.Player.Name));
-        Assert.Equal(4, rows[0].Points);
-        Assert.Equal(3, rows[1].Points);
-        Assert.Equal(3, rows[2].Points);
-        Assert.True(rows[1].Buchholz > rows[2].Buchholz);
-        Assert.Equal(15, rows[1].ScoreFor);
+        // A y C empatan a puntos y a PE: manda la diferencia de PV (+8 contra +1).
+        // B y D empatan a puntos: B tiene más PE aunque su diferencia de PV sea peor.
+        Assert.Equal(["A", "C", "B", "D"], rows.Select(r => r.Player.Name));
+        Assert.Equal(3, rows[0].Points);
+        Assert.Equal(8, rows[0].ScoreDifference);
+        Assert.Equal(3, rows[2].ScenarioPoints);
+    }
+
+    [Fact]
+    public void Standings_break_equal_difference_by_points_for()
+    {
+        var t = new Tournament();
+        var a = new TournamentPlayer { Name = "A" };
+        var b = new TournamentPlayer { Name = "B" };
+        var c = new TournamentPlayer { Name = "C" };
+        var d = new TournamentPlayer { Name = "D" };
+        t.Players.AddRange([a, b, c, d]);
+        t.Rounds.Add(new TournamentRound
+        {
+            Number = 1,
+            Pairings =
+            [
+                new() { Table = 1, PlayerA = a.Id, PlayerB = b.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 6, ScoreB = 2 } },
+                new() { Table = 2, PlayerA = d.Id, PlayerB = c.Id, Result = new() { Outcome = MatchOutcome.WinB, ScoreA = 4, ScoreB = 8 } },
+            ],
+        });
+
+        var rows = TournamentStandings.Compute(t);
+
+        Assert.Equal(["C", "A", "D", "B"], rows.Select(r => r.Player.Name));
+    }
+
+    [Fact]
+    public void Score_cap_limits_points_for_the_standings()
+    {
+        Assert.Equal((20, 3), Tournament.CappedScores(new() { Outcome = MatchOutcome.WinA, ScoreA = 32, ScoreB = 3 }, 20));
+        Assert.Equal((20, 21), Tournament.CappedScores(new() { Outcome = MatchOutcome.WinB, ScoreA = 25, ScoreB = 30 }, 20));
+        Assert.Equal((20, 20), Tournament.CappedScores(new() { Outcome = MatchOutcome.Draw, ScoreA = 25, ScoreB = 25 }, 20));
+        Assert.Equal((32, 3), Tournament.CappedScores(new() { Outcome = MatchOutcome.WinA, ScoreA = 32, ScoreB = 3 }, null));
+
+        var t = new Tournament { ScoreCap = 20 };
+        var a = new TournamentPlayer { Name = "A" };
+        var b = new TournamentPlayer { Name = "B" };
+        t.Players.AddRange([a, b]);
+        t.Rounds.Add(new TournamentRound
+        {
+            Number = 1,
+            Pairings = [new() { Table = 1, PlayerA = a.Id, PlayerB = b.Id, Result = new() { Outcome = MatchOutcome.WinA, ScoreA = 32, ScoreB = 3 } }],
+        });
+
+        var rows = TournamentStandings.Compute(t);
+        Assert.Equal(20, rows[0].ScoreFor);
+        Assert.Equal(3, rows[0].ScoreAgainst);
+    }
+
+    [Fact]
+    public async Task Wipeout_adds_its_bonus_and_scenario_points_are_kept()
+    {
+        var t = await CreateAsync(4);
+        Assert.Equal(Tournament.DefaultScoreCap, t.ScoreCap);
+        var table = t.CurrentRound!.Pairings[0].Table;
+
+        TournamentService.RecordResult(t, 1, table, MatchOutcome.WinB, 10, 8, ResultSource.Manual, new ResultExtras(2, 4, WipeoutB: true));
+
+        var result = t.CurrentRound.Pairings[0].Result!;
+        Assert.Equal(10, result.ScoreA);
+        Assert.Equal(8 + Tournament.WipeoutBonus, result.ScoreB);
+        Assert.True(result.WipeoutB);
+        Assert.Equal((2, 4), (result.ScenarioA, result.ScenarioB));
+        Assert.Throws<TournamentException>(() =>
+            TournamentService.RecordResult(t, 1, table, MatchOutcome.Draw, 1, 1, ResultSource.Manual, new ResultExtras(WipeoutA: true, WipeoutB: true)));
     }
 
     [Fact]
