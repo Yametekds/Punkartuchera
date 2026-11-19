@@ -1,7 +1,10 @@
 @* Ficha de una misión: resumen propio, cómo se puntúa y la página del PDF oficial. *@
 
 <article class="paper mission-card @(Highlighted ? "is-highlighted" : null)" id="@($"mision-{Mission.Id}")">
-    <img class="mission-card__photo" src="@MissionImages.Photo(Mission)" alt="" width="800" height="450" loading="lazy" decoding="async" />
+    @if (Mission.HasArt)
+    {
+        <img class="mission-card__photo" src="@MissionImages.Photo(Mission)" alt="" width="800" height="450" loading="lazy" decoding="async" />
+    }
     @if (Number is { } number)
     {
         <span class="mission-card__number" aria-hidden="true">@number</span>
@@ -9,10 +12,13 @@
     <h3 class="mission-card__title">@Mission.Name</h3>
     <p class="mission-card__summary">@Mission.Summary</p>
     <p class="mission-card__scoring"><strong>Puntos:</strong> @Mission.Scoring</p>
-    <details class="mission-card__map">
-        <summary>Ver el plano</summary>
-        <img src="@MissionImages.Map(Mission)" alt="Plano de @Mission.Name: zonas de despliegue y dónde va cada objetivo" width="420" height="428" loading="lazy" decoding="async" />
-    </details>
+    @if (Mission.HasArt)
+    {
+        <details class="mission-card__map">
+            <summary>Ver el plano</summary>
+            <img src="@MissionImages.Map(Mission)" alt="Plano de @Mission.Name: zonas de despliegue y dónde va cada objetivo" width="420" height="428" loading="lazy" decoding="async" />
+        </details>
+    }
     <p class="mission-card__meta">
         @Mission.ContaminatedZones @(Mission.ContaminatedZones == 1 ? "zona contaminada" : "zonas contaminadas")
         · <a href="@MissionCatalog.PdfLink(Mission)" target="_blank" rel="noopener">PDF, p. @Mission.Page</a>

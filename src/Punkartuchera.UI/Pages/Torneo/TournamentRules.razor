@@ -1,0 +1,113 @@
+@page "/torneo/reglas"
+@using Punkartuchera.Core.Tournaments
+
+<PageTitle>Reglas de torneo · Punkartuchera</PageTitle>
+
+<header class="page-header">
+    <div class="page-header__title">
+        <span class="page-kicker">POTS, la liga del Páramo</span>
+        <h1 class="page-title distress">Reglas de torneo</h1>
+    </div>
+    <a class="btn btn--ghost" href="torneo"><Icon Path="@Icons.Back" /> Torneos</a>
+</header>
+
+<p class="mission-lead">
+    Lo que pide el POTS oficial para un torneo de Punka, mascado. La regla de oro: no seas capullo.
+    Las Cartas de Escenario y de Fulla vienen en el Mazo del POTS, que se compra aparte; aquí no las vas a encontrar.
+</p>
+
+<div class="rule-grid">
+    <article class="rule-box">
+        <h3 class="rule-box__title">Qué te traes de casa</h3>
+        <p class="rules-text">Tus minis (de Punka o no, pero que se vea qué llevan), algo para medir, al menos un d10, los mazos de Escenario y de Fulla, la lista de tu banda y tu TQM.</p>
+        <p class="rules-text">Todo es información pública menos las balas de cada mini y las que tengas guardadas para desplegar más tarde (Infiltración y compañía). En cuanto pisan la mesa, el rival puede verlo todo.</p>
+        <SourceRef Source="pots" Page="3" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Bandas y puntos</h3>
+        <p class="rules-text">Reglamento V2 y los PDFs de la web, a rajatabla. Lo normal es jugar a 400 puntos; en torneos de iniciación o con prisa, a 350, que es lo que valen las listas de los Starters.</p>
+        <p class="rules-text">Unami y subfacciones entran si la organización da barra libre, que es lo habitual. Si el torneo es para novatos, mejor solo lo del reglamento.</p>
+        <SourceRef Source="pots" Page="5" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">El TQM (Tipo/a Que Mola)</h3>
+        <p class="rules-text">Cada banda lleva una mini extra en peana de 25 mm, la que te dé la gana. Es obligatorio.</p>
+        <p class="rules-text">Antes de desplegar, la colocas a nivel del suelo en el lado del rival: entre 15 y 30 cm de su borde. Cuenta como escenografía de Tamaño 1 y Blindaje 3, no se puede Abatir ni retirar, no estorba al Movimiento y nadie puede acabar su Movimiento encima. Algunas Cartas de Escenario te hacen jugar con él.</p>
+        <SourceRef Source="pots" Page="6" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Cartas de Escenario y de Fulla</h3>
+        <p class="rules-text">Cada mazo trae 12 cartas. Baraja, deja que el rival corte (y que las cuente si desconfía) y roba 2 de cada.</p>
+        <p class="rules-text">Las de Escenario son objetivos secretos que dan Puntos de Escenario; se enseñan al acabar. Las de Fulla son putadas de un solo uso que juegas cuando la carta lo diga; si se juegan varias a la vez, se resuelven en el orden en que se cantaron.</p>
+        <SourceRef Source="pots" Page="6" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Arrasamiento</h3>
+        <p class="rules-text">Si Abates a la última mini rival, el Turno y la partida se acaban en el acto. Se resuelve lo de final de Turno, luego lo de final de partida (objetivos secretos incluidos) y se cuentan los Puntos de victoria.</p>
+        <p class="rules-text">El que arrasa se lleva @Tournament.WipeoutBonus PV extra por abusón. Si ni con esas gana, mala suerte: haber contado mejor.</p>
+        <SourceRef Source="pots" Page="7" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Orden de preparación</h3>
+        <ol class="rules-text">
+            <li>Cada uno coloca su TQM, a ciegas porque aún no hay cartas.</li>
+            <li>Despliegue normal del reglamento: primero las de menos Agilidad.</li>
+            <li>Cada uno roba 2 Cartas de Escenario y 2 de Fulla sin enseñarlas.</li>
+        </ol>
+        <SourceRef Source="pots" Page="10" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Mesa y tiempo</h3>
+        <p class="rules-text">Mesas de 90x90 cm con la escenografía ya puesta y el tamaño marcado si hay dudas. Todo es Terreno chachi salvo las charcas contaminadas, que cuentan como Terreno chungo. Los objetivos los coloca la organización.</p>
+        <p class="rules-text">Partidas de 6 Turnos y hora y media por ronda a 400 puntos. Si se acaba el tiempo, la partida termina ahí: se resuelve el final de Turno y el de partida, y a contar.</p>
+        <SourceRef Source="pots" Page="10" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Emparejamientos</h3>
+        <p class="rules-text">Primera ronda al azar (la app la sortea), aunque la organización puede retocar cruces para que los colegas de siempre no se coman en la primera. Luego, sistema suizo: los de arriba contra los de arriba y sin repetir rival.</p>
+        <SourceRef Source="pots" Page="8" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Clasificación</h3>
+        <p class="rules-text">Puntos de torneo: 3 por ganar, 1 por empatar y 0 por perder. Si hay empate, desempata por este orden:</p>
+        <ol class="rules-text">
+            <li>Más Puntos de Escenario (los de las cartas y los extras que regale la organización).</li>
+            <li>Mejor diferencia de Puntos de victoria: a favor menos en contra.</li>
+            <li>Más Puntos de victoria a favor.</li>
+        </ol>
+        <SourceRef Source="pots" Page="8" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Tope de Puntos de victoria</h3>
+        <p class="rules-text">Para que una paliza no rompa el torneo, cada bando cuenta como mucho un tope de PV por partida, entre 15 y 20. Un 32-3 con tope 20 se apunta como 20-3.</p>
+        <p class="rules-text">Si los dos pasan el tope, el ganador se queda con el tope más uno y el perdedor con el tope. La app lo aplica sola en la clasificación.</p>
+        <SourceRef Source="pots" Page="11" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Puntos de Escenario extra</h3>
+        <p class="rules-text">La organización puede regalar Puntos de Escenario por hazañas épicas, nunca por machacar al rival, que ese ya se lleva la victoria. Ideas del POTS:</p>
+        <ul class="rules-text">
+            <li><strong>Apurando</strong> (5): ganar gracias a la última tirada del último Turno.</li>
+            <li><strong>Algo es algo</strong> (2): que te Abatan 6 o más minis en un solo Turno.</li>
+            <li><strong>Pequeño pero matón</strong> (1): impactar en Combate a un rival que te sacaba 8 o más en la tirada enfrentada.</li>
+            <li><strong>Último hombre en pie</strong> (2): acabar la partida con una sola mini.</li>
+        </ul>
+        <SourceRef Source="pots" Page="7" />
+    </article>
+
+    <article class="rule-box">
+        <h3 class="rule-box__title">Premios</h3>
+        <p class="rules-text">Trofeo al primero y cuchara de palo al último, vale. Pero el resto de regalos, en orden aleatorio: puedes quedar el 17 y pillar el mejor botín.</p>
+        <SourceRef Source="pots" Page="9" />
+    </article>
+</div>

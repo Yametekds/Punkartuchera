@@ -45,6 +45,7 @@ else
     <h2 class="section-title">Torneo nuevo</h2>
     <div class="paper tourney-setup">
         <p>Este móvil lleva el torneo. Cada mesa juega en su propio móvil y, al acabar, te enseña un QR con el resultado.</p>
+        <p class="sheet__small">Se juega con las reglas oficiales del POTS: clasificación, tope de PV, Arrasamiento y TQM. <a href="torneo/reglas">Échales un ojo</a>.</p>
 
         <label class="field">
             <span class="field__label">Nombre del torneo</span>
@@ -83,6 +84,7 @@ else
             @if (_entries.Count >= Tournament.MinPlayers)
             {
                 <Stepper Label="@($"Rondas (recomendadas: {Tournament.RecommendedRounds(_entries.Count)})")" Value="Rounds" Min="1" Max="MaxRounds" ValueChanged="v => _rounds = v" />
+                <Stepper Label="Tope de Puntos de victoria por partida (POTS: entre 15 y 20)" Value="_scoreCap" Min="Tournament.MinScoreCap" Max="Tournament.MaxScoreCap" ValueChanged="v => _scoreCap = v" />
             }
         }
 
@@ -115,6 +117,7 @@ else
     private string? _error;
     private string _name = string.Empty;
     private int? _rounds;
+    private int _scoreCap = Tournament.DefaultScoreCap;
     private List<Tournament> _tournaments = [];
     private List<Band> _bands = [];
     private readonly List<Entry> _entries = [];
@@ -181,7 +184,7 @@ else
         _error = null;
         try
         {
-            var t = await Tournaments.CreateAsync(_name, _entries.Select(e => new TournamentEntry(e.BandId, e.PlayerName)).ToList(), Rounds);
+            var t = await Tournaments.CreateAsync(_name, _entries.Select(e => new TournamentEntry(e.BandId, e.PlayerName)).ToList(), Rounds, _scoreCap);
             Navigation.NavigateTo($"torneo/{t.Id}");
         }
         catch (TournamentException ex)

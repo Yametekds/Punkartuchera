@@ -18,7 +18,18 @@
     { "id": "subfacciones-troupe", "title": "Subfacciones Troupé", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesTroupe.pdf" },
     { "id": "subfacciones-unami", "title": "Subfacciones Unami", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/SubfaccionesUnami.pdf" },
     { "id": "subfacciones-craabianos", "title": "Subfacciones Craabianos (beta)", "url": "https://punkapocalyptic.com/descargasweb/SubfaccionesCraabianos.pdf" },
-    { "id": "faqs", "title": "FAQs y erratas", "url": "https://punkapocalyptic.com/faqs/" }
+    { "id": "faqs", "title": "FAQs y erratas", "url": "https://punkapocalyptic.com/faqs/" },
+    { "id": "pots", "title": "POTS (reglas de torneo)", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/07/POTS-25.pdf" },
+    { "id": "devin-crow", "title": "Devin Crow", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/DevinV2-1.pdf" },
+    { "id": "punkalabazas", "title": "Escenario Punkalabazas", "url": "https://punkapocalyptic.com/descargasweb/Punkalabazas.pdf" },
+    { "id": "ficha-banda", "title": "Fichas de banda (color)", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/ControlBanda.pdf", "extra": true },
+    { "id": "ficha-banda-editable", "title": "Fichas de banda (editable)", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/ControlBandaEditable.pdf", "extra": true },
+    { "id": "ficha-banda-bn", "title": "Fichas de banda (ByN)", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/ControlBandaBN.pdf", "extra": true },
+    { "id": "ficha-individual", "title": "Fichas individuales", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/FichaIndividual.pdf", "extra": true },
+    { "id": "marcadores", "title": "Marcadores", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/Marcadores.pdf", "extra": true },
+    { "id": "tarot-madame-destino", "title": "Cartas del Tarot de Madame Destino", "url": "https://punkapocalyptic.com/wp-content/uploads/2025/08/TarotMadameDestino2.zip", "extra": true },
+    { "id": "lista-slashers", "title": "Lista de ejemplo Slashers", "url": "https://punkapocalyptic.com/wp-content/uploads/2026/10/FichaControlSlashers.pdf", "extra": true },
+    { "id": "lista-banda-del-comic", "title": "Lista Banda del Cómic", "url": "https://www.badrollgames.com/V2/FichaControlComic.pdf", "extra": true }
   ],
   "attributes": [
     { "key": "a", "name": "Acciones", "abbreviation": "A", "min": 1, "max": 3, "default": 2, "description": "Cuántas Acciones puede hacer en su Fase de activación. Nunca más de 3." },
