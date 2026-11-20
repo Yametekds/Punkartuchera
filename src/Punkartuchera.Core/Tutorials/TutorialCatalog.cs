@@ -12,6 +12,7 @@ public static class TutorialCatalog
         Play(),
         Band(),
         Terrain(),
+        MissionsAndTournaments(),
     ];
 
     public static Tutorial? Find(string? id) => All.FirstOrDefault(t => t.Id == id);
@@ -31,7 +32,7 @@ public static class TutorialCatalog
                 "Una vez cargada, **funciona sin conexión**: bandas, reglas y mapa tiran en el sótano más mugriento del páramo. Solo la partida con código necesita red.",
             ])
             {
-                InApp = "Todo lo que guardas **se queda en tu móvil**, no en ninguna nube. Si borras los datos del navegador, tus bandas se van con ellos.",
+                InApp = "Todo lo que guardas **se queda en tu móvil**, no en ninguna nube. Si borras los datos del navegador, tus bandas se van con ellos, salvo que tengas una **copia de seguridad** hecha desde **Usuario**.",
             },
             new("El menú",
             [
@@ -40,7 +41,10 @@ public static class TutorialCatalog
                 "• **Reglas**: el reglamento resumido, con buscador y todas las facciones.",
                 "• **Mapa**: generador de mesas con la escenografía repartida.",
                 "• **Partida**: el marcador para la bronca de hoy.",
+                "• **Misiones**: los escenarios oficiales, mascados y con uno al azar.",
+                "• **Torneo**: monta un torneo suizo con las reglas del POTS.",
                 "• **Tutoriales**: esto que estás leyendo, por si se te olvida.",
+                "• **Usuario**: tu nickname, el tamaño de la letra y la copia de seguridad.",
                 "En el móvil tienes además una **barra abajo** con Bandas, Reglas, Mapa y Partida, siempre a mano.",
             ])
             {
@@ -108,6 +112,20 @@ public static class TutorialCatalog
                     new("pasar-al-rival.webp", "Ventana Pásale la banda al rival con un código QR y el botón Enviar archivo", "Pasar al rival: QR o archivo, y las balas no viajan."),
                 ],
             },
+            new("Sácala en PDF",
+            [
+                "¿La quieres en papel para la mesa o para fardar? En el menú **⋮** de la banda, **Exportar a PDF** te monta las hojas con pinta de manual:",
+                "• Una **portada** con el nombre, la facción y su emblema, la **lista de la banda**, las **reglas especiales de la facción** y los **límites** de la banda.",
+                "• Una **ficha por miembro** con sus Atributos, el **Blindaje**, las **balas**, el equipo, las habilidades, sus reglas especiales y su foto.",
+                "Dale a **Guardar en PDF** y, en la ventana de imprimir, elige **Guardar como PDF** como impresora. O mándalo directo a la impresora y a otra cosa.",
+            ])
+            {
+                InApp = "Está pensado para **imprimir**: en algunos visores del móvil puede verse algo distinto que en papel.",
+                Shots =
+                [
+                    new("exportar-pdf.webp", "Vista previa de la hoja de banda para PDF con la portada y el botón Guardar en PDF", "Exportar a PDF: la vista previa y el botón Guardar en PDF."),
+                ],
+            },
             new("Genera el mapa",
             [
                 "En **Mapa** eliges:",
@@ -127,12 +145,12 @@ public static class TutorialCatalog
             },
             new("Lleva la partida",
             [
-                "En **Partida** eliges **Mi banda** y **La del rival**, y cómo jugar:",
+                "En **Partida** eliges **Mi banda** y **La del rival**, la **misión** si vais a jugar una (de la lista o al azar) y cómo jugar:",
                 "• **En este móvil**: las dos bandas en el mismo teléfono. Vale cualquier banda, también las rivales que hayas cargado.",
-                "• **Cada uno en su móvil** (si tu versión lo tiene montado): uno crea la partida y le pasa el **código** al otro, que lo mete en su Punkartuchera. Su banda te llega sola, sin balas ni fotos, y cada uno marca a los suyos.",
+                "• **Cada uno en su móvil**: uno crea la partida y le pasa el **código** al otro. Ojo, que está marcado como **experimental**: aún está a medio soldar y puede fallar. Si queréis ir a lo seguro, las dos bandas en un móvil.",
                 "Durante la partida, marca a cada miembro como **Por actuar** o **Ya ha ido**, y **En pie** o **Baja**.",
                 "El contador de **Ronda** de la app lleva los **Turnos** del reglamento: con **Siguiente ronda**, todos vuelven a estar por actuar.",
-                "Arriba llevas el **marcador** de cada banda, y el botón **Dado** tira los d10 por ti.",
+                "Arriba llevas el **marcador** de cada banda, y el botón **Dado** tira los **d10** (o d6, si algo los pide) por ti.",
                 "¿Os tenéis que ir? **Dejar para luego** la guarda para seguirla otro día. Cuando acabe la carnicería, **Terminar y borrar**.",
             ])
             {
@@ -140,6 +158,21 @@ public static class TutorialCatalog
                 Shots =
                 [
                     new("partida.webp", "Partida en marcha con el marcador, el contador de Ronda y los miembros marcados como Ya ha ido o Por actuar", "Marcador, Ronda y quién ha ido ya."),
+                ],
+            },
+            new("Tu rincón: Usuario",
+            [
+                "En **Usuario** dejas la app a tu gusto:",
+                "• **Nickname**: con él firmas tus copias y viaja con tu banda cuando se la pasas a otro, así en los torneos se sabe de quién es.",
+                "• **Tamaño de letra**: para leer las fichas sin dejarte los ojos.",
+                "• **Copia de seguridad**: **Hacer copia** mete en un solo archivo tus bandas (con sus balas), las rivales, las partidas guardadas, tu nickname y tus ajustes.",
+                "Guarda esa copia donde quieras. Si cambias de móvil o se te borra el navegador, **Restaurar copia** y como si nada.",
+            ])
+            {
+                Link = new("usuario", "Ir a Usuario"),
+                Shots =
+                [
+                    new("usuario.webp", "Pantalla Usuario con el nickname, el tamaño de letra y la copia de seguridad", "Usuario: nickname, letra y copia de seguridad."),
                 ],
             },
         ]);
@@ -318,19 +351,20 @@ public static class TutorialCatalog
             ])
             {
                 RuleIds = ["armas-equipo"],
-                InApp = "Con **Sacar del reglamento** la ficha se rellena con su perfil, y **Añadir equipo** solo te ofrece lo que esa tropa puede comprar.",
+                InApp = "Con **Sacar del reglamento** la ficha se rellena con su perfil, y **Añadir equipo** solo te ofrece lo que esa tropa puede comprar. El **Blindaje** se saca solo de lo que lleve puesto: si le compras una armadura nueva, **sustituye** a la que tenía. Y cada Atributo enseña su **modificador** (+1, −1…) si algún trasto se lo cambia.",
             },
             new("Compra equipo y balas",
             [
                 "Además de lo de su facción, hay **equipo que puede llevar cualquiera**:",
                 "• **Balas**: **15 puntos** cada una, solo para armas de fuego. Las armas que no son de fuego tienen munición para toda la partida.",
-                "• **Bayoneta**: +2 a la Penetración en cuerpo a cuerpo para un arma de fuego.",
+                "• **Bayoneta**: **3 puntos**, para cualquiera que lleve un arma de fuego. +2 a la Penetración en cuerpo a cuerpo y **una por miniatura**, aunque lleve varias armas de fuego.",
                 "• **Escudo**: más Blindaje en cuerpo a cuerpo y Cobertura +2 contra disparos. No va con armas A dos manos.",
                 "• **Protección contra la contaminación**: pasas del Terreno contaminado.",
-                "• **Gato parameño**: uno por banda y con su miniatura a la vista. Una vez por partida repites una tirada tuya u obligas al rival a repetir una suya.",
+                "• **Gato parameño**: **10 puntos** y **uno por banda**, con su miniatura a la vista. No lo lleva nadie: es de la banda entera. Una vez por partida repites una tirada tuya u obligas al rival a repetir una suya.",
                 "Las balas son caras. **Pocas y bien puestas.**",
             ])
             {
+                InApp = "El Gato se compra en el recuadro **Para toda la banda**, debajo de los miembros, y su coste se suma al total.",
                 Link = new("reglas/equipo", "Ver armas y equipo"),
             },
             new("Lo que se ve y lo que no",
@@ -487,6 +521,105 @@ public static class TutorialCatalog
                 RuleIds = ["coberturas"],
                 InApp = "En el generador de Mapa eliges el **material** de cada tipo de pieza y el plano ya sale con **la marca de cada una**. Si vuestra escenografía es distinta, cambiad el material y listo.",
                 Link = new("mapa", "Generar un mapa"),
+            },
+        ]);
+
+    private static Tutorial MissionsAndTournaments() => new(
+        "misiones-torneos",
+        "Misiones y torneos",
+        "A qué jugamos y quién manda",
+        "Elige la misión de la partida, monta un torneo suizo con las reglas del POTS y lleva la clasificación sin una sola hoja de cálculo.",
+        [
+            new("Elige la misión",
+            [
+                "En **Misiones** tienes **todos los escenarios oficiales**: los del PDF de Escenarios y los sueltos de la web.",
+                "Cada misión trae:",
+                "• Un **resumen** de lo que hay que hacer, sin paja.",
+                "• **Cómo se puntúa**, que es lo que acaba decidiendo quién gana.",
+                "• Su **foto** y el **plano** con el despliegue y dónde va cada objetivo.",
+                "• Cuántas **zonas contaminadas** pide y la **página del PDF** con la letra pequeña.",
+                "¿No os ponéis de acuerdo? **Una al azar** y que decida la suerte.",
+                "Todas duran **6 Turnos**, se despliega como siempre y gana el que más **Puntos de victoria** rasque.",
+            ])
+            {
+                Link = new("misiones", "Ver las misiones"),
+                Shots =
+                [
+                    new("misiones.webp", "La misión que ha tocado al azar, con su foto, el resumen y cómo se puntúa", "Una al azar: resumen, puntos y plano."),
+                ],
+            },
+            new("Átala a la partida",
+            [
+                "La misión se puede meter en la partida de **tres maneras**:",
+                "• Desde **Misiones**, con **Jugar esta misión**: te lleva a Partida con ella ya puesta.",
+                "• Al crear la partida, con **Elegir misión** o **Al azar**.",
+                "• Si ya hay una partida en marcha, con **Anclar a la partida** desde Misiones.",
+                "Durante la partida tenéis la misión a mano, con su resumen, sus puntos y el plano. Se acabó el «¿y esto cómo puntuaba?».",
+            ])
+            {
+                Link = new("partida", "Ir a la partida"),
+                Shots =
+                [
+                    new("partida-mision.webp", "Crear partida con la misión elegida, su resumen y los botones Cambiar y Al azar", "Al crear la partida: misión de la lista o al azar."),
+                ],
+            },
+            new("Monta el torneo",
+            [
+                "Un móvil lleva el torneo: el del que organiza. Antes de empezar, **carga en ese móvil la banda de cada jugador** desde Bandas con **Cargar rival**. Cada banda llega con el **nickname** de su dueño.",
+                "En **Torneo**, **Torneo nuevo**:",
+                "• Ponle **nombre** y marca las **bandas** que juegan. Puedes cambiar el nombre del jugador de cada una.",
+                "• Elige cuántas **rondas**: la app te dice las recomendadas para ese número de jugadores.",
+                "• Elige el **tope de Puntos de victoria** por partida: el POTS dice **entre 15 y 20**.",
+                "Dale a **Sortear la primera ronda** y ya tienes las mesas. Si sois impares, a uno le toca **Descansa**, que cuenta como victoria.",
+            ])
+            {
+                Link = new("torneo", "Montar un torneo"),
+                Shots =
+                [
+                    new("torneo-nuevo.webp", "Formulario Torneo nuevo con las bandas marcadas, las rondas y el tope de Puntos de victoria", "Torneo nuevo: bandas, rondas y tope de PV."),
+                ],
+            },
+            new("El resultado, por QR",
+            [
+                "Cada mesa juega **en su propio móvil**, en Partida, como siempre.",
+                "Al terminar, sale el botón **QR del resultado para el torneo**. El que organiza le da a **Escanear resultado** y se lo lleva.",
+                "Antes de apuntarlo, repasa el resultado y mete lo que el QR no sabe:",
+                "• Los **Puntos de Escenario** de cada uno (cartas de Escenario y extras de la organización).",
+                "• Si alguien **arrasó**: se lleva **+5 PV** por abusón.",
+                "¿Una mesa sin móvil o con el QR tieso? **Apuntar a mano** y listo. Si la has liado, **Corregir**.",
+            ])
+            {
+                Shots =
+                [
+                    new("torneo-mesas.webp", "Ronda de torneo con las mesas emparejadas, el botón Escanear resultado y Apuntar a mano en cada mesa", "Mesas de la ronda: escanea el QR o apunta a mano."),
+                ],
+            },
+            new("La clasificación del POTS",
+            [
+                "La pestaña **Clasificación** se calcula sola con las reglas oficiales del POTS:",
+                "• **Puntos de torneo**: 3 por ganar, 1 por empatar, 0 por perder y 3 por descansar.",
+                "• Si hay empate, manda quien tenga más **Puntos de Escenario**.",
+                "• Luego, la mejor **diferencia de Puntos de victoria**, y al final quien tenga **más a favor**.",
+                "Los PV se cuentan **con tope**: un 32-3 con tope 20 se apunta como 20-3. Si los dos pasan el tope, el ganador se queda con el tope más uno y el perdedor con el tope.",
+                "Cuando acaban todas las mesas, **Emparejar la ronda** siguiente: sistema suizo, los de arriba contra los de arriba y **sin repetir rival**. Quien se retire, desde **Jugadores**.",
+            ])
+            {
+                Shots =
+                [
+                    new("torneo-clasificacion.webp", "Tabla de clasificación del torneo con Pts, PE y la diferencia de Puntos de victoria", "Clasificación: Pts, PE y diferencia de PV."),
+                ],
+            },
+            new("Las reglas del torneo y lo que hay que imprimir",
+            [
+                "En **Torneo** tienes el enlace a las **reglas de torneo** del POTS, mascadas:",
+                "• Qué te traes de casa y a cuántos puntos se juega (lo normal, **400**).",
+                "• El **TQM**: la mini extra que colocas en el lado del rival antes de desplegar.",
+                "• Las **cartas de Escenario y de Fulla**, el **Arrasamiento** y el **orden de preparación**.",
+                "• **Mesas de 90×90**, 6 Turnos y hora y media por ronda.",
+                "Y en **Reglas**, abajo del todo, **Para imprimir y trastear**: fichas, marcadores, cartas y listas de ejemplo de la zona de descargas oficial.",
+            ])
+            {
+                Link = new("torneo/reglas", "Ver las reglas de torneo"),
             },
         ]);
 }
