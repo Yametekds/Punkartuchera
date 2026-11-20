@@ -1,0 +1,87 @@
+@* Ventana para elegir el tipo de miembro viendo la foto oficial de cada miniatura. *@
+@inject RosterBuilder Roster
+
+<div class="sheet-scrim" @onclick="Close"></div>
+<section class="sheet paper troop-picker" role="dialog" aria-modal="true" aria-labelledby="troop-picker-title">
+    <header class="sheet__head">
+        <h2 id="troop-picker-title" class="sheet__title">Elige tipo</h2>
+        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
+    </header>
+
+    @if (Choices.Count > 6)
+    {
+        <input class="field__input" type="search" placeholder="Buscar…" @bind="_filter" @bind:event="oninput" aria-label="Buscar tipo" />
+    }
+
+    <div class="troop-picker__list">
+        @foreach (var group in Visible.GroupBy(c => c.Group))
+        {
+            <div class="troop-picker__group">
+                <h3 class="loadout-group__title">@group.Key</h3>
+                <div class="troop-picker__grid">
+                    @foreach (var choice in group)
+                    {
+                        var selected = choice.Key == SelectedKey;
+                        <button type="button" class="troop-option @(selected ? "is-selected" : null)" aria-pressed="@(selected ? "true" : "false")" @onclick="() => Pick(choice)">
+                            <MiniPortrait Photo="PhotoOf(choice)" Alt="@choice.Name" Size="pick" />
+                            <span class="troop-option__name">@choice.Name</span>
+                            @if (choice.Label is not null)
+                            {
+                                <span class="troop-option__troop">@choice.Troop.Name</span>
+                            }
+                            <span class="troop-option__cost">@choice.Troop.Cost ptos</span>
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (!Visible.Any())
+        {
+            <p class="sheet__small">Nada con ese nombre en la lista de tu banda.</p>
+        }
+    </div>
+
+    <p class="sheet__small">Fotos oficiales de las miniaturas (Bad Roll Games). La calavera es que no hay foto de esa.</p>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<TroopChoice> Choices { get; set; } = [];
+
+    [Parameter] public string? SelectedKey { get; set; }
+
+    [Parameter] public EventCallback<TroopChoice> OnPick { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private readonly Dictionary<string, PhotoRef?> _photos = [];
+    private string _filter = string.Empty;
+
+    private IEnumerable<TroopChoice> Visible
+    {
+        get
+        {
+            var key = RulesText.Fold(_filter.Trim());
+            return key.Length == 0
+                ? Choices
+                : Choices.Where(c => RulesText.Fold(c.Name).Contains(key, StringComparison.Ordinal)
+                    || RulesText.Fold(c.Troop.Name).Contains(key, StringComparison.Ordinal));
+        }
+    }
+
+    /// <summary>La misma foto que se pondrá en la ficha al elegirla.</summary>
+    private PhotoRef? PhotoOf(TroopChoice choice)
+    {
+        if (!_photos.TryGetValue(choice.Key, out var photo))
+        {
+            photo = Roster.FromTroop(choice.Troop, choice.Owner.ParentId ?? choice.Owner.Id).Photo;
+            _photos[choice.Key] = photo;
+        }
+
+        return photo;
+    }
+
+    private Task Pick(TroopChoice choice) => OnPick.InvokeAsync(choice);
+
+    private Task Close() => OnClose.InvokeAsync();
+}

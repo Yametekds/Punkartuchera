@@ -55,28 +55,25 @@ else
             @if (_choices.Count > 0)
             {
                 <div class="recruit-picker">
-                    <label class="field">
-                        <span class="field__label">Tipo</span>
-                        <select class="field__input" value="@_choiceKey" @onchange="PickTroop">
-                            @if (_customRole is not null)
+                    <div class="field">
+                        <span class="field__label" id="member-type-label">Tipo</span>
+                        <button type="button" class="field__input troop-trigger" aria-labelledby="member-type-label" aria-haspopup="dialog" @onclick="() => _troopPicker = true">
+                            @if (CurrentChoice is { } current)
                             {
-                                <option value="@CustomKey">@_customRole (a mano)</option>
+                                <MiniPortrait Photo="_member.Photo" Alt="" Size="sm" />
+                                <span class="troop-trigger__text">@ChoiceLabel(current)</span>
+                            }
+                            else if (_customRole is not null)
+                            {
+                                <span class="troop-trigger__text">@_customRole (a mano)</span>
                             }
                             else
                             {
-                                <option value="">Elige tipo</option>
+                                <span class="troop-trigger__text troop-trigger__text--empty">Elige tipo</span>
                             }
-                            @foreach (var group in _choices.GroupBy(c => c.Group))
-                            {
-                                <optgroup label="@group.Key">
-                                    @foreach (var choice in group)
-                                    {
-                                        <option value="@choice.Key">@ChoiceLabel(choice)</option>
-                                    }
-                                </optgroup>
-                            }
-                        </select>
-                    </label>
+                            <span class="troop-trigger__more">Ver fotos</span>
+                        </button>
+                    </div>
                     @if (_picked is not null)
                     {
                         <p class="recruit-picker__summary">
@@ -171,6 +168,11 @@ else
                            OnPick="Buy" OnManual="name => AddManual(name, isSkill)" OnClose="() => _picker = null" />
         }
 
+        @if (_troopPicker)
+        {
+            <TroopPicker Choices="_choices" SelectedKey="@_choiceKey" OnPick="PickTroop" OnClose="() => _troopPicker = false" />
+        }
+
         <section class="paper stack cost-sheet">
             <h2 class="section-title">Coste de la miniatura</h2>
             <ul class="cost-sheet__lines">
@@ -228,6 +230,9 @@ else
     private LoadoutSlot? _picker;
     private UnitCost _cost = new([], UnitCostCalculator.DefaultBulletPrice);
     private TroopChoice? _picked;
+    private bool _troopPicker;
+
+    private TroopChoice? CurrentChoice => _choices.FirstOrDefault(c => c.Key == _choiceKey);
     private string _choiceKey = string.Empty;
 
     /// <summary>Tipo escrito a mano en una ficha antigua que no sale en la lista de su banda.</summary>
@@ -299,15 +304,16 @@ else
     }
 
     /// <summary>Rellena la ficha con una tropa, personalidad o mercenario del reglamento, conservando la foto y el nombre puesto.</summary>
-    private void PickTroop(ChangeEventArgs e)
+    private void PickTroop(TroopChoice choice)
     {
+        _troopPicker = false;
         if (_member is null)
         {
             return;
         }
 
-        var key = e.Value?.ToString() ?? string.Empty;
-        if (key == CustomKey || key == _choiceKey)
+        var key = choice.Key;
+        if (key == _choiceKey)
         {
             return;
         }
