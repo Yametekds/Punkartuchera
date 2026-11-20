@@ -108,14 +108,30 @@ else
         <section class="paper stack">
             <h2 class="section-title">Atributos</h2>
             <PlaceholderNotice />
-            <div class="stat-grid">
-                @foreach (var stat in Rules.Stats)
-                {
-                    <Stepper Label="@stat.Abbreviation" Min="stat.Min" Max="stat.Max" Compact="true"
-                             Value="_member.GetStat(stat.Key, stat.Default)"
-                             ValueChanged="value => _member.Stats[stat.Key] = value" />
-                }
-            </div>
+            @if (HasOfficialProfile)
+            {
+                <dl class="stat-grid stat-grid--locked" aria-label="Atributos del perfil">
+                    @foreach (var stat in Rules.Stats)
+                    {
+                        <div class="statbox" title="@stat.Name">
+                            <dt>@stat.Abbreviation</dt>
+                            <dd>@_member.GetStat(stat.Key, stat.Default)</dd>
+                        </div>
+                    }
+                </dl>
+                <p class="muted stat-grid__note">Perfil del reglamento. Solo lo cambian el equipo y las reglas especiales.</p>
+            }
+            else
+            {
+                <div class="stat-grid">
+                    @foreach (var stat in Rules.Stats)
+                    {
+                        <Stepper Label="@stat.Abbreviation" Min="stat.Min" Max="stat.Max" Compact="true"
+                                 Value="_member.GetStat(stat.Key, stat.Default)"
+                                 ValueChanged="value => _member.Stats[stat.Key] = value" />
+                    }
+                </div>
+            }
             @if (_canBuyAmmo || _member.Ammo > 0)
             {
                 <div class="ammo-stepper">
@@ -236,6 +252,9 @@ else
     private const string CustomKey = "__custom";
 
     private bool IsNew => MemberId is null;
+
+    /// <summary>Tipo sacado del reglamento: su perfil es fijo y no se edita a mano.</summary>
+    private bool HasOfficialProfile => _choiceKey.Length > 0 && _choiceKey != CustomKey;
 
     private IReadOnlyList<OfficialMini> OfficialPhotos =>
         _member is null ? [] : Roster.PhotosFor(_band?.FactionId, _member.Role);
