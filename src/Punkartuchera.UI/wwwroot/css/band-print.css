@@ -707,4 +707,6 @@
     .band-print { padding: 12px 8px 32px; }
     .print-doc { padding: 16px 12px; }
     .print-profile { --photo-size: 22mm; }
+    /* A 30pt una palabra larga no cabe en la columna del nombre y se partiría por cualquier letra */
+    .print-cover__name { font-size: clamp(13pt, 5.5vw, 30pt); }
 }
