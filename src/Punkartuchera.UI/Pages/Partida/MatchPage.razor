@@ -200,10 +200,45 @@ else
         </p>
     }
 
-    <section class="match-score" aria-label="Marcador">
+    <section class="match-score match-bar" aria-label="Marcador y ronda">
         @ScoreView(MatchSide.Own, match.OwnBandName)
-        <span class="match-score__vs" aria-hidden="true">vs</span>
+        <div class="match-bar__round">
+            <div class="match-bar__dial">
+                <button type="button" class="stepper__btn match-bar__back" aria-label="Volver a la ronda anterior"
+                        disabled="@(match.Round <= 1 || match.ClosedByRival || _busy)" @onclick="() => SetRound(match.Round - 1)">‹</button>
+                <div class="round-dial" style="--round: @match.Round; --rounds: @ActiveMatch.MaxRound" role="img" aria-label="Ronda @match.Round de @ActiveMatch.MaxRound">
+                    <span class="round-dial__value">@match.Round</span>
+                </div>
+                <span class="match-bar__of" aria-hidden="true">de @ActiveMatch.MaxRound</span>
+            </div>
+            @if (match.Round < ActiveMatch.MaxRound)
+            {
+                <button type="button" class="btn btn--blood match-bar__next" disabled="@(match.ClosedByRival || _busy)" @onclick="NextRound">
+                    Siguiente<span class="match-bar__next-word"> ronda</span>
+                </button>
+            }
+            else if (!match.Over)
+            {
+                <button type="button" class="btn btn--blood match-bar__next" disabled="@(match.ClosedByRival || _busy)" @onclick="NextRound">
+                    Cerrar ronda
+                </button>
+            }
+            else
+            {
+                <button type="button" class="btn btn--ghost match-bar__next" disabled="@(match.ClosedByRival || _busy)" @onclick="() => SetRound(ActiveMatch.MaxRound)">
+                    Reabrir
+                </button>
+            }
+        </div>
         @ScoreView(MatchSide.Rival, match.RivalBandName ?? "Rival")
+        @if (_confirmNext)
+        {
+            <div class="match-bar__confirm" role="alert">
+                <span>@PendingText(match)</span>
+                <button type="button" class="btn btn--blood" disabled="@_busy" @onclick="ConfirmNextRound">@(match.Round < ActiveMatch.MaxRound ? "Pasar igual" : "Cerrar igual")</button>
+                <button type="button" class="btn btn--ghost" @onclick="() => _confirmNext = false">Espera</button>
+            </div>
+        }
     </section>
 
     @if (match.Over)
@@ -214,32 +249,15 @@ else
         <TournamentResultQr Match="match" />
     }
 
-    <div class="paper match-round">
-        <div class="round-dial" style="--round: @match.Round; --rounds: @ActiveMatch.MaxRound" aria-hidden="true">
-            <span class="round-dial__value">@match.Round</span>
+    @if (match.HasRival)
+    {
+        <div class="match-tabs page-tabs" role="tablist" aria-label="Banda a la vista">
+            @TabView(MatchSide.Own, match.OwnBandName, match.Own)
+            @TabView(MatchSide.Rival, match.RivalBandName ?? "Rival", match.Rival)
         </div>
-        <Stepper Label="@($"Ronda (de {ActiveMatch.MaxRound})")" Value="match.Round" Min="1" Max="ActiveMatch.MaxRound" ValueChanged="SetRound" />
-        @if (match.Round < ActiveMatch.MaxRound)
-        {
-            <button type="button" class="btn btn--blood" disabled="@(match.ClosedByRival || _busy)" @onclick="() => SetRound(match.Round + 1)">
-                Siguiente ronda
-            </button>
-        }
-        else if (!match.Over)
-        {
-            <button type="button" class="btn btn--blood" disabled="@(match.ClosedByRival || _busy)" @onclick="Finish">
-                Cerrar la última ronda
-            </button>
-        }
-        else
-        {
-            <button type="button" class="btn btn--ghost" disabled="@(match.ClosedByRival || _busy)" @onclick="() => SetRound(ActiveMatch.MaxRound)">
-                Reabrir la ronda @ActiveMatch.MaxRound
-            </button>
-        }
-    </div>
+    }
 
-    <div class="match-sides">
+    <div class="match-sides" data-tab="@(_tab == MatchSide.Own ? "own" : "rival")">
         @MatchSideView((MatchSide.Own, match.OwnBandName, match.Own, true))
         @if (match.HasRival)
         {
@@ -247,7 +265,7 @@ else
         }
         else
         {
-            <section class="match-side">
+            <section class="match-side match-side--rival">
                 <h2 class="section-title">Rival</h2>
                 <p class="paper match-waiting">
                     Esperando al rival… Que meta el código <strong>@match.Code</strong> en su Punkartuchera.
@@ -304,6 +322,8 @@ else
     private Guid? _ownId;
     private Guid? _rivalId;
     private (MatchSide Side, int Index)? _sheet;
+    private MatchSide _tab = MatchSide.Own;
+    private bool _confirmNext;
     private GearInfo? _rule;
     private string? _ruleTitle;
     private readonly Dictionary<MatchSide, (Band? Band, int Count, BandAids Aids)> _aidCache = [];
@@ -340,9 +360,9 @@ else
         var band = BandOf(side.Side);
         var aids = AidsOf(side.Side);
         var editable = side.Editable && !Matches.Current!.ClosedByRival;
-        <section class="match-side">
+        <section class="match-side match-side--@(side.Side == MatchSide.Own ? "own" : "rival")" id="match-side-@(side.Side == MatchSide.Own ? "own" : "rival")" role="tabpanel">
             <h2 class="section-title">@side.Name</h2>
-            <p class="match-side__count">@side.Members.Count(m => !m.Down) en pie de @side.Members.Count</p>
+            <p class="match-side__count">@side.Members.Count(m => !m.Down) en pie de @side.Members.Count<span class="match-side__pending"> · @Pending(side.Members) por actuar</span></p>
 
             @if (aids.Band.Count > 0)
             {
@@ -401,6 +421,46 @@ else
         </section>
     };
 
+    private RenderFragment TabView(MatchSide side, string name, List<MatchMember> members) => __builder =>
+    {
+        var pending = Pending(members);
+        var id = side == MatchSide.Own ? "own" : "rival";
+        <button type="button" role="tab" class="page-tabs__tab match-tabs__tab @(_tab == side ? "is-active" : null)"
+                aria-selected="@(_tab == side ? "true" : "false")" aria-controls="match-side-@id" @onclick="() => _tab = side">
+            <span class="match-tabs__name">@name</span>
+            <span class="match-tabs__pending @(pending == 0 ? "is-done" : null)">@(pending == 0 ? "todos han ido" : $"{pending} por actuar")</span>
+        </button>
+    };
+
+    private static int Pending(IEnumerable<MatchMember> members) => members.Count(m => !m.Down && !m.Activated);
+
+    private int PendingTotal(ActiveMatch match) => Pending(match.Own) + (match.HasRival ? Pending(match.Rival) : 0);
+
+    private string PendingText(ActiveMatch match)
+    {
+        var pending = PendingTotal(match);
+        return pending == 1 ? "Queda 1 miniatura sin actuar." : $"Quedan {pending} miniaturas sin actuar.";
+    }
+
+    /// <summary>Antes de pasar de ronda avisa si queda alguien en pie sin actuar.</summary>
+    private Task NextRound()
+    {
+        if (PendingTotal(Matches.Current!) > 0)
+        {
+            _confirmNext = true;
+            return Task.CompletedTask;
+        }
+
+        return ConfirmNextRound();
+    }
+
+    private Task ConfirmNextRound()
+    {
+        _confirmNext = false;
+        var match = Matches.Current!;
+        return match.Round < ActiveMatch.MaxRound ? SetRound(match.Round + 1) : Finish();
+    }
+
     private RenderFragment AidView((MatchSide Side, BandAids Aids, MatchAid Aid, int? Index, bool Detailed) a) => __builder =>
     {
         var match = Matches.Current!;
@@ -421,14 +481,17 @@ else
         var editable = (side == MatchSide.Own || !match.IsOnline) && !match.ClosedByRival && (side == MatchSide.Own || match.HasRival);
         <div class="match-score__side">
             <span class="match-score__name">@name</span>
-            <span class="match-score__value" aria-live="polite">@score</span>
-            @if (editable)
-            {
-                <span class="match-score__controls">
-                    <button type="button" class="stepper__btn" disabled="@(score <= 0)" aria-label="Quitar un punto a @name" @onclick="() => SetScore(side, score - 1)">−</button>
-                    <button type="button" class="stepper__btn" aria-label="Sumar un punto a @name" @onclick="() => SetScore(side, score + 1)">+</button>
-                </span>
-            }
+            <span class="match-score__count">
+                @if (editable)
+                {
+                    <button type="button" class="stepper__btn match-score__minus" disabled="@(score <= 0)" aria-label="Quitar un punto a @name" @onclick="() => SetScore(side, score - 1)">−</button>
+                }
+                <span class="match-score__value" aria-live="polite">@score</span>
+                @if (editable)
+                {
+                    <button type="button" class="stepper__btn match-score__plus" aria-label="Sumar un punto a @name" @onclick="() => SetScore(side, score + 1)">+</button>
+                }
+            </span>
         </div>
     };
 
@@ -551,7 +614,11 @@ else
 
     private Task Reconnect() => RunAsync(() => Matches.ReconnectAsync());
 
-    private Task SetRound(int round) => RunAsync(() => Matches.SetRoundAsync(round));
+    private Task SetRound(int round)
+    {
+        _confirmNext = false;
+        return RunAsync(() => Matches.SetRoundAsync(round));
+    }
 
     private Task Toggle(MatchSide side, int index, bool? activated = null, bool? down = null) => RunAsync(async () =>
     {
@@ -595,6 +662,8 @@ else
     private async Task AfterLeavingAsync()
     {
         _sheet = null;
+        _tab = MatchSide.Own;
+        _confirmNext = false;
         _code = null;
         _rivalId = null;
         _missionId = null;

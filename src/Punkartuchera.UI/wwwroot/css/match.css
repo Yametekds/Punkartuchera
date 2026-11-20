@@ -42,11 +42,6 @@
 .match-code .match-experimental { flex: none; align-self: center; }
 .match-experimental__note { font-size: .9rem; font-style: italic; }
 
-.match-round {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
-    margin-bottom: 18px;
-}
-.match-round .stepper { flex: 1 1 220px; }
 
 .match-sides { display: grid; gap: 18px; }
 @media (min-width: 900px) {
@@ -162,12 +157,9 @@
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 255, 255, .12);
     text-shadow: 0 0 1px rgba(0, 0, 0, .6);
 }
-.match-score__controls { display: flex; gap: 6px; }
 .match-score .stepper__btn { color: var(--punk-accent); }
-.match-score__vs { font-family: var(--punk-font-display); color: var(--punk-blood); font-size: 1.3rem; text-shadow: 0 1px 0 rgba(0, 0, 0, .9); }
 
 /* Dial de rondas: un sector por ronda, rellenos en rojo hasta la actual */
-.match-round { align-items: center; }
 .round-dial {
     --size: 74px;
     position: relative; flex: none;
@@ -446,3 +438,93 @@
 @media (prefers-reduced-motion: reduce) {
     .die, .dice-tray.is-rolling .die { animation: none; }
 }
+
+/* ---------- Barra de la partida: marcador y ronda pegados bajo la cabecera ---------- */
+
+.match-bar {
+    position: sticky; z-index: 8;
+    top: calc(max(10px, env(safe-area-inset-top)) + 56px);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px; padding: 14px 10px 10px; margin-bottom: 16px;
+}
+.match-bar .match-score__side { gap: 2px; }
+.match-bar .match-score__name { font-size: .78rem; }
+.match-bar .match-score__value { font-size: 2.1rem; padding: 4px 8px 1px; }
+.match-score__count { display: flex; align-items: center; gap: 4px; }
+.match-bar .stepper__btn {
+    width: 36px; height: 40px; font-size: 1.3rem; color: var(--punk-accent);
+    background: rgba(13, 11, 9, .55); border: 2px solid rgba(236, 194, 140, .5);
+}
+.match-bar .stepper__btn:disabled { opacity: .45; }
+.match-bar__round { display: grid; justify-items: center; gap: 6px; }
+.match-bar__dial { display: flex; align-items: center; gap: 4px; }
+.match-bar .round-dial { --size: 46px; border-width: 2px; }
+.match-bar .round-dial__value { font-size: 1.05rem; }
+.match-bar .match-bar__back { width: 30px; height: 36px; font-size: 1.4rem; color: var(--punk-accent); }
+.match-bar__of { font-family: var(--punk-font-display); font-size: .75rem; color: var(--punk-text-muted); text-shadow: 0 1px 0 rgba(0, 0, 0, .9); }
+.match-bar__next { min-height: 40px; padding: 6px 12px; font-size: .9rem; white-space: nowrap; }
+.match-bar__confirm {
+    grid-column: 1 / -1;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    padding-top: 8px; border-top: 1px dashed rgba(236, 194, 140, .3);
+}
+.match-bar__confirm span { flex: 1 1 100%; font-weight: 600; }
+.match-bar__confirm .btn { flex: 1 1 0; min-height: 42px; }
+
+/* En pantallas estrechas los botones del tanto van en columna junto a la placa. */
+@media (max-width: 400px) {
+    .match-bar { gap: 4px; padding-inline: 8px; }
+    .match-bar .match-score__count { gap: 3px; }
+    .match-bar .match-score__count .stepper__btn { width: 30px; height: 30px; font-size: 1.1rem; }
+    .match-bar .match-score__count { display: grid; grid-template-columns: auto auto; }
+    .match-bar .match-score__count .match-score__value { grid-column: 1; grid-row: 1 / 3; }
+    .match-bar .match-score__plus { grid-column: 2; grid-row: 1; }
+    .match-bar .match-score__minus { grid-column: 2; grid-row: 2; }
+    .match-bar__next { padding-inline: 8px; font-size: .8rem; }
+}
+
+/* Pestañas Mi banda / Rival: solo en móvil y tablet; en escritorio van las dos columnas. */
+.match-tabs { margin-bottom: 14px; }
+.match-tabs__tab { display: grid; justify-items: center; gap: 2px; min-width: 0; padding-block: 6px; }
+.match-tabs__name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.match-tabs__pending {
+    font-family: var(--punk-font-body); font-size: .75rem; letter-spacing: 0; text-transform: none;
+    color: var(--punk-accent);
+}
+.match-tabs__pending.is-done { color: var(--punk-text-muted); }
+@media (max-width: 899px) {
+    .match-sides[data-tab="own"] > .match-side--rival,
+    .match-sides[data-tab="rival"] > .match-side--own { display: none; }
+    .match-sides .match-side > .section-title { display: none; }
+}
+@media (min-width: 900px) {
+    .match-tabs { display: none; }
+}
+@media (max-width: 899px) {
+    .match-side__pending { display: none; }
+}
+@media (max-width: 360px) {
+    .match-bar__next-word { display: none; }
+}
+
+/* Misión, mapa, fotos y notas: plegados, con lo esencial a la vista. */
+.match-fold { margin-bottom: 4px; }
+.match-fold__head { cursor: pointer; list-style: none; margin: 18px 0 12px; }
+.match-fold__head::-webkit-details-marker { display: none; }
+.match-fold__head::after { order: 2; }
+.match-fold__meta {
+    order: 3; display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--punk-font-body); font-size: .85rem; letter-spacing: 0; color: var(--punk-text-muted);
+}
+.match-fold__meta::after {
+    content: ""; width: 9px; height: 9px;
+    border-right: 2px solid var(--punk-accent); border-bottom: 2px solid var(--punk-accent);
+    transform: rotate(-45deg); transition: transform .15s;
+}
+.match-fold[open] > .match-fold__head .match-fold__meta::after { transform: rotate(45deg); }
+.match-fold__head:focus-visible { outline: 2px solid var(--punk-accent); outline-offset: 4px; }
+
+.table-mode .match-bar .match-score__value { font-size: 2.8rem; }
+.table-mode .match-bar .stepper__btn { width: 44px; height: 48px; font-size: 1.6rem; }
+.table-mode .match-bar .round-dial { --size: 56px; }
+.table-mode .match-bar .match-bar__next { min-height: 48px; font-size: 1rem; }
