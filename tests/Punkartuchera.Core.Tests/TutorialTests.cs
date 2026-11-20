@@ -8,12 +8,12 @@ public class TutorialTests
     private static readonly Rulebook Book = RulebookLoader.LoadEmbedded();
 
     // Rutas de la app a las que puede llevar un tutorial.
-    private static readonly string[] Routes = ["bandas/nueva", "reglas", "reglas/equipo", "reglas/especiales", "mapa", "partida"];
+    private static readonly string[] Routes = ["bandas/nueva", "reglas", "reglas/equipo", "reglas/especiales", "mapa", "partida", "misiones", "torneo", "torneo/reglas", "usuario"];
 
     [Fact]
-    public void Has_the_four_guides_with_unique_ids()
+    public void Has_the_five_guides_with_unique_ids()
     {
-        Assert.Equal(["app", "jugar", "banda", "terreno"], TutorialCatalog.All.Select(t => t.Id));
+        Assert.Equal(["app", "jugar", "banda", "terreno", "misiones-torneos"], TutorialCatalog.All.Select(t => t.Id));
         Assert.All(TutorialCatalog.All, t => Assert.NotEmpty(t.Steps));
     }
 
