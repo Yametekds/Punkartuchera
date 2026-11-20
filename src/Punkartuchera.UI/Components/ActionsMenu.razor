@@ -1,6 +1,6 @@
 @* Botón ⋮ que despliega acciones secundarias. *@
 <div class="menu-anchor">
-    <button type="button" class="btn btn--icon" aria-label="Más acciones" aria-expanded="@_open" @onclick="() => _open = !_open">
+    <button type="button" class="btn btn--icon" aria-label="Más acciones" aria-expanded="@(_open ? "true" : "false")" @onclick="() => _open = !_open">
         <Icon Path="@Icons.Dots" />
     </button>
     @if (_open)
