@@ -707,6 +707,57 @@
     .band-print { padding: 12px 8px 32px; }
     .print-doc { padding: 16px 12px; }
     .print-profile { --photo-size: 22mm; }
-    /* A 30pt una palabra larga no cabe en la columna del nombre y se partiría por cualquier letra */
-    .print-cover__name { font-size: clamp(13pt, 5.5vw, 30pt); }
+
+    /* Portada: el emblema pasa a la esquina de arriba, junto al texto de la facción, y el nombre
+       usa todo el ancho de la chapa. Al lado del emblema no cabían las palabras largas y se partían
+       por cualquier letra o quedaban debajo de él. */
+    .print-cover > :not(.print-cover__emblem) { max-width: none; }
+
+    .print-cover__emblem {
+        top: 5mm;
+        right: 6mm;
+        width: 17mm;
+        height: 17mm;
+        transform: rotate(6deg);
+    }
+
+    .print-cover__kicker {
+        min-height: 15mm;
+        padding-right: 20mm;
+        box-sizing: border-box;
+    }
+
+    /* Tamaño según el ancho de la chapa (pantalla menos 108px de márgenes): cabe una palabra de 13 letras */
+    .print-cover__name { font-size: clamp(13pt, calc((100vw - 108px) / 11.5), 30pt); }
+
+    /* Perfiles: el coste baja debajo del nombre y los atributos ya no se apartan de la foto,
+       que queda dentro de la cabecera. Con todo en una fila el nombre y la tabla de atributos
+       se quedaban sin sitio y se partían o se montaban. */
+    .print-profile__head {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 1.5mm;
+        min-height: calc(var(--photo-size) + 1mm);
+        box-sizing: border-box;
+        padding-right: 4mm;
+    }
+
+    /* Igual con el nombre del perfil, que tiene al lado la foto (pantalla menos 163px) */
+    .print-profile__name { font-size: clamp(10pt, calc((100vw - 163px) / 11.5), 14pt); }
+
+    .print-profile__main {
+        min-height: 0;
+        padding-left: 3.5mm;
+    }
+
+    /* El número se aparta a la izquierda para que no lo tape la marca del modificador */
+    .print-stats td:has(.print-stats__mod) { padding-right: 2.8mm; }
+    .print-stats__mod { right: .4mm; }
+
+    /* Tablas: menos relleno y letra algo menor para que quepan las cuatro columnas de la lista */
+    .print-table { font-size: 8.5pt; }
+
+    .print-table th,
+    .print-table td { padding: 1.2mm 1.2mm; }
 }
