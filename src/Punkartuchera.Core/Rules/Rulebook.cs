@@ -39,7 +39,6 @@ public sealed class Rulebook
     public FactionRules? FindFaction(string? id) =>
         string.IsNullOrEmpty(id) ? null : Factions.FirstOrDefault(f => f.Id == id);
 
-    /// <summary>Busca una subfacción por su id dentro de cualquier facción.</summary>
     private readonly Dictionary<(string Subfaction, string Troop), Troop> _subfactionTroops = [];
 
     /// <summary>
@@ -66,6 +65,7 @@ public sealed class Rulebook
         }
     }
 
+    /// <summary>Busca una subfacción por su id dentro de cualquier facción.</summary>
     public FactionRules? FindSubfaction(string? id) =>
         string.IsNullOrEmpty(id) ? null : Factions.SelectMany(f => f.Subfactions).FirstOrDefault(s => s.Id == id);
 

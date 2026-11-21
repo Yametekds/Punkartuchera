@@ -874,6 +874,11 @@ textarea.field__input { resize: vertical; }
 .notice--danger { outline: 0; background: var(--punk-rust); color: var(--punk-text); clip-path: var(--punk-rough); }
 .paper .notice { background: rgba(29, 23, 18, .08); color: var(--punk-ink); }
 
+/* Pantalla rota (ErrorBoundary del layout). */
+.crash { max-width: 34rem; padding: 24px 0; }
+.crash p { margin: 12px 0 20px; }
+.crash__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
 /* Grito de aviso bajo un botón: aparece de golpe y se sacude. */
 .shout {
     align-self: flex-start;
