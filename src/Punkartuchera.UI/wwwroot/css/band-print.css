@@ -727,8 +727,13 @@
         box-sizing: border-box;
     }
 
-    /* Tamaño según el ancho de la chapa (pantalla menos 108px de márgenes): cabe una palabra de 13 letras */
-    .print-cover__name { font-size: clamp(13pt, calc((100vw - 108px) / 11.5), 30pt); }
+    /* Tamaño según el ancho de la chapa (pantalla menos 108px de márgenes): cabe una palabra de 13 letras.
+       Si la palabra más larga del nombre (--palabra, en letras) no cabe, la letra baja hasta que quepa entera:
+       cada letra ocupa como mucho .78em más los 1.8px de espaciado de los títulos. */
+    .print-cover__name {
+        --palabra-ancho: calc((100vw - 108px - max(var(--palabra, 1), 1) * 1.8px) / (max(var(--palabra, 1), 1) * .78));
+        font-size: clamp(8pt, min(calc((100vw - 108px) / 11.5), var(--palabra-ancho)), 30pt);
+    }
 
     /* Perfiles: el coste baja debajo del nombre y los atributos ya no se apartan de la foto,
        que queda dentro de la cabecera. Con todo en una fila el nombre y la tabla de atributos
@@ -744,7 +749,10 @@
     }
 
     /* Igual con el nombre del perfil, que tiene al lado la foto (pantalla menos 163px) */
-    .print-profile__name { font-size: clamp(10pt, calc((100vw - 163px) / 11.5), 14pt); }
+    .print-profile__name {
+        --palabra-ancho: calc((100vw - 163px - max(var(--palabra, 1), 1) * 1.8px) / (max(var(--palabra, 1), 1) * .78));
+        font-size: clamp(6pt, min(calc((100vw - 163px) / 11.5), var(--palabra-ancho)), 14pt);
+    }
 
     .print-profile__main {
         min-height: 0;

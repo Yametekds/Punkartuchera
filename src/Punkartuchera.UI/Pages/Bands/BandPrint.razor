@@ -53,7 +53,7 @@
                     <div class="print-cover__emblem" aria-hidden="true">@Logo</div>
                 }
                 <p class="print-cover__kicker">Banda de @FactionName@(SubfactionName is null ? "" : $" · {SubfactionName}")</p>
-                <h1 class="print-cover__name">@_band.Name</h1>
+                <h1 class="print-cover__name" style="--palabra: @LongestWord(_band.Name)">@_band.Name</h1>
                 <dl class="print-cover__facts">
                     <div><dt>Miembros</dt><dd>@_band.Members.Count</dd></div>
                     @if (_band.Cost is { } cost)
@@ -168,7 +168,7 @@
                     }
                     <header class="print-profile__head">
                         <div class="print-profile__title">
-                            <h2 class="print-profile__name">@member.Name</h2>
+                            <h2 class="print-profile__name" style="--palabra: @LongestWord(member.Name)">@member.Name</h2>
                             @if (!string.IsNullOrEmpty(member.Role) && !string.Equals(member.Role, member.Name, StringComparison.CurrentCultureIgnoreCase))
                             {
                                 <span class="print-profile__role">@member.Role</span>
@@ -375,6 +375,16 @@
 
     /// <summary>Fotos que no se han podido cargar (sin conexión con la tienda): mejor sin foto que un hueco roto.</summary>
     private readonly HashSet<Guid> _brokenPhotos = [];
+
+    /// <summary>
+    /// Letras de la palabra más larga de un nombre. En pantallas estrechas la letra del nombre se reduce
+    /// con ella para que la palabra quepa entera en vez de partirse por cualquier letra.
+    /// </summary>
+    private static int LongestWord(string? name) =>
+        (name ?? string.Empty).Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries)
+            .Select(word => new System.Globalization.StringInfo(word).LengthInTextElements)
+            .DefaultIfEmpty(0)
+            .Max();
 
     private string FactionName => Rules.FindFaction(_band?.FactionId)?.Name ?? "Sin facción";
 
