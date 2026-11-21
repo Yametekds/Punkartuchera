@@ -26,7 +26,7 @@
       {
         "name": "Psycho-killer", "cost": 40, "page": 2,
         "stats": { "a": "2", "c": "6", "p": "-", "ag": "3", "f": "4", "d": "4", "t": "1" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Motosierra", "cost": 10 }],
         "armor": "Ninguno",
         "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero humano", "cost": 10 }],
@@ -111,7 +111,7 @@
         "cost": 40,
         "page": 7,
         "stats": { "a": "2", "c": "5", "p": "-", "ag": "4", "f": "4", "d": "4", "t": "1" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Ninguno",
         "rules": [
@@ -127,7 +127,7 @@
         "cost": 40,
         "page": 7,
         "stats": { "a": "3", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "6" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Hoz", "cost": 5 }, { "name": "Maza", "cost": 5 }],
         "armor": "Ninguno",
         "rules": [
@@ -143,7 +143,7 @@
         "cost": 45,
         "page": 7,
         "stats": { "a": "2", "c": "2", "p": "3", "ag": "4", "f": "4", "d": "5", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
         "armor": "Ninguno",
         "rules": [

@@ -28,7 +28,7 @@
     {
       "name": "Grumete", "cost": 18, "page": 6,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "4", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }],
       "armor": "Ninguno",
       "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }]
@@ -36,7 +36,7 @@
     {
       "name": "Marinero", "cost": 30, "page": 7,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 4 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
@@ -45,7 +45,7 @@
     {
       "name": "Arponero", "cost": 40, "page": 8,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "3", "f": "5", "d": "5", "t": "2" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Cañón de mano", "cost": 14 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
@@ -54,7 +54,7 @@
     {
       "name": "Capitán", "cost": 60, "page": 9,
       "stats": { "a": "3", "c": "5", "p": "5", "ag": "5", "f": "5", "d": "4", "t": "4" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Trabuco", "cost": 5 }, { "name": "Maza", "cost": 5 }, { "name": "Arpón", "cost": 6, "each": true }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
@@ -64,7 +64,7 @@
     {
       "name": "Custodio del Abismo", "cost": 60, "page": 10,
       "stats": { "a": "2", "c": "5", "p": "3", "ag": "3", "f": "4", "d": "4", "t": "5" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tridente", "cost": 7 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura quitinosa", "cost": 10 }],
@@ -101,7 +101,7 @@
   "weapons": [
     { "name": "Tridente", "kind": "Melee", "cost": 7, "combat": "+0", "strength": "+2", "penetration": "3" },
     { "name": "Arpón", "kind": "Ranged", "cost": 6, "range": "10/20/30", "strength": "F+1/F/F-1", "penetration": "5", "rules": ["Usar y tirar"], "notes": "6 puntos cada uno; hasta 3, que cuentan como una sola arma." },
-    { "name": "Cañón de mano", "kind": "Ranged", "cost": 14, "range": "30/60/90", "strength": "8/7/6", "penetration": "4", "rules": ["Armatoste", "Escasa", "Mamotreto"], "notes": "Solo dispara una vez." },
+    { "name": "Cañón de mano", "kind": "Ranged", "cost": 14, "range": "30/60/90", "strength": "8/7/6", "penetration": "4", "rules": ["Armatoste", "Escasa", "Mamotreto"], "singleUse": true, "notes": "Solo dispara una vez." },
     { "name": "Pistola de mecha", "kind": "Ranged", "cost": 4, "range": "10/15/20", "strength": "4/3/2", "penetration": "2", "rules": ["Lentorra (X)"], "notes": "Lentorra (2). Se puede disparar en cuerpo a cuerpo (C+1, F4, Pen 2) y queda descargada." },
     { "name": "Red", "kind": "Ranged", "cost": 6, "range": "5/10/15", "strength": "-", "penetration": "-", "rules": ["Usar y tirar"], "notes": "La miniatura alcanzada gasta sus 2 siguientes Acciones en quitársela; si combate antes, -3 a Combate; si Abate, se libera. No contra miniaturas trabadas." }
   ],

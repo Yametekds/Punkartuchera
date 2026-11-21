@@ -22,7 +22,7 @@
       {
         "name": "Pirómano", "cost": 45, "page": 2,
         "stats": { "a": "2", "c": "4", "p": "3", "ag": "5", "f": "4", "d": "4", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Cóctel molotov", "cost": 8, "each": true }, { "name": "Filo medio", "cost": 10 }, { "name": "Lanzallamas", "cost": 20 }],
         "armor": "Ninguno",
         "armorOptions": [{ "name": "Piel quemada", "cost": 5 }],
@@ -79,7 +79,7 @@
       {
         "name": "Gorila", "cost": 50, "page": 6, "personality": true,
         "stats": { "a": "2", "c": "5", "p": "2", "ag": "3", "f": "4", "d": "4", "t": "2" },
-        "weaponRule": "Una",
+        "weaponRule": "Una", "weaponMin": 1, "weaponMax": 1,
         "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Cuero endurecido",
         "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
@@ -123,7 +123,7 @@
       {
         "name": "Chispa rugiente", "replaces": "Chispa", "cost": 40, "page": 10,
         "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "4", "d": "4", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos), como el Chispa",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos), como el Chispa", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Cuero endurecido",
         "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],

@@ -32,6 +32,16 @@ public class RulebookTests
     }
 
     [Fact]
+    public void Every_weapon_rule_has_its_limits_as_numbers()
+    {
+        foreach (var troop in AllFactions.SelectMany(f => f.Troops).Where(t => !string.IsNullOrWhiteSpace(t.WeaponRule)))
+        {
+            Assert.True(troop.WeaponMax is >= 1 and <= 2, $"{troop.Name}: weaponMax");
+            Assert.True(troop.WeaponMin is >= 0 && troop.WeaponMin <= troop.WeaponMax, $"{troop.Name}: weaponMin");
+        }
+    }
+
+    [Fact]
     public void Ids_and_anchors_are_unique()
     {
         Assert.Equal(Book.Sections.Count, Book.Sections.Select(s => s.Id).Distinct().Count());

@@ -32,7 +32,7 @@
     {
       "name": "Mutante", "cost": 12, "page": 43,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
-      "weaponRule": "Puede llevar una",
+      "weaponRule": "Puede llevar una", "weaponMin": 0, "weaponMax": 1,
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Ninguno",
       "mutations": "De una a tres mutaciones distintas de la lista, pagando su coste."
@@ -47,7 +47,7 @@
     {
       "name": "Bestia del pozo", "cost": 70, "page": 45,
       "stats": { "a": "2", "c": "5", "p": "2", "ag": "2", "f": "6", "d": "6", "t": "1" },
-      "weaponRule": "Puede llevar una",
+      "weaponRule": "Puede llevar una", "weaponMin": 0, "weaponMax": 1,
       "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
       "armor": "Piel dura 3",
       "mutations": "Ya tiene Cachas, Resistente (en el perfil) y Piel dura 3. Puede añadir UNA entre Carga brutal, Espinas, Esputo ácido, Garras envenenadas, Miembros extra, Cola afilada, Extremidad prensil o Piernas seguras.",
@@ -56,7 +56,7 @@
     {
       "name": "Cabezón", "cost": 80, "page": 46,
       "stats": { "a": "3", "c": "1", "p": "3", "ag": "3", "f": "2", "d": "2", "t": "4" },
-      "weaponRule": "Puede llevar una",
+      "weaponRule": "Puede llevar una", "weaponMin": 0, "weaponMax": 1,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
       "armor": "Ninguno",
       "rules": [{ "name": "Poderes psíquicos", "text": "Tiene todos los Poderes psíquicos de la facción." }]

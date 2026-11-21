@@ -92,7 +92,7 @@
         "cost": 50,
         "page": 7,
         "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "6", "d": "5", "t": "2" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Rifle automático", "cost": 10 }],
         "armor": "Cuero endurecido",
         "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
@@ -104,7 +104,7 @@
       {
         "name": "Recluta", "cost": 18, "page": 8,
         "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -148,7 +148,7 @@
       {
         "name": "Ingeniero", "cost": 16, "page": 12,
         "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "5" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Sables de Xerum", "cost": 10 }, { "name": "Cañón de Xerum", "cost": 15 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -157,7 +157,7 @@
       {
         "name": "Gólem", "cost": 60, "page": 13,
         "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "4", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }],
         "armor": "Armadura metálica",
         "equipmentOptions": [{ "name": "Escudo", "cost": 6 }, { "name": "Walkie-talkie", "cost": 7 }],
