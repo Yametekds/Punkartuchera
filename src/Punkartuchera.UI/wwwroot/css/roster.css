@@ -251,3 +251,7 @@ button.gear-item__link {
 .datacard__stats .statbox--armor { background: rgba(120, 128, 134, .38); }
 .datacard__armor { margin: 0; font-size: .9rem; }
 .datacard__armor .datacard__label { margin-right: 6px; }
+
+/* Atributos de un tipo oficial: solo lectura, en placas como en la ficha. */
+.stat-grid--locked { grid-template-columns: repeat(auto-fit, minmax(36px, 1fr)); gap: 5px; margin: 0; color: var(--punk-text); }
+.stat-grid__note { margin: 0; font-size: .85rem; }
