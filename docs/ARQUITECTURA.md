@@ -116,6 +116,8 @@ El reglamento está en datos, no en código: `Core/Rules/Data/core.json` (atribu
 - Cada entrada indica `source` y `page`, que apuntan a los PDFs oficiales de `core.json` → `sources`. La interfaz enlaza a esa página del PDF.
 - Los textos son un resumen; las tablas, perfiles y costes se copian tal cual. Los perfiles de tropa son texto ("3 (5)", "-", "X") para respetar la notación del libro.
 - Para añadir una facción: crea su JSON en `factions/` y añade su id al orden de `RulebookLoader`. Los tests de `RulebookTests` comprueban que los perfiles estén completos, que las reglas especiales citadas existan y que las armas de las opciones estén en el arsenal.
+- Lo que cambia cómo se juega va en campos propios, no en el texto: `weaponMin`/`weaponMax` junto a `weaponRule` en cada tropa, `alone` en un arma que no se combina con otras y `singleUse` en un arma de un solo disparo. Los textos son para leer.
+- `RuleBehaviourSnapshotTests` guarda en `rule-behaviour.snapshot.txt` cómo se comporta todo el catálogo (límite de armas, compras posibles, Blindaje, armas a distancia y avisos de cada tropa con cada compra). Si un cambio de datos o de código lo altera, el test falla con la primera línea distinta; si el cambio es a propósito, se regenera con `PUNK_ACTUALIZAR_FOTO=1 dotnet test` y se revisa el diff.
 - `RulesSearch` indexa todo (sin tildes ni mayúsculas, todas las palabras obligatorias, título antes que texto) y devuelve enlaces con ancla. `FragmentScroller` lleva la vista al ancla al abrir la página.
 
 Páginas (`Pages/Rules/`): `/reglas` (buscador e índice), `/reglas/basicas`, `/reglas/especiales`, `/reglas/equipo` y `/reglas/faccion/{id}/{reglas|miembros|equipo}`. Su CSS propio está en `wwwroot/css/rules.css`.

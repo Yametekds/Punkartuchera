@@ -100,17 +100,18 @@ public sealed partial class MemberWeapons(GearLookup lookup)
 
         return info?.Kind switch
         {
-            GearInfoKind.RangedWeapon => FromRules(label, info.SpecialRules, info.Summary),
+            GearInfoKind.RangedWeapon => FromRules(label, info),
 
             // Las de cuerpo a cuerpo con Lentorra (puño balístico, guante de boxeo) también se descargan.
-            GearInfoKind.MeleeWeapon => FromRules(label, info.SpecialRules, info.Summary) is { Kind: ShotKind.Reload } melee ? melee : null,
+            GearInfoKind.MeleeWeapon => FromRules(label, info) is { Kind: ShotKind.Reload } melee ? melee : null,
             GearInfoKind.Rule => FromText(label, info.Summary),
             _ => null,
         };
     }
 
-    private static RangedWeapon? FromRules(string label, IReadOnlyList<string> rules, string summary)
+    private static RangedWeapon? FromRules(string label, GearInfo info)
     {
+        var rules = info.SpecialRules;
         if (rules.Any(r => Same(r, Firearm)))
         {
             return new RangedWeapon(label, ShotKind.Bullets);
@@ -118,10 +119,10 @@ public sealed partial class MemberWeapons(GearLookup lookup)
 
         if (rules.Any(r => RulesText.Fold(r).StartsWith("lentorra", StringComparison.Ordinal)))
         {
-            return new RangedWeapon(label, ShotKind.Reload, ReloadActions(rules.Append(summary)) ?? 0);
+            return new RangedWeapon(label, ShotKind.Reload, ReloadActions(rules.Append(info.Summary)) ?? 0);
         }
 
-        if (rules.Any(r => Same(r, "Usar y tirar")) || OneShot().IsMatch(summary))
+        if (info.SingleUse || rules.Any(r => Same(r, "Usar y tirar")))
         {
             return new RangedWeapon(label, ShotKind.SingleUse);
         }
@@ -202,9 +203,6 @@ public sealed partial class MemberWeapons(GearLookup lookup)
 
     [GeneratedRegex(@"Lentorra\s*\((\d+|X)", RegexOptions.IgnoreCase)]
     private static partial Regex Lentorra();
-
-    [GeneratedRegex(@"solo dispara una vez", RegexOptions.IgnoreCase)]
-    private static partial Regex OneShot();
 
     [GeneratedRegex(@"\bPen\b|\d+/\d+/\d+")]
     private static partial Regex ProfileText();

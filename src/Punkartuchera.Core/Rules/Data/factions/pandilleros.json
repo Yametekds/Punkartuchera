@@ -21,7 +21,7 @@
     {
       "name": "Piltrafa", "cost": 20, "page": 55,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Arco", "cost": 10 }],
       "armor": "Ropas resistentes",
       "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }]
@@ -29,7 +29,7 @@
     {
       "name": "Machaca", "cost": 30, "page": 56,
       "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 },
         { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 }, { "name": "Arco", "cost": 10 }, { "name": "Filo medio", "cost": 10 }
@@ -41,7 +41,7 @@
     {
       "name": "Bruto", "cost": 40, "page": 57,
       "stats": { "a": "2", "c": "5", "p": "4", "ag": "4", "f": "5", "d": "4", "t": "2" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
@@ -50,7 +50,7 @@
     {
       "name": "Curtido", "cost": 40, "page": 58,
       "stats": { "a": "2", "c": "6", "p": "6", "ag": "5", "f": "4", "d": "4", "t": "4" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 },
         { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
@@ -62,7 +62,7 @@
     {
       "name": "Jefe", "cost": 70, "page": 59,
       "stats": { "a": "3", "c": "6", "p": "6", "ag": "6", "f": "4", "d": "4", "t": "5" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Ballesta", "cost": 8 },
         { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }

@@ -28,7 +28,7 @@
         "cost": 25,
         "page": 3,
         "stats": { "a": "2", "c": "3", "p": "3", "ag": "5", "f": "2", "d": "3", "t": "5" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }],
         "armor": "Ropas resistentes",
         "specialRules": ["Camuflaje", "Todoterreno"]
@@ -36,7 +36,7 @@
       {
         "name": "Vigía", "cost": 25, "page": 2,
         "stats": { "a": "2", "c": "3", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Rifle", "cost": 8 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -103,7 +103,7 @@
       {
         "name": "Ingenio", "cost": 70, "page": 7,
         "stats": { "a": "2", "c": "3", "p": "3", "ag": "2", "f": "6", "d": "5", "t": "4" },
-        "weaponRule": "Al menos una y como máximo dos",
+        "weaponRule": "Al menos una y como máximo dos", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza pesada", "cost": 6 }, { "name": "Puño balístico acoplado", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Lanzavapor acoplado", "cost": 10 }, { "name": "Lanzaarpones acoplado", "cost": 18 }],
         "armor": "Exoarmadura",
         "equipment": "Protección contra la contaminación"
@@ -161,7 +161,7 @@
       {
         "name": "Cohetero", "cost": 35, "page": 12,
         "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "3", "d": "3", "t": "5" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Trabuco", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],

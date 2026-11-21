@@ -1,0 +1,1271 @@
+## pandilleros · Piltrafa
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Arco [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros · Machaca
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Ballesta [Weapon] Bl 1 (Ropas resistentes) · dist: Ballesta:Reload1
+- Arco [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros · Bruto
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pura chapa [Armor] Bl 5 (Pura chapa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Escudo [Gear] Bl 3 (Cuero endurecido) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros · Curtido
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Ballesta [Weapon] Bl 1 (Ropas resistentes) · dist: Ballesta:Reload1
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Rifle automático [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle automático:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros · Jefe
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Ballesta [Weapon] Bl 3 (Cuero endurecido) · dist: Ballesta:Reload1
+- Rifle [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle:Bullets
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Rifle automático [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle automático:Bullets
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros · Clint Tirofijo
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Lucy:Bullets
+## pandilleros · Lord Homoeroticus
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Alegradías:Bullets
+## pandilleros/flipaos-de-los-ninjas · El Rayao
+límite: -
+base: Bl 3 (Albornoz costroso (cuero endurecido)) · dist: -
+## pandilleros/fraus · Amacizona
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Lanza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Escudo [Gear] Bl 1 (Ropas resistentes) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros/fraus · Callisto
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+## pandilleros/ostra-azul · Mamporrero
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Fusta [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Látigo [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## pandilleros/ostra-azul · Lord Homoeroticus
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Alegradías:Bullets
+## mutardos · Pocho
+límite: -
+base: Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos · Mutante
+límite: 0-1
+base: Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Maza ligera [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Filo pequeño [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Maza [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Filo medio [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Cachas [Skill] Bl 0 () · dist: -
+- Capacitado [Skill] Bl 0 () · dist: -
+- Carga brutal [Skill] Bl 0 () · dist: -
+- Cola afilada [Skill] Bl 0 () · dist: -
+- Corredor [Skill] Bl 0 () · dist: -
+- Espinas [Skill] Bl 0 () · dist: -
+- Esputo ácido [Skill] Bl 0 () · dist: -
+- Extremidad prensil [Skill] Bl 0 () · dist: -
+- Garras [Skill] Bl 0 () · dist: -
+- Garras envenenadas [Skill] Bl 0 () · dist: -
+- Miembros extra [Skill] Bl 0 () · dist: -
+- Mimetismo [Skill] Bl 0 () · dist: -
+- Pegajoso [Skill] Bl 0 () · dist: -
+- Piel dura 1 [Skill] Bl 1 (Piel dura 1) · dist: -
+- Piel dura 3 [Skill] Bl 3 (Piel dura 3) · dist: -
+- Piel dura 5 [Skill] Bl 5 (Piel dura 5) · dist: -
+- Piernas seguras [Skill] Bl 0 () · dist: -
+- Proyectil orgánico [Skill] Bl 0 () · dist: -
+- Rana [Skill] Bl 0 () · dist: -
+- Resonancia psíquica [Skill] Bl 0 () · dist: -
+- Resistente [Skill] Bl 0 () · dist: -
+- Sentidos aguzados [Skill] Bl 0 () · dist: -
+- Sónar [Skill] Bl 0 () · dist: -
+## mutardos · Perromorfo
+límite: -
+base: Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos · Bestia del pozo
+límite: 0-1
+base: Bl 3 (Piel dura 3) · dist: -
+- Maza [Weapon] Bl 3 (Piel dura 3) · dist: -
+- Maza pesada [Weapon] Bl 3 (Piel dura 3) · dist: -
+- Filo pesado [Weapon] Bl 3 (Piel dura 3) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Carga brutal [Skill] Bl 3 (Piel dura 3) · dist: -
+- Cola afilada [Skill] Bl 3 (Piel dura 3) · dist: -
+- Espinas [Skill] Bl 3 (Piel dura 3) · dist: -
+- Esputo ácido [Skill] Bl 3 (Piel dura 3) · dist: -
+- Extremidad prensil [Skill] Bl 3 (Piel dura 3) · dist: -
+- Garras envenenadas [Skill] Bl 3 (Piel dura 3) · dist: -
+- Miembros extra [Skill] Bl 3 (Piel dura 3) · dist: -
+- Piernas seguras [Skill] Bl 3 (Piel dura 3) · dist: -
+## mutardos · Cabezón
+límite: 0-1
+base: Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos · Magmador
+límite: -
+base: Bl 5 (Piel dura 5) · dist: Aliento flamígero:Reload2
+## mutardos · Kim y Fostiador
+límite: -
+base: Bl 3 (Piel dura 3) · dist: -
+## mutardos/amanecer-mutante · Cabezón
+límite: 0-1
+base: Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos/amanecer-mutante · Pretoriano
+límite: 0-1
+base: Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Filo pequeño [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Maza [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Maza pesada [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Ballesta [Weapon] Bl 0 () · dist: Ballesta:Reload1 · avisos: Tiene que llevar al menos una de Mutaciones.
+- Filo pesado [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Filo medio [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Escudo [Gear] Bl 0 () sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Tiene que llevar al menos una de Mutaciones.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Cachas [Skill] Bl 0 () · dist: -
+- Capacitado [Skill] Bl 0 () · dist: -
+- Carga brutal [Skill] Bl 0 () · dist: -
+- Cola afilada [Skill] Bl 0 () · dist: -
+- Corredor [Skill] Bl 0 () · dist: -
+- Espinas [Skill] Bl 0 () · dist: -
+- Esputo ácido [Skill] Bl 0 () · dist: -
+- Extremidad prensil [Skill] Bl 0 () · dist: -
+- Garras [Skill] Bl 0 () · dist: -
+- Garras envenenadas [Skill] Bl 0 () · dist: -
+- Miembros extra [Skill] Bl 0 () · dist: -
+- Mimetismo [Skill] Bl 0 () · dist: -
+- Pegajoso [Skill] Bl 0 () · dist: -
+- Piel dura 1 [Skill] Bl 1 (Piel dura 1) · dist: -
+- Piel dura 3 [Skill] Bl 3 (Piel dura 3) · dist: -
+- Piel dura 5 [Skill] Bl 5 (Piel dura 5) · dist: -
+- Piernas seguras [Skill] Bl 0 () · dist: -
+- Proyectil orgánico [Skill] Bl 0 () · dist: -
+- Rana [Skill] Bl 0 () · dist: -
+- Resonancia psíquica [Skill] Bl 0 () · dist: -
+- Resistente [Skill] Bl 0 () · dist: -
+- Sentidos aguzados [Skill] Bl 0 () · dist: -
+- Sónar [Skill] Bl 0 () · dist: -
+## mutardos/amanecer-mutante · Kim y Fostiador
+límite: -
+base: Bl 3 (Piel dura 3) · dist: -
+## mutardos/fuerza-m · Hilo Anal
+límite: -
+base: Bl 0 () · dist: -
+## mutardos/fuerza-m · Pajaroto Rojo
+límite: -
+base: Bl 0 () · dist: -
+## mutardos/macumba · Caimanomorfo
+límite: -
+base: Bl 3 (Piel escamosa (Blindaje 3)) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos/macumba · Espíritu del pantano
+límite: -
+base: Bl 3 (Piel dura 3) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+## mutardos/macumba · Mamá Guedé
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## chatarreros · Dinamo
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bomba de humo [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Bomba incendiaria [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Vaporeta [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Chasqueador y traje voltaico [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bala apañada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros · Engranaje
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Trabuco [Weapon] Bl 1 (Ropas resistentes) · dist: Trabuco:Reload1
+- Bombeadora [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bala apañada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros · Pistón
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Puño balístico [Weapon] Bl 3 (Cuero endurecido) · dist: Puño balístico:Reload2
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Lanzaarpones [Weapon] Bl 3 (Cuero endurecido) · dist: Lanzaarpones:Reload2
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bala apañada [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros · Sonda
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bala apañada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros · Caronte
+límite: -
+base: Bl 3 (Carcasa) · dist: -
+## chatarreros · Samantha O'Sullivan
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Rotocañón:Bullets
+## chatarreros/carroneros · Sonda
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Trampa [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Acusica [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Ajustador [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Emboscador [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Felino [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Flacucho [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Infiltrador [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Navajero [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Saltador [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Velocista [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros/carroneros · Vigía
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Trampa [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros/carroneros · Señor Lao
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+## chatarreros/innovadores · Ingenio
+límite: 1-2
+base: Bl 5 (Exoarmadura) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza pesada [Weapon] Bl 5 (Exoarmadura) · dist: -
+- Puño balístico acoplado [Weapon] Bl 5 (Exoarmadura) · dist: Puño balístico acoplado:Reload1
+- Filo pesado [Weapon] Bl 5 (Exoarmadura) · dist: -
+- Lanzavapor acoplado [Weapon] Bl 5 (Exoarmadura) · dist: Lanzavapor acoplado:Reload1
+- Lanzaarpones acoplado [Weapon] Bl 5 (Exoarmadura) · dist: Lanzaarpones acoplado:Reload1
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] NO: Ya lo lleva
+- Bala apañada [Gear] Bl 5 (Exoarmadura) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 5 (Exoarmadura) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 5 (Exoarmadura) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros/innovadores · El Profesor
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## chatarreros/pioneros · Cohetero
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Trabuco [Weapon] Bl 1 (Ropas resistentes) · dist: Trabuco:Reload1
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Ciclohete [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mochila cohete [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] NO: Ya lo lleva
+- Bala apañada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cacharras del oficio [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mira telescópica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## chatarreros/pioneros · Lucky Lucy
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+## sangre-negra · Ceniza
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Pistola [Weapon] Bl 0 () · dist: Pistola:Bullets
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra · Quemado
+límite: 0-1
+base: Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: -
+## sangre-negra · Guardián de la Llama
+límite: 1-1
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pura chapa [Armor] Bl 5 (Pura chapa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra · Ascua
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Cóctel molotov [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Motosierra [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Lanzallamas [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Escudo [Gear] Bl 3 (Cuero endurecido) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra · Chispa
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra · Momma Nutritora
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## sangre-negra · Cunnilingus Igni
+límite: -
+base: Bl 5 (Pura chapa) · dist: Pistola Lechazo:Bullets
+## sangre-negra/crematorio · Pirómano
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Cóctel molotov [Weapon] Bl 0 () · dist: -
+- Filo medio [Weapon] Bl 0 () · dist: -
+- Lanzallamas [Weapon] Bl 0 () · dist: -
+- Piel quemada [Armor] Bl 2 (Piel quemada) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra/crematorio · Chamusquina
+límite: -
+base: Bl 2 (Piel quemada) · dist: -
+## sangre-negra/nuevos-hijos · Gorila
+límite: 1-1
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra/rugientes · Chispa rugiente
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Motocicleta [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Motocicleta con sidecar [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Quad [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Lanzatrueno [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## sangre-negra/rugientes · Flammeus Asinum
+límite: -
+base: Bl 0 () · dist: escopeta:Bullets
+## v-reich · Subhumano
+límite: -
+base: Bl 5 (Pura chapa) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Walkie-talkie [Gear] Bl 5 (Pura chapa) · dist: -
+- Mastín [Gear] Bl 5 (Pura chapa) · dist: -
+## v-reich · Sanitario
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich · Soldat
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Rifle [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle:Bullets
+- Walkie-talkie [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich · Übersoldat
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Rifle automático [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle automático:Bullets
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pura chapa [Armor] Bl 5 (Pura chapa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich · Mariscal
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Rifle automático [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle automático:Bullets
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] NO: Ya lo lleva
+## v-reich · Ilse, la Loba del V Reich
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: pistola:Bullets
+## v-reich · Aaron Schwartzmann
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: pistola:Bullets
+## v-reich · Edward Berhart
+límite: -
+base: Bl 5 (Pura chapa) · dist: rifle automático:Bullets
+## v-reich/division-cientifica · Engendro
+límite: -
+base: Bl 4 (Armadura metálica) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Walkie-talkie [Gear] NO: Desmadrado: no puede llevarlo
+- Mastín [Gear] Bl 4 (Armadura metálica) · dist: -
+## v-reich/division-cientifica · Subhumano científico
+límite: -
+base: Bl 0 () · dist: -
+- Chapa soldada [Gear] Bl 0 () · dist: -
+- Explosivos [Gear] Bl 0 () · dist: -
+- Mandíbula cepo [Gear] Bl 0 () · dist: -
+- Manostijeras [Gear] Bl 0 () · dist: -
+- Zancos [Gear] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Walkie-talkie [Gear] Bl 0 () · dist: -
+- Mastín [Gear] Bl 0 () · dist: -
+## v-reich/division-cientifica · Tierdoktor
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Walkie-talkie [Gear] Bl 3 (Cuero endurecido) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: -
+- Mastín [Gear] Bl 3 (Cuero endurecido) · dist: -
+## v-reich/division-cientifica · Doktor Eustace Hanneman
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## v-reich/fuerte-thule · Übersoldat
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Rifle automático [Weapon] Bl 3 (Cuero endurecido) · dist: Rifle automático:Bullets
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pura chapa [Armor] Bl 5 (Pura chapa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Escudo [Gear] Bl 3 (Cuero endurecido) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich/fuerte-thule · Recluta
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich/fuerte-thule · Eva y UNO
+límite: -
+base: Bl 0 () · dist: pistola:Bullets
+## v-reich/organizacion-kraken · Ingeniero
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Sables de Xerum [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cañón de Xerum [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Die Glocke (la Campana) [Gear] Bl 1 (Ropas resistentes) sit: Die Glocke (la Campana): Se despliega en tu zona antes que las miniaturas · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich/organizacion-kraken · Gólem
+límite: 1-2
+base: Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 4 (Armadura metálica) · dist: -
+- Pistola [Weapon] Bl 4 (Armadura metálica) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 4 (Armadura metálica) · dist: Escopeta:Bullets
+- Rifle [Weapon] Bl 4 (Armadura metálica) · dist: Rifle:Bullets
+- Escudo [Gear] Bl 4 (Armadura metálica) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Walkie-talkie [Gear] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Mastín [Gear] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Die Glocke (la Campana) [Gear] Bl 4 (Armadura metálica) sit: Die Glocke (la Campana): Se despliega en tu zona antes que las miniaturas · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## v-reich/organizacion-kraken · Casco Rojo
+límite: -
+base: Bl 4 (Armadura metálica) · dist: pistola:Bullets
+## idos · Despojo
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Hoz [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero humano [Armor] Bl 3 (Cuero humano) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Escoria: no puede llevarlo
+## idos · Aberración
+límite: -
+base: Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos · Cosechador
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Hoz [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero humano [Armor] Bl 3 (Cuero humano) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos · Desgarrador
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Hoz [Weapon] Bl 0 () · dist: -
+- Filo medio [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero humano [Armor] Bl 3 (Cuero humano) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos · Glotón
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza pesada [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pesado [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero humano [Armor] Bl 3 (Cuero humano) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos · Tío
+límite: -
+base: Bl 0 () · dist: -
+## idos · Madre
+límite: -
+base: Bl 0 () · dist: -
+## idos/slashers · Psycho-killer
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Hoz [Weapon] Bl 0 () · dist: -
+- Filo pesado [Weapon] Bl 0 () · dist: -
+- Filo medio [Weapon] Bl 0 () · dist: -
+- Motosierra [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero humano [Armor] Bl 3 (Cuero humano) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos/slashers · El Hombre de los Gusanos
+límite: -
+base: Bl 0 () · dist: -
+## idos/slashers · La Familia de la Cabaña
+límite: -
+base: Bl 0 () · dist: -
+## idos/slashers · El Abuelo de la Cabaña
+límite: -
+base: Bl 0 () · dist: -
+## idos/hermandad-de-la-bestia · Desgarrador
+límite: 1-2
+base: Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Hoz [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Filo medio [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos/hermandad-de-la-bestia · Cosechador
+límite: 1-2
+base: Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Filo pequeño [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Hoz [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Maza [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos/hermandad-de-la-bestia · Glotón
+límite: 1-2
+base: Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza pesada [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Filo pesado [Weapon] Bl 0 (Criaturas de pesadilla) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 (Criaturas de pesadilla) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos/hermandad-de-la-bestia · Abominación
+límite: -
+base: Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: -
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## idos/hermandad-de-la-bestia · El Habitante de la Oscuridad
+límite: -
+base: Bl 0 () · dist: -
+## idos/devoradores · Necrófago
+límite: -
+base: Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: -
+- Arma incrustada [Gear] NO: Necesita llevar hoz, filo pequeño o filo medio
+## irradiados · Mártir
+límite: 1-1
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados · Discípulo
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados · Penitente
+límite: 1-1
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Granada santa [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Botafumeiro tóxico [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Lanzarresiduos [Weapon] Bl 1 (Ropas resistentes) · dist: Lanzarresiduos:Reload2
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados · Cardenal Nuclear
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Granada santa [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Rifle automático [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle automático:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados · Paladín
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura metálica [Armor] Bl 4 (Armadura metálica) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Escudo [Gear] Bl 3 (Cuero endurecido) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados · El Portador de las Reliquias
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+## irradiados · El Guardián de las Llaves
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## irradiados/herederos-mecanicos · Robotrón
+límite: 0-1
+base: Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Maza ligera [Weapon] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Maza [Weapon] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Munición contaminada [Gear] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Aleación especial [Skill] Bl 5 (Aleación especial) · dist: -
+- Análisis de objetivos [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Brillante culo metálico [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Cálculo avanzado [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Modelo militar [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Motor de impulso [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Procesador cuántico [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Proyectil acoplado [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Servos mejorados [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+- Transportista [Skill] Bl 3 (Cuerpo mecánico (Blindaje 3)) · dist: -
+## irradiados/inquisicion-atomica · Escudero
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Arco [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados/inquisicion-atomica · Inquisidor
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Granada santa [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## irradiados/inquisicion-atomica · La Gran Inquisidora
+límite: -
+base: Bl 2 (Armadura de fe) · dist: -
+## irradiados/rebelion-isotopica · Científico
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cortadora de plasma [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Rifle de fusión [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle de fusión:Reload1
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Munición irradiada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición contaminada [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Munición atómica [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · Pachacho
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Guante de boxeo extensible [Weapon] Bl 1 (Ropas resistentes) · dist: Guante de boxeo extensible:Reload1
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Cañón de confeti [Weapon] Bl 1 (Ropas resistentes) · dist: Cañón de confeti:Reload1
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bocina [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bomba fétida [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cojín de pedos [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Flor escupe agua [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Globo que flota [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Guante con descarga [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pañuelos infinitos [Skill] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · Domador
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Látigo [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · Acróbata
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Filo medio [Weapon] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bocina [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bomba fétida [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cojín de pedos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Flor escupe agua [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Globo que flota [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Guante con descarga [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pañuelos infinitos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · Forzudo
+límite: 1-1
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza [Weapon] Bl 0 () · dist: -
+- Maza pesada [Weapon] Bl 0 () · dist: -
+- Filo pesado [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bocina [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bomba fétida [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cojín de pedos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Flor escupe agua [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Globo que flota [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Guante con descarga [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pañuelos infinitos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · Jefe de pista
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Pistola [Weapon] Bl 0 () · dist: Pistola:Bullets
+- Filo medio [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe · François el Mimo
+límite: -
+base: Bl 0 () · dist: -
+## troupe · Madame Destino
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## troupe/freak-show · Bicho raro
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Maza ligera [Weapon] Bl 0 () · dist: - · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: - · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Filo pequeño [Weapon] Bl 0 () · dist: - · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Maza [Weapon] Bl 0 () · dist: - · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Pistola [Weapon] Bl 0 () · dist: Pistola:Bullets · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Filo medio [Weapon] Bl 0 () · dist: - · avisos: Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 0).
+- Ancas [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Enanismo [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 5).
+- Faquir [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 6).
+- Feo que te cagas [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 8).
+- Gordérrimo [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 8).
+- Gigantismo [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Huesos de gelatina [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 5).
+- Mata de pelos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que gastar al menos 10 ptos en Rarezas (lleva 8).
+- Ojos esquivos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pedregoso [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Piel escamosa [Skill] Bl 2 (+2 Piel escamosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Siamés [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe/ilusionistas · Artista
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Pistola [Weapon] Bl 0 () · dist: Pistola:Bullets
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## troupe/cirque-du-no-se · Acróbata
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que llevar al menos una de Especialidades de Acróbata.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Especialidades de Acróbata.
+- Maza ligera [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Especialidades de Acróbata.
+- Filo pequeño [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Especialidades de Acróbata.
+- Filo medio [Weapon] Bl 0 () · dist: - · avisos: Tiene que llevar al menos una de Especialidades de Acróbata.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que llevar al menos una de Especialidades de Acróbata.
+- Cañón lanzador [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que llevar al menos una de Especialidades de Acróbata.
+- Chismeciclo [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que llevar al menos una de Especialidades de Acróbata.
+- Coche de Pachachos [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una. | Tiene que llevar al menos una de Especialidades de Acróbata.
+- Acróbata [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Funambulista [Skill] Bl 0 () · dist: -
+- Lanzador de cuchillos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Malabarista [Skill] Bl 0 () · dist: -
+- Saltimbanqui [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Tragafuegos [Skill] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami · Chamán
+límite: 0-1
+base: Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: -
+- Hierbas alucinógenas [Gear] Bl 0 () · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: -
+## unami · Sombra
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Tomahawk [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami · Trueno
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Tomahawk [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Arco [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami · Viento
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Tomahawk [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Arco [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami · Elaichik
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: -
+## unami/cambiapieles · Yee naaldlooshii
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Maza [Weapon] Bl 0 () · dist: -
+- Tomahawk [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami/descastados · Renegado
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+- Escopeta [Weapon] Bl 1 (Ropas resistentes) · dist: Escopeta:Bullets
+- Rifle [Weapon] Bl 1 (Ropas resistentes) · dist: Rifle:Bullets
+- Filo medio [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Chaleco antibalas [Armor] Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Tótem [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## unami/apostadores · Croupier
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Tomahawk [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Hierbas alucinógenas [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Grumete
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Cuchillos arrojadizos [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Pistola de mecha [Weapon] Bl 0 () · dist: Pistola de mecha:Reload2
+- Trabuco [Weapon] Bl 0 () · dist: Trabuco:Reload1
+- Red [Weapon] Bl 0 () · dist: Red:SingleUse
+- Tridente [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero endurecido [Armor] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Marinero
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuchillos arrojadizos [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola de mecha [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola de mecha:Reload2
+- Trabuco [Weapon] Bl 3 (Cuero endurecido) · dist: Trabuco:Reload1
+- Red [Weapon] Bl 3 (Cuero endurecido) · dist: Red:SingleUse
+- Tridente [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura quitinosa [Armor] Bl 5 (Armadura quitinosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Arponero
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Arpón [Weapon] Bl 3 (Cuero endurecido) · dist: Arpón:SingleUse
+- Maza pesada [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Cañón de mano [Weapon] Bl 3 (Cuero endurecido) · dist: Cañón de mano:SingleUse
+- Armadura quitinosa [Armor] Bl 5 (Armadura quitinosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Capitán
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Pistola de mecha [Weapon] Bl 3 (Cuero endurecido) · dist: Pistola de mecha:Reload2
+- Trabuco [Weapon] Bl 3 (Cuero endurecido) · dist: Trabuco:Reload1
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Arpón [Weapon] Bl 3 (Cuero endurecido) · dist: Arpón:SingleUse
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura quitinosa [Armor] Bl 5 (Armadura quitinosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cadena del naufragio [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cáliz de salmuera [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Caracola del umbral [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Diente de leviatán [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Ídolo de coral vivo [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Máscara tentacular [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pez globo [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Custodio del Abismo
+límite: 1-2
+base: Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pequeño [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Maza [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Tridente [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo pesado [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Filo medio [Weapon] Bl 3 (Cuero endurecido) · dist: -
+- Armadura quitinosa [Armor] Bl 5 (Armadura quitinosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cadena del naufragio [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cáliz de salmuera [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Caracola del umbral [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Diente de leviatán [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Ídolo de coral vivo [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Máscara tentacular [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Pez globo [Skill] Bl 3 (Cuero endurecido) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos · Bloody Mary
+límite: -
+base: Bl 5 (Armadura quitinosa) · dist: -
+## craabianos · Davinnie Jones
+límite: -
+base: Bl 5 (Armadura quitinosa) · dist: Fusil arponero:Reload1
+## craabianos/abisales · Híbrido
+límite: 1-2
+base: Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 0 () · dist: -
+- Filo pequeño [Weapon] Bl 0 () · dist: -
+- Pistola de mecha [Weapon] Bl 0 () · dist: Pistola de mecha:Reload2
+- Maza [Weapon] Bl 0 () · dist: -
+- Red [Weapon] Bl 0 () · dist: Red:SingleUse
+- Tridente [Weapon] Bl 0 () · dist: -
+- Ropas resistentes [Armor] Bl 2 (Ropas resistentes, +1 Piel escamosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Cuero endurecido [Armor] Bl 4 (Cuero endurecido, +1 Piel escamosa) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 0 () · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## craabianos/mariscadores · Tenacero
+límite: -
+base: Bl 5 (Armadura quitinosa) · dist: -
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 5 (Armadura quitinosa) · dist: -
+- Aceite de ballenorca [Gear] Bl 5 (Armadura quitinosa) · dist: -
+## craabianos/resacados · Barman
+límite: 1-2
+base: Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Maza ligera [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Filo pequeño [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Pistola de mecha [Weapon] Bl 1 (Ropas resistentes) · dist: Pistola de mecha:Reload2
+- Maza [Weapon] Bl 1 (Ropas resistentes) · dist: -
+- Trabuco [Weapon] Bl 1 (Ropas resistentes) · dist: Trabuco:Reload1
+- Bayoneta [Gear] NO: Necesita llevar arma de fuego
+- Protección contra la contaminación [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+- Aceite de ballenorca [Gear] Bl 1 (Ropas resistentes) · dist: - · avisos: Le falta un arma: el reglamento pide al menos una.
+## banda-del-comic · Paul
+límite: -
+base: Bl 0 () · dist: -
+## banda-del-comic · Dan novato
+límite: -
+base: Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: Escopeta:Bullets
+## banda-del-comic · Nicole
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## banda-del-comic · Markus
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Escopeta:Bullets
+## banda-del-comic · Vale
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: Rifle con mira telescópica:Bullets
+## banda-del-comic · Dan
+límite: -
+base: Bl 3 (Chaleco antibalas) sit: 5/6/7 contra Arma de fuego (Chaleco antibalas) · dist: -
+## banda-del-comic · Rita
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: ballesta:Reload1
+## mercenarios · El Viejo Sajarratas
+límite: -
+base: Bl 3 (Capa de ratas (cuero endurecido)) · dist: -
+## mercenarios · Imperatrix Rabiosa
+límite: -
+base: Bl 3 (Cuero endurecido) · dist: Rifle con mira telescópica:Bullets
+## mercenarios · Mongodrilo Dundee
+límite: -
+base: Bl 2 (Piel de mongolongo) sit: Piel de mongolongo: Blindaje 2 contra disparos y 5 cuerpo a cuerpo · dist: -
+## mercenarios · Crazy Mel
+límite: -
+base: Bl 4 (Armadura metálica) · dist: Escopeta:Bullets
+## mercenarios · Capitán Hammerica
+límite: -
+base: Bl 4 (Armadura metálica) sit: Escudo: Cuerpo a cuerpo: +2 al Blindaje y -1 al Combate · dist: pistola:Bullets
+## mercenarios · Lizzy DeVille
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: Pistola:Bullets
+## mercenarios · Ochodedos
+límite: -
+base: Bl 0 () · dist: -
+## mercenarios · Irina
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
+## mercenarios · Devin Crow
+límite: -
+base: Bl 1 (Ropas resistentes) · dist: -
