@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Punkartuchera.Core.Models;
 
@@ -86,7 +87,7 @@ public sealed partial class LoadoutModifiers(Rulebook book, GearLookup lookup, U
             var included = group.Where(m => m.Included).Sum(m => m.Delta);
             var bought = delta - included;
             var baseValue = troop is not null && troop.Stats.TryGetValue(group.Key, out var text) && FirstNumber().Match(text) is { Success: true } number
-                ? int.Parse(number.Groups[1].Value)
+                ? int.Parse(number.Groups[1].Value, CultureInfo.InvariantCulture)
                 : (int?)null;
             var alreadyApplied = included != 0 && baseValue is { } value && member.GetStat(group.Key, value) != value;
             var pending = bought + (alreadyApplied ? 0 : included);
@@ -113,7 +114,7 @@ public sealed partial class LoadoutModifiers(Rulebook book, GearLookup lookup, U
             yield break;
         }
 
-        var delta = int.Parse(match.Groups[2].Value) * (match.Groups[1].Value == "+" ? 1 : -1);
+        var delta = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture) * (match.Groups[1].Value == "+" ? 1 : -1);
         foreach (var name in Regex.Split(match.Groups[3].Value, @"\s*(?:,|\by\b)\s*"))
         {
             var attribute = book.Attributes.FirstOrDefault(a => RulesText.Fold(a.Name) == RulesText.Fold(name.Trim()));

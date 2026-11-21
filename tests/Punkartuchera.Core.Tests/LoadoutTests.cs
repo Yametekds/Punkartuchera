@@ -258,7 +258,7 @@ public class LoadoutTests
 
         var mutant = Recruit("mutardos", "Mutante");
         Assert.Contains("Tiene que llevar al menos una de Mutaciones.", _advisor.Advise(mutant, "mutardos").Warnings);
-        Assert.Empty(_advisor.Advise(Recruit("mutardos", "Perromorfo"), "mutardos").Skills.Where(o => o.Group == "Mutaciones"));
+        Assert.DoesNotContain(_advisor.Advise(Recruit("mutardos", "Perromorfo"), "mutardos").Skills, o => o.Group == "Mutaciones");
 
         var band = Enumerable.Range(0, 3).Select(_ => Buy(Recruit("mutardos", "Mutante"), "mutardos", "Rana")).ToList();
         Assert.Equal("Como máximo 3 en la banda", Option(_advisor.Advise(mutant, "mutardos", null, band), "Rana").Blocked);
@@ -273,7 +273,7 @@ public class LoadoutTests
 
         var freak = RecruitSub("troupe", "freak-show", "Bicho raro");
         Assert.Null(Option(_advisor.Advise(freak, "troupe", "freak-show"), "Siamés").Blocked);
-        Assert.Contains(_advisor.Advise(freak, "troupe", "freak-show").Warnings, w => w.StartsWith("Tiene que gastar al menos 10 ptos en Rarezas"));
+        Assert.Contains(_advisor.Advise(freak, "troupe", "freak-show").Warnings, w => w.StartsWith("Tiene que gastar al menos 10 ptos en Rarezas", StringComparison.Ordinal));
     }
 
     [Fact]

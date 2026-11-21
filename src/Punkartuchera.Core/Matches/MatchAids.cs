@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Punkartuchera.Core.Models;
 using Punkartuchera.Core.Rules;
@@ -551,7 +552,7 @@ public sealed partial class MatchAidCatalog(Rulebook book, UnitCostCalculator co
                     continue;
                 }
 
-                var charges = int.Parse(match.Groups[1].Value);
+                var charges = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 if (Is(troops[i], "Chamusquina") && Is(info.Name, "Lanzallamas"))
                 {
                     charges = 5; // Lanzallamitas.

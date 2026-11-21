@@ -302,7 +302,7 @@ public class RosterBuilderTests
         var scavengers = FactionBrief.For(Book, "chatarreros", "carroneros")!;
         Assert.Equal("chatarreros", scavengers.Parent?.Id);
         Assert.StartsWith("Usa Pistones", scavengers.TroopLine);
-        Assert.DoesNotContain(scavengers.Restrictions, r => r.StartsWith("Usa "));
+        Assert.DoesNotContain(scavengers.Restrictions, r => r.StartsWith("Usa ", StringComparison.Ordinal));
         Assert.Equal(["Sonda", "Vigía", "Señor Lao"], scavengers.OwnTroops.Select(t => t.Name));
         Assert.DoesNotContain(scavengers.Troops, t => t.Name == "Dinamo");
         Assert.Equal("reglas/faccion/chatarreros/subfaccion/carroneros", scavengers.RulesHref);
@@ -468,7 +468,7 @@ public class RuleMentionTests
     [Fact]
     public void Whale_oil_explains_slippery()
     {
-        var oil = Book.FindFaction("craabianos")!.Gear.First(g => g.Name.StartsWith("Aceite"));
+        var oil = Book.FindFaction("craabianos")!.Gear.First(g => g.Name.StartsWith("Aceite", StringComparison.Ordinal));
         var rule = Assert.Single(_mentions.Split(oil.Text), p => p.Rule is not null).Rule!;
         Assert.Equal("Escurridizo", rule.Name);
         Assert.StartsWith("Se separa del Combate", RuleMentions.Gloss(rule));

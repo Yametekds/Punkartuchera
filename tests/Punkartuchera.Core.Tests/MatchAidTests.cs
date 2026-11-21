@@ -73,7 +73,7 @@ public class MatchAidTests
         var band = Band("sangre-negra", null, ("Quemado", 0));
         band.Members[0].Gear.Add(new Equipment { Name = "Lanzallamas" });
 
-        var fuel = Assert.Single(For(band).Of(0), a => a.Key.StartsWith("cargas-"));
+        var fuel = Assert.Single(For(band).Of(0), a => a.Key.StartsWith("cargas-", StringComparison.Ordinal));
         Assert.Equal(10, fuel.Start);
     }
 

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Punkartuchera.Core.Models;
 
@@ -230,12 +231,12 @@ public sealed partial class UnitCostCalculator(Rulebook book)
         var text = name.Trim();
         if (LeadingCount().Match(text) is { Success: true } lead)
         {
-            return (int.Parse(lead.Groups[1].Value), lead.Groups[2].Value);
+            return (int.Parse(lead.Groups[1].Value, CultureInfo.InvariantCulture), lead.Groups[2].Value);
         }
 
         if (TrailingCount().Match(text) is { Success: true } trail)
         {
-            return (int.Parse(trail.Groups[2].Value), trail.Groups[1].Value);
+            return (int.Parse(trail.Groups[2].Value, CultureInfo.InvariantCulture), trail.Groups[1].Value);
         }
 
         return (1, text);

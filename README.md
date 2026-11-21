@@ -53,6 +53,7 @@ El relé de partidas en línea se despliega aparte en Azure: pasos en [docs/PART
 | `infra` | Recursos de Azure del relé en Bicep. |
 | `tests/Punkartuchera.Core.Tests` | Tests de la lógica de negocio. |
 | `tests/Punkartuchera.Relay.Tests` | Tests del relé, incluidos intentos de abuso. |
+| `tests/Punkartuchera.UI.Tests` | Tests de las pantallas con bUnit, con almacenamiento en memoria. |
 
 Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 
