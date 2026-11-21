@@ -36,7 +36,7 @@ Cada hora, `LimpiarPartidas` borra las caducadas.
 
 - `hello`: la banda en el formato del QR, la ronda y el estado de cada miembro. Se manda al conectar o reconectar, así lo que se perdiera sin cobertura se pone al día solo. Con `reply: true` el otro contesta con el suyo.
 - `status`: el estado de los miembros propios, en el orden en que se mandó la banda.
-- `round`: cambio de ronda, con un reloj de Lamport (`stamp`). Si los dos cambian la ronda a la vez, gana el reloj más alto y, si empatan, la ronda más alta: los dos móviles acaban igual.
+- `round`: cambio de ronda, con un reloj de Lamport (`stamp`, de 0 a 100.000). Si los dos cambian la ronda a la vez, gana el reloj más alto y, si empatan, la ronda más alta: los dos móviles acaban igual.
 
 La app valida todo lo que llega (`MatchMessage.TryParse`) y no deja que el rival cambie de banda a mitad de partida.
 
@@ -44,7 +44,8 @@ La app valida todo lo que llega (`MatchMessage.TryParse`) y no deja que el rival
 
 - **Llaves**: 32 bytes aleatorios; el relé solo guarda su SHA-256 y compara en tiempo constante. El código solo sirve para entrar una vez: después hace falta la llave.
 - **Códigos**: 29 caracteres posibles en 6 posiciones (unos 600 millones). Una partida acepta un solo rival y caduca a los 30 minutos si nadie entra.
-- **Límites por minuto** (en memoria de cada instancia): 6 creaciones y 12 intentos de entrar por IP, 90 mensajes por jugador.
+- **Límites por minuto** (en memoria de cada instancia): 6 creaciones y 12 intentos de entrar por IP, 20 conexiones por IP y por jugador, 90 mensajes por jugador.
+- **Tope de partidas**: como mucho 100 abiertas a la vez; con el relé lleno, crear responde 503 y la app avisa.
 - **Mensajes**: tamaño máximo, JSON válido, profundidad máxima 8 y solo los tipos permitidos. `bye` solo lo puede mandar el relé.
 - **Sin claves en Azure**: la Function App usa una identidad administrada con los roles justos; SignalR y la cuenta de almacenamiento tienen desactivado el acceso por clave.
 - **CORS** limitado a la web publicada, HTTPS obligatorio y TLS 1.2 como mínimo.
@@ -112,6 +113,8 @@ az role assignment create --assignee $app --role "Website Contributor" --scope $
 ```
 
 Después, en GitHub crea el entorno `relay` (*Settings → Environments*) y las variables `AZURE_CLIENT_ID` (el `$app`), `AZURE_TENANT_ID` (`az account show --query tenantId -o tsv`), `AZURE_SUBSCRIPTION_ID` (`az account show --query id -o tsv`) y `AZURE_FUNCTIONAPP_NAME`.
+
+En ese entorno, limita las ramas a `main` (*Deployment branches*) y, si quieres revisar cada despliegue, activa *Required reviewers*. La credencial federada solo vale para el entorno `relay`, así que ningún otro flujo puede entrar en Azure.
 
 ## Probar en local
 
