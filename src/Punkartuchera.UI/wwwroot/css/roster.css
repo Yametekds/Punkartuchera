@@ -21,6 +21,44 @@
 .recruit-picker { display: grid; gap: 8px; }
 .recruit-picker__summary { margin: 0; color: var(--punk-ink-muted); font-size: .9rem; }
 
+/* Tipo de miembro: botón que abre las miniaturas con su foto oficial */
+.troop-trigger {
+    display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
+    min-height: 58px; padding-top: 5px; padding-bottom: 5px;
+}
+.troop-trigger .portrait { transform: rotate(-3deg); }
+.troop-trigger__text { flex: 1; min-width: 0; font-weight: 600; }
+.troop-trigger__text--empty { font-weight: normal; color: var(--punk-ink-muted); }
+.troop-trigger__more {
+    flex: none; font-family: var(--punk-font-display); font-size: .85rem; text-transform: uppercase;
+    color: var(--punk-blood); white-space: nowrap;
+}
+.troop-trigger:hover .troop-trigger__more { text-decoration: underline; }
+
+.troop-picker { max-height: min(90vh, 820px); }
+.troop-picker__list { display: grid; gap: 16px; }
+.troop-picker__group { display: grid; gap: 10px; }
+.troop-picker__grid { display: grid; gap: 12px 10px; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+.troop-option {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 10px 6px 8px; min-width: 0;
+    font: inherit; color: var(--punk-ink); text-align: center;
+    background: rgba(255, 255, 255, .3);
+    border: 2px solid var(--punk-black);
+    cursor: pointer;
+}
+.troop-option:hover, .troop-option:focus-visible { background: var(--punk-accent); }
+.troop-option.is-selected { background: var(--punk-accent-strong); box-shadow: inset 0 0 0 3px var(--punk-blood); }
+.troop-option:nth-child(odd) .portrait { transform: rotate(-2deg); }
+.troop-option:nth-child(even) .portrait { transform: rotate(2deg); }
+.portrait--pick { width: 100%; max-width: 150px; aspect-ratio: 11 / 12; height: auto; margin-bottom: 4px; }
+.troop-option__name { font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; }
+.troop-option__troop { font-size: .78rem; color: var(--punk-ink-muted); }
+.troop-option__cost { font-family: var(--punk-font-display); color: var(--punk-blood); }
+@media (min-width: 640px) {
+    .sheet.troop-picker { width: min(720px, calc(100vw - 32px)); }
+}
+
 .subfaction-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
 .subfaction-card {
     display: grid; gap: 6px; padding: 14px;
