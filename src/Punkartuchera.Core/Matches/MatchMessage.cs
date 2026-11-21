@@ -78,7 +78,7 @@ public sealed class MatchMessage
     }
 
     private static bool ValidRound(MatchMessage m) =>
-        m.Round is null or (>= 1 and <= ActiveMatch.MaxRound) && m.Stamp is null or >= 0;
+        m.Round is null or (>= 1 and <= ActiveMatch.MaxRound) && m.Stamp is null or (>= 0 and <= ActiveMatch.MaxRoundStamp);
 
     private static bool ValidMembers(MatchMessage m) =>
         m.Members is null || m.Members.Count <= MaxMembers;

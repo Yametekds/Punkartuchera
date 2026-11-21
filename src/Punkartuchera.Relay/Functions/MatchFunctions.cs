@@ -25,6 +25,11 @@ public sealed class MatchFunctions(MatchRelay relay, RequestThrottle throttle)
             return TooManyRequests();
         }
 
+        if (await relay.IsFullAsync(cancellationToken))
+        {
+            return new StatusCodeResult(StatusCodes.Status503ServiceUnavailable);
+        }
+
         var ticket = await relay.CreateAsync(cancellationToken);
         return Private(request, new JsonResult(ticket, RelayJsonContext.Default.Options) { StatusCode = StatusCodes.Status201Created });
     }
@@ -55,9 +60,20 @@ public sealed class MatchFunctions(MatchRelay relay, RequestThrottle throttle)
         string code,
         CancellationToken cancellationToken)
     {
+        // Por dirección antes de mirar la llave (no se consulta el almacén a lo bruto) y por jugador después.
+        if (!throttle.TryAcquire(RequestThrottle.Bucket.Connect, ClientAddress(request)))
+        {
+            return TooManyRequests();
+        }
+
         if (await AuthenticateAsync(request, code, cancellationToken) is not { } player)
         {
             return new UnauthorizedResult();
+        }
+
+        if (!throttle.TryAcquire(RequestThrottle.Bucket.Connect, player.PlayerId))
+        {
+            return TooManyRequests();
         }
 
         var info = await relay.ConnectAsync(player, cancellationToken);

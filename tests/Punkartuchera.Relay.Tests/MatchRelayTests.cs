@@ -34,6 +34,22 @@ public class MatchRelayTests
     }
 
     [Fact]
+    public async Task The_relay_stops_creating_matches_when_it_is_full()
+    {
+        for (var i = 0; i < MatchRelay.MaxOpenMatches - 1; i++)
+        {
+            await _relay.CreateAsync();
+        }
+
+        Assert.False(await _relay.IsFullAsync());
+        await _relay.CreateAsync();
+        Assert.True(await _relay.IsFullAsync());
+
+        _clock.Advance(MatchRelay.OpenFor);
+        Assert.False(await _relay.IsFullAsync());
+    }
+
+    [Fact]
     public async Task Only_one_rival_can_join()
     {
         var host = await _relay.CreateAsync();

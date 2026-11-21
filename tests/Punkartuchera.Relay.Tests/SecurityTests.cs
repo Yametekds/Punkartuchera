@@ -67,6 +67,17 @@ public class SecurityTests
     }
 
     [Fact]
+    public void Throttle_limits_connection_tokens()
+    {
+        using var throttle = new RequestThrottle();
+
+        var allowed = Enumerable.Range(0, 50).Count(_ => throttle.TryAcquire(RequestThrottle.Bucket.Connect, "jugador"));
+
+        Assert.Equal(20, allowed);
+        Assert.True(throttle.TryAcquire(RequestThrottle.Bucket.Message, "jugador"));
+    }
+
+    [Fact]
     public async Task Body_reader_stops_at_the_limit_even_if_content_length_lies()
     {
         var big = new MemoryStream(new byte[RelayProtocol.MaxMessageBytes + 1]);

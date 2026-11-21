@@ -67,6 +67,22 @@ public sealed class TableMatchStore : IMatchStore
         await _table.DeleteEntityAsync(code, RowKey, ETag.All, cancellationToken);
     }
 
+    public async Task<int> CountOpenAsync(DateTimeOffset now, int limit, CancellationToken cancellationToken = default)
+    {
+        await _ensureTable.Value;
+        var filter = TableClient.CreateQueryFilter($"ExpiresAt gt {now}");
+        var count = 0;
+        await foreach (var _ in _table.QueryAsync<TableEntity>(filter, select: ["PartitionKey"], cancellationToken: cancellationToken))
+        {
+            if (++count >= limit)
+            {
+                break;
+            }
+        }
+
+        return count;
+    }
+
     public async Task<int> DeleteExpiredAsync(DateTimeOffset now, CancellationToken cancellationToken = default)
     {
         await _ensureTable.Value;

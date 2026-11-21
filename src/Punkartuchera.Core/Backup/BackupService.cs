@@ -249,6 +249,7 @@ public sealed class BackupService(
     private static void Tidy(ActiveMatch match)
     {
         match.Round = Math.Clamp(match.Round, 1, ActiveMatch.MaxRound);
+        match.RoundStamp = Math.Clamp(match.RoundStamp, 0, ActiveMatch.MaxRoundStamp);
         match.OwnScore = Math.Clamp(match.OwnScore, 0, ActiveMatch.MaxCount);
         match.RivalScore = Math.Clamp(match.RivalScore, 0, ActiveMatch.MaxCount);
         match.OwnBandName = RivalBandSanitizer.CleanText(match.OwnBandName, BandService.MaxNameLength);

@@ -428,6 +428,20 @@ public class MatchServiceTests
         Assert.Equal(4, _guest.Matches.Current!.Round);
     }
 
+    [Theory]
+    [InlineData(9223372036854775807)]
+    [InlineData(ActiveMatch.MaxRoundStamp + 1)]
+    public async Task A_rival_cannot_freeze_the_round_with_a_huge_stamp(long stamp)
+    {
+        await StartOnlineAsync();
+
+        await _host.Relay.DeliverAsync($$"""{"type":"round","round":2,"stamp":{{stamp}}}""");
+        Assert.Equal(1, _host.Matches.Current!.Round);
+
+        await _host.Matches.SetRoundAsync(3);
+        Assert.Equal(3, _guest.Matches.Current!.Round);
+    }
+
     private async Task StartOnlineAsync()
     {
         var hostBand = await _host.AddBandAsync("Los Oxidados", "Morro", "Chispas");

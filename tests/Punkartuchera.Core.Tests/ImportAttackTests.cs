@@ -318,7 +318,37 @@ public class ImportAttackTests
         Assert.Equal(0, rival.TotalCost);
     }
 
+    // ---------- Suplantar la banda de otro jugador ----------
+
+    [Fact]
+    public async Task A_band_with_someone_elses_id_does_not_replace_their_copy()
+    {
+        var id = Guid.NewGuid();
+        var friend = await ImportAsync(Package(id, "Colega", "Los Legales", "Morro"));
+
+        var forged = await ImportAsync(Package(id, "Troll", "Los Legales", "Bocazas"));
+
+        Assert.NotEqual(friend.Id, forged.Id);
+        var kept = await _bands.GetAsync(friend.Id);
+        Assert.Equal("Morro", Assert.Single(kept!.Members).Name);
+    }
+
+    [Fact]
+    public async Task The_same_player_can_send_their_band_again()
+    {
+        var id = Guid.NewGuid();
+        var first = await ImportAsync(Package(id, "Colega", "Los Legales", "Morro"));
+
+        var again = await ImportAsync(Package(id, "Colega", "Los Legales", "Chispas"));
+
+        Assert.Equal(first.Id, again.Id);
+        Assert.Single(await _bands.GetAllAsync());
+    }
+
     // ---------- Utilidades ----------
+
+    private static string Package(Guid id, string player, string name, string member) =>
+        $$$"""{"format":"punkartuchera-band","version":1,"band":{"id":"{{{id}}}","name":"{{{name}}}","factionId":"chatarreros","playerName":"{{{player}}}","members":[{"name":"{{{member}}}","role":"Pandillero"}]}}""";
 
     private Task<Band> ImportAsync(string json) => _exchange.ImportAsync(new MemoryStream(Encoding.UTF8.GetBytes(json)));
 
