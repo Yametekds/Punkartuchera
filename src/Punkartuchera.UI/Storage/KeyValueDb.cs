@@ -1,4 +1,5 @@
 using Microsoft.JSInterop;
+using Punkartuchera.UI.Services;
 
 namespace Punkartuchera.UI.Storage;
 
@@ -6,17 +7,14 @@ namespace Punkartuchera.UI.Storage;
 /// Acceso a IndexedDB a través de <c>punkDb.js</c>. Solo intercambia strings
 /// para no depender de la serialización por reflexión del interop.
 /// </summary>
-public sealed class KeyValueDb(IJSRuntime js) : IAsyncDisposable
+public sealed class KeyValueDb(IJSRuntime js) : JsModule(js, "punkDb.js")
 {
     public const string BandsStore = "bands";
     public const string PhotosStore = "photos";
     public const string MatchesStore = "matches";
     public const string TournamentsStore = "tournaments";
 
-    private Task<IJSObjectReference>? _module;
 
-    private Task<IJSObjectReference> Module =>
-        _module ??= js.InvokeAsync<IJSObjectReference>("import", "./_content/Punkartuchera.UI/js/punkDb.js").AsTask();
 
     public async Task<string[]> GetAllAsync(string store, CancellationToken cancellationToken = default)
     {
@@ -46,19 +44,5 @@ public sealed class KeyValueDb(IJSRuntime js) : IAsyncDisposable
     {
         var module = await Module;
         return await module.InvokeAsync<bool>("requestPersistence");
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_module is { IsCompletedSuccessfully: true })
-        {
-            try
-            {
-                await _module.Result.DisposeAsync();
-            }
-            catch (JSDisconnectedException)
-            {
-            }
-        }
     }
 }

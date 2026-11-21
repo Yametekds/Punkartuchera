@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Punkartuchera.Core.Matches;
 
 namespace Punkartuchera.UI.Storage;
@@ -7,7 +8,7 @@ namespace Punkartuchera.UI.Storage;
 /// Partidas guardadas en el almacén <c>matches</c> de IndexedDB: una entrada por partida
 /// (la clave es su Id) y la entrada <c>current</c> con el Id de la que está en pantalla.
 /// </summary>
-public sealed class IndexedDbSavedMatchStore(KeyValueDb db) : ISavedMatchStore
+public sealed class IndexedDbSavedMatchStore(KeyValueDb db, ILogger<IndexedDbSavedMatchStore> logger) : ISavedMatchStore
 {
     private const string CurrentKey = "current";
 
@@ -46,8 +47,11 @@ public sealed class IndexedDbSavedMatchStore(KeyValueDb db) : ISavedMatchStore
 
     private static string Key(Guid id) => id.ToString("N");
 
-    /// <summary>Lee una partida. La entrada <c>current</c> y las que tengan un formato que ya no vale se ignoran.</summary>
-    private static ActiveMatch? Read(string? json)
+    /// <summary>
+    /// Lee una partida. La entrada <c>current</c> se ignora; las que tengan un formato que ya no vale
+    /// también, pero queda aviso en el registro para no perderlas sin rastro.
+    /// </summary>
+    private ActiveMatch? Read(string? json)
     {
         if (json is null || !json.StartsWith('{'))
         {
@@ -58,8 +62,9 @@ public sealed class IndexedDbSavedMatchStore(KeyValueDb db) : ISavedMatchStore
         {
             return JsonSerializer.Deserialize(json, MatchJsonContext.Default.ActiveMatch);
         }
-        catch (JsonException)
+        catch (JsonException ex)
         {
+            logger.LogWarning(ex, "Partida guardada que no se puede leer ({Length} caracteres): se deja fuera.", json.Length);
             return null;
         }
     }

@@ -18,8 +18,21 @@ function openDb() {
                 }
             }
         };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+            const database = request.result;
+            // Otra pestaña abre una versión nueva: se suelta esta conexión para no bloquearla
+            // y la siguiente operación vuelve a abrir la base de datos.
+            database.onversionchange = () => {
+                database.close();
+                dbPromise = null;
+            };
+            resolve(database);
+        };
+        request.onerror = () => {
+            dbPromise = null;
+            reject(request.error);
+        };
+        request.onblocked = () => console.warn('punkDb: otra pestaña de la app tiene abierta una versión anterior de los datos.');
     });
 }
 

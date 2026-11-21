@@ -1,5 +1,7 @@
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
+using Punkartuchera.UI.Services;
 using Punkartuchera.Core.Users;
 
 namespace Punkartuchera.UI.Storage;
@@ -8,13 +10,8 @@ namespace Punkartuchera.UI.Storage;
 /// Guarda el perfil en localStorage (lo lee también el index.html al arrancar) y aplica
 /// el tamaño de letra y la tipografía a la página cada vez que cambian.
 /// </summary>
-public sealed class LocalUserProfileStore(IJSRuntime js) : IUserProfileStore, IAsyncDisposable
+public sealed class LocalUserProfileStore(IJSRuntime js, ILogger<LocalUserProfileStore> logger) : JsModule(js, "punkPrefs.js"), IUserProfileStore
 {
-    private Task<IJSObjectReference>? _module;
-
-    private Task<IJSObjectReference> Module =>
-        _module ??= js.InvokeAsync<IJSObjectReference>("import", "./_content/Punkartuchera.UI/js/punkPrefs.js").AsTask();
-
     public async Task<UserProfile> GetAsync(CancellationToken cancellationToken = default)
     {
         var module = await Module;
@@ -28,8 +25,9 @@ public sealed class LocalUserProfileStore(IJSRuntime js) : IUserProfileStore, IA
         {
             return (JsonSerializer.Deserialize(json, UserJsonContext.Default.UserProfile) ?? new UserProfile()).Normalize();
         }
-        catch (JsonException)
+        catch (JsonException ex)
         {
+            logger.LogWarning(ex, "Perfil guardado que no se puede leer: se usan los valores de serie.");
             return new UserProfile();
         }
     }
@@ -56,18 +54,4 @@ public sealed class LocalUserProfileStore(IJSRuntime js) : IUserProfileStore, IA
         ReadingFont.Hyperlegible => "hyperlegible",
         _ => "punk",
     };
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_module is { IsCompletedSuccessfully: true })
-        {
-            try
-            {
-                await _module.Result.DisposeAsync();
-            }
-            catch (JSDisconnectedException)
-            {
-            }
-        }
-    }
 }
