@@ -5,7 +5,7 @@
 <div class="punk-shell">
     <header class="punk-topbar">
         <span class="punk-topbar__rust" aria-hidden="true"></span>
-        <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@_drawerOpen" @onclick="() => _drawerOpen = true">
+        <button type="button" class="appbar-menu" aria-label="Abrir menú" aria-expanded="@(_drawerOpen ? "true" : "false")" @onclick="() => _drawerOpen = true">
             <Icon Path="@Icons.Menu" />
         </button>
         <a class="punk-brand" href="">

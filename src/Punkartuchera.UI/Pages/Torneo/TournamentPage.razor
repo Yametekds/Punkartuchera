@@ -226,7 +226,7 @@ else
                 <div class="faction-grid tourney-outcome">
                     @foreach (var (outcome, label) in new[] { (MatchOutcome.WinA, a.Name), (MatchOutcome.Draw, "Empate"), (MatchOutcome.WinB, b.Name) })
                     {
-                        <button type="button" class="faction-tile @(edit.Outcome == outcome ? "is-selected" : null)" aria-pressed="@(edit.Outcome == outcome)"
+                        <button type="button" class="faction-tile @(edit.Outcome == outcome ? "is-selected" : null)" aria-pressed="@((edit.Outcome == outcome) ? "true" : "false")"
                                 @onclick="() => edit.Outcome = outcome">@label</button>
                     }
                 </div>

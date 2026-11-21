@@ -8,13 +8,22 @@
 @inject PhotoCropper Cropper
 
 <section class="match-record" aria-label="Misión, mapa, fotos y notas">
-    <h2 class="section-title">Misión</h2>
+    <details class="match-fold">
+    <summary class="section-title match-fold__head">
+        <span>Misión</span>
+        <span class="match-fold__meta">@(MissionCatalog.Find(Match.MissionId)?.Name ?? "sin elegir")</span>
+    </summary>
     <div class="paper match-mission">
         <MissionPicker Value="@Match.MissionId" ValueChanged="SetMission" Disabled="_busy" />
         <a class="match-mission__all" href="misiones">Ver todas las misiones</a>
     </div>
+    </details>
 
-    <h2 class="section-title">Mapa</h2>
+    <details class="match-fold">
+    <summary class="section-title match-fold__head">
+        <span>Mapa</span>
+        <span class="match-fold__meta">@(Match.Map is { } summaryMap ? summaryMap.Code : "sin mapa")</span>
+    </summary>
     <div class="card match-map">
         @if (Match.Map is { } map)
         {
@@ -40,8 +49,13 @@
             <p class="muted match-map__note">Con solo el código sale con la mesa y la chatarra del reglamento. Si cambiasteis algo, mejor desde el generador.</p>
         }
     </div>
+    </details>
 
-    <h2 class="section-title">Fotos de la mesa</h2>
+    <details class="match-fold">
+    <summary class="section-title match-fold__head">
+        <span>Fotos de la mesa</span>
+        <span class="match-fold__meta">@(Match.Photos.Count == 0 ? "ninguna" : Match.Photos.Count == 1 ? "1 foto" : $"{Match.Photos.Count} fotos")</span>
+    </summary>
     <div class="paper match-photos">
         <p class="match-photos__hint">
             <strong>Hazla cenital:</strong> desde arriba, con el móvil paralelo a la mesa y la mesa entera en la foto.
@@ -89,8 +103,13 @@
             </ul>
         }
     </div>
+    </details>
 
-    <h2 class="section-title">Notas</h2>
+    <details class="match-fold">
+    <summary class="section-title match-fold__head">
+        <span>Notas</span>
+        <span class="match-fold__meta">@(Match.Notes is null ? "vacías" : "apuntadas")</span>
+    </summary>
     <div class="paper match-notes">
         <label class="visually-hidden" for="match-notes">Notas de la partida</label>
         <textarea id="match-notes" class="field__input" rows="5" maxlength="@ActiveMatch.MaxNotes"
@@ -98,6 +117,7 @@
                   value="@_notes" @oninput="OnNotesInput" @onchange="SaveNotesAsync"></textarea>
         <p class="muted match-notes__state" aria-live="polite">@(_notesDirty ? "Apuntando…" : Match.Notes is null ? "Se guarda sola mientras escribes." : "Guardado.")</p>
     </div>
+    </details>
     <p class="muted match-record__private">La misión, el mapa, las fotos y las notas se quedan en este móvil: no se mandan al rival.</p>
 </section>
 

@@ -16,7 +16,7 @@
             break;
 
         case AidKind.Once:
-            <button type="button" class="chip aid__once" aria-pressed="@(Value > 0)" disabled="@(!Editable)"
+            <button type="button" class="chip aid__once" aria-pressed="@((Value > 0) ? "true" : "false")" disabled="@(!Editable)"
                     @onclick="() => OnChange.InvokeAsync(Value > 0 ? 0 : 1)">
                 @(Value > 0 ? "✓ " : null)@Aid.Name
             </button>
@@ -33,7 +33,7 @@
             }
             else
             {
-                <button type="button" class="chip aid__once" aria-pressed="false" aria-expanded="@_picking" disabled="@(!Editable)"
+                <button type="button" class="chip aid__once" aria-pressed="false" aria-expanded="@(_picking ? "true" : "false")" disabled="@(!Editable)"
                         @onclick="() => _picking = !_picking">
                     @Aid.Name
                 </button>

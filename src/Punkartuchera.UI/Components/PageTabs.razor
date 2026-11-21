@@ -3,7 +3,7 @@
     @foreach (var tab in Tabs)
     {
         <button type="button" role="tab" class="page-tabs__tab @(tab == Active ? "is-active" : null)"
-                aria-selected="@(tab == Active)" @onclick="() => Select(tab)">
+                aria-selected="@((tab == Active) ? "true" : "false")" @onclick="() => Select(tab)">
             @tab
         </button>
     }

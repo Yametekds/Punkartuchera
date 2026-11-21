@@ -139,7 +139,7 @@ else
             {
                 var selected = _entries.Any(e => e.BandId == band.Id);
                 <button type="button" class="faction-tile tourney-band @(selected ? "is-selected" : null) @(band.IsReadOnly ? "tourney-band--rival" : null)"
-                        aria-pressed="@selected" @onclick="() => Toggle(band)">
+                        aria-pressed="@(selected ? "true" : "false")" @onclick="() => Toggle(band)">
                     <span class="tourney-band__name">@band.Name</span>
                     <span class="tourney-band__meta">
                         @(Rules.FindFaction(band.FactionId)?.Name ?? band.FactionId)

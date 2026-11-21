@@ -116,7 +116,7 @@
                 @foreach (var board in Terrain.Boards)
                 {
                     <button type="button" class="faction-tile map-option @(board == _board ? "is-selected" : null)"
-                            aria-pressed="@(board == _board)" @onclick="() => SelectBoard(board)">
+                            aria-pressed="@((board == _board) ? "true" : "false")" @onclick="() => SelectBoard(board)">
                         <span>@board.Name</span>
                         <small>@board.Note · despliegue de @board.DeploymentDepth cm</small>
                     </button>
@@ -128,7 +128,7 @@
                 @foreach (var (orientation, name, hint) in Orientations)
                 {
                     <button type="button" class="faction-tile map-option @(orientation == _orientation ? "is-selected" : null)"
-                            aria-pressed="@(orientation == _orientation)" @onclick="() => SelectOrientation(orientation)">
+                            aria-pressed="@((orientation == _orientation) ? "true" : "false")" @onclick="() => SelectOrientation(orientation)">
                         <span class="map-option__head">
                             <svg class="map-option__icon" viewBox="0 0 12 12" aria-hidden="true">
                                 <rect x=".5" y=".5" width="11" height="11" />

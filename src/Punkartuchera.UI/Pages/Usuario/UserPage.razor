@@ -65,7 +65,7 @@
                 {
                     <button type="button" class="font-tile @(_profile.Font == option.Font ? "is-selected" : null)"
                             data-font-preview="@LocalUserProfileStore.FontAttribute(option.Font)"
-                            aria-pressed="@(_profile.Font == option.Font)" @onclick="() => ChangeFont(option.Font)">
+                            aria-pressed="@((_profile.Font == option.Font) ? "true" : "false")" @onclick="() => ChangeFont(option.Font)">
                         <span class="font-tile__name">@option.Name</span>
                         <span class="font-tile__about">@option.About</span>
                     </button>
