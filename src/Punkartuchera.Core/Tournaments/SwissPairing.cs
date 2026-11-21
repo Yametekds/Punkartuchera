@@ -157,7 +157,7 @@ public static class SwissPairing
     private static bool SamePlayer(TournamentPlayer a, TournamentPlayer b) =>
         !string.IsNullOrWhiteSpace(a.Name)
         && !string.Equals(a.Name.Trim(), UserProfile.DefaultNickname, StringComparison.OrdinalIgnoreCase)
-        && string.Equals(a.Name.Trim(), b.Name.Trim(), StringComparison.CurrentCultureIgnoreCase);
+        && string.Equals(a.Name.Trim(), b.Name.Trim(), StringComparison.OrdinalIgnoreCase);
 }
 
 public sealed class TournamentException(string message) : Exception(message);

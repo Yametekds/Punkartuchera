@@ -210,6 +210,6 @@ public class BackupAttackTests
             }
         }
 
-        return (crc ^ 0xFFFFFFFFu).ToString("x8");
+        return (crc ^ 0xFFFFFFFFu).ToString("x8", System.Globalization.CultureInfo.InvariantCulture);
     }
 }
