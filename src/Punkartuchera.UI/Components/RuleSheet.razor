@@ -1,12 +1,7 @@
 @inject GearLookup Lookup
 
 @* Ventana con lo que dice el reglamento de un objeto o habilidad, sin salir de la ficha. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper rule-sheet" role="dialog" aria-modal="true" aria-labelledby="rule-sheet-title">
-    <header class="sheet__head">
-        <h2 id="rule-sheet-title" class="sheet__title">@Title</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="@Title" Class="rule-sheet" OnClose="Close">
 
     <span class="chip rule-sheet__kind">@KindLabel(Info.Kind)</span>
 
@@ -28,7 +23,7 @@
             <a class="btn btn--blood" href="@Info.Href" @onclick="Close">Ver en las reglas</a>
         </div>
     }
-</section>
+</Sheet>
 
 @code {
     [Parameter, EditorRequired] public GearInfo Info { get; set; } = default!;

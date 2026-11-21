@@ -1167,13 +1167,17 @@ a.menu-pop__item { text-decoration: none; }
 
 /* ---------- Hojas (pasar y cargar rival) ---------- */
 
-.sheet-scrim { position: fixed; inset: 0; z-index: 30; background: rgba(13, 11, 9, .72); }
+/* Las hojas son <dialog> modales: se anulan los estilos del navegador y el fondo es su ::backdrop. */
+.sheet::backdrop { background: rgba(13, 11, 9, .72); }
 .sheet {
-    position: fixed; z-index: 31; left: 0; right: 0; bottom: 0;
+    position: fixed; z-index: 31; left: 0; right: 0; bottom: 0; top: auto;
+    width: auto; max-width: none; margin: 0; border: 0;
     max-height: 92vh; overflow-y: auto; overscroll-behavior: contain;
     padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
     display: flex; flex-direction: column; gap: 10px;
 }
+.sheet:not([open]) { display: none; }
+.sheet:focus { outline: none; }
 .sheet p { margin: 0; }
 /* La hoja hace scroll y pega con el borde de la pantalla: el desgarro inferior
    quedaba recortado dentro del scroll y pisaba el pie del papel */

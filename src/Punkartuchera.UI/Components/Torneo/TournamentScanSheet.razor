@@ -3,12 +3,7 @@
 @inject IJSRuntime JS
 
 @* Hoja del organizador para escanear el QR de resultado que enseña el móvil de una mesa. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="scan-title">
-    <header class="sheet__head">
-        <h2 id="scan-title" class="sheet__title">Escanear resultado</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="Escanear resultado" OnClose="Close">
 
     <p>En el móvil de la mesa: <strong>Partida › QR del resultado para el torneo</strong>. Apunta aquí.</p>
     <div class="scanner @(_cameraState == "ok" ? "is-live" : null)">
@@ -29,7 +24,7 @@
     }
 
     <p class="sheet__small">¿No hay manera? Cierra esto y dale a <strong>Apuntar a mano</strong> en la mesa.</p>
-</section>
+</Sheet>
 
 @code {
     [Parameter, EditorRequired] public Tournament Tournament { get; set; } = default!;
