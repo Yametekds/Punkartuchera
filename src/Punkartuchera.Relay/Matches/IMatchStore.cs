@@ -14,6 +14,9 @@ public interface IMatchStore
 
     Task DeleteAsync(string code, CancellationToken cancellationToken = default);
 
+    /// <summary>Cuenta las partidas sin caducar; deja de contar al llegar a <paramref name="limit"/>.</summary>
+    Task<int> CountOpenAsync(DateTimeOffset now, int limit, CancellationToken cancellationToken = default);
+
     /// <summary>Borra las partidas caducadas y devuelve cuántas.</summary>
     Task<int> DeleteExpiredAsync(DateTimeOffset now, CancellationToken cancellationToken = default);
 }

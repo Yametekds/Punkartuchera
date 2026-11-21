@@ -15,6 +15,9 @@ public sealed class RequestThrottle : IDisposable
         Create,
         Join,
         Message,
+
+        /// <summary>Negociar la conexión SignalR: cada token abre una de las pocas conexiones del plan.</summary>
+        Connect,
     }
 
     private static readonly Dictionary<Bucket, int> PerMinute = new()
@@ -22,6 +25,7 @@ public sealed class RequestThrottle : IDisposable
         [Bucket.Create] = 6,
         [Bucket.Join] = 12,
         [Bucket.Message] = 90,
+        [Bucket.Connect] = 20,
     };
 
     private readonly PartitionedRateLimiter<(Bucket, string)> _limiter;

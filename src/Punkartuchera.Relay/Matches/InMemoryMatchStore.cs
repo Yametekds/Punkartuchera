@@ -37,6 +37,9 @@ public sealed class InMemoryMatchStore : IMatchStore
         return Task.CompletedTask;
     }
 
+    public Task<int> CountOpenAsync(DateTimeOffset now, int limit, CancellationToken cancellationToken = default) =>
+        Task.FromResult(Math.Min(_matches.Values.Count(m => m.ExpiresAt > now), limit));
+
     public Task<int> DeleteExpiredAsync(DateTimeOffset now, CancellationToken cancellationToken = default)
     {
         var expired = _matches.Values.Where(m => m.ExpiresAt <= now).Select(m => m.Code).ToList();

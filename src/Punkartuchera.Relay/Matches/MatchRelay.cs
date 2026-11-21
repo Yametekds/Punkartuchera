@@ -23,7 +23,17 @@ public sealed class MatchRelay(IMatchStore store, IRealtimeChannel channel, Time
     /// <summary>Duración del token de SignalR. La app pide otro al reconectar.</summary>
     public static readonly TimeSpan ConnectionTokenLifetime = TimeSpan.FromHours(1);
 
+    /// <summary>
+    /// Partidas abiertas a la vez como mucho. El plan Free de SignalR admite 20 conexiones en total;
+    /// con este tope, quien cree partidas en bucle desde muchas direcciones no llena el almacén sin fin.
+    /// </summary>
+    public const int MaxOpenMatches = 100;
+
     private const int CreateAttempts = 5;
+
+    /// <summary>True si ya hay <see cref="MaxOpenMatches"/> partidas abiertas y no se pueden crear más.</summary>
+    public async Task<bool> IsFullAsync(CancellationToken cancellationToken = default) =>
+        await store.CountOpenAsync(time.GetUtcNow(), MaxOpenMatches, cancellationToken) >= MaxOpenMatches;
 
     public async Task<RelayTicket> CreateAsync(CancellationToken cancellationToken = default)
     {
