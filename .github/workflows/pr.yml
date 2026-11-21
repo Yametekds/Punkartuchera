@@ -1,0 +1,46 @@
+name: Comprobar PR
+
+# Compila, pasa los tests y publica la web en cada PR contra main, sin desplegar nada.
+# Repite los pasos de pages.yml para que lo que pasa aquí también pase al publicar.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Compilar
+        run: dotnet build --configuration Release
+
+      - name: Tests
+        run: dotnet test --configuration Release --no-build
+
+      - name: Publicar la web
+        run: dotnet publish src/Punkartuchera.Web/Punkartuchera.Web.csproj --configuration Release --output publish
+
+      - name: Comprobar dependencias vulnerables
+        run: |
+          dotnet list package --vulnerable --include-transitive | tee vulnerables.txt
+          ! grep -q "has the following vulnerable packages" vulnerables.txt
+
+      - name: Aplicar la CSP
+        run: dotnet run build/csp.cs -- publish/wwwroot/index.html
