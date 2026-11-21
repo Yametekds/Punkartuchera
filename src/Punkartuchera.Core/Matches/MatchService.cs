@@ -170,7 +170,7 @@ public sealed class MatchService(
 
             match.Round = round;
             match.Over = false;
-            match.RoundStamp++;
+            match.RoundStamp = Math.Min(match.RoundStamp + 1, ActiveMatch.MaxRoundStamp);
             ResetActivations(match);
             await SaveAsync(match, cancellationToken);
         }
@@ -196,7 +196,7 @@ public sealed class MatchService(
             }
 
             match.Over = true;
-            match.RoundStamp++;
+            match.RoundStamp = Math.Min(match.RoundStamp + 1, ActiveMatch.MaxRoundStamp);
             await SaveAsync(match, cancellationToken);
         }
         finally

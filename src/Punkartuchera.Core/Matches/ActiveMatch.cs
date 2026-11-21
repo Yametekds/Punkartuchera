@@ -16,6 +16,12 @@ public sealed class ActiveMatch
     /// <summary>Largo máximo de las notas.</summary>
     public const int MaxNotes = 4000;
 
+    /// <summary>
+    /// Tope del reloj de la ronda. Sube uno por cambio, así que una partida real no se acerca;
+    /// un sello mayor que llegue del rival se descarta, porque al sumarle uno se desbordaría.
+    /// </summary>
+    public const long MaxRoundStamp = 100_000;
+
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public MatchMode Mode { get; set; }
