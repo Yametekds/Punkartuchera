@@ -3,6 +3,7 @@
 @inject IPhotoStore Photos
 @inject PhotoUrlProvider PhotoUrls
 @inject PhotoCropper Cropper
+@inject ILogger<PhotoPicker> Logger
 
 <div class="photo-picker">
     <div class="photo-picker__actions">
@@ -138,7 +139,7 @@
         }
         catch (JSException ex)
         {
-            Console.Error.WriteLine($"No se pudo abrir la foto: {ex.Message}");
+            Logger.LogError(ex, "No se pudo abrir la foto");
             _error = "No se pudo abrir la foto. Prueba otra vez.";
         }
         finally
@@ -170,7 +171,7 @@
         }
         catch (JSException ex)
         {
-            Console.Error.WriteLine($"No se pudo guardar la foto: {ex.Message}");
+            Logger.LogError(ex, "No se pudo guardar la foto");
             _error = "No se pudo guardar la foto. Prueba otra vez.";
             _cropping = false;
         }

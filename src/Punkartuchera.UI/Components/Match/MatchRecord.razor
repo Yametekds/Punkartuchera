@@ -6,6 +6,7 @@
 @inject IPhotoStore PhotoStore
 @inject PhotoUrlProvider PhotoUrls
 @inject PhotoCropper Cropper
+@inject ILogger<MatchRecord> Logger
 
 <section class="match-record" aria-label="Misión, mapa, fotos y notas">
     <details class="match-fold">
@@ -201,7 +202,7 @@
         }
         catch (JSException ex)
         {
-            Console.Error.WriteLine($"No se pudo guardar la foto: {ex.Message}");
+            Logger.LogError(ex, "No se pudo guardar la foto de la partida");
             _error = "No se pudo guardar la foto. Prueba otra vez.";
         }
         finally
@@ -236,13 +237,38 @@
         _notes = e.Value as string;
         _notesDirty = true;
         _notesDelay?.Cancel();
+        _notesDelay?.Dispose();
         _notesDelay = new CancellationTokenSource();
-        var token = _notesDelay.Token;
-        _ = Task.Delay(800, token).ContinueWith(_ => InvokeAsync(async () =>
+        _ = SaveNotesLaterAsync(_notesDelay.Token);
+    }
+
+    // Nadie espera esta tarea, así que gestiona sus propios errores: si no, se perderían sin aviso.
+    private async Task SaveNotesLaterAsync(CancellationToken token)
+    {
+        try
         {
-            await FlushNotesAsync();
+            await Task.Delay(800, token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            try
+            {
+                await FlushNotesAsync();
+            }
+            catch (JSException ex)
+            {
+                Logger.LogError(ex, "No se pudieron guardar las notas de la partida");
+                _notesDirty = true;
+                _error = "No se han podido guardar las notas. Sigue escribiendo y se intentará otra vez.";
+            }
+
             StateHasChanged();
-        }), token, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
+        });
     }
 
     private async Task SaveNotesAsync()
@@ -290,6 +316,7 @@
     public async ValueTask DisposeAsync()
     {
         _notesDelay?.Cancel();
+        _notesDelay?.Dispose();
         await FlushNotesAsync();
     }
 }
