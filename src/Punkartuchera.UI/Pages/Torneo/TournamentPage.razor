@@ -190,12 +190,7 @@ else
     {
         var a = t.FindPlayer(edit.Pairing.PlayerA)!;
         var b = t.FindPlayer(edit.Pairing.PlayerB!.Value)!;
-        <div class="sheet-scrim" @onclick="() => _editing = null"></div>
-        <section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="result-title">
-            <header class="sheet__head">
-                <h2 id="result-title" class="sheet__title">Mesa @edit.Pairing.Table · ronda @edit.Round</h2>
-                <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="() => _editing = null"><Icon Path="@Icons.Close" /></button>
-            </header>
+        <Sheet Title="@($"Mesa {edit.Pairing.Table} · ronda {edit.Round}")" OnClose="() => _editing = null">
             @if (edit.FromQr)
             {
                 <p>Leído del QR de la mesa. Repásalo, mete los Puntos de Escenario y apúntalo.</p>
@@ -238,7 +233,7 @@ else
                     <button type="button" class="btn btn--ghost" disabled="@_busy" @onclick="ClearResult">Quitar resultado</button>
                 }
             </div>
-        </section>
+        </Sheet>
     }
 }
 

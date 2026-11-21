@@ -12,12 +12,7 @@
 
 @if (_open)
 {
-    <div class="sheet-scrim" @onclick="() => _open = false"></div>
-    <section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="result-qr-title">
-        <header class="sheet__head">
-            <h2 id="result-qr-title" class="sheet__title">Resultado para el torneo</h2>
-            <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="() => _open = false"><Icon Path="@Icons.Close" /></button>
-        </header>
+    <Sheet Title="Resultado para el torneo" OnClose="() => _open = false">
 
         @if (_code is not null)
         {
@@ -32,7 +27,7 @@
         {
             <p class="notice">Falta la banda rival: sin ella no hay resultado que pasar.</p>
         }
-    </section>
+    </Sheet>
 }
 
 @code {

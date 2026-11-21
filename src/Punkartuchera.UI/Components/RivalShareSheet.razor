@@ -2,12 +2,7 @@
 @inject FileSharer Sharer
 
 @* Hoja para pasar la banda al rival: QR sin fotos o archivo completo. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="share-title">
-    <header class="sheet__head">
-        <h2 id="share-title" class="sheet__title">Pásale la banda al rival</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="Pásale la banda al rival" OnClose="Close">
 
     @if (_qr is not null)
     {
@@ -43,7 +38,7 @@
     }
 
     <p class="sheet__small">Las balas no van ni en el QR ni en el archivo.</p>
-</section>
+</Sheet>
 
 @code {
     [Parameter, EditorRequired] public Guid BandId { get; set; }

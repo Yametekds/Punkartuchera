@@ -4,12 +4,7 @@
 @inject LoadoutModifiers LoadoutModifiers
 
 @* Todo lo de un miembro durante la partida: atributos, equipo, habilidades y reglas de su tropa. Nunca las balas. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper rule-sheet match-sheet" role="dialog" aria-modal="true" aria-labelledby="match-sheet-title">
-    <header class="sheet__head">
-        <h2 id="match-sheet-title" class="sheet__title">@Name</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="@Name" Class="rule-sheet match-sheet" OnClose="Close">
 
     <div class="match-sheet__state">
         @if (Role is { Length: > 0 })
@@ -79,7 +74,7 @@
             </div>
         </div>
     }
-</section>
+</Sheet>
 
 @code {
     [Parameter] public Miniature? Member { get; set; }
