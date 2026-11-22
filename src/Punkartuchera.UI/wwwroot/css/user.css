@@ -42,9 +42,6 @@
 :root[data-font] body { line-height: 1.6; }
 /* Estas letras ya vienen espaciadas: el espaciado extra de los rótulos las desparrama. */
 :root[data-font] body * { letter-spacing: 0 !important; }
-:root[data-font] .punk-brand__name,
-:root[data-font] .drawer__title,
-:root[data-font] .boot__title { font-family: "Black Ops One", "Impact", sans-serif; }
 /* Los garabatos van torcidos para dar ambiente; leyendo con otra letra, mejor rectos. */
 :root[data-font] .page-kicker,
 :root[data-font] .scribble { transform: none; }

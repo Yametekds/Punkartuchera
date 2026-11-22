@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/marca/punkartuchera-logo-principal.svg" alt="Punkartuchera" width="420">
+</p>
+
 # Punkartuchera
 
 Gestor de bandas para el juego de escaramuzas **Punkapocalyptic**: crea tus bandas, haz fotos a tus miniaturas y consulta sus atributos de un vistazo, también sin conexión.
@@ -56,6 +60,10 @@ El relé de partidas en línea se despliega aparte en Azure: pasos en [docs/PART
 | `tests/Punkartuchera.UI.Tests` | Tests de las pantallas con bUnit, con almacenamiento en memoria. |
 
 Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
+
+## Logo
+
+Los archivos del logo en SVG están en [docs/marca](docs/marca): logo principal, horizontal, isotipo, versión negativa, icono de la app, versión plana y la hoja con todas las versiones. La app usa el principal en la pantalla de carga, el horizontal en la cabecera y el menú, y el icono en el favicon y al instalarla.
 
 ## Aviso
 
