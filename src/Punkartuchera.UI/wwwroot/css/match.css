@@ -528,3 +528,35 @@
 .table-mode .match-bar .stepper__btn { width: 44px; height: 48px; font-size: 1.6rem; }
 .table-mode .match-bar .round-dial { --size: 56px; }
 .table-mode .match-bar .match-bar__next { min-height: 48px; font-size: 1rem; }
+
+/* Modo mesa en móvil: la ronda queda en medio con su botón en una fila propia debajo,
+   y los botones del tanto bajo la placa, para que todo quepa a lo ancho. */
+@media (max-width: 599px) {
+    .table-mode .match-bar { column-gap: 6px; row-gap: 10px; padding-inline: 8px; }
+    .table-mode .match-bar__round { display: contents; }
+    .table-mode .match-bar > .match-score__side { grid-row: 1; }
+    .table-mode .match-bar > .match-score__side:first-child { grid-column: 1; }
+    .table-mode .match-bar > .match-score__side ~ .match-score__side { grid-column: 3; }
+    .table-mode .match-bar__dial {
+        grid-column: 2; grid-row: 1;
+        display: grid; grid-template-columns: auto auto; align-items: center; justify-items: center; gap: 2px 4px;
+    }
+    .table-mode .match-bar__of { grid-column: 2; }
+    .table-mode .match-bar .match-bar__back { width: 32px; }
+    .table-mode .match-bar .match-bar__next { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+    .table-mode .match-bar__next-word { display: inline; }
+    .table-mode .match-bar__confirm { grid-row: 3; }
+    .table-mode .match-bar .match-score__count {
+        display: grid; grid-template-columns: auto auto; justify-content: center; gap: 6px;
+    }
+    .table-mode .match-bar .match-score__count .match-score__value { grid-column: 1 / -1; grid-row: 1; }
+    .table-mode .match-bar .match-score__minus { grid-column: 1; grid-row: 2; }
+    .table-mode .match-bar .match-score__plus { grid-column: 2; grid-row: 2; }
+    .table-mode .match-bar .match-score__count .match-score__value:only-child { grid-column: auto; }
+    .table-mode .match-bar .match-score__value { padding-inline: 6px; }
+    .table-mode .match-bar .match-score__count .stepper__btn { width: 46px; height: 46px; }
+}
+@media (max-width: 360px) {
+    .table-mode .match-bar .match-score__value { font-size: 2.2rem; }
+    .table-mode .match-bar .match-score__count .stepper__btn { width: 40px; height: 42px; }
+}
