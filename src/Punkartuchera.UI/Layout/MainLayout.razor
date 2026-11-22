@@ -61,7 +61,22 @@
     </nav>
 
     <main class="punk-main">
-        @Body
+        @* Si una pantalla revienta, se cae solo esa pantalla: el menú sigue vivo y al navegar se recupera. *@
+        <ErrorBoundary @ref="_errorBoundary">
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                <section class="crash" role="alert">
+                    <h1 class="page-title distress" tabindex="-1">Esto ha petado</h1>
+                    <p>Algo se ha roto en esta pantalla. Tus bandas y partidas siguen guardadas.</p>
+                    <div class="crash__actions">
+                        <button type="button" class="btn btn--primary" @onclick="Recover">Volver a intentarlo</button>
+                        <a class="btn btn--ghost" href="">Ir a mis bandas</a>
+                    </div>
+                </section>
+            </ErrorContent>
+        </ErrorBoundary>
     </main>
 
     @* En móvil y tablet, las secciones de siempre a mano del pulgar (las demás siguen en el menú) *@
@@ -81,12 +96,14 @@
 
 @code {
     private bool _drawerOpen;
+    private ErrorBoundary? _errorBoundary;
 
     protected override void OnInitialized() => Navigation.LocationChanged += OnLocationChanged;
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         _drawerOpen = false;
+        _errorBoundary?.Recover();
         StateHasChanged();
     }
 
@@ -98,6 +115,8 @@
             ? path.Length == 0 || path == "bandas" || path.StartsWith("bandas/", StringComparison.Ordinal)
             : path == item.Href || path.StartsWith(item.Href + "/", StringComparison.Ordinal);
     }
+
+    private void Recover() => _errorBoundary?.Recover();
 
     public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
 }
