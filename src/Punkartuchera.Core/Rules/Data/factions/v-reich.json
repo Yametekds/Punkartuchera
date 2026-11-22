@@ -25,7 +25,7 @@
     {
       "name": "Sanitario", "cost": 35, "page": 74,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "4", "f": "3", "d": "3", "t": "5" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }],
       "armor": "Ropas resistentes",
       "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -40,7 +40,7 @@
     {
       "name": "Soldat", "cost": 40, "page": 75,
       "stats": { "a": "2", "c": "4", "p": "5", "ag": "4", "f": "4", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }],
       "armor": "Cuero endurecido",
       "equipmentOptions": [{ "name": "Walkie-talkie", "cost": 7 }, { "name": "Mastín", "cost": 9 }],
@@ -49,7 +49,7 @@
     {
       "name": "Übersoldat", "cost": 50, "page": 76,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "6", "d": "5", "t": "2" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Maza pesada", "cost": 6 },
         { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }
@@ -61,7 +61,7 @@
     {
       "name": "Mariscal", "cost": 60, "page": 77,
       "stats": { "a": "3", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "4", "t": "4" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 },
         { "name": "Escopeta", "cost": 6 }, { "name": "Filo medio", "cost": 10 }, { "name": "Rifle automático", "cost": 10 }

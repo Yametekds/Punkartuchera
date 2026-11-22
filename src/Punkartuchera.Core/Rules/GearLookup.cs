@@ -7,6 +7,12 @@ public sealed record GearInfo(string Name, GearInfoKind Kind, string Summary, st
 {
     /// <summary>Reglas especiales que lleva (armas y blindajes): "A dos manos", "Escasa"…</summary>
     public IReadOnlyList<string> SpecialRules { get; init; } = [];
+
+    /// <summary>Arma que no se combina con ninguna otra.</summary>
+    public bool Alone { get; init; }
+
+    /// <summary>Arma que dispara una sola vez por partida.</summary>
+    public bool SingleUse { get; init; }
 }
 
 /// <summary>Una regla especial con su texto, para explicarla sin salir de la ficha.</summary>
@@ -38,7 +44,7 @@ public sealed partial class GearLookup
         foreach (var weapon in book.Weapons)
         {
             Add(weapon.Name, weapon.FactionId, Describe(weapon), $"reglas/equipo#{weapon.Slug}",
-                weapon.Kind == WeaponKind.Melee ? GearInfoKind.MeleeWeapon : GearInfoKind.RangedWeapon, weapon.Rules);
+                weapon.Kind == WeaponKind.Melee ? GearInfoKind.MeleeWeapon : GearInfoKind.RangedWeapon, weapon.Rules, weapon.Alone, weapon.SingleUse);
         }
 
         foreach (var armor in book.Armors)
@@ -121,8 +127,8 @@ public sealed partial class GearLookup
             .Select(r => new RuleDetail(r.Name, r.Rule!.Text, $"reglas/especiales#{r.Rule.Slug}"))
             .ToList();
 
-    private void Add(string name, string? factionId, string summary, string? href, GearInfoKind kind, IReadOnlyList<string>? rules = null) =>
-        _entries.Add((Key(name), factionId, new GearInfo(name, kind, summary, href) { SpecialRules = rules ?? [] }));
+    private void Add(string name, string? factionId, string summary, string? href, GearInfoKind kind, IReadOnlyList<string>? rules = null, bool alone = false, bool singleUse = false) =>
+        _entries.Add((Key(name), factionId, new GearInfo(name, kind, summary, href) { SpecialRules = rules ?? [], Alone = alone, SingleUse = singleUse }));
 
     private static string Key(string? name) =>
         Spaces().Replace(Parenthesis().Replace(RulesText.Fold(name), " "), " ").Trim();

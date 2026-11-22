@@ -22,7 +22,7 @@
     {
       "name": "Ceniza", "cost": 12, "page": 13,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
       "armor": "Ninguno",
       "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }]
@@ -30,7 +30,7 @@
     {
       "name": "Quemado", "cost": 15, "page": 14,
       "stats": { "a": "2", "c": "2", "p": "2", "ag": "4", "f": "3", "d": "3", "t": "2" },
-      "weaponRule": "Puede llevar una",
+      "weaponRule": "Puede llevar una", "weaponMin": 0, "weaponMax": 1,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }],
       "armor": "Ninguno",
       "specialRules": ["Mónguer"],
@@ -43,7 +43,7 @@
     {
       "name": "Guardián de la Llama", "cost": 20, "page": 15,
       "stats": { "a": "2", "c": "2", "p": "2", "ag": "2", "f": "3", "d": "3", "t": "6" },
-      "weaponRule": "Una",
+      "weaponRule": "Una", "weaponMin": 1, "weaponMax": 1,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }, { "name": "Pura chapa", "cost": 15 }],
@@ -52,7 +52,7 @@
     {
       "name": "Ascua", "cost": 50, "page": 16,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "5", "f": "4", "d": "4", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 },
         { "name": "Cóctel molotov", "cost": 8, "each": true }, { "name": "Filo medio", "cost": 10 }, { "name": "Motosierra", "cost": 10 }, { "name": "Lanzallamas", "cost": 20 }
@@ -65,7 +65,7 @@
     {
       "name": "Chispa", "cost": 55, "page": 17,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "6", "f": "4", "d": "4", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }, { "name": "Chaleco antibalas", "cost": 10 }],

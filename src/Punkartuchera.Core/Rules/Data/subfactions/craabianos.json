@@ -28,7 +28,7 @@
       {
         "name": "Híbrido", "cost": 22, "page": 2,
         "stats": { "a": "2", "c": "4", "p": "2", "ag": "2", "f": "4", "d": "4", "t": "2" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Red", "cost": 6 }, { "name": "Tridente", "cost": 7 }],
         "armor": "Ninguno",
         "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }, { "name": "Cuero endurecido", "cost": 10 }],
@@ -124,7 +124,7 @@
       {
         "name": "Barman", "cost": 35, "page": 7,
         "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "4", "t": "4" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola de mecha", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Trabuco", "cost": 5 }],
         "armor": "Ropas resistentes",
         "rules": [

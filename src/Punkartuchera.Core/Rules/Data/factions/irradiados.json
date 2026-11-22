@@ -27,7 +27,7 @@
     {
       "name": "Mártir", "cost": 16, "page": 33,
       "stats": { "a": "2", "c": "1", "p": "1", "ag": "2", "f": "2", "d": "2", "t": "3" },
-      "weaponRule": "Una",
+      "weaponRule": "Una", "weaponMin": 1, "weaponMax": 1,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }],
       "armor": "Ninguno",
       "rules": [{ "name": "Radiado", "text": "Es fuente de Radiación vivo y muerto, y tira Radiación cada Turno por la suya propia. Al caer deja dos marcadores de Radiación." }]
@@ -35,7 +35,7 @@
     {
       "name": "Discípulo", "cost": 20, "page": 34,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }],
       "armor": "Ropas resistentes",
       "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -44,7 +44,7 @@
     {
       "name": "Penitente", "cost": 40, "page": 35,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "5", "d": "5", "t": "-" },
-      "weaponRule": "Una",
+      "weaponRule": "Una", "weaponMin": 1, "weaponMax": 1,
       "weaponOptions": [{ "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 }, { "name": "Botafumeiro tóxico", "cost": 7 }, { "name": "Lanzarresiduos", "cost": 15 }],
       "armor": "Ropas resistentes",
       "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -53,7 +53,7 @@
     {
       "name": "Cardenal Nuclear", "cost": 50, "page": 36,
       "stats": { "a": "3", "c": "2", "p": "4", "ag": "4", "f": "3", "d": "3", "t": "7" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 },
         { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }, { "name": "Rifle automático", "cost": 10 }
@@ -66,7 +66,7 @@
     {
       "name": "Paladín", "cost": 50, "page": 37,
       "stats": { "a": "2", "c": "5", "p": "3", "ag": "5", "f": "4", "d": "4", "t": "3" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Maza pesada", "cost": 6 }, { "name": "Filo pesado", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
       "armor": "Cuero endurecido",
       "armorOptions": [{ "name": "Armadura metálica", "cost": 10 }],

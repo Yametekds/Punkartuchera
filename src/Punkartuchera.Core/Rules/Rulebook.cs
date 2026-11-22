@@ -205,6 +205,12 @@ public sealed class Weapon
 
     public int? Page { get; set; }
 
+    /// <summary>No se combina con ninguna otra arma (Garras y dientes).</summary>
+    public bool Alone { get; set; }
+
+    /// <summary>Dispara una sola vez por partida, aunque no tenga la regla Usar y tirar (Cañón de mano).</summary>
+    public bool SingleUse { get; set; }
+
     public string? Notes { get; set; }
 
     /// <summary>Nulo si es equipo genérico.</summary>
@@ -449,6 +455,12 @@ public sealed class Troop
     public Dictionary<string, string> Stats { get; set; } = [];
 
     public string? WeaponRule { get; set; }
+
+    /// <summary>Mínimo de armas que pide <see cref="WeaponRule"/> (0 si "Puede llevar…").</summary>
+    public int? WeaponMin { get; set; }
+
+    /// <summary>Máximo de armas que permite <see cref="WeaponRule"/>.</summary>
+    public int? WeaponMax { get; set; }
 
     /// <summary>Armas fijas (personalidades).</summary>
     public string? Weapons { get; set; }

@@ -168,12 +168,12 @@ public class LoadoutTests
     }
 
     [Theory]
-    [InlineData("Una", 1, 1)]
-    [InlineData("Puede llevar una", 0, 1)]
-    [InlineData("Al menos una y como máximo dos (nunca dos A dos manos)", 1, 2)]
-    public void Weapon_rules_are_read_from_the_troop(string rule, int min, int max)
+    [InlineData("pandilleros", "Bruto", 1, 2)]
+    [InlineData("irradiados", "Mártir", 1, 1)]
+    [InlineData("sangre-negra", "Quemado", 0, 1)]
+    public void Weapon_limits_come_from_the_troop_sheet(string factionId, string troop, int min, int max)
     {
-        var limit = LoadoutAdvisor.ParseLimit(rule)!;
+        var limit = _advisor.Advise(Recruit(factionId, troop), factionId).Limit!;
         Assert.Equal((min, max), (limit.Min, limit.Max));
     }
 

@@ -27,7 +27,7 @@
         "name": "Robotrón", "cost": 10, "page": 2,
         "stats": { "a": "2", "c": "2", "p": "2", "ag": "2", "f": "2", "d": "2", "t": "2" },
         "weapons": "Miembros robóticos (como garras y dientes)",
-        "weaponRule": "Puede llevar además una de estas",
+        "weaponRule": "Puede llevar además una de estas", "weaponMin": 0, "weaponMax": 1,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Cuerpo mecánico (Blindaje 3)",
         "specialRules": ["Radioinmune"],
@@ -82,7 +82,7 @@
       {
         "name": "Escudero", "cost": 10, "page": 5,
         "stats": { "a": "2", "c": "2", "p": "3", "ag": "2", "f": "2", "d": "2", "t": "2" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Arco", "cost": 10 }],
         "armor": "Ninguno",
         "specialRules": ["Radioinmune"],
@@ -94,7 +94,7 @@
       {
         "name": "Inquisidor", "cost": 30, "page": 6,
         "stats": { "a": "2", "c": "3", "p": "2", "ag": "4", "f": "3", "d": "3", "t": "5" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Granada santa", "cost": 5, "each": true }, { "name": "Maza", "cost": 5 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],
@@ -142,7 +142,7 @@
       {
         "name": "Científico", "cost": 15, "page": 9,
         "stats": { "a": "2", "c": "2", "p": "2", "ag": "3", "f": "3", "d": "3", "t": "7" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Cortadora de plasma", "cost": 8 }, { "name": "Rifle de fusión", "cost": 12 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],

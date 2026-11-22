@@ -143,8 +143,7 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
         return member;
     }
 
-    private int BulletPrice =>
-        book.Gear.FirstOrDefault(g => g.FactionId is null && RulesText.Fold(g.Name) == "balas")?.Cost ?? UnitCostCalculator.DefaultBulletPrice;
+    private int BulletPrice => UnitCostCalculator.BulletPriceIn(book);
 
     /// <summary>Fotos oficiales de una tropa; los mercenarios valen para cualquier facción.</summary>
     public IReadOnlyList<OfficialMini> PhotosFor(string? factionId, string? troopName) =>

@@ -22,7 +22,7 @@
     {
       "name": "Dinamo", "cost": 15, "page": 4,
       "stats": { "a": "2", "c": "2", "p": "2", "ag": "3", "f": "3", "d": "3", "t": "7" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Bomba de humo", "cost": 5, "each": true }, { "name": "Bomba incendiaria", "cost": 7, "each": true },
         { "name": "Vaporeta", "cost": 8 }, { "name": "Chasqueador y traje voltaico", "cost": 25 }
@@ -33,7 +33,7 @@
     {
       "name": "Engranaje", "cost": 16, "page": 5,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "3", "f": "3", "d": "3", "t": "5" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 },
         { "name": "Pistola", "cost": 5 }, { "name": "Trabuco", "cost": 5 }, { "name": "Bombeadora", "cost": 8 },
@@ -45,7 +45,7 @@
     {
       "name": "Pistón", "cost": 30, "page": 6,
       "stats": { "a": "2", "c": "4", "p": "4", "ag": "4", "f": "4", "d": "3", "t": "4" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [
         { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 },
         { "name": "Maza pesada", "cost": 6 }, { "name": "Puño balístico", "cost": 6 }, { "name": "Filo pesado", "cost": 8 },
@@ -57,7 +57,7 @@
     {
       "name": "Sonda", "cost": 40, "page": 7,
       "stats": { "a": "2", "c": "3", "p": "3", "ag": "5", "f": "2", "d": "3", "t": "5" },
-      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+      "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
       "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Pistola", "cost": 5 }],
       "armor": "Ropas resistentes",
       "specialRules": ["Camuflaje", "Infiltración", "Raudo", "Todoterreno"]

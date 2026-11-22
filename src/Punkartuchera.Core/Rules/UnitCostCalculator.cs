@@ -44,7 +44,10 @@ public sealed partial class UnitCostCalculator(Rulebook book)
     /// <summary>Precio de una bala si el reglamento no lo diera (Equipo, pág. 3).</summary>
     public const int DefaultBulletPrice = 15;
 
-    public int BulletPrice =>
+    public int BulletPrice => BulletPriceIn(book);
+
+    /// <summary>Precio de una bala según el equipo genérico del reglamento.</summary>
+    public static int BulletPriceIn(Rulebook book) =>
         book.Gear.FirstOrDefault(g => g.FactionId is null && RulesText.Fold(g.Name) == "balas")?.Cost ?? DefaultBulletPrice;
 
     public UnitCost Calculate(Miniature member, string? factionId, string? subfactionId = null)

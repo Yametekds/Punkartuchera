@@ -80,7 +80,7 @@
       {
         "name": "Amacizona", "cost": 70, "page": 5,
         "stats": { "a": "2", "c": "5", "p": "4", "ag": "6", "f": "5", "d": "5", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Lanza", "cost": 8 }, { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Ropas resistentes",
         "equipmentOptions": [{ "name": "Escudo", "cost": 6 }],
@@ -133,7 +133,7 @@
       {
         "name": "Mamporrero", "cost": 30, "page": 9,
         "stats": { "a": "2", "c": "4", "p": "3", "ag": "4", "f": "4", "d": "4", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Fusta", "cost": 4 }, { "name": "Látigo", "cost": 5 }, { "name": "Maza", "cost": 5 }],
         "armor": "Cuero endurecido",
         "rules": [

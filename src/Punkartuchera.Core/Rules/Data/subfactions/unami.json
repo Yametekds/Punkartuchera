@@ -23,7 +23,7 @@
       {
         "name": "Yee naaldlooshii", "cost": 40, "page": 2,
         "stats": { "a": "-", "c": "3", "p": "3", "ag": "5", "f": "3", "d": "3", "t": "2" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Tomahawk", "cost": 5 }],
         "armor": "Ninguno",
         "armorOptions": [{ "name": "Ropas resistentes", "cost": 5 }],
@@ -72,7 +72,7 @@
       {
         "name": "Renegado", "cost": 30, "page": 5,
         "stats": { "a": "2", "c": "5", "p": "5", "ag": "5", "f": "4", "d": "3", "t": "3" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Maza", "cost": 5 }, { "name": "Pistola", "cost": 5 }, { "name": "Escopeta", "cost": 6 }, { "name": "Rifle", "cost": 8 }, { "name": "Filo medio", "cost": 10 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }, { "name": "Chaleco antibalas", "cost": 15 }],
@@ -116,7 +116,7 @@
       {
         "name": "Croupier", "cost": 30, "page": 8,
         "stats": { "a": "-", "c": "3", "p": "4", "ag": "5", "f": "2", "d": "3", "t": "4" },
-        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)",
+        "weaponRule": "Al menos una y como máximo dos (nunca dos A dos manos)", "weaponMin": 1, "weaponMax": 2,
         "weaponOptions": [{ "name": "Cuchillos arrojadizos", "cost": 3 }, { "name": "Maza ligera", "cost": 3 }, { "name": "Filo pequeño", "cost": 4 }, { "name": "Tomahawk", "cost": 5 }],
         "armor": "Ropas resistentes",
         "armorOptions": [{ "name": "Cuero endurecido", "cost": 5 }],

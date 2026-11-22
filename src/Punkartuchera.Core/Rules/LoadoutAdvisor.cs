@@ -69,7 +69,7 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
     {
         var troop = costs.FindTroop(member.Role, factionId, subfactionId);
         var closed = troop is not null && (troop.Personality || book.Factions.Any(f => f.IsMercenaries && f.Troops.Contains(troop)));
-        var limit = troop is null ? null : ParseLimit(troop.WeaponRule);
+        var limit = LimitOf(troop);
         var band = (others ?? []).Where(m => m.Id != member.Id).Append(member).ToList();
 
         var worn = member.Gear.Select(g => Describe(g.Name, factionId)).ToList();
@@ -113,22 +113,11 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
         return new Loadout(gear, skills, limit, weapons, closed, troop is not null, warnings);
     }
 
-    /// <summary>
-    /// "Una" → solo una; "Puede llevar una" → ninguna o una; "Al menos una y como máximo dos" → una o dos.
-    /// Nulo si la tropa no elige armas.
-    /// </summary>
-    public static WeaponLimit? ParseLimit(string? rule)
-    {
-        var text = RulesText.Fold(rule);
-        if (text.Length == 0)
-        {
-            return null;
-        }
-
-        var max = text.Contains("maximo dos", StringComparison.Ordinal) ? 2 : 1;
-        var min = text.StartsWith("puede", StringComparison.Ordinal) ? 0 : 1;
-        return new WeaponLimit(min, max, rule!.Trim());
-    }
+    /// <summary>Cuántas armas puede llevar la tropa según su ficha; nulo si no elige armas.</summary>
+    public static WeaponLimit? LimitOf(Troop? troop) =>
+        troop is { WeaponRule: { Length: > 0 } rule, WeaponMax: { } max }
+            ? new WeaponLimit(troop.WeaponMin ?? 1, max, rule.Trim())
+            : null;
 
     /// <summary>
     /// Añade una compra a una lista de nombres: lo que va por unidades suma cantidad ("Bomba de humo x2")
@@ -664,8 +653,7 @@ public sealed class LoadoutAdvisor(Rulebook book, GearLookup lookup, UnitCostCal
             _ => LoadoutSlot.Gear,
         };
         var rules = info?.SpecialRules.Select(r => RulesText.Fold(RulesText.StripParameter(r))).ToList() ?? [];
-        var notes = RulesText.Fold(info?.Summary);
-        var alone = rules.Contains("mamotreto") || notes.Contains("no se combina con otras armas", StringComparison.Ordinal);
+        var alone = info?.Alone == true || rules.Contains("mamotreto");
         return new Item(name, info, slot, info?.Kind,
             TwoHanded: alone && rules.Contains("mamotreto") || rules.Contains("a dos manos"),
             Alone: alone,
