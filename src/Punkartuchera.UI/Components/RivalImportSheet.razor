@@ -4,12 +4,7 @@
 @inject NavigationManager Navigation
 
 @* Hoja para cargar la banda del rival: escanea su QR o abre su archivo. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper" role="dialog" aria-modal="true" aria-labelledby="import-title">
-    <header class="sheet__head">
-        <h2 id="import-title" class="sheet__title">Cargar rival</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="Cargar rival" OnClose="Close">
 
     <p>Apunta al QR de su banda. Llega sin fotos.</p>
     <div class="scanner @(_cameraState == "ok" ? "is-live" : null)">
@@ -41,7 +36,7 @@
             <InputFile class="visually-hidden" OnChange="ImportFile" accept=".punkband" />
         </label>
     </div>
-</section>
+</Sheet>
 
 @code {
     [Parameter] public EventCallback OnClose { get; set; }

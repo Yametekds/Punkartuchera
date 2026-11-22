@@ -1,10 +1,5 @@
 @* Ventana para añadir equipo o habilidades: lo que permite el reglamento, con precio y perfil. *@
-<div class="sheet-scrim" @onclick="Close"></div>
-<section class="sheet paper loadout-picker" role="dialog" aria-modal="true" aria-labelledby="loadout-picker-title">
-    <header class="sheet__head">
-        <h2 id="loadout-picker-title" class="sheet__title">@Title</h2>
-        <button type="button" class="btn btn--icon sheet__close" aria-label="Cerrar" @onclick="Close"><Icon Path="@Icons.Close" /></button>
-    </header>
+<Sheet Title="@Title" Class="loadout-picker" OnClose="Close">
 
     @if (Intro is not null)
     {
@@ -66,7 +61,7 @@
             <button type="button" class="btn btn--ghost" @onclick="AddManual" disabled="@string.IsNullOrWhiteSpace(_manual)">Añadir</button>
         </div>
     </div>
-</section>
+</Sheet>
 
 @code {
     [Parameter, EditorRequired] public IReadOnlyList<LoadoutOption> Options { get; set; } = [];
