@@ -9,7 +9,7 @@
             <Icon Path="@Icons.Menu" />
         </button>
         <a class="punk-brand" href="">
-            <span class="punk-brand__name">Punkartuchera</span>
+            <img class="punk-brand__logo" src="_content/Punkartuchera.UI/img/logo/punkartuchera-logo-horizontal.svg" alt="Punkartuchera" width="832" height="217" />
         </a>
         @* En pantallas anchas el menú va en la propia chapa y el lateral se queda para el móvil *@
         <nav class="topnav" aria-label="Secciones">
@@ -21,7 +21,6 @@
                 </a>
             }
         </nav>
-        <Icon Path="@Icons.Skull" Class="punk-brand__mark" />
     </header>
 
     @if (_drawerOpen)
@@ -30,7 +29,7 @@
     }
     <nav class="drawer @(_drawerOpen ? "is-open" : null)" aria-label="Secciones" inert="@(!_drawerOpen)">
         <div class="drawer__head">
-            <span class="drawer__title">Punkartuchera</span>
+            <img class="drawer__logo" src="_content/Punkartuchera.UI/img/logo/punkartuchera-logo-horizontal.svg" alt="Punkartuchera" width="832" height="217" />
             <button type="button" class="btn btn--icon" aria-label="Cerrar menú" @onclick="() => _drawerOpen = false">
                 <Icon Path="@Icons.Close" />
             </button>
