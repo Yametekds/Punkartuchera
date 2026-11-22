@@ -154,6 +154,8 @@ public sealed class SignalRMatchRelay(HttpClient http) : IMatchRelay, IAsyncDisp
                 throw new RelayRejectedException();
             case HttpStatusCode.TooManyRequests:
                 throw new RelayException("Demasiadas peticiones seguidas. Espera un minuto.");
+            case HttpStatusCode.ServiceUnavailable:
+                throw new RelayException("El relé está a tope de partidas. Prueba otra vez en un rato.");
             case >= HttpStatusCode.BadRequest:
                 throw new RelayException($"El relé ha fallado ({(int)response.StatusCode}). Prueba otra vez en un rato.");
         }

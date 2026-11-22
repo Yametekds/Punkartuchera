@@ -52,8 +52,8 @@ foreach (var path in args)
         // 'wasm-unsafe-eval' deja compilar WebAssembly (lo necesita .NET) sin permitir eval() de JavaScript.
         $"script-src 'self' 'wasm-unsafe-eval' {string.Join(' ', hashes)}",
         // Los componentes usan atributos style; las hojas externas solo de aquí y de Google Fonts.
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-        "font-src 'self' https://fonts.gstatic.com",
+        "style-src 'self' 'unsafe-inline'",
+        "font-src 'self'",
         // data: y blob: para las fotos guardadas y el encuadre; la tienda oficial para las fotos de las miniaturas.
         "img-src 'self' data: blob: https://www.badrollgames.com",
         "media-src 'self' blob:",

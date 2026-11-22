@@ -105,11 +105,12 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
     private async Task<Band> SaveRivalAsync(Band band, Dictionary<string, PackagedPhoto> packaged, CancellationToken cancellationToken)
     {
         var sourceId = band.Id;
-
-        var previous = (await bands.GetAllAsync(cancellationToken))
-            .FirstOrDefault(b => b.IsReadOnly && b.SourceId == sourceId);
-
         RivalBandSanitizer.Sanitize(band, rules);
+
+        // Solo sustituye la copia que pasó el mismo jugador. El identificador de una banda va en su archivo
+        // y en su QR, así que otro podría copiarlo para machacar en este móvil la banda de un tercero.
+        var previous = (await bands.GetAllAsync(cancellationToken))
+            .FirstOrDefault(b => b.IsReadOnly && b.SourceId == sourceId && SamePlayer(b.PlayerName, band.PlayerName));
         band.Id = previous?.Id ?? Guid.NewGuid();
         band.SourceId = sourceId;
         band.CreatedAt = previous?.CreatedAt ?? DateTimeOffset.UtcNow;
@@ -164,6 +165,10 @@ public sealed class BandExchangeService(IBandRepository bands, IPhotoStore photo
 
         return band;
     }
+
+    /// <summary>Las copias de antes del nickname no traen jugador: esas se pueden sustituir.</summary>
+    private static bool SamePlayer(string? saved, string? incoming) =>
+        string.IsNullOrEmpty(saved) || string.Equals(saved, incoming, StringComparison.Ordinal);
 
     private static async Task<BandPackage> ReadAsync(Stream content, CancellationToken cancellationToken)
     {
