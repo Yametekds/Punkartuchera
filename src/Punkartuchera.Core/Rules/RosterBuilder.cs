@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Punkartuchera.Core.Models;
 
@@ -184,7 +185,7 @@ public sealed partial class RosterBuilder(Rulebook book, IReadOnlyList<StatDefin
         {
             var text = source.TryGetValue(stat.Key, out var value) ? value : string.Empty;
             var match = ParenthesisValue().Match(text) is { Success: true } inner ? inner : FirstNumber().Match(text);
-            var number = match.Success ? int.Parse(match.Groups[1].Value) : stat.Min > 0 ? stat.Default : stat.Min;
+            var number = match.Success ? int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture) : stat.Min > 0 ? stat.Default : stat.Min;
             result[stat.Key] = Math.Clamp(number, stat.Min, stat.Max);
         }
 

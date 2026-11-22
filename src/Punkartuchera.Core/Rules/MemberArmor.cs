@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Punkartuchera.Core.Models;
 
@@ -39,7 +40,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
             // Lo lleva en el nombre: "Cuerpo mecánico (Blindaje 3)".
             if (InName().Match(name) is { Success: true } inName)
             {
-                worn = (int.Parse(inName.Groups[1].Value), name);
+                worn = (int.Parse(inName.Groups[1].Value, CultureInfo.InvariantCulture), name);
                 continue;
             }
 
@@ -56,7 +57,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
                 var item = FindArmor(info.Name, factionId);
                 if (item is not null && LeadingNumber().Match(item.Armor) is { Success: true } number)
                 {
-                    worn = (int.Parse(number.Groups[1].Value), name);
+                    worn = (int.Parse(number.Groups[1].Value, CultureInfo.InvariantCulture), name);
                     var rest = item.Armor[number.Length..].Trim(' ', '·', ',');
                     if (rest.Length > 0)
                     {
@@ -75,7 +76,7 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
             var text = info.Summary.Trim();
             if (OwnArmor().Match(text) is { Success: true } own)
             {
-                worn = (int.Parse(own.Groups[1].Value), name);
+                worn = (int.Parse(own.Groups[1].Value, CultureInfo.InvariantCulture), name);
                 if (own.Groups[2].Success)
                 {
                     situational.Add($"{name}: {Shorten(text)}");
@@ -87,15 +88,15 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
             }
             else if (BecomesArmor().Match(text) is { Success: true } becomes)
             {
-                Keep(ref replaced, int.Parse(becomes.Groups[1].Value), name);
+                Keep(ref replaced, int.Parse(becomes.Groups[1].Value, CultureInfo.InvariantCulture), name);
             }
             else if (FlatBonus().Match(text) is { Success: true } flat)
             {
-                bonuses.Add((int.Parse(flat.Groups[1].Value), name, false));
+                bonuses.Add((int.Parse(flat.Groups[1].Value, CultureInfo.InvariantCulture), name, false));
             }
             else if (AnyArmorBonus().Match(text) is { Success: true } any)
             {
-                bonuses.Add((int.Parse(any.Groups[1].Value), name, true));
+                bonuses.Add((int.Parse(any.Groups[1].Value, CultureInfo.InvariantCulture), name, true));
             }
             else if (text.Contains("Blindaje", StringComparison.OrdinalIgnoreCase) && !text.Contains("ignora", StringComparison.OrdinalIgnoreCase))
             {
@@ -114,15 +115,15 @@ public sealed partial class MemberArmor(Rulebook book, GearLookup lookup, UnitCo
 
             if (OwnArmor().Match(text) is { Success: true, Groups: var own } && !own[2].Success)
             {
-                worn ??= (int.Parse(own[1].Value), rule.Name);
+                worn ??= (int.Parse(own[1].Value, CultureInfo.InvariantCulture), rule.Name);
             }
             else if (FlatBonus().Match(text) is { Success: true } flat)
             {
-                bonuses.Add((int.Parse(flat.Groups[1].Value), rule.Name, false));
+                bonuses.Add((int.Parse(flat.Groups[1].Value, CultureInfo.InvariantCulture), rule.Name, false));
             }
             else if (AnyArmorBonus().Match(text) is { Success: true } any)
             {
-                bonuses.Add((int.Parse(any.Groups[1].Value), rule.Name, true));
+                bonuses.Add((int.Parse(any.Groups[1].Value, CultureInfo.InvariantCulture), rule.Name, true));
             }
         }
 
