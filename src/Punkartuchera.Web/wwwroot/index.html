@@ -49,11 +49,33 @@
         <div class="boot">
             <div class="boot__plate">
                 <img class="boot__logo" src="_content/Punkartuchera.UI/img/logo/punkartuchera-logo-principal.svg" alt="Punkartuchera" width="1102" height="530" />
+                <p class="boot__line" id="boot-line">Cargando la cartuchera...</p>
                 <div class="boot__bar"><span></span></div>
                 <div class="loading-progress-text"></div>
             </div>
         </div>
     </div>
+    <script>
+        // Frases de la pantalla de carga; se para sola cuando la app sustituye el contenido.
+        (function () {
+            var lines = [
+                'Cargando la cartuchera...',
+                'Contando balas, que no sobran...',
+                'Afilando machetes oxidados...',
+                'Engrasando el armatoste...',
+                'Despertando a la chusma...',
+                'Rebuscando en la chatarra...',
+                'Pintando calaveras en la chapa...'
+            ];
+            var i = 0;
+            var timer = setInterval(function () {
+                var el = document.getElementById('boot-line');
+                if (!el) { clearInterval(timer); return; }
+                i = (i + 1) % lines.length;
+                el.textContent = lines[i];
+            }, 1400);
+        })();
+    </script>
 
     <div id="blazor-error-ui">
         Algo ha petado.
