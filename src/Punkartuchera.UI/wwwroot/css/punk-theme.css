@@ -221,8 +221,8 @@ h1:focus { outline: none; }
     display: flex; align-items: center; gap: 10px;
     color: var(--punk-text); text-decoration: none;
 }
-.punk-brand__logo { display: block; height: clamp(2.2rem, 8.5vw, 2.6rem); width: auto; max-width: 100%; }
-.punk-brand__mark { display: block; flex: none; height: clamp(2.6rem, 11vw, 3.2rem); width: auto; }
+.punk-brand__logo { display: block; width: clamp(12.8rem, 57vw, 18rem); height: auto; max-width: 100%; }
+.punk-brand__mark { display: block; flex: none; height: clamp(2.2rem, 11vw, 3.2rem); width: auto; }
 .punk-brand__sub {
     font-family: var(--punk-font-scribble); font-size: .95rem;
     color: var(--punk-accent); transform: rotate(-4deg);
@@ -305,7 +305,7 @@ h1:focus { outline: none; }
 }
 .appbar-menu .icon { width: 1.8rem; height: 1.8rem; }
 .appbar-menu:focus-visible { outline: 3px solid var(--punk-accent); }
-.punk-topbar .punk-brand { flex: 1; }
+.punk-topbar .punk-brand { flex: 1; min-width: 0; }
 .appbar-menu:hover { color: var(--punk-accent); }
 
 /* Menú en la chapa (solo pantallas anchas): letras estarcidas con el brochazo rojo en la activa */
@@ -337,11 +337,9 @@ h1:focus { outline: none; }
     .punk-topbar .punk-brand { flex: none; }
     .topnav { display: flex; flex: 1; justify-content: flex-end; gap: 2px; margin-right: 6px; }
     /* el rótulo y la calavera ocupan su sitio: el menú va sin iconos */
-    .topnav__item { padding: 6px 9px; }
-    .topnav__item .icon { display: none; }
-}
-@media (min-width: 1000px) and (max-width: 1129px) {
+    .punk-brand__logo { width: clamp(9rem, calc(100vw - 855px), 15rem); }
     .topnav__item { padding: 6px 6px; font-size: .9rem; }
+    .topnav__item .icon { display: none; }
 }
 
 /* Menú lateral */
@@ -932,49 +930,16 @@ textarea.field__input { resize: vertical; }
     mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, .25) 30%, #000 100%);
 }
 .boot__plate > * { position: relative; }
-.boot__logo {
-    display: block; width: min(100%, 340px); height: auto;
-    animation: boot-stamp .5s cubic-bezier(.2, .8, .3, 1.2) both;
-}
-/* Frase de carga: se va cambiando desde index.html mientras arranca la app */
-.boot__line {
-    margin: 0; min-height: 1.5em;
-    font-family: var(--punk-font-scribble); font-size: 1.05rem; color: var(--punk-accent);
-    text-align: center; transform: rotate(-2deg);
-    text-shadow: 0 1px 0 rgba(0, 0, 0, .9), 0 2px 6px rgba(0, 0, 0, .8);
-}
-/* Cartuchera: correa de cuero que se va llenando de balas */
-.boot__bar {
-    position: relative;
-    width: 260px; max-width: 78vw; height: 32px;
-    background:
-        repeating-linear-gradient(to right, rgba(236, 194, 140, .55) 0 4px, transparent 4px 8px) left top 11px / 100% 1px no-repeat,
-        repeating-linear-gradient(to right, rgba(236, 194, 140, .55) 0 4px, transparent 4px 8px) left bottom 7px / 100% 1px no-repeat,
-        linear-gradient(to bottom, transparent 8px, #5a3820 8px, #3d2615 13px, #2e1c10 23px, transparent 23px);
-    border-left: 6px solid #2e1c10; border-right: 6px solid #2e1c10;
-    box-shadow: 0 3px 0 rgba(0, 0, 0, .45);
-}
+.boot__logo { display: block; width: min(100%, 360px); height: auto; }
+.boot__bar { width: 240px; max-width: 80vw; height: 14px; border: 3px solid var(--punk-accent); }
 .boot__bar span {
     display: block; height: 100%;
     width: var(--blazor-load-percentage, 0%);
-    width: round(down, var(--blazor-load-percentage, 0%), 13px);
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 30'%3E%3Cpath d='M2.5 11C2.5 5 4 1.6 6.5 1c2.5.6 4 4 4 10z' fill='%23b4602c' stroke='%231a1410' stroke-width='.8'/%3E%3Cpath d='M4.4 10.5C4.5 6.5 5.3 3.6 6.4 2.6' fill='none' stroke='%23e9a46b' stroke-width='1'/%3E%3Crect x='2' y='10.5' width='9' height='15.5' fill='%23c9973a' stroke='%231a1410' stroke-width='.8'/%3E%3Crect x='3.4' y='11.2' width='1.6' height='14' fill='%23f0d08a'/%3E%3Crect x='8.6' y='11.2' width='1.6' height='14' fill='%238a5f22'/%3E%3Crect x='1.4' y='25.6' width='10.2' height='3' fill='%23a8792b' stroke='%231a1410' stroke-width='.8'/%3E%3C/svg%3E") left center / 13px 30px repeat-x;
-    filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, .55));
+    background: repeating-linear-gradient(-45deg, var(--punk-accent) 0 8px, var(--punk-rust) 8px 16px);
     transition: width .2s ease;
 }
-.loading-progress-text {
-    font-family: var(--punk-font-display); font-size: 1.5rem; line-height: 1; color: var(--punk-text);
-    letter-spacing: .06em; text-shadow: 2px 2px 0 var(--punk-rust);
-}
-.loading-progress-text::after { content: var(--blazor-load-percentage-text, "..."); }
-@keyframes boot-stamp {
-    0% { opacity: 0; transform: scale(1.4) rotate(-7deg); }
-    60% { opacity: 1; transform: scale(.95) rotate(1.5deg); }
-    100% { opacity: 1; transform: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-    .boot__logo { animation: none; }
-}
+.boot__plate .boot__bar { background: rgba(0, 0, 0, .55); }
+.loading-progress-text::after { content: var(--blazor-load-percentage-text, "Cargando"); color: var(--punk-text-muted); font-family: var(--punk-font-scribble); }
 
 #blazor-error-ui {
     display: none;
