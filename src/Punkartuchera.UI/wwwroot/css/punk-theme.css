@@ -221,7 +221,8 @@ h1:focus { outline: none; }
     display: flex; align-items: center; gap: 10px;
     color: var(--punk-text); text-decoration: none;
 }
-.punk-brand__logo { display: block; height: clamp(2.5rem, 10vw, 3rem); width: auto; max-width: 100%; }
+.punk-brand__logo { display: block; width: clamp(12.8rem, 57vw, 18rem); height: auto; max-width: 100%; }
+.punk-brand__mark { display: block; flex: none; height: clamp(2.2rem, 11vw, 3.2rem); width: auto; }
 .punk-brand__sub {
     font-family: var(--punk-font-scribble); font-size: .95rem;
     color: var(--punk-accent); transform: rotate(-4deg);
@@ -304,7 +305,7 @@ h1:focus { outline: none; }
 }
 .appbar-menu .icon { width: 1.8rem; height: 1.8rem; }
 .appbar-menu:focus-visible { outline: 3px solid var(--punk-accent); }
-.punk-topbar .punk-brand { flex: 1; }
+.punk-topbar .punk-brand { flex: 1; min-width: 0; }
 .appbar-menu:hover { color: var(--punk-accent); }
 
 /* Menú en la chapa (solo pantallas anchas): letras estarcidas con el brochazo rojo en la activa */
@@ -333,11 +334,11 @@ h1:focus { outline: none; }
         padding-right: var(--plate-pad-x);
     }
     .appbar-menu, .drawer, .drawer-scrim { display: none; }
-    .punk-topbar .punk-brand { flex: 0 1 auto; }
+    .punk-topbar .punk-brand { flex: none; }
     .topnav { display: flex; flex: 1; justify-content: flex-end; gap: 2px; margin-right: 6px; }
-}
-@media (min-width: 1000px) and (max-width: 1199px) {
-    .topnav__item { padding: 6px 9px; }
+    /* el rótulo y la calavera ocupan su sitio: el menú va sin iconos */
+    .punk-brand__logo { width: clamp(9rem, calc(100vw - 855px), 15rem); }
+    .topnav__item { padding: 6px 6px; font-size: .9rem; }
     .topnav__item .icon { display: none; }
 }
 
