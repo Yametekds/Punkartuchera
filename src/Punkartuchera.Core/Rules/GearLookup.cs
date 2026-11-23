@@ -71,6 +71,16 @@ public sealed partial class GearLookup
         {
             Add(rule.Name, null, rule.Text, $"reglas/especiales#{rule.Slug}", GearInfoKind.Rule);
         }
+
+        // Al final, para que no le quiten el sitio al equipo cuando el nombre se busca aproximado.
+        foreach (var faction in book.Factions)
+        {
+            AddFactionRules(faction, faction.Id, $"reglas/faccion/{faction.Id}/reglas");
+            foreach (var subfaction in faction.Subfactions)
+            {
+                AddFactionRules(subfaction, faction.Id, $"reglas/faccion/{faction.Id}/subfaccion/{subfaction.Id}");
+            }
+        }
     }
 
     /// <summary>Busca un nombre; con facción, prefiere lo genérico y lo de esa facción.</summary>
@@ -100,6 +110,14 @@ public sealed partial class GearLookup
             ? $"Cuerpo a cuerpo · C {weapon.Combat ?? "+0"} · F {weapon.Strength} · Pen {weapon.Penetration}"
             : $"{weapon.Range} cm · F {weapon.Strength} · Pen {weapon.Penetration}";
         return Join(profile, string.Join(", ", weapon.Rules), weapon.Notes);
+    }
+
+    private void AddFactionRules(FactionRules faction, string factionId, string page)
+    {
+        foreach (var rule in faction.Rules)
+        {
+            Add(rule.Name, factionId, rule.Text, $"{page}#{rule.Slug}", GearInfoKind.Rule);
+        }
     }
 
     private void AddFaction(FactionRules faction, string factionId, string root)

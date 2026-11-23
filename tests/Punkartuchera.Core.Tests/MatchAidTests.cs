@@ -20,6 +20,24 @@ public class MatchAidTests
     }
 
     [Fact]
+    public void Every_rule_the_aids_link_is_found_in_the_rulebook()
+    {
+        var lookup = new GearLookup(Book);
+        foreach (var faction in Book.Factions)
+        {
+            foreach (var sub in faction.Subfactions.Select(s => (FactionRules?)s).Prepend(null))
+            {
+                var troops = faction.Troops.Concat(sub?.Troops ?? []).Select(t => (t.Name, 30)).ToArray();
+                var aids = For(Band(faction.Id, sub?.Id, troops));
+                foreach (var aid in aids.Band.Concat(aids.Members.SelectMany(m => m)).Where(a => a.Rule is not null))
+                {
+                    Assert.True(lookup.Find(aid.Rule, faction.Id) is not null, $"{aid.Rule} ({sub?.Id ?? faction.Id})");
+                }
+            }
+        }
+    }
+
+    [Fact]
     public void Idos_count_ambrosia_and_despojos_cannot_take_it()
     {
         var band = Band("idos", null, ("Despojo", 15), ("Cosechador", 40), ("Aberración", 35), ("Glotón", 45), ("Desgarrador", 40), ("Despojo", 15), ("Desgarrador", 40), ("Madre", 90), ("Despojo", 15));
