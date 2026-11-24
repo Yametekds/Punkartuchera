@@ -53,15 +53,13 @@ public sealed partial class UnitCostCalculator(Rulebook book)
     public UnitCost Calculate(Miniature member, string? factionId, string? subfactionId = null)
     {
         var troop = FindTroop(member.Role, factionId, subfactionId);
+        var (baseCost, includedNames) = Breakdown(member, troop, factionId, subfactionId);
         var lines = new List<CostLine>
         {
-            new(BaseLabel(member, troop), CostLineKind.Base, member.BaseCost ?? member.Cost ?? 0),
+            new(BaseLabel(member, troop), CostLineKind.Base, baseCost),
         };
 
-        // Si no hay coste base guardado (miembros de antes), lo que ya llevaba se da por pagado.
-        var included = member.BaseCost is null
-            ? member.Gear.Select(g => g.Name).Concat(member.Skills).Select(Key).ToList()
-            : member.Included.Select(Key).ToList();
+        var included = includedNames.Select(Key).ToList();
 
         foreach (var name in member.Gear.Select(g => g.Name).Concat(member.Skills))
         {
@@ -81,15 +79,29 @@ public sealed partial class UnitCostCalculator(Rulebook book)
     public UnitCost Apply(Miniature member, string? factionId, string? subfactionId = null)
     {
         var cost = Calculate(member, factionId, subfactionId);
-        if (member.BaseCost is null)
-        {
-            member.BaseCost = member.Cost ?? 0;
-            member.Included = [.. member.Gear.Select(g => g.Name), .. member.Skills];
-        }
+        var (baseCost, included) = Breakdown(member, FindTroop(member.Role, factionId, subfactionId), factionId, subfactionId);
+        member.BaseCost = baseCost;
+        member.Included = [.. included];
 
         member.Cost = cost.Total;
         member.BulletPrice = cost.BulletPrice;
         return cost;
+    }
+
+    /// <summary>
+    /// Separa el coste base de las fichas de control en el de la tropa y el precio del equipo comprado aparte,
+    /// para que ese equipo se vea con su precio y quitarlo baje el coste.
+    /// </summary>
+    public void SeparateBase(Miniature member, string? factionId, string? subfactionId = null)
+    {
+        if (member.BaseCost is null)
+        {
+            return;
+        }
+
+        var (baseCost, included) = Breakdown(member, FindTroop(member.Role, factionId, subfactionId), factionId, subfactionId);
+        member.BaseCost = baseCost;
+        member.Included = [.. included];
     }
 
     /// <summary>Precio de una compra por su nombre, o nulo si el reglamento no le pone precio.</summary>
@@ -135,6 +147,49 @@ public sealed partial class UnitCostCalculator(Rulebook book)
 
         static IEnumerable<PurchaseOption> Priced(IEnumerable<PriceOption> source, string group, bool isSkill) =>
             source.Where(o => o.Cost is not null).Select(o => new PurchaseOption(group, o.Name, o.Cost!.Value, isSkill));
+    }
+
+    /// <summary>
+    /// Coste base y lo que va incluido en él. Si el coste base guardado es el de la tropa más el precio exacto
+    /// del equipo que trae aparte (fichas de control), se separa: la tropa a su coste y ese equipo con su precio.
+    /// </summary>
+    private (int Base, IReadOnlyList<string> Included) Breakdown(Miniature member, Troop? troop, string? factionId, string? subfactionId)
+    {
+        // Si no hay coste base guardado (miembros de antes), lo que ya llevaba se da por pagado.
+        if (member.BaseCost is not { } stored)
+        {
+            return (member.Cost ?? 0, [.. member.Gear.Select(g => g.Name), .. member.Skills]);
+        }
+
+        if (troop is null || stored <= troop.Cost)
+        {
+            return (stored, member.Included);
+        }
+
+        var fixedItems = new[] { troop.Weapons, troop.Armor, troop.Equipment }
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .Concat(troop.SpecialRules)
+            .ToList();
+        var own = new List<string>();
+        var extra = 0;
+        foreach (var name in member.Included)
+        {
+            if (fixedItems.Any(f => SameItem(f, name)))
+            {
+                own.Add(name);
+                continue;
+            }
+
+            var (quantity, item) = Parse(name);
+            if (Price(item, troop, factionId, subfactionId) is not { } each)
+            {
+                return (stored, member.Included);
+            }
+
+            extra += each * quantity;
+        }
+
+        return extra == stored - troop.Cost ? (troop.Cost, own) : (stored, member.Included);
     }
 
     private CostLine Line(string name, List<string> included, Troop? troop, string? factionId, string? subfactionId)

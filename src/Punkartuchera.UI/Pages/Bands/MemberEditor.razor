@@ -276,6 +276,11 @@ else
             _member = IsNew
                 ? Bands.NewMember(Rules.Roles.FirstOrDefault() ?? string.Empty)
                 : existing is null ? null : Clone(existing);
+            if (_member is not null)
+            {
+                Costs.SeparateBase(_member, _band.FactionId, _band.SubfactionId);
+            }
+
             _gearNames = _member?.Gear.Select(g => g.Name).ToList() ?? [];
             _choices = Roster.ChoicesFor(_band.FactionId, _band.SubfactionId);
             SelectCurrentChoice();

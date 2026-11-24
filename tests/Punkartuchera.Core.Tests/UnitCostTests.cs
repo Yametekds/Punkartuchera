@@ -50,6 +50,50 @@ public class UnitCostTests
     }
 
     [Fact]
+    public void Preset_members_show_the_price_of_the_gear_bought_on_top_of_the_troop()
+    {
+        var list = Book.Lists.Single(l => l.Id == "craabianos");
+        var marinero = _builder.FromPreset(list, list.Members.Single(m => m.Troop == "Marinero" && m.Weapons.Contains("Filo medio")));
+
+        var cost = _costs.Calculate(marinero, "craabianos");
+
+        Assert.Equal(47, cost.Total);
+        Assert.Equal(30, cost.Lines[0].Points);
+        Assert.Contains(cost.Lines, l => l.Label == "Filo medio" && l.Kind == CostLineKind.Purchase && l.Points == 10);
+        Assert.Contains(cost.Lines, l => l.Label == "Pistola de mecha" && l.Kind == CostLineKind.Purchase && l.Points == 4);
+        Assert.Contains(cost.Lines, l => l.Label == "Aceite de ballenorca" && l.Kind == CostLineKind.Purchase && l.Points == 3);
+        Assert.Contains(cost.Lines, l => l.Label == "Cuero endurecido" && l.Kind == CostLineKind.Included);
+    }
+
+    [Fact]
+    public void Removing_preset_gear_lowers_the_cost_and_saving_keeps_the_troop_base()
+    {
+        var list = Book.Lists.Single(l => l.Id == "craabianos");
+        var marinero = _builder.FromPreset(list, list.Members.Single(m => m.Troop == "Marinero" && m.Weapons.Contains("Filo medio")));
+
+        marinero.Gear.RemoveAll(g => g.Name == "Filo medio");
+        _costs.Apply(marinero, "craabianos");
+
+        Assert.Equal(37, marinero.Cost);
+        Assert.Equal(30, marinero.BaseCost);
+        Assert.DoesNotContain("Pistola de mecha", marinero.Included);
+        Assert.Contains("Cuero endurecido", marinero.Included);
+    }
+
+    [Fact]
+    public void Preset_members_keep_the_cost_of_their_control_sheet()
+    {
+        foreach (var list in Book.Lists)
+        {
+            foreach (var preset in list.Members)
+            {
+                var member = _builder.FromPreset(list, preset);
+                Assert.Equal(preset.Cost, _costs.Calculate(member, list.FactionId).Total);
+            }
+        }
+    }
+
+    [Fact]
     public void Fixed_gear_and_troop_rules_do_not_count_twice()
     {
         var mel = _builder.FromTroop(Book.FindFaction("mercenarios")!.Troops.First(t => t.Name == "Crazy Mel"), "pandilleros");
