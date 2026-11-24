@@ -22,6 +22,10 @@
             {
                 <span class="datacard__role">@Member.Role</span>
             }
+            @if (ShowCost && Member.Cost is { } cost)
+            {
+                <span class="datacard__cost">@cost ptos</span>
+            }
         </div>
         <dl class="datacard__stats" style="--stat-count: @(Rules.Stats.Count + 1 + (ShowAmmo ? 1 : 0))">
             @foreach (var stat in Rules.Stats)
@@ -203,6 +207,9 @@
 
     /// <summary>Destino para editar la ficha; nulo si no es editable.</summary>
     [Parameter] public string? Href { get; set; }
+
+    /// <summary>Muestra lo que vale la miniatura (base, compras y balas).</summary>
+    [Parameter] public bool ShowCost { get; set; }
 
     /// <summary>Oculta las balas (fichas del rival).</summary>
     [Parameter] public bool HideAmmo { get; set; }
