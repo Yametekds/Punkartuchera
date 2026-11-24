@@ -1065,6 +1065,7 @@ a.menu-pop__item { text-decoration: none; }
     background: var(--punk-brush-sand) left center / 100% 100% no-repeat;
 }
 .datacard__role { color: var(--punk-accent); font-family: var(--punk-font-heading); text-transform: uppercase; letter-spacing: 1.2px; font-size: .9rem; }
+.datacard__cost { color: var(--punk-text); font-family: var(--punk-font-display); letter-spacing: .5px; font-size: .9rem; }
 .datacard__stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(32px, 1fr)); gap: 4px; margin: 0; }
 .statbox {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
