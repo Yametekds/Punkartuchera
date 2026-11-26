@@ -222,6 +222,7 @@ h1:focus { outline: none; }
     color: var(--punk-text); text-decoration: none;
 }
 .punk-brand__logo { display: block; width: clamp(12.8rem, 57vw, 18rem); height: auto; max-width: 100%; }
+.punk-brand__user { display: block; flex: none; }
 .punk-brand__mark { display: block; flex: none; height: clamp(2.2rem, 11vw, 3.2rem); width: auto; }
 .punk-brand__sub {
     font-family: var(--punk-font-scribble); font-size: .95rem;
